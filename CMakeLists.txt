@@ -22,14 +22,14 @@ include_directories(${NNSIM_INCLUDE_DIR})
 # list all source files here
 # TODO: replace this with a macro
 
-add_library (${NNSIM_LIB}
+#add_library (${NNSIM_LIB}
 #    ${NNSIM_SOURCE_DIR}/
-    )
+#    )
     
 add_executable (${NNSIM_NAME}
 	${NNSIM_SOURCE_DIR}/main.cpp)
-target_link_libraries(${NNSIM_NAME}
-	${NNSIM_LIB})
+#target_link_libraries(${NNSIM_NAME}
+#	${NNSIM_LIB})
 
 ################################################
 # GTest - http://code.google.com/p/googletest/ #
@@ -40,7 +40,7 @@ enable_testing(true)
 
 include_directories(${gtest_SOURCE_DIR}/include 
 	${gtest_SOURCE_DIR}
-    ${gmock_SOURCE_DIR}/include 
+        ${gmock_SOURCE_DIR}/include 
 	${gmock_SOURCE_DIR})
 	
 # list test definitions here
