@@ -14,6 +14,9 @@
 #define	DOCUMENT_H
 
 #include "tmte-cpp/main/util/exceptions/IllegalArgumentException.h"
+#include <utility>
+
+using std::auto_ptr;
 
 /**
  * Represents a Document class.
@@ -33,8 +36,8 @@ public:
      * 
      */
     Document(
-            int const * const words,
-            int const * const counts,
+            auto_ptr<int> words,
+            auto_ptr<int> counts,
             int const length,
             int const total)
     throw (IllegalArgumentException);
@@ -68,8 +71,8 @@ public:
      */
     int const getTotal() const;
 private:
-    int const * words;
-    int const * counts;
+    auto_ptr<int> words;
+    auto_ptr<int> counts;
     int length;
     int total;
 };

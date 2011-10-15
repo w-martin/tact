@@ -11,17 +11,18 @@
  */
 
 #include <stddef.h>
+#include <memory>
 
 #include "tmte-cpp/main/model/Document.h"
 
 Document::Document(
-        int const * const words,
-        int const * const counts,
+        auto_ptr<int> words,
+        auto_ptr<int> counts,
         int const length,
         int const total)
 throw (IllegalArgumentException) {
-    if (NULL == words
-            || NULL == counts) {
+    if (NULL == words.get()
+            || NULL == counts.get()) {
         throw IllegalArgumentException();
     }
     Document::words = words;
@@ -30,12 +31,15 @@ throw (IllegalArgumentException) {
     Document::total = total;
 }
 
+Document::~Document() {
+}
+
 int const * const Document::getWords() const {
-    return Document::words;
+    return Document::words.get();
 }
 
 int const * const Document::getCounts() const {
-    return Document::counts;
+    return Document::counts.get();
 }
 
 int const Document::getLength() const {

@@ -1,5 +1,5 @@
 /**
- * @file main.cpp
+ * @file ExceptionTest.cpp
  * @author  William Martin <will.st4@gmail.com>
  * @version 0.0
  *
