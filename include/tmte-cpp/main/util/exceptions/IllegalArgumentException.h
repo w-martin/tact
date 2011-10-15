@@ -7,11 +7,6 @@
  *
  * This program is licensed under the MIT license, please see COPYING for a 
  * copy of the license.
- *
- * @section DESCRIPTION
- *
- * Exception class which indicates that a method was called with 
- * one or more illegal arguments.
  * 
  */
 
@@ -22,13 +17,29 @@
 
 #include "tmte-cpp/main/util/exceptions/Exception.h"
 
+/**
+ * Exception class which indicates that a method was called with 
+ * one or more illegal arguments.
+ * 
+ */
 class IllegalArgumentException : public Exception {
 public:
 
+    /**
+     * Default constructor. Uses the default message for this
+     * Exception.
+     * 
+     */
     IllegalArgumentException() : Exception(ILLEGAL_ARGUMENT_MESSAGE) {
     }
 
-    IllegalArgumentException(const char * const message) 
+    /**
+     * Uses the given message for this Exception.
+     * 
+     * @param message the message to use for this Exception.
+     * 
+     */
+    IllegalArgumentException(const char * const message)
     : Exception(message) {
     }
 };

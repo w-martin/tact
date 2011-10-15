@@ -10,6 +10,8 @@
  * 
  */
 
+#include <stddef.h>
+
 #include "tmte-cpp/main/model/Document.h"
 
 Document::Document(
@@ -18,6 +20,10 @@ Document::Document(
         int const length,
         int const total)
 throw (IllegalArgumentException) {
+    if (NULL == words
+            || NULL == counts) {
+        throw IllegalArgumentException();
+    }
     Document::words = words;
     Document::counts = counts;
     Document::length = length;

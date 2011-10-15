@@ -7,13 +7,6 @@
  *
  * This program is licensed under the MIT license, please see COPYING for a 
  * copy of the license.
- *
- * @section DESCRIPTION
- *
- * Custom <code>Exception</code> class.
- * 
- * @param message the message that will be printed as the cause for this
- * <code>Exception</code>.
  * 
  */
 
@@ -22,9 +15,23 @@
 
 #include <exception>
 
+/**
+ * Custom <code>Exception</code> class.
+ * 
+ * @param message the message that will be printed as the cause for this
+ * <code>Exception</code>.
+ * 
+ */
 class Exception : public std::exception {
 public:
 
+    /**
+     * Default constructor.
+     * 
+     * @param message the message that will be printed as the cause for this
+     * <code>Exception</code>.
+     * 
+     */
     Exception(const char *message) {
         Exception::message = message;
     }
@@ -36,11 +43,6 @@ public:
         return message;
     }
 private:
-    /**
-     * The string which is the reason why this <code>Exception</code> was
-     * thrown.
-     * 
-     */
     const char *message;
 };
 

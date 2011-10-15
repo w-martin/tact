@@ -26,6 +26,12 @@
  */
 class Document {
 public:
+    /**
+     * Default constructor.
+     * 
+     * @throw IllegalArgumentException if words or counts is null.
+     * 
+     */
     Document(
             int const * const words,
             int const * const counts,
