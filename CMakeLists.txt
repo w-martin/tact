@@ -11,25 +11,25 @@ set(CMAKE_CXX_COMPILER clang++)
 
 project (tmte-cpp CXX)
 
-set(NNSIM_NAME tmte-cpp)
-set(NNSIM_LIB tmte-lib)
-set(NNSIM_SOURCE_DIR src)
-set(NNSIM_INCLUDE_DIR include)
-set(NNSIM_TEST_DIR test)
+set(TMTE_NAME tmte-cpp)
+set(TMTE_LIB tmte-lib)
+set(TMTE_SOURCE_DIR src)
+set(TMTE_INCLUDE_DIR include)
+set(TMTE_TEST_DIR test)
 
-include_directories(${NNSIM_INCLUDE_DIR})
+include_directories(${TMTE_INCLUDE_DIR})
 
 # list all source files here
 # TODO: replace this with a macro
 
-add_library (${NNSIM_LIB}
-    ${NNSIM_SOURCE_DIR}/model/Document.cpp
+add_library (${TMTE_LIB}
+    ${TMTE_SOURCE_DIR}/model/Document.cpp
     )
     
-add_executable (${NNSIM_NAME}
-	${NNSIM_SOURCE_DIR}/main.cpp)
-target_link_libraries(${NNSIM_NAME}
-	${NNSIM_LIB})
+add_executable (${TMTE_NAME}
+	${TMTE_SOURCE_DIR}/main.cpp)
+target_link_libraries(${TMTE_NAME}
+	${TMTE_LIB})
 
 ################################################
 # GTest - http://code.google.com/p/googletest/ #
@@ -46,8 +46,9 @@ include_directories(${gtest_SOURCE_DIR}/include
 # list test definitions here
 # TODO: replace this with a macro
 
-#add_executable(ModelTests 
-#	${NNSIM_TEST_DIR}/
-#	) 
-#target_link_libraries(ModelTests gmock gmock_main ${NNSIM_LIB}) 
-#add_test(ModelTests ModelTests)
+add_executable(UtilTests 
+	${TMTE_TEST_DIR}/util/exceptions/ExceptionTest.cpp
+        ${TMTE_TEST_DIR}/util/exceptions/IllegalArgumentExceptionTest.cpp
+	) 
+target_link_libraries(UtilTests gmock gmock_main ${TMTE_LIB}) 
+add_test(UtilTests UtilTests)
