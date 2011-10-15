@@ -4,3 +4,8 @@ CMakeCache.txt
 nbproject/
 documentation/
 build/
+*CTestTestfile.cmake
+*Makefile
+*cmake_install.cmake
+*.a
+*tmte-cpp
