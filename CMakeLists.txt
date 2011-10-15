@@ -22,14 +22,14 @@ include_directories(${NNSIM_INCLUDE_DIR})
 # list all source files here
 # TODO: replace this with a macro
 
-#add_library (${NNSIM_LIB}
-#    ${NNSIM_SOURCE_DIR}/
-#    )
+add_library (${NNSIM_LIB}
+    ${NNSIM_SOURCE_DIR}/model/Document.cpp
+    )
     
 add_executable (${NNSIM_NAME}
 	${NNSIM_SOURCE_DIR}/main.cpp)
-#target_link_libraries(${NNSIM_NAME}
-#	${NNSIM_LIB})
+target_link_libraries(${NNSIM_NAME}
+	${NNSIM_LIB})
 
 ################################################
 # GTest - http://code.google.com/p/googletest/ #
