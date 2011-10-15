@@ -13,6 +13,7 @@
 #ifndef CORPUS_H
 #define	CORPUS_H
 
+#include "tmte-cpp/main/model/Document.h"
 #include <utility>
 
 using std::auto_ptr;
@@ -42,7 +43,7 @@ public:
      * @param document the Document to add.
      * 
      */
-    void addDocument(auto_ptr<Document> const document);
+    void addDocument(auto_ptr<Document> document);
     /**
      * Gets the number of Documents in this Corpus.
      * 
@@ -72,7 +73,7 @@ public:
      */
     void setNoTerms(int const noTerms);
 private:
-    auto_ptr<Document> const * const documents;
+    auto_ptr<Document> * documents;
     int noDocuments;
     int noTerms;
 };

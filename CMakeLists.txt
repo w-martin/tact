@@ -23,6 +23,7 @@ include_directories(${TMTE_INCLUDE_DIR})
 # TODO: replace this with a macro
 
 add_library (${TMTE_LIB}
+    ${TMTE_SOURCE_DIR}/model/Corpus.cpp
     ${TMTE_SOURCE_DIR}/model/Document.cpp
     )
     
