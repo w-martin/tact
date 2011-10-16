@@ -18,28 +18,20 @@
 Corpus::Corpus() {
     noDocuments = 0;
     noTerms = 0;
-    documents = (auto_ptr<Document>*) malloc(
-            sizeof (auto_ptr<Document>) * noDocuments);
+    documents = new vector<Document const *>();
 }
 
 Corpus::~Corpus() {
-    free(documents);
+    delete documents;
 }
 
-Document const * const * const Corpus::getDocuments() const {
-    Document const ** documentsArray =
-            (Document const **) malloc(sizeof (Document*) * noDocuments);
-    for (int i = 0; i < noDocuments; i++) {
-        documentsArray[i] = documents[i].get();
-    }
-    return documentsArray;
+vector<Document const *> const * const Corpus::getDocuments() const {
+    return documents;
 }
 
 void Corpus::addDocument(auto_ptr<Document> document) {
     noDocuments++;
-    documents = (auto_ptr<Document> *) realloc(
-            documents, sizeof (auto_ptr<Document>) * noDocuments);
-    documents[noDocuments - 1] = document;
+    documents->push_back(document.release());
 }
 
 int const Corpus::getNoDocuments() const {

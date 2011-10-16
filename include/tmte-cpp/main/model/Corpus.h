@@ -15,8 +15,10 @@
 
 #include "tmte-cpp/main/model/Document.h"
 #include <utility>
+#include <vector>
 
 using std::auto_ptr;
+using std::vector;
 
 /**
  * Represents a collection of related documents.
@@ -36,7 +38,7 @@ public:
      * @return the list of Document pointers.
      * 
      */
-    Document const * const * const getDocuments() const;
+    vector<Document const *> const * const getDocuments() const;
     /**
      * Adds the given Document to the list of Documents.
      * 
@@ -73,7 +75,7 @@ public:
      */
     void setNoTerms(int const noTerms);
 private:
-    auto_ptr<Document> * documents;
+    vector<Document const *> * documents;
     int noDocuments;
     int noTerms;
 };
