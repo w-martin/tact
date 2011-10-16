@@ -1,19 +1,4 @@
 #!/usr/bin/env python
-#
-# File:   MockLayer.h
-# Author: Will
-# 
-# Created on 05 July, 20:30
-#
-# Licensed under the BSD 2-Clause Licence.
-# You may obtain a copy of the license at
-# 
-#     http://www.opensource.org/licenses/bsd-license.php
-# 
-# See COPYING for a copy of the License applied to this product.
-# 
-
-"""Driver for mocking a class with Google Mock with minimal effort."""
 
 __author__ = 'will.st4@gmail.com (William Martin)'
 
@@ -22,7 +7,7 @@ import sys
 
 ## Definitions
 # Directories needed
-headerDir = "include/nn-simulator/"
+headerDir = "include/tmte-cpp/"
 mainDir = headerDir + "main/"
 testDir = headerDir + "test/"
 # gmock script

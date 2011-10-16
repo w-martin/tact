@@ -16,7 +16,6 @@
 #include "tmte-cpp/main/model/Document.h"
 
 Document::Document(int const length) {
-    Document::noWords = 0;
     Document::total = 0;
     words = new vector <char const *>();
     counts = new vector<int>;
@@ -33,7 +32,6 @@ vector<char const *> const * const Document::getWords() const {
 }
 
 void Document::addWord(auto_ptr<const char> word, const int count) {
-    noWords++;
     words->push_back(word.release());
     counts->push_back(count);
     total += count;

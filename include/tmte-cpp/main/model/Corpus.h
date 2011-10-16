@@ -47,20 +47,6 @@ public:
      */
     void addDocument(auto_ptr<Document> document);
     /**
-     * Gets the number of Documents in this Corpus.
-     * 
-     * @return the number of Documents in this Corpus.
-     * 
-     */
-    int const getNoDocuments() const;
-    /**
-     * Sets the number of Documents in this Corpus.
-     * 
-     * @param noDocuments the number of Documents in this Corpus.
-     * 
-     */
-    void setNoDocuments(int const noDocuments);
-    /**
      * Gets the number of terms in this Corpus.
      * 
      * @return the number of terms in this Corpus.
@@ -76,7 +62,6 @@ public:
     void setNoTerms(int const noTerms);
 private:
     vector<Document const *> * documents;
-    int noDocuments;
     int noTerms;
 };
 

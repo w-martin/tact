@@ -16,7 +16,6 @@
 #include "tmte-cpp/main/model/Corpus.h"
 
 Corpus::Corpus() {
-    noDocuments = 0;
     noTerms = 0;
     documents = new vector<Document const *>();
 }
@@ -30,16 +29,7 @@ vector<Document const *> const * const Corpus::getDocuments() const {
 }
 
 void Corpus::addDocument(auto_ptr<Document> document) {
-    noDocuments++;
     documents->push_back(document.release());
-}
-
-int const Corpus::getNoDocuments() const {
-    return noDocuments;
-}
-
-void Corpus::setNoDocuments(const int noDocuments) {
-    Corpus::noDocuments = noDocuments;
 }
 
 int const Corpus::getNoTerms() const {

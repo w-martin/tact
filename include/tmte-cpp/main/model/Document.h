@@ -56,13 +56,6 @@ public:
      */
     vector<int> const * const getCounts() const;
     /**
-     * Gets the number of words.
-     * 
-     * @return the number of words.
-     * 
-     */
-    int const getNoWords() const;
-    /**
      * Gets the length.
      * 
      * @return the length.
@@ -79,7 +72,6 @@ public:
 private:
     vector<char const *> * words;
     vector<int> * counts;
-    int noWords;
     int length;
     int total;
 };
