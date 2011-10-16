@@ -15,35 +15,36 @@
 
 #include "tmte-cpp/main/model/Document.h"
 
-Document::Document(
-        auto_ptr<int> words,
-        auto_ptr<int> counts,
-        int const length,
-        int const total)
-throw (IllegalArgumentException) {
-    if (NULL == words.get()
-            || NULL == counts.get()) {
-        throw IllegalArgumentException();
-    }
-    Document::words = words;
-    Document::counts = counts;
+Document::Document(int const length) {
+    Document::noWords = 0;
+    Document::total = 0;
+    words = new vector <char const *>();
+    counts = new vector<int>;
     Document::length = length;
-    Document::total = total;
 }
 
 Document::~Document() {
+    delete words;
+    delete counts;
 }
 
-int const * const Document::getWords() const {
-    return Document::words.get();
+vector<char const *> const * const Document::getWords() const {
+    return words;
 }
 
-int const * const Document::getCounts() const {
-    return Document::counts.get();
+void Document::addWord(auto_ptr<const char> word, const int count) {
+    noWords++;
+    words->push_back(word.release());
+    counts->push_back(count);
+    total += count;
+}
+
+vector<int> const * const Document::getCounts() const {
+    return counts;
 }
 
 int const Document::getLength() const {
-    return Document::length;
+    return length;
 }
 
 int const Document::getTotal() const {

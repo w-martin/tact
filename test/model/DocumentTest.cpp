@@ -23,25 +23,19 @@ namespace {
     protected:
 
         DocumentTest() {
-            testWords = new int[1];
-            testCounts = new int[2];
-            testLength = 5;
-            testTotal = 10;
-            testDocument = new Document(
-                    auto_ptr<int>(testWords),
-                    auto_ptr<int>(testCounts),
-                    testLength,
-                    testTotal);
+            length = 15;
+            count = 1504;
+            word = "testword";
+            testDocument = new Document(length);
         }
 
         virtual ~DocumentTest() {
             delete testDocument;
         }
-        Document const * testDocument;
-        int * testWords;
-        int * testCounts;
-        int testLength;
-        int testTotal;
+        Document * testDocument;
+        char const* word;
+        int count;
+        int length;
     };
 
     /*
@@ -49,7 +43,8 @@ namespace {
      * 
      */
     TEST_F(DocumentTest, WordsTest) {
-        EXPECT_EQ(testWords, testDocument->getWords());
+            testDocument->addWord(auto_ptr<char const>(word), count);
+        EXPECT_STREQ(word, testDocument->getWords()->at(0));
     }
 
     /*
@@ -57,7 +52,8 @@ namespace {
      * 
      */
     TEST_F(DocumentTest, CountsTest) {
-        EXPECT_EQ(testCounts, testDocument->getCounts());
+            testDocument->addWord(auto_ptr<char const>(word), count);
+        EXPECT_EQ(count, testDocument->getCounts()->at(0));
     }
 
     /*
@@ -65,7 +61,7 @@ namespace {
      * 
      */
     TEST_F(DocumentTest, LengthTest) {
-        EXPECT_EQ(testLength, testDocument->getLength());
+        EXPECT_EQ(length, testDocument->getLength());
     }
 
     /*
@@ -73,6 +69,7 @@ namespace {
      * 
      */
     TEST_F(DocumentTest, TotalTest) {
-        EXPECT_EQ(testTotal, testDocument->getTotal());
+            testDocument->addWord(auto_ptr<char const>(word), count);
+        EXPECT_EQ(count, testDocument->getTotal());
     }
 }

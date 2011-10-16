@@ -23,6 +23,7 @@ Corpus::Corpus() {
 }
 
 Corpus::~Corpus() {
+    free(documents);
 }
 
 Document const * const * const Corpus::getDocuments() const {

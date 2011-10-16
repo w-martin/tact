@@ -13,18 +13,16 @@
 #ifndef DOCUMENT_H
 #define	DOCUMENT_H
 
-#include "tmte-cpp/main/util/exceptions/IllegalArgumentException.h"
 #include <utility>
+#include <vector>
 
 using std::auto_ptr;
+using std::vector;
 
 /**
  * Represents a Document class.
  * 
- * @param words the words.
- * @param counts the counts.
- * @param length the length.
- * @param total the total.
+ * @param length the length of this Document's file.
  * 
  */
 class Document {
@@ -32,15 +30,8 @@ public:
     /**
      * Default constructor.
      * 
-     * @throw IllegalArgumentException if words or counts is null.
-     * 
      */
-    Document(
-            auto_ptr<int> words,
-            auto_ptr<int> counts,
-            int const length,
-            int const total)
-    throw (IllegalArgumentException);
+    Document(int const length);
     virtual ~Document();
     /**
      * Gets the words.
@@ -48,14 +39,29 @@ public:
      * @return the words.
      * 
      */
-    int const * const getWords() const;
+    vector<char const *> const * const getWords() const;
+    /**
+     * Adds the given word with its corresponding count.
+     * 
+     * @param word the word to add.
+     * @param count the count of the given word.
+     * 
+     */
+    void addWord(auto_ptr<char const> word, int const count);
     /**
      * Gets the counts.
      * 
      * @return the counts.
      * 
      */
-    int const * const getCounts() const;
+    vector<int> const * const getCounts() const;
+    /**
+     * Gets the number of words.
+     * 
+     * @return the number of words.
+     * 
+     */
+    int const getNoWords() const;
     /**
      * Gets the length.
      * 
@@ -71,8 +77,9 @@ public:
      */
     int const getTotal() const;
 private:
-    auto_ptr<int> words;
-    auto_ptr<int> counts;
+    vector<char const *> * words;
+    vector<int> * counts;
+    int noWords;
     int length;
     int total;
 };
