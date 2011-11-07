@@ -22,6 +22,7 @@ include_directories(${TMTE_INCLUDE_DIR})
 add_library (${TMTE_LIB}
     ${TMTE_SOURCE_DIR}/model/Corpus.cpp
     ${TMTE_SOURCE_DIR}/model/Document.cpp
+    ${TMTE_SOURCE_DIR}/model/TopicModel.cpp
     )
     
 add_executable (${TMTE_NAME}
