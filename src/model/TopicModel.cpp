@@ -12,10 +12,15 @@
 
 #include "tmte-cpp/main/model/TopicModel.h"
 
-TopicModel::TopicModel(int const noIterations) {
+TopicModel::TopicModel(int const noIterations,
+        int const noTopics) {
+    TopicModel::noIterations = noIterations;
+    TopicModel::noTopics = noTopics;
 }
 
 TopicModel::TopicModel(const TopicModel& orig) {
+    TopicModel::noIterations = orig.getNoIterations();
+    TopicModel::noTopics = orig.getNoTopics();
 }
 
 TopicModel::~TopicModel() {
@@ -27,4 +32,12 @@ int const TopicModel::getNoIterations() const {
 
 void TopicModel::setNoIterations(const int noIterations) {
     TopicModel::noIterations = noIterations;
+}
+
+int const TopicModel::getNoTopics() const {
+    return noTopics;
+}
+
+void TopicModel::setNoTopics(const int noTopics) {
+    TopicModel::noTopics = noTopics;
 }
