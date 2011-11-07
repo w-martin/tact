@@ -14,9 +14,6 @@
 #define	TOPICMODEL_H
 
 #include "tmte-cpp/main/model/Alphabet.h"
-#include <memory>
-
-using std::auto_ptr;
 
 /**
  * Represents a Topic Model.
@@ -24,13 +21,15 @@ using std::auto_ptr;
  */
 class TopicModel {
 public:
-    TopicModel();
+    TopicModel(int const noIterations);
     TopicModel(const TopicModel& orig);
     virtual ~TopicModel();
-    Alphabet const * const getAlphabet() const;
-    void setAlphabet(auto_ptr<Alphabet> alphabet);
+    virtual Alphabet const * const getAlphabet() const;
+    virtual int const getNoTopics() const;
+    int const getNoIterations() const;
+    void setNoIterations(int const noIterations);
 private:
-    auto_ptr<Alphabet> alphabet;
+    int noIterations;
 };
 
 #endif	/* TOPICMODEL_H */

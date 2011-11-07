@@ -12,7 +12,7 @@
 
 #include "tmte-cpp/main/model/TopicModel.h"
 
-TopicModel::TopicModel() {
+TopicModel::TopicModel(int const noIterations) {
 }
 
 TopicModel::TopicModel(const TopicModel& orig) {
@@ -21,11 +21,10 @@ TopicModel::TopicModel(const TopicModel& orig) {
 TopicModel::~TopicModel() {
 }
 
-void TopicModel::setAlphabet(
-        auto_ptr<Alphabet> alphabet) {
-    TopicModel::alphabet = alphabet;
+int const TopicModel::getNoIterations() const {
+    return noIterations;
 }
 
-Alphabet const * const TopicModel::getAlphabet() const {
-    return alphabet.get();
+void TopicModel::setNoIterations(const int noIterations) {
+    TopicModel::noIterations = noIterations;
 }
