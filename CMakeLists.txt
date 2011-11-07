@@ -48,6 +48,7 @@ include_directories(${gtest_SOURCE_DIR}/include
 add_executable(ModelTests 
 	${TMTE_TEST_DIR}/model/CorpusTest.cpp
 	${TMTE_TEST_DIR}/model/DocumentTest.cpp
+	${TMTE_TEST_DIR}/model/TopicModelTest.cpp
 	) 
 target_link_libraries(ModelTests gmock gmock_main ${TMTE_LIB}) 
 add_test(ModelTests ModelTests)

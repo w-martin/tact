@@ -12,12 +12,13 @@
 
 #include "tmte-cpp/main/model/TopicModel.h"
 #include <cstring>
+#include <memory>
 
 TopicModel::TopicModel(int const noIterations,
         int const noTopics) {
     TopicModel::noIterations = noIterations;
     TopicModel::noTopics = noTopics;
-    TopicModel::alpha = new double[noTopics];
+    TopicModel::alpha = (double*) calloc(noTopics, sizeof (double));
     alphaSum = 0.0;
     beta = DEFAULT_BETA;
     betaSum = 0.0;
@@ -34,7 +35,7 @@ TopicModel::TopicModel(const TopicModel& orig) {
 }
 
 TopicModel::~TopicModel() {
-    delete[] alpha;
+    free(alpha);
 }
 
 int const TopicModel::getNoIterations() const {

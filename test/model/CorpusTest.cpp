@@ -7,10 +7,6 @@
  *
  * This program is licensed under the MIT license, please see COPYING for a 
  * copy of the license.
- *
- * @section DESCRIPTION
- *
- * Tests Corpus.
  * 
  */
 
@@ -23,6 +19,10 @@ using ::testing::_;
 
 namespace {
 
+    /**
+     * Tests Corpus.
+     * 
+     */
     class CorpusTest : public ::testing::Test {
     protected:
 

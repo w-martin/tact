@@ -32,13 +32,16 @@ public:
             int const noTopics);
     TopicModel(const TopicModel& orig);
     virtual ~TopicModel();
+
     /**
      * Gets the Alphabet.
      * 
      * @return the Alphabet.
      * 
      */
-    virtual Alphabet const * const getAlphabet() const;
+    virtual Alphabet const * const getAlphabet() const {
+        return NULL;
+    }
     /**
      * Gets the number of iterations of EM training to do.
      * 
@@ -53,13 +56,15 @@ public:
      * 
      */
     int const getNoTopics() const;
+
     /**
      * Adds the given Instances to this TopicModel.
      * 
      * @param instances the Instances to add to this TopicModel.
      * 
      */
-    virtual void addInstances(vector<Instance*> const * const instances);
+    virtual void addInstances(vector<Instance*> const * const instances) {
+    }
     /**
      * Gets the array of alpha values.
      * 
@@ -105,12 +110,14 @@ public:
      *  
      */
     double const getBetaSum() const;
+
     /**
      * Estimates the topic model.
      * 
      */
-    virtual void estimate();
-private:
+    virtual void estimate() {
+    }
+protected:
     int noIterations;
     int noTopics;
     double * alpha;
