@@ -55,6 +55,7 @@ add_test(ModelTests ModelTests)
 add_executable(UtilTests 
 	${TMTE_TEST_DIR}/util/exceptions/ExceptionTest.cpp
         ${TMTE_TEST_DIR}/util/exceptions/IllegalArgumentExceptionTest.cpp
+        ${TMTE_TEST_DIR}/util/exceptions/OutOfBoundsExceptionTest.cpp
 	) 
 target_link_libraries(UtilTests gmock gmock_main ${TMTE_LIB}) 
 add_test(UtilTests UtilTests)

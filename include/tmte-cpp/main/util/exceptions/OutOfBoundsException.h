@@ -1,7 +1,7 @@
 /**
  * @file OutOfBoundsException.h
  * @author  William Martin <will.st4@gmail.com>
- * @version 0.0
+ * @version 0.1
  *
  * @section LICENSE
  *
@@ -56,8 +56,10 @@ private:
 
     char const * createErrorMessage(int const & index,
             int const & bounds) const {
-        char * result;
         char const * const format = "%s \nIndex: %d Bounds: %d";
+        char * result = (char*) malloc(sizeof (format)
+                + sizeof (OUT_OF_BOUNDS_MESSAGE) - 6 * sizeof (char)
+                + 4 * sizeof (int));
         sprintf(result, format,
                 OUT_OF_BOUNDS_MESSAGE, index, bounds);
         return result;
