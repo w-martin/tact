@@ -14,6 +14,10 @@
 #define	TOPICMODEL_H
 
 #include "tmte-cpp/main/model/Alphabet.h"
+#include "tmte-cpp/main/model/Instance.h"
+#include <vector>
+
+using std::vector;
 
 /**
  * Represents a Topic Model.
@@ -40,13 +44,6 @@ public:
      */
     int const getNoIterations() const;
     /**
-     * Sets the number of iterations of EM training to do.
-     * 
-     * @param noIterations the number of iterations of EM training to do.
-     * 
-     */
-    void setNoIterations(int const noIterations);
-    /**
      * Gets the number of Topics.
      * 
      * @return the number of Topics.
@@ -54,12 +51,12 @@ public:
      */
     int const getNoTopics() const;
     /**
-     * Sets the number of Topics.
+     * Adds the given Instances to this TopicModel.
      * 
-     * @param noTopics the number of Topics.
+     * @param instances the Instances to add to this TopicModel.
      * 
      */
-    void setNoTopics(int const noTopics);
+    virtual void addInstances(vector<Instance*> const * const instances);
 private:
     int noIterations;
     int noTopics;

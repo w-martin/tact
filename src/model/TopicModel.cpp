@@ -30,14 +30,6 @@ int const TopicModel::getNoIterations() const {
     return noIterations;
 }
 
-void TopicModel::setNoIterations(const int noIterations) {
-    TopicModel::noIterations = noIterations;
-}
-
 int const TopicModel::getNoTopics() const {
     return noTopics;
-}
-
-void TopicModel::setNoTopics(const int noTopics) {
-    TopicModel::noTopics = noTopics;
 }
