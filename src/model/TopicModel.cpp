@@ -11,19 +11,30 @@
  */
 
 #include "tmte-cpp/main/model/TopicModel.h"
+#include <cstring>
 
 TopicModel::TopicModel(int const noIterations,
         int const noTopics) {
     TopicModel::noIterations = noIterations;
     TopicModel::noTopics = noTopics;
+    TopicModel::alpha = new double[noTopics];
+    alphaSum = 0.0;
+    beta = DEFAULT_BETA;
+    betaSum = 0.0;
 }
 
 TopicModel::TopicModel(const TopicModel& orig) {
     TopicModel::noIterations = orig.getNoIterations();
     TopicModel::noTopics = orig.getNoTopics();
+    double const * const originalAlpha = orig.getAlpha();
+    memcpy(&alpha, &originalAlpha, sizeof (originalAlpha));
+    TopicModel::alphaSum = orig.getAlphaSum();
+    TopicModel::beta = orig.getBeta();
+    TopicModel::betaSum = orig.getBetaSum();
 }
 
 TopicModel::~TopicModel() {
+    delete[] alpha;
 }
 
 int const TopicModel::getNoIterations() const {
@@ -32,4 +43,36 @@ int const TopicModel::getNoIterations() const {
 
 int const TopicModel::getNoTopics() const {
     return noTopics;
+}
+
+double const * const TopicModel::getAlpha() const {
+    return alpha;
+}
+
+void TopicModel::setAlpha(int const & index,
+        const double value)
+throw (OutOfBoundsException) {
+    if (index >= noTopics) {
+        throw OutOfBoundsException(index, noTopics);
+    } else {
+        alphaSum -= alpha[index];
+        alpha[index] = value;
+        alphaSum += value;
+    }
+}
+
+double const TopicModel::getAlphaSum() const {
+    return alphaSum;
+}
+
+double const TopicModel::getBeta() const {
+    return beta;
+}
+
+void TopicModel::setBeta(const double beta) {
+    TopicModel::beta = beta;
+}
+
+double const TopicModel::getBetaSum() const {
+    return betaSum;
 }

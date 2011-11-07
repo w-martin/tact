@@ -13,6 +13,10 @@
 #ifndef INSTANCE_H
 #define	INSTANCE_H
 
+/**
+ * Instance class for inputting corpus files.
+ * 
+ */
 class Instance {
 public:
 
