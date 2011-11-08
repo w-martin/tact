@@ -13,6 +13,13 @@
 #ifndef ALPHABET_H
 #define	ALPHABET_H
 
+#include <vector>
+#include <memory>
+#include "tmte-cpp/main/model/exceptions/DuplicatedWordException.h"
+
+using std::auto_ptr;
+using std::vector;
+
 /**
  * Represents a finite collection of words.
  * 
@@ -29,6 +36,13 @@ public:
      * 
      */
     virtual const int getSize() const;
+    virtual vector<char*> const getWords() const;
+    virtual int const addWord(auto_ptr<char*> word)
+    throw (DuplicatedWordException);
+private:
+    vector<auto_ptr<char* > > const * words;
+    vector<int> const * indices;
+    int nextIndex;
 };
 
 #endif	/* ALPHABET_H */

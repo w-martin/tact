@@ -61,7 +61,10 @@ namespace {
         delete testException;
         testException = new OutOfBoundsException(5, 2);
 
-        EXPECT_STRNE(NULL, testException->what());
-        EXPECT_STRNE(OUT_OF_BOUNDS_MESSAGE, testException->what());
+        char const * const whatMessage = testException->what();
+        EXPECT_STRNE(NULL, whatMessage);
+        EXPECT_STRNE(OUT_OF_BOUNDS_MESSAGE, whatMessage);
+        EXPECT_STRNE(message, whatMessage);
+        EXPECT_GT(strlen(whatMessage), 0);
     }
 }

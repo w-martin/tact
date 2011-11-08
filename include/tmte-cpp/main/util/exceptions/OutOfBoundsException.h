@@ -35,8 +35,8 @@ public:
     }
 
     /**
-     * Default constructor. Uses the default message for this
-     * Exception.
+     * Specific constructor. Generated an informative message
+     * about the error.
      * 
      */
     OutOfBoundsException(int const index, int const bounds)
@@ -57,9 +57,8 @@ private:
     char const * createErrorMessage(int const & index,
             int const & bounds) const {
         char const * const format = "%s \nIndex: %d Bounds: %d";
-        char * result = (char*) malloc(sizeof (format)
-                + sizeof (OUT_OF_BOUNDS_MESSAGE) - 6 * sizeof (char)
-                + 4 * sizeof (int));
+        char * result = (char*) malloc(sizeof (char) * (strlen(format)
+                + strlen(OUT_OF_BOUNDS_MESSAGE) - 6) + sizeof (int) * 2);
         sprintf(result, format,
                 OUT_OF_BOUNDS_MESSAGE, index, bounds);
         return result;
