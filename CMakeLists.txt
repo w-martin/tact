@@ -22,6 +22,7 @@ include_directories(${TMTE_INCLUDE_DIR})
 add_library (${TMTE_LIB}
     ${TMTE_SOURCE_DIR}/model/Corpus.cpp
     ${TMTE_SOURCE_DIR}/model/Document.cpp
+    ${TMTE_SOURCE_DIR}/model/TopicModel.cpp
     )
     
 add_executable (${TMTE_NAME}
@@ -47,6 +48,7 @@ include_directories(${gtest_SOURCE_DIR}/include
 add_executable(ModelTests 
 	${TMTE_TEST_DIR}/model/CorpusTest.cpp
 	${TMTE_TEST_DIR}/model/DocumentTest.cpp
+	${TMTE_TEST_DIR}/model/TopicModelTest.cpp
 	) 
 target_link_libraries(ModelTests gmock gmock_main ${TMTE_LIB}) 
 add_test(ModelTests ModelTests)
@@ -54,6 +56,7 @@ add_test(ModelTests ModelTests)
 add_executable(UtilTests 
 	${TMTE_TEST_DIR}/util/exceptions/ExceptionTest.cpp
         ${TMTE_TEST_DIR}/util/exceptions/IllegalArgumentExceptionTest.cpp
+        ${TMTE_TEST_DIR}/util/exceptions/OutOfBoundsExceptionTest.cpp
 	) 
 target_link_libraries(UtilTests gmock gmock_main ${TMTE_LIB}) 
 add_test(UtilTests UtilTests)

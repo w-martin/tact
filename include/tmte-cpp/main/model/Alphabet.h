@@ -13,8 +13,6 @@
 #ifndef ALPHABET_H
 #define	ALPHABET_H
 
-
-
 /**
  * Represents a finite collection of words.
  * 
@@ -31,9 +29,6 @@ public:
      * 
      */
     virtual const int getSize() const;
-    virtual const int lookupIndex(const & const au)
-private:
-
 };
 
 #endif	/* ALPHABET_H */

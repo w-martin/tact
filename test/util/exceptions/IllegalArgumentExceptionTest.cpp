@@ -7,10 +7,6 @@
  *
  * This program is licensed under the MIT license, please see COPYING for a 
  * copy of the license.
- *
- * @section DESCRIPTION
- *
- * Tests IllegalArgumentException.
  * 
  */
 
@@ -21,6 +17,10 @@
 
 namespace {
 
+    /**
+     * Tests IllegalArgumentException.
+     * 
+     */
     class IllegalArgumentExceptionTest : public ::testing::Test {
     protected:
 

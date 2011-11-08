@@ -7,10 +7,6 @@
  *
  * This program is licensed under the MIT license, please see COPYING for a 
  * copy of the license.
- *
- * @section DESCRIPTION
- *
- * Tests Document.
  * 
  */
 
@@ -19,6 +15,10 @@
 
 namespace {
 
+    /**
+     * Tests Document.
+     * 
+     */
     class DocumentTest : public ::testing::Test {
     protected:
 
@@ -43,7 +43,7 @@ namespace {
      * 
      */
     TEST_F(DocumentTest, WordsTest) {
-            testDocument->addWord(auto_ptr<char const>(word), count);
+        testDocument->addWord(auto_ptr<char const>(word), count);
         EXPECT_STREQ(word, testDocument->getWords()->at(0));
     }
 
@@ -52,7 +52,7 @@ namespace {
      * 
      */
     TEST_F(DocumentTest, CountsTest) {
-            testDocument->addWord(auto_ptr<char const>(word), count);
+        testDocument->addWord(auto_ptr<char const>(word), count);
         EXPECT_EQ(count, testDocument->getCounts()->at(0));
     }
 
@@ -69,7 +69,7 @@ namespace {
      * 
      */
     TEST_F(DocumentTest, TotalTest) {
-            testDocument->addWord(auto_ptr<char const>(word), count);
+        testDocument->addWord(auto_ptr<char const>(word), count);
         EXPECT_EQ(count, testDocument->getTotal());
     }
 }
