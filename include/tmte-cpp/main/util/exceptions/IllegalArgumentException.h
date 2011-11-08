@@ -1,7 +1,7 @@
 /**
  * @file IllegalArgumentException.h
  * @author  William Martin <will.st4@gmail.com>
- * @version 0.0
+ * @version 0.1
  *
  * @section LICENSE
  *
@@ -30,7 +30,8 @@ public:
      * Exception.
      * 
      */
-    IllegalArgumentException() : Exception(ILLEGAL_ARGUMENT_MESSAGE) {
+    IllegalArgumentException() : Exception(
+    string(ILLEGAL_ARGUMENT_MESSAGE)) {
     }
 
     /**
@@ -39,7 +40,7 @@ public:
      * @param message the message to use for this Exception.
      * 
      */
-    IllegalArgumentException(const char * const message)
+    IllegalArgumentException(string const message)
     : Exception(message) {
     }
 };

@@ -1,5 +1,5 @@
 /**
- * @file DuplicatedWordException.h
+ * @file WordNotPresentException.h
  * @author  William Martin <will.st4@gmail.com>
  * @version 0.1
  *
@@ -10,10 +10,10 @@
  * 
  */
 
-#ifndef DUPLICATEDWORDEXCEPTION_H
-#define	DUPLICATEDWORDEXCEPTION_H
+#ifndef WORDNOTPRESENTEXCEPTION_H
+#define	WORDNOTPRESENTEXCEPTION_H
 
-#define DUPLICATED_WORD_MESSAGE "Error. Word already present in alphabet."
+#define WORD_NOT_PRESENT_MESSAGE "Error. Word not present in alphabet."
 
 #include "tmte-cpp/main/util/exceptions/Exception.h"
 
@@ -22,7 +22,7 @@
  * present in an alphabet.
  * 
  */
-class DuplicatedWordException : public Exception {
+class WordNotPresentException : public Exception {
 public:
 
     /**
@@ -30,8 +30,8 @@ public:
      * Exception.
      * 
      */
-    DuplicatedWordException() : Exception(
-    string(DUPLICATED_WORD_MESSAGE)) {
+    WordNotPresentException() : Exception(
+    WORD_NOT_PRESENT_MESSAGE) {
     }
 
     /**
@@ -39,7 +39,7 @@ public:
      * about the error.
      * 
      */
-    DuplicatedWordException(string const word, bool const isMessage)
+    WordNotPresentException(string const word, bool const isMessage)
     : Exception(isMessage ? word : createErrorMessage(word)) {
     }
 
@@ -49,16 +49,16 @@ public:
      * @param message the message to use for this Exception.
      * 
      */
-    DuplicatedWordException(string const message)
+    WordNotPresentException(string const message)
     : Exception(message) {
     }
 private:
 
     string const createErrorMessage(string word) const {
-        return string(DUPLICATED_WORD_MESSAGE)
-                + string(" \nDuplicated word: ")
+        return string(WORD_NOT_PRESENT_MESSAGE)
+                + " \nWord: "
                 + word
-                + string(".");
+                + ".";
     }
 };
 

@@ -1,7 +1,7 @@
 /**
  * @file Exception.h
  * @author  William Martin <will.st4@gmail.com>
- * @version 0.0
+ * @version 0.1
  *
  * @section LICENSE
  *
@@ -14,6 +14,9 @@
 #define	EXCEPTION_H
 
 #include <exception>
+#include <string>
+
+using std::string;
 
 /**
  * Custom <code>Exception</code> class.
@@ -32,7 +35,7 @@ public:
      * <code>Exception</code>.
      * 
      */
-    Exception(const char *message) {
+    Exception(string message) {
         Exception::message = message;
     }
 
@@ -40,10 +43,10 @@ public:
     }
 
     virtual const char * what() const throw () {
-        return message;
+        return message.c_str();
     }
 private:
-    const char *message;
+    string message;
 };
 
 #endif	/* EXCEPTION_H */

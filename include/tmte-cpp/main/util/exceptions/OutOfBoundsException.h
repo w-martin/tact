@@ -16,7 +16,9 @@
 #define OUT_OF_BOUNDS_MESSAGE "Error. Out of bounds."
 
 #include "tmte-cpp/main/util/exceptions/Exception.h"
-#include <string>
+#include <sstream>
+
+using std::stringstream;
 
 /**
  * Exception class which indicates that an array was accessed
@@ -31,7 +33,7 @@ public:
      * Exception.
      * 
      */
-    OutOfBoundsException() : Exception(OUT_OF_BOUNDS_MESSAGE) {
+    OutOfBoundsException() : Exception(string(OUT_OF_BOUNDS_MESSAGE)) {
     }
 
     /**
@@ -49,19 +51,17 @@ public:
      * @param message the message to use for this Exception.
      * 
      */
-    OutOfBoundsException(const char * const message)
+    OutOfBoundsException(string const message)
     : Exception(message) {
     }
 private:
 
-    char const * createErrorMessage(int const & index,
+    string const createErrorMessage(int const & index,
             int const & bounds) const {
-        char const * const format = "%s \nIndex: %d Bounds: %d";
-        char * result = (char*) malloc(sizeof (char) * (strlen(format)
-                + strlen(OUT_OF_BOUNDS_MESSAGE) - 6) + sizeof (int) * 2);
-        sprintf(result, format,
-                OUT_OF_BOUNDS_MESSAGE, index, bounds);
-        return result;
+        stringstream stream;
+        stream << OUT_OF_BOUNDS_MESSAGE << " \nIndex: "
+                << index << " Bounds: " << bounds;
+        return stream.str();
     }
 };
 
