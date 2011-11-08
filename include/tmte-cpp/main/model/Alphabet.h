@@ -55,6 +55,28 @@ public:
     int const addWord(string const word)
     throw (DuplicatedWordException);
     /**
+     * Removes the word with the given index.
+     * 
+     * @param index the index of the word to remove.
+     * @return the word that was removed.
+     * @throws WordNotPresentException if the word is not present 
+     * in this Alphabet.
+     * 
+     */
+    string const removeWord(int const index)
+    throw (WordNotPresentException);
+    /**
+     * Removes the given word from this Alphabet.
+     * 
+     * @param word the word to remove.
+     * @return the index of the word that was removed.
+     * @throws WordNotPresentException if the word is not present 
+     * in this Alphabet.
+     * 
+     */
+    int const removeWord(string const word)
+    throw (WordNotPresentException);
+    /**
      * Checks if the given word is present in this Alphabet.
      * 
      * @param word the word to check for.
@@ -74,10 +96,36 @@ public:
      * 
      * @param word the word to get the index of.
      * @return the index of the given word.
+     * @throws WordNotPresentException if the word is not present.
      * 
      */
     int const getIndex(string const word) const
     throw (WordNotPresentException);
+    /**
+     * Gets the word with the given index.
+     * 
+     * @param index the index of the word to get.
+     * @return the word with the given index.
+     * @throws WordNotPresentException if the word is not present.
+     * 
+     */
+    string const getWord(int const index) const
+    throw (WordNotPresentException);
+protected:
+    /**
+     * Deletes the given word from this Alphabet.
+     * 
+     * @param word the word to delete.
+     * 
+     */
+    void deleteWord(string const word);
+    /**
+     * Deletes the given index from this Alphabet.
+     * 
+     * @param index the index to delete.
+     * 
+     */
+    void deleteIndex(int const index);
 private:
     vector<string> * words;
     vector<int> * indices;

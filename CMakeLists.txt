@@ -51,6 +51,7 @@ add_executable(ModelTests
 	${TMTE_TEST_DIR}/model/DocumentTest.cpp
 	${TMTE_TEST_DIR}/model/TopicModelTest.cpp
 	${TMTE_TEST_DIR}/model/exceptions/DuplicatedWordExceptionTest.cpp
+	${TMTE_TEST_DIR}/model/exceptions/WordNotPresentExceptionTest.cpp
 	) 
 target_link_libraries(ModelTests gmock gmock_main ${TMTE_LIB}) 
 add_test(ModelTests ModelTests)
