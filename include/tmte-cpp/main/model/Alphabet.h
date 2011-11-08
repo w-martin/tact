@@ -129,7 +129,6 @@ protected:
 private:
     vector<string> * words;
     vector<int> * indices;
-    int noWords;
     int nextIndex;
 };
 

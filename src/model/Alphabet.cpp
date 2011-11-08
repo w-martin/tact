@@ -19,12 +19,15 @@ Alphabet::Alphabet() {
     words = new vector<string > ();
     indices = new vector<int>();
     nextIndex = 0;
-    noWords = 0;
 }
 
 Alphabet::~Alphabet() {
     delete words;
     delete indices;
+}
+
+int const Alphabet::getSize() const {
+    return words->size();
 }
 
 vector<string> const * const Alphabet::getWords() const {
@@ -39,7 +42,6 @@ throw (DuplicatedWordException) {
         words->push_back(word);
         int index = nextIndex++;
         indices->push_back(index);
-        noWords++;
         return index;
     }
 }
@@ -49,7 +51,6 @@ throw (WordNotPresentException) {
     string const word = getWord(index);
     deleteWord(word);
     deleteIndex(index);
-    noWords--;
     return word;
 }
 
@@ -58,7 +59,6 @@ throw (WordNotPresentException) {
     int const index = getIndex(word);
     deleteWord(word);
     deleteIndex(index);
-    noWords--;
     return index;
 }
 
@@ -66,7 +66,7 @@ bool const Alphabet::hasWord(const string word) const {
     try {
         getIndex(word);
         return true;
-    } catch (DuplicatedWordException) {
+    } catch (WordNotPresentException) {
         return false;
     }
 }
@@ -77,28 +77,28 @@ vector<int> const * const Alphabet::getIndices() const {
 
 int const Alphabet::getIndex(const string word) const
 throw (WordNotPresentException) {
-    for (vector<string>::size_type i = 0; i < noWords; i++) {
+    for (vector<string>::size_type i = 0; i < words->size(); i++) {
         if (0 == words->at(i).compare(word)) {
             return indices->at(i);
         }
     }
-    throw DuplicatedWordException(word);
+    throw WordNotPresentException(word);
 }
 
 string const Alphabet::getWord(const int index) const
 throw (WordNotPresentException) {
-    for (vector<string>::size_type i = 0; i < noWords; i++) {
+    for (vector<string>::size_type i = 0; i < indices->size(); i++) {
         if (index == indices->at(i)) {
             return words->at(i);
         }
     }
     stringstream stream;
-    stream << "has index " << index << ".";
-    throw DuplicatedWordException(stream.str());
+    stream << "has index " << index;
+    throw WordNotPresentException(stream.str());
 }
 
 void Alphabet::deleteWord(const string word) {
-    for (vector<string>::size_type i = 0; i < noWords; i++) {
+    for (vector<string>::size_type i = 0; i < words->size(); i++) {
         if (0 == words->at(i).compare(word)) {
             words->erase(words->begin() + i);
             return;
@@ -107,7 +107,7 @@ void Alphabet::deleteWord(const string word) {
 }
 
 void Alphabet::deleteIndex(const int index) {
-    for (vector<string>::size_type i = 0; i < noWords; i++) {
+    for (vector<string>::size_type i = 0; i < indices->size(); i++) {
         if (index == indices->at(i)) {
             indices->erase(indices->begin() + i);
             return;
