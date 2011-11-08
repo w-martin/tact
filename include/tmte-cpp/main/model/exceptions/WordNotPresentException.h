@@ -16,6 +16,9 @@
 #define WORD_NOT_PRESENT_MESSAGE "Error. Word not present in alphabet."
 
 #include "tmte-cpp/main/util/exceptions/Exception.h"
+#include <sstream>
+
+using std::stringstream;
 
 /**
  * Exception class which indicates that a word was already
@@ -55,10 +58,10 @@ public:
 private:
 
     string const createErrorMessage(string word) const {
-        return string(WORD_NOT_PRESENT_MESSAGE)
-                + " \nWord: "
-                + word
-                + ".";
+        stringstream stream;
+        stream << WORD_NOT_PRESENT_MESSAGE << " \nWord: "
+                << word << ".";
+        return stream.str();
     }
 };
 
