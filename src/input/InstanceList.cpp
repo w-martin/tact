@@ -21,6 +21,9 @@ InstanceList::InstanceList(auto_ptr<Pipe> pipe) {
 }
 
 InstanceList::InstanceList(const InstanceList& orig) {
+    pipe = auto_ptr<Pipe>(new Pipe(*orig.getPipe()));
+//    dataAlphabet = pipe->getDataAlphabet();
+//    targetAlphabet = pipe->getTargetAlphabet();
     instances = new vector<Instance>(*orig.getInstances());  
 }
 
