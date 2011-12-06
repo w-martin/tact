@@ -13,11 +13,16 @@
 #ifndef PIPE_H
 #define	PIPE_H
 
+#include <vector>
+#include "tmte-cpp/main/input/Instance.h"
+
+using std::vector;
+
 /**
- * Pipe class for inputting corpus files.
+ * Pipe class for transforming Instance objects.
  * 
  */
-class Pipe {
+class Pipe : vector<Instance> {
 public:
 
     Pipe() {
@@ -28,6 +33,7 @@ public:
 
     virtual ~Pipe() {
     }
+private:
 };
 
 #endif	/* PIPE_H */

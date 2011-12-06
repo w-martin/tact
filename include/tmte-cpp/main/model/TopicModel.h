@@ -16,11 +16,11 @@
 #define DEFAULT_BETA 0.01
 
 #include "tmte-cpp/main/model/Alphabet.h"
-#include "tmte-cpp/main/model/Instance.h"
+#include "tmte-cpp/main/input/InstanceList.h"
 #include "tmte-cpp/main/util/exceptions/OutOfBoundsException.h"
-#include <vector>
+#include <memory>
 
-using std::vector;
+using std::auto_ptr;
 
 /**
  * Represents a Topic Model.
@@ -63,7 +63,7 @@ public:
      * @param instances the Instances to add to this TopicModel.
      * 
      */
-    virtual void addInstances(vector<Instance*> const * const instances) {
+    virtual void addInstances(auto_ptr<InstanceList> instanceList) {
     }
     /**
      * Gets the array of alpha values.
@@ -124,6 +124,7 @@ protected:
     double alphaSum;
     double beta;
     double betaSum;
+    auto_ptr<InstanceList> instanceList;
     Alphabet const * alphabet;
 };
 

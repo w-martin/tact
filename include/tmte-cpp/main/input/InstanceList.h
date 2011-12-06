@@ -13,6 +13,12 @@
 #ifndef INSTANCELIST_H
 #define	INSTANCELIST_H
 
+#include "tmte-cpp/main/input/Pipe.h"
+#include "tmte-cpp/main/input/Instance.h"
+#include <memory>
+
+using std::auto_ptr;
+
 /**
  * List of instances for use with Pipe.
  * 
@@ -20,14 +26,21 @@
 class InstanceList {
 public:
 
-    InstanceList() {
-    }
+    InstanceList();
 
-    InstanceList(const InstanceList& orig) {
-    }
+    InstanceList(const InstanceList& orig);
 
-    virtual ~InstanceList() {
-    }
+    virtual ~InstanceList();
+    /**
+     * Gets the Instance objects.
+     * 
+     * @return the Instance objects.
+     * 
+     */
+    vector<Instance> const * const getInstances() const;
+private:
+    auto_ptr<Pipe> pipe;
+    vector<Instance> * instances;
 };
 
 #endif	/* INSTANCELIST_H */

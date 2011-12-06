@@ -12,7 +12,6 @@
 
 #include "tmte-cpp/main/model/TopicModel.h"
 #include <cstring>
-#include <memory>
 
 TopicModel::TopicModel(int const noIterations,
         int const noTopics) {
