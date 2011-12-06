@@ -1,5 +1,5 @@
 /**
- * @file Instance.h
+ * @file Pipe.h
  * @author  William Martin <will.st4@gmail.com>
  * @version 0.1
  *
@@ -10,25 +10,24 @@
  * 
  */
 
-#ifndef INSTANCE_H
-#define	INSTANCE_H
+#ifndef PIPE_H
+#define	PIPE_H
 
 /**
- * Instance class for inputting corpus files.
+ * Pipe class for inputting corpus files.
  * 
  */
-class Instance {
+class Pipe {
 public:
 
-    Instance() {
+    Pipe() {
     }
 
-    Instance(const Instance& orig) {
+    Pipe(const Pipe& orig) {
     }
 
-    virtual ~Instance() {
+    virtual ~Pipe() {
     }
 };
 
-#endif	/* INSTANCE_H */
-
+#endif	/* PIPE_H */

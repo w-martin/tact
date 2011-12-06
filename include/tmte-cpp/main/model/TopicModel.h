@@ -124,6 +124,7 @@ protected:
     double alphaSum;
     double beta;
     double betaSum;
+    Alphabet const * alphabet;
 };
 
 #endif	/* TOPICMODEL_H */
