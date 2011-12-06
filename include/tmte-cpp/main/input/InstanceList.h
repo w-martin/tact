@@ -38,6 +38,14 @@ public:
      * 
      */
     vector<Instance> const * const getInstances() const;
+    /**
+     * Adds the given Instance to this InstanceList.
+     * 
+     * @param instance the Instance to add.
+     * @return true if the Instance was added successfully, false otherwise.
+     * 
+     */
+    bool const addInstance (Instance const & instance);
 private:
     auto_ptr<Pipe> pipe;
     vector<Instance> * instances;

@@ -10,9 +10,6 @@
  * 
  */
 
-#include <stddef.h>
-#include <memory>
-
 #include "tmte-cpp/main/input/InstanceList.h"
 
 InstanceList::InstanceList() {
@@ -24,8 +21,14 @@ InstanceList::InstanceList(const InstanceList& orig) {
 }
 
 InstanceList::~InstanceList() {
+    delete instances;
 }
 
-vector<Instance> const * const InstanceList::getInstances() const{
+vector<Instance> const * const InstanceList::getInstances() const {
     return instances;
+}
+
+bool const InstanceList::addInstance(Instance const & instance) {
+    instances->push_back(instance);
+    return true;
 }
