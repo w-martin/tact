@@ -15,6 +15,7 @@
 
 #include "tmte-cpp/main/input/Pipe.h"
 #include "tmte-cpp/main/input/Instance.h"
+#include "tmte-cpp/main/model/Alphabet.h"
 #include <memory>
 
 using std::auto_ptr;
@@ -25,11 +26,8 @@ using std::auto_ptr;
  */
 class InstanceList {
 public:
-
-    InstanceList();
-
+    InstanceList(auto_ptr<Pipe> pipe);
     InstanceList(const InstanceList& orig);
-
     virtual ~InstanceList();
     /**
      * Gets the Instance objects.
@@ -39,6 +37,21 @@ public:
      */
     vector<Instance> const * const getInstances() const;
     /**
+     * Gets the Pipe that this InstanceList uses.
+     * 
+     * @return the Pipe that this InstanceList uses.
+     * 
+     */
+    Pipe const * const getPipe() const;
+    /**
+     * Sets the Pipe that this InstanceList uses.
+     * 
+     * @param pipe the Pipe that this InstanceList will use.
+     * @return true if the Pipe was set, false otherwise.
+     * 
+     */
+    bool const setPipe(auto_ptr<Pipe> pipe);
+    /**
      * Adds the given Instance to this InstanceList.
      * 
      * @param instance the Instance to add.
@@ -46,9 +59,25 @@ public:
      * 
      */
     bool const addInstance (Instance const & instance);
+    /**
+     * Gets the data Alphabet.
+     * 
+     * @return the data Alphabet.
+     * 
+     */
+    Alphabet const * const getDataAlphabet() const;
+    /**
+     * Gets the target Alphabet.
+     * 
+     * @return the target Alphabet.
+     * 
+     */
+    Alphabet const * const getTargetAlphabet() const;
 private:
     auto_ptr<Pipe> pipe;
     vector<Instance> * instances;
+    Alphabet const * dataAlphabet;
+    Alphabet const * targetAlphabet;
 };
 
 #endif	/* INSTANCELIST_H */

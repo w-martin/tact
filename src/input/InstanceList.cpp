@@ -11,8 +11,12 @@
  */
 
 #include "tmte-cpp/main/input/InstanceList.h"
+#include "tmte-cpp/main/model/Alphabet.h"
 
-InstanceList::InstanceList() {
+InstanceList::InstanceList(auto_ptr<Pipe> pipe) {
+    InstanceList::pipe = pipe;
+//    dataAlphabet = pipe->getDataAlphabet();
+//    targetAlphabet = pipe->getTargetAlphabet();
     instances = new vector<Instance>();
 }
 
@@ -28,7 +32,26 @@ vector<Instance> const * const InstanceList::getInstances() const {
     return instances;
 }
 
+Pipe const * const InstanceList::getPipe() const {
+    return pipe.get();
+}
+
+bool const InstanceList::setPipe(auto_ptr<Pipe> pipe) {
+    InstanceList::pipe = pipe;
+//    dataAlphabet = pipe->getDataAlphabet();
+//    targetAlphabet = pipe->getTargetAlphabet();
+    return true;
+}
+
 bool const InstanceList::addInstance(Instance const & instance) {
     instances->push_back(instance);
     return true;
+}
+
+Alphabet const * const InstanceList::getDataAlphabet() const {
+    return dataAlphabet;
+}
+
+Alphabet const * const InstanceList::getTargetAlphabet() const {
+    return targetAlphabet;
 }
