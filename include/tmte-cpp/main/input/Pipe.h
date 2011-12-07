@@ -61,7 +61,6 @@ public:
      */
     void setTargetAlphabet(auto_ptr<Alphabet> targetAlphabet)
     throw (AlphabetSetException);
-protected:
     /**
      * Performs the pipe operation of this Pipe.
      * 
