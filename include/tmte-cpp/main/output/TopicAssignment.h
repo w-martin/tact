@@ -22,12 +22,18 @@
  */
 class TopicAssignment : Assignment {
 public:
-    TopicAssignment();
+    TopicAssignment(Instance const * const instance);
     TopicAssignment(TopicAssignment const & orig);
     virtual ~TopicAssignment();
+    /**
+     * Gets the Instance that Topics are assigned to.
+     * 
+     * @return the Instance that Topics are assigned to.
+     * 
+     */
+    Instance const * const getInstance() const;
 private:
     Instance const * instance;
-    
 };
 
 #endif	/* TOPICASSIGNMENT_H */

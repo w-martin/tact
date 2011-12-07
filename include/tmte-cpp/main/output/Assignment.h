@@ -13,8 +13,7 @@
 #ifndef ASSIGNMENT_H
 #define	ASSIGNMENT_H
 
-#include "tmte-cpp/main/input/Instance.h"
-#include "tmte-cpp/main/output/Assignment.h"
+#include "tmte-cpp/main/output/Identifier.h"
 #include <map>
 
 using std::map;
@@ -23,10 +22,15 @@ using std::map;
  * Represents an assignment some elements with corresponding counts.
  * 
  */
-class Assignment{
+class Assignment : map<Identifier, double> {
 public:
-    Assignment();
-    Assignment(Assignment const & orig);
+
+    Assignment() {
+    }
+
+    Assignment(Assignment const & orig)
+    : map<Identifier, double >(orig) {
+    }
     virtual ~Assignment();
 };
 
