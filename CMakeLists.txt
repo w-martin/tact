@@ -52,8 +52,9 @@ include_directories(${gtest_SOURCE_DIR}/include
 # list test definitions here
 # TODO: replace this with a macro
 
-add_executable(InputTests 
+add_executable(InputTests
 	${TMTE_TEST_DIR}/input/exceptions/AlphabetSetExceptionTest.cpp
+	${TMTE_TEST_DIR}/input/PipeTest.cpp
 	) 
 target_link_libraries(InputTests gmock gmock_main ${TMTE_LIB}) 
 add_test(InputTests InputTests)
