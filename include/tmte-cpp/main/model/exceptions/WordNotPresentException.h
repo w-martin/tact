@@ -65,5 +65,5 @@ private:
     }
 };
 
-#endif	/* DUPLICATEDWORDEXCEPTION_H */
+#endif	/* WORDNOTPRESENTEXCEPTION_H */
 

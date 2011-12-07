@@ -13,10 +13,14 @@
 #ifndef PIPE_H
 #define	PIPE_H
 
-#include <vector>
+#include "tmte-cpp/main/input/exceptions/AlphabetSetException.h"
 #include "tmte-cpp/main/input/Instance.h"
+#include "tmte-cpp/main/model/Alphabet.h"
+#include <vector>
+#include <memory>
 
 using std::vector;
+using std::auto_ptr;
 
 /**
  * Pipe class for transforming Instance objects.
@@ -24,16 +28,51 @@ using std::vector;
  */
 class Pipe : vector<Instance> {
 public:
-
-    Pipe() {
-    }
-
-    Pipe(const Pipe& orig) {
-    }
-
-    virtual ~Pipe() {
-    }
+    Pipe();
+    Pipe(const Pipe& orig);
+    virtual ~Pipe();
+    /**
+     * Gets the data Alphabet.
+     * 
+     * @return the data Alphabet.
+     * 
+     */
+    Alphabet const * const getDataAlphabet() const;
+    /**
+     * Sets the data Alphabet.
+     * 
+     * @param dataAlphabet the data Alphabet.
+     * 
+     */
+    void setDataAlphabet(auto_ptr<Alphabet> dataAlphabet)
+    throw (AlphabetSetException);
+    /**
+     * Gets the target Alphabet.
+     * 
+     * @return the target Alphabet.
+     * 
+     */
+    Alphabet const * const getTargetAlphabet() const;
+    /**
+     * Sets the target Alphabet.
+     * 
+     * @param targetAlphabet the target Alphabet.
+     * 
+     */
+    void setTargetAlphabet(auto_ptr<Alphabet> targetAlphabet)
+    throw (AlphabetSetException);
+protected:
+    /**
+     * Performs the pipe operation of this Pipe.
+     * 
+     * @param instance the Instance to perform the pipe operation on.
+     * @return the transformed Instance.
+     * 
+     */
+    virtual Instance const pipe(Instance const & instance) const;
 private:
+    auto_ptr<Alphabet> dataAlphabet;
+    auto_ptr<Alphabet> targetAlphabet;
 };
 
 #endif	/* PIPE_H */
