@@ -52,3 +52,7 @@ throw (AlphabetSetException) {
         Pipe::targetAlphabet = targetAlphabet;
     }
 }
+
+Instance const Pipe::pipe(Instance const & instance) const {
+    return instance;
+}
