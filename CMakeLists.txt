@@ -21,6 +21,7 @@ include_directories(${TMTE_INCLUDE_DIR})
 
 add_library (${TMTE_LIB}
     ${TMTE_SOURCE_DIR}/algorithm/LatentDirichletAllocation.cpp
+    ${TMTE_SOURCE_DIR}/input/FeatureVector.cpp
     ${TMTE_SOURCE_DIR}/input/InstanceList.cpp
     ${TMTE_SOURCE_DIR}/input/Pipe.cpp
     ${TMTE_SOURCE_DIR}/model/Alphabet.cpp
