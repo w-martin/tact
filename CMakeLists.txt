@@ -72,6 +72,7 @@ add_test(ModelTests ModelTests)
 
 add_executable(OutputTests 
 	${TMTE_TEST_DIR}/output/IdentifierTest.cpp
+	${TMTE_TEST_DIR}/output/TopicAssignmentTest.cpp
 	) 
 target_link_libraries(OutputTests gmock gmock_main ${TMTE_LIB}) 
 add_test(OutputTests OutputTests)

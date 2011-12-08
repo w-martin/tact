@@ -31,7 +31,8 @@ public:
     Assignment(Assignment const & orig)
     : map<Identifier, double >(orig) {
     }
-    virtual ~Assignment();
+    virtual ~Assignment(){
+    }
 };
 
 #endif	/* ASSIGNMENT_H */
