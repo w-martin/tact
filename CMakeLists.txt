@@ -70,6 +70,12 @@ add_executable(ModelTests
 target_link_libraries(ModelTests gmock gmock_main ${TMTE_LIB}) 
 add_test(ModelTests ModelTests)
 
+add_executable(OutputTests 
+	${TMTE_TEST_DIR}/output/IdentifierTest.cpp
+	) 
+target_link_libraries(OutputTests gmock gmock_main ${TMTE_LIB}) 
+add_test(OutputTests OutputTests)
+
 add_executable(UtilTests 
 	${TMTE_TEST_DIR}/util/exceptions/ExceptionTest.cpp
         ${TMTE_TEST_DIR}/util/exceptions/IllegalArgumentExceptionTest.cpp
