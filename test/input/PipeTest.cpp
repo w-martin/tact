@@ -15,6 +15,9 @@
 #include "gtest/gtest.h"
 #include "tmte-cpp/main/input/Pipe.h"
 #include "tmte-cpp/main/model/Alphabet.h"
+#include <memory>
+
+using std::auto_ptr;
 
 namespace {
 
@@ -27,12 +30,17 @@ namespace {
 
         PipeTest() {
             pipe = new Pipe();
+            testAlphabet = new Alphabet();
+            testAlphabet->addWord(testWord);
+            alphabetPTR = auto_ptr<Alphabet>(testAlphabet);
         }
 
         virtual ~PipeTest() {
             delete pipe;
         }
-        Pipe const * pipe;
+        Pipe * pipe;
+        Alphabet * testAlphabet;
+        auto_ptr<Alphabet> alphabetPTR;
     };
 
     /*
@@ -41,7 +49,41 @@ namespace {
      */
     TEST_F(PipeTest, DataAlphabetTest) {
         EXPECT_EQ(0, pipe->getDataAlphabet());
-        Alphabet const * testAlphabet = new Alphabet();
-        
+        pipe->setDataAlphabet(alphabetPTR);
+        EXPECT_EQ(testAlphabet, pipe->getDataAlphabet());
+    }
+
+    /*
+     * Tests whether the dataAlphabet setter throws an exception correctly.
+     * 
+     */
+    TEST_F(PipeTest, SetDataAlphabetExceptionTest) {
+        pipe->setDataAlphabet(alphabetPTR);
+        EXPECT_EQ(testAlphabet, pipe->getDataAlphabet());
+        auto_ptr<Alphabet> tmp = auto_ptr<Alphabet>(new Alphabet());
+        tmp->addWord(testWord);
+        EXPECT_THROW(pipe->setDataAlphabet(tmp), AlphabetSetException);
+    }
+
+    /*
+     * Tests whether the targetAlphabet getter and setter methods work correctly.
+     * 
+     */
+    TEST_F(PipeTest, TargetAlphabetTest) {
+        EXPECT_EQ(0, pipe->getTargetAlphabet());
+        pipe->setTargetAlphabet(alphabetPTR);
+        EXPECT_EQ(testAlphabet, pipe->getTargetAlphabet());
+    }
+
+    /*
+     * Tests whether the targetAlphabet setter throws an exception correctly.
+     * 
+     */
+    TEST_F(PipeTest, SetTargetAlphabetExceptionTest) {
+        pipe->setTargetAlphabet(alphabetPTR);
+        EXPECT_EQ(testAlphabet, pipe->getTargetAlphabet());
+        auto_ptr<Alphabet> tmp = auto_ptr<Alphabet>(new Alphabet());
+        tmp->addWord(testWord);
+        EXPECT_THROW(pipe->setTargetAlphabet(tmp), AlphabetSetException);
     }
 }
