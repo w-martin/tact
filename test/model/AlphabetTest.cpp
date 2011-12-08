@@ -104,4 +104,25 @@ namespace {
         EXPECT_EQ(1, alphabet->removeWord(testWord));
         EXPECT_EQ(0, alphabet->getSize());
     }
+
+    /*
+     * Tests whether the getNextIndex method works correctly.
+     * 
+     */
+    TEST_F(AlphabetTest, GetNextIndexTest) {
+        EXPECT_EQ(1, alphabet->getNextIndex());
+        alphabet->addWord("hello");
+        EXPECT_EQ(2, alphabet->getNextIndex());
+    }
+
+    /*
+     * Tests whether the copy constructor works correctly.
+     * 
+     */
+    TEST_F(AlphabetTest, CopyConstructorTest) {
+        Alphabet * tmp = new Alphabet(*alphabet);
+        EXPECT_EQ(1, tmp->getSize());
+        EXPECT_STREQ(testWord, tmp->getWord(0).c_str());
+        delete tmp;
+    }
 }

@@ -29,6 +29,7 @@ using std::string;
 class Alphabet {
 public:
     Alphabet();
+    Alphabet(Alphabet const & orig);
     virtual ~Alphabet();
     /**
      * Gets the size of this Alphabet.
@@ -111,6 +112,13 @@ public:
      */
     string const getWord(int const index) const
     throw (WordNotPresentException);
+    /**
+     * Gets the next index.
+     * 
+     * @return the next index.
+     * 
+     */
+    int const getNextIndex() const;
 protected:
     /**
      * Deletes the given word from this Alphabet.

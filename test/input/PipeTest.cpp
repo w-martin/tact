@@ -86,4 +86,18 @@ namespace {
         tmp->addWord(testWord);
         EXPECT_THROW(pipe->setTargetAlphabet(tmp), AlphabetSetException);
     }
+
+    /*
+     * Tests whether the copy constructor works correctly.
+     * 
+     */
+    TEST_F(PipeTest, CopyConstructorTest) {
+        pipe->setDataAlphabet(alphabetPTR);
+        Pipe * tmp = new Pipe(*pipe);
+        Alphabet const * const alph = tmp->getDataAlphabet();
+        EXPECT_EQ(1, alph->getSize());
+        EXPECT_STREQ(testWord, alph->getWord(0).c_str());
+        EXPECT_EQ(0, tmp->getTargetAlphabet());
+        delete tmp;
+    }
 }

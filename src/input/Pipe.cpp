@@ -16,10 +16,14 @@ Pipe::Pipe() {
 }
 
 Pipe::Pipe(const Pipe& orig) {
-    setDataAlphabet(auto_ptr<Alphabet > (
-            new Alphabet(*orig.getDataAlphabet())));
-    setTargetAlphabet(auto_ptr<Alphabet > (
-            new Alphabet(*orig.getTargetAlphabet())));
+    if (0 != orig.getDataAlphabet()) {
+        dataAlphabet = auto_ptr<Alphabet > (
+                new Alphabet(*orig.getDataAlphabet()));
+    }
+    if (0 != orig.getTargetAlphabet()) {
+        targetAlphabet = auto_ptr<Alphabet > (
+                new Alphabet(*orig.getTargetAlphabet()));
+    }
 }
 
 Pipe::~Pipe() {

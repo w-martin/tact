@@ -21,6 +21,12 @@ Alphabet::Alphabet() {
     nextIndex = 0;
 }
 
+Alphabet::Alphabet(Alphabet const & orig) {
+    words = new vector<string>(*orig.getWords());
+    indices = new vector<int>(*orig.getIndices());
+    nextIndex = orig.getNextIndex();
+}
+
 Alphabet::~Alphabet() {
     delete words;
     delete indices;
@@ -113,4 +119,8 @@ void Alphabet::deleteIndex(const int index) {
             return;
         }
     }
+}
+
+int const Alphabet::getNextIndex() const {
+    return nextIndex;
 }
