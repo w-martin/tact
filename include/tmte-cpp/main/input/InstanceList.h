@@ -76,8 +76,6 @@ public:
 private:
     auto_ptr<Pipe> pipe;
     vector<Instance> * instances;
-    Alphabet const * dataAlphabet;
-    Alphabet const * targetAlphabet;
 };
 
 #endif	/* INSTANCELIST_H */

@@ -55,6 +55,7 @@ include_directories(${gtest_SOURCE_DIR}/include
 add_executable(InputTests
 	${TMTE_TEST_DIR}/input/exceptions/AlphabetSetExceptionTest.cpp
 	${TMTE_TEST_DIR}/input/FeatureVectorTest.cpp
+	${TMTE_TEST_DIR}/input/InstanceListTest.cpp
 	${TMTE_TEST_DIR}/input/PipeTest.cpp
 	) 
 target_link_libraries(InputTests gmock gmock_main ${TMTE_LIB}) 

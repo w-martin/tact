@@ -15,15 +15,11 @@
 
 InstanceList::InstanceList(auto_ptr<Pipe> pipe) {
     InstanceList::pipe = pipe;
-    dataAlphabet = pipe->getDataAlphabet();
-    targetAlphabet = pipe->getTargetAlphabet();
     instances = new vector<Instance>();
 }
 
 InstanceList::InstanceList(const InstanceList& orig) {
     pipe = auto_ptr<Pipe>(new Pipe(*orig.getPipe()));
-    dataAlphabet = pipe->getDataAlphabet();
-    targetAlphabet = pipe->getTargetAlphabet();
     instances = new vector<Instance>(*orig.getInstances());  
 }
 
@@ -41,8 +37,6 @@ Pipe const * const InstanceList::getPipe() const {
 
 bool const InstanceList::setPipe(auto_ptr<Pipe> pipe) {
     InstanceList::pipe = pipe;
-    dataAlphabet = pipe->getDataAlphabet();
-    targetAlphabet = pipe->getTargetAlphabet();
     return true;
 }
 
@@ -52,9 +46,9 @@ bool const InstanceList::addInstance(Instance const & instance) {
 }
 
 Alphabet const * const InstanceList::getDataAlphabet() const {
-    return dataAlphabet;
+    return pipe->getDataAlphabet();
 }
 
 Alphabet const * const InstanceList::getTargetAlphabet() const {
-    return targetAlphabet;
+    return pipe->getTargetAlphabet();
 }
