@@ -50,11 +50,23 @@ namespace {
     };
 
     /*
-     * Tests whether the dataAlphabet getter and setter methods work correctly.
+     * Tests whether the addInstance and getInstances methods work correctly.
      * 
      */
-    TEST_F(InstanceListTest, DataAlphabetTest) {
-        
+    TEST_F(InstanceListTest, InstancesTest) {
+        EXPECT_EQ(0, instanceList->getInstances()->size());
+        Instance * i = new Instance();
+        EXPECT_TRUE(instanceList->addInstance(i));
+        vector<Instance*> const * tmp = instanceList->getInstances();
+        EXPECT_EQ(1, tmp->size());
+        EXPECT_EQ(i, tmp->at(0));
+        EXPECT_FALSE(instanceList->addInstance(i));
+        i = new Instance();
+        EXPECT_TRUE(instanceList->addInstance(i));
+        tmp = instanceList->getInstances();
+        EXPECT_EQ(2, tmp->size());
+        EXPECT_EQ(i, tmp->at(1));
+        EXPECT_FALSE(instanceList->addInstance(i));
     }
 
     /*

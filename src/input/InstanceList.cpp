@@ -11,24 +11,49 @@
  */
 
 #include "tmte-cpp/main/input/InstanceList.h"
-#include "tmte-cpp/main/model/Alphabet.h"
 
 InstanceList::InstanceList(auto_ptr<Pipe> pipe) {
     InstanceList::pipe = pipe;
-    instances = new vector<Instance>();
+    instances = new vector<Instance*> ();
 }
 
 InstanceList::InstanceList(const InstanceList& orig) {
-    pipe = auto_ptr<Pipe>(new Pipe(*orig.getPipe()));
-    instances = new vector<Instance>(*orig.getInstances());  
+    pipe = auto_ptr<Pipe > (new Pipe(*orig.getPipe()));
+    instances = new vector<Instance*>(*orig.getInstances());
 }
 
 InstanceList::~InstanceList() {
+    for (int i = instances->size() - 1; i >= 0; i--) {
+        delete instances->at(i);
+    }
     delete instances;
 }
 
-vector<Instance> const * const InstanceList::getInstances() const {
+bool const InstanceList::addInstance(Instance * const instance) {
+    if (!containsInstance(instance)) {
+        instances->push_back(instance);
+        return true;
+    } else {
+        return false;
+    }
+}
+
+vector<Instance*> const * const InstanceList::getInstances() const {
     return instances;
+}
+
+bool const InstanceList::containsInstance(
+        Instance const * const instance) const {
+    for (int i = 0; i < instances->size(); i++) {
+        if (instance == instances->at(i)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+int const InstanceList::getSize() const {
+    return instances->size();
 }
 
 Pipe const * const InstanceList::getPipe() const {
@@ -37,11 +62,6 @@ Pipe const * const InstanceList::getPipe() const {
 
 bool const InstanceList::setPipe(auto_ptr<Pipe> pipe) {
     InstanceList::pipe = pipe;
-    return true;
-}
-
-bool const InstanceList::addInstance(Instance const & instance) {
-    instances->push_back(instance);
     return true;
 }
 

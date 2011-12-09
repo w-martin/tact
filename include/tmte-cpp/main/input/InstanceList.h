@@ -30,12 +30,36 @@ public:
     InstanceList(const InstanceList& orig);
     virtual ~InstanceList();
     /**
+     * Adds the given Instance to this InstanceList.
+     * 
+     * @param instance the Instance to add.
+     * @return true if the Instance was added successfully, false otherwise.
+     * 
+     */
+    bool const addInstance (Instance * const instance);
+    /**
      * Gets the Instance objects.
      * 
      * @return the Instance objects.
      * 
      */
-    vector<Instance> const * const getInstances() const;
+    vector<Instance*> const * const getInstances() const;
+    /**
+     * Checks if this InstanceList contains the given Instance.
+     * 
+     * @param instance the Instance to check for.
+     * @return true if this InstanceList contains the given Instance,
+     * false otherwise.
+     * 
+     */
+    bool const containsInstance(Instance const * const instance) const;
+    /**
+     * Gets the size of this InstanceList.
+     * 
+     * @return the size of this InstanceList.
+     * 
+     */
+    int const getSize() const;
     /**
      * Gets the Pipe that this InstanceList uses.
      * 
@@ -52,14 +76,6 @@ public:
      */
     bool const setPipe(auto_ptr<Pipe> pipe);
     /**
-     * Adds the given Instance to this InstanceList.
-     * 
-     * @param instance the Instance to add.
-     * @return true if the Instance was added successfully, false otherwise.
-     * 
-     */
-    bool const addInstance (Instance const & instance);
-    /**
      * Gets the data Alphabet.
      * 
      * @return the data Alphabet.
@@ -75,7 +91,7 @@ public:
     Alphabet const * const getTargetAlphabet() const;
 private:
     auto_ptr<Pipe> pipe;
-    vector<Instance> * instances;
+    vector<Instance*> * instances;
 };
 
 #endif	/* INSTANCELIST_H */
