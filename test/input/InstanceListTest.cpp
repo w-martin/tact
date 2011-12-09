@@ -65,6 +65,52 @@ namespace {
     }
 
     /*
+     * Tests whether the getSize method works correctly.
+     * 
+     */
+    TEST_F(InstanceListTest, GetSizeTest) {
+        EXPECT_EQ(0, instanceList->getSize());
+        Instance * i = new Instance();
+        instanceList->addInstance(i);
+        EXPECT_EQ(1, instanceList->getSize());
+    }
+
+    /*
+     * Tests whether the pipe getter and setter methods work correctly.
+     * 
+     */
+    TEST_F(InstanceListTest, PipeTest) {
+        EXPECT_EQ(testPipe, instanceList->getPipe());
+        Pipe * p = new Pipe();
+        instanceList->setPipe(auto_ptr<Pipe > (p));
+        EXPECT_NE(testPipe, instanceList->getPipe());
+        EXPECT_EQ(p, instanceList->getPipe());
+        EXPECT_EQ((void*) 0, instanceList->getDataAlphabet());
+        EXPECT_EQ((void*) 0, instanceList->getTargetAlphabet());
+    }
+
+    /*
+     * Tests whether the getDataAlphabet method works correctly.
+     * 
+     */
+    TEST_F(InstanceListTest, GetDataAlphabetTest) {
+        EXPECT_EQ(testAlphabet, instanceList->getDataAlphabet());
+    }
+
+    /*
+     * Tests whether the getTargetAlphabet method works correctly.
+     * 
+     */
+    TEST_F(InstanceListTest, GetTargetAlphabetTest) {
+        EXPECT_EQ((void*) 0, instanceList->getTargetAlphabet());
+        Pipe * p = new Pipe();
+        Alphabet * a = new Alphabet();
+        p->setTargetAlphabet(auto_ptr<Alphabet > (a));
+        instanceList->setPipe(auto_ptr<Pipe > (p));
+        EXPECT_EQ(a, instanceList->getTargetAlphabet());
+    }
+
+    /*
      * Tests whether the copy constructor works correctly.
      * 
      */
