@@ -14,11 +14,6 @@
 
 #include "gtest/gtest.h"
 #include "tmte-cpp/main/input/InstanceList.h"
-#include "tmte-cpp/main/input/Pipe.h"
-#include "tmte-cpp/main/model/Alphabet.h"
-#include <memory>
-
-using std::auto_ptr;
 
 namespace {
 
@@ -32,10 +27,10 @@ namespace {
         InstanceListTest() {
             testAlphabet = new Alphabet();
             testAlphabet->addWord(testWord);
-            alphabetPTR = auto_ptr<Alphabet>(testAlphabet);
+            alphabetPTR = auto_ptr<Alphabet > (testAlphabet);
             testPipe = new Pipe();
             testPipe->setDataAlphabet(alphabetPTR);
-            pipePTR = auto_ptr<Pipe>(testPipe);
+            pipePTR = auto_ptr<Pipe > (testPipe);
             instanceList = new InstanceList(pipePTR);
         }
 
@@ -74,6 +69,12 @@ namespace {
      * 
      */
     TEST_F(InstanceListTest, CopyConstructorTest) {
-        
+        Instance * i = new Instance();
+        instanceList->addInstance(i);
+        InstanceList const * const tmp = new InstanceList(*instanceList);
+        EXPECT_NE(tmp, instanceList);
+        EXPECT_EQ(1, tmp->getSize());
+        EXPECT_NE((void*) 0, tmp->getDataAlphabet());
+        EXPECT_EQ((void*) 0, tmp->getTargetAlphabet());
     }
 }
