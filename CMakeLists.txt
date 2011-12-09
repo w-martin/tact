@@ -52,6 +52,12 @@ include_directories(${gtest_SOURCE_DIR}/include
 # list test definitions here
 # TODO: replace this with a macro
 
+add_executable(AlgorithmTests
+	${TMTE_TEST_DIR}/algorithm/LatentDirichletAllocationTest.cpp
+	) 
+target_link_libraries(AlgorithmTests gmock gmock_main ${TMTE_LIB}) 
+add_test(AlgorithmTests AlgorithmTests)
+
 add_executable(InputTests
 	${TMTE_TEST_DIR}/input/exceptions/AlphabetSetExceptionTest.cpp
 	${TMTE_TEST_DIR}/input/FeatureVectorTest.cpp

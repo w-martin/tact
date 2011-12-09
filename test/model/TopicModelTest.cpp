@@ -25,11 +25,7 @@ namespace {
         TopicModelTest() {
             noIterations = 7;
             noTopics = 60;
-            topicModel =
-                    new TopicModel(noIterations, noTopics);
-            // we test both the normal and copy constructors
-            topicModel =
-                    new TopicModel((*topicModel));
+            topicModel = new TopicModel(noIterations, noTopics);
         }
 
         virtual ~TopicModelTest() {
@@ -119,5 +115,15 @@ namespace {
      */
     TEST_F(TopicModelTest, GetBetaSumTest) {
         EXPECT_EQ(0.0, topicModel->getBetaSum());
+    }
+
+    /*
+     * Tests whether the copy constructor works correctly.
+     * 
+     */
+    TEST_F(TopicModelTest, CopyConstructorTest) {
+        TopicModel tmp = (*topicModel);
+        EXPECT_EQ(noIterations, tmp.getNoIterations());
+        EXPECT_EQ(noTopics, tmp.getNoTopics());
     }
 }

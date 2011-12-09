@@ -13,13 +13,15 @@
 #ifndef LATENTDIRICHLETALLOCATION_H
 #define	LATENTDIRICHLETALLOCATION_H
 
+#include "tmte-cpp/main/model/TopicModel.h"
+
 /**
  * Performs LDA on a corpus.
  * 
  */
-class LatentDirichletAllocation {
+class LatentDirichletAllocation : public TopicModel {
 public:
-    LatentDirichletAllocation();
+    LatentDirichletAllocation(int const noIterations, int const noTopics);
     LatentDirichletAllocation(const LatentDirichletAllocation& orig);
     virtual ~LatentDirichletAllocation();
 private:

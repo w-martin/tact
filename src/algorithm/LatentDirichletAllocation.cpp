@@ -12,11 +12,14 @@
 
 #include "tmte-cpp/main/algorithm/LatentDirichletAllocation.h"
 
-LatentDirichletAllocation::LatentDirichletAllocation() {
+LatentDirichletAllocation::LatentDirichletAllocation(
+        int const noIterations, int const noTopics)
+: TopicModel(noIterations, noTopics) {
 }
 
 LatentDirichletAllocation::LatentDirichletAllocation(
-        const LatentDirichletAllocation& orig) {
+        const LatentDirichletAllocation& orig)
+: TopicModel(orig) {
 }
 
 LatentDirichletAllocation::~LatentDirichletAllocation() {

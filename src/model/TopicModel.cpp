@@ -17,24 +17,34 @@ TopicModel::TopicModel(int const noIterations,
         int const noTopics) {
     TopicModel::noIterations = noIterations;
     TopicModel::noTopics = noTopics;
-    TopicModel::alpha = (double*) calloc(noTopics, sizeof (double));
+    
+    alpha = new double[noTopics];
+    for (int i = 0; i < noTopics; i++) {
+        alpha[i] = 0;
+    }
+    
     alphaSum = 0.0;
     beta = DEFAULT_BETA;
     betaSum = 0.0;
 }
 
 TopicModel::TopicModel(const TopicModel& orig) {
-    TopicModel::noIterations = orig.getNoIterations();
-    TopicModel::noTopics = orig.getNoTopics();
-    double const * const originalAlpha = orig.getAlpha();
-    memcpy(&alpha, &originalAlpha, sizeof (originalAlpha));
-    TopicModel::alphaSum = orig.getAlphaSum();
-    TopicModel::beta = orig.getBeta();
-    TopicModel::betaSum = orig.getBetaSum();
+    noIterations = orig.getNoIterations();
+    noTopics = orig.getNoTopics();
+    
+    double const * const tmp = orig.getAlpha();
+    alpha = new double[noTopics];
+    for (int i = 0; i < noTopics; i++) {
+        alpha[i] = tmp[i];
+    }
+    
+    alphaSum = orig.getAlphaSum();
+    beta = orig.getBeta();
+    betaSum = orig.getBetaSum();
 }
 
 TopicModel::~TopicModel() {
-    free(alpha);
+    delete [] alpha;
 }
 
 int const TopicModel::getNoIterations() const {
