@@ -24,6 +24,11 @@ public:
     LatentDirichletAllocation(int const noIterations, int const noTopics);
     LatentDirichletAllocation(const LatentDirichletAllocation& orig);
     virtual ~LatentDirichletAllocation();
+    /**
+     * Estimates the topic model.
+     * 
+     */
+    virtual void estimate();
 private:
 
 };

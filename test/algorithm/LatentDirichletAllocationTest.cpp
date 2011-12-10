@@ -46,6 +46,14 @@ namespace {
     }
 
     /*
+     * Tests whether the pass to the estimate method correctly.
+     * 
+     */
+    TEST_F(LatentDirichletAllocationTest, EstimateTest) {
+        lda->estimate();
+    }
+
+    /*
      * Tests whether the copy constructor works correctly.
      * 
      */
