@@ -11,9 +11,15 @@
  */
 
 #include "tmte-cpp/main/algorithm/LatentDirichletAllocation.h"
-#include <boost/thread.hpp>
 #include <time.h>
 #include <iostream>
+
+using namespace std;
+
+void *thread(void *argv)
+{
+    cout<<"Into a spawned thread"<<endl;
+}
 
 LatentDirichletAllocation::LatentDirichletAllocation(
         int const noIterations, int const noTopics)
@@ -29,7 +35,9 @@ LatentDirichletAllocation::~LatentDirichletAllocation() {
 }
 
 void LatentDirichletAllocation::estimate() {
-    long startTime = time(NULL);
-    int noThreads = boost::thread::hardware_concurrency();
-    std::cout << noThreads;
+    
+    pthread_t t;
+    pthread_create(&t,NULL,thread,NULL);
+    pthread_join(t,NULL);
+    cout<<"Back in main thread"<<endl;
 }

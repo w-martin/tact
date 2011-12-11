@@ -14,8 +14,6 @@ set(TMTE_SOURCE_DIR src)
 set(TMTE_INCLUDE_DIR include)
 set(TMTE_TEST_DIR test)
 
-include_directories(${TMTE_INCLUDE_DIR})
-
 # list all source files here
 # TODO: replace this with a macro
 
@@ -31,10 +29,13 @@ add_library (${TMTE_LIB}
     ${TMTE_SOURCE_DIR}/output/Identifier.cpp
     ${TMTE_SOURCE_DIR}/output/TopicAssignment.cpp
     )
-    
+
+find_package(Threads REQUIRED)
+
 add_executable (${TMTE_NAME}
 	${TMTE_SOURCE_DIR}/main.cpp)
 target_link_libraries(${TMTE_NAME}
+        ${CMAKE_THREAD_LIBS_INIT}
 	${TMTE_LIB})
 
 ################################################
@@ -55,7 +56,7 @@ include_directories(${gtest_SOURCE_DIR}/include
 add_executable(AlgorithmTests
 	${TMTE_TEST_DIR}/algorithm/LatentDirichletAllocationTest.cpp
 	) 
-target_link_libraries(AlgorithmTests gmock gmock_main ${TMTE_LIB}) 
+target_link_libraries(AlgorithmTests gmock gmock_main ${TMTE_LIB})
 add_test(AlgorithmTests AlgorithmTests)
 
 add_executable(InputTests
