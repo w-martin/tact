@@ -6,7 +6,7 @@ cmake_minimum_required (VERSION 2.6.2)
 # Main #
 ########
 
-project (tmte-cpp CXX)
+project (tmte-cpp)
 
 set(TMTE_NAME tmte-cpp)
 set(TMTE_LIB tmte-lib)
