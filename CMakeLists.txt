@@ -14,6 +14,9 @@ set(TMTE_SOURCE_DIR src)
 set(TMTE_INCLUDE_DIR include)
 set(TMTE_TEST_DIR test)
 
+include_directories(${TMTE_INCLUDE_DIR}
+)
+
 # list all source files here
 # TODO: replace this with a macro
 

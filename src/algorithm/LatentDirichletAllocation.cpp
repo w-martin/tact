@@ -13,13 +13,10 @@
 #include "tmte-cpp/main/algorithm/LatentDirichletAllocation.h"
 #include <time.h>
 #include <iostream>
+#include <vector>
 
-using namespace std;
-
-void *thread(void *argv)
-{
-    cout<<"Into a spawned thread"<<endl;
-}
+using std::cout;
+using std::endl;
 
 LatentDirichletAllocation::LatentDirichletAllocation(
         int const noIterations, int const noTopics)
@@ -34,10 +31,25 @@ LatentDirichletAllocation::LatentDirichletAllocation(
 LatentDirichletAllocation::~LatentDirichletAllocation() {
 }
 
+void * thread(void *argv) {
+    int i = *(int*) argv;
+//    cout << "I am thread " << i << endl;
+    return NULL;
+}
+
 void LatentDirichletAllocation::estimate() {
-    
-    pthread_t t;
-    pthread_create(&t,NULL,thread,NULL);
-    pthread_join(t,NULL);
-    cout<<"Back in main thread"<<endl;
+    vector<pthread_t> threads;
+    int numbers[4];
+    for (int i = 0; i < 4; i++) {
+        numbers[i] = i;
+        int * number = &numbers[i];
+        pthread_t t;
+        pthread_create(&t, NULL, thread, (void*) number);
+        threads.push_back(t);
+    }
+    for (int i = 0; i < 4; i++) {
+        pthread_t t = threads.at(i);
+        pthread_join(t, NULL);
+    }
+//    cout << "Back in main thread" << endl;
 }
