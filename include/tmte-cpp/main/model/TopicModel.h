@@ -17,6 +17,7 @@
 
 #include "tmte-cpp/main/model/Alphabet.h"
 #include "tmte-cpp/main/input/InstanceList.h"
+#include "tmte-cpp/main/output/TopicAssignment.h"
 #include "tmte-cpp/main/util/exceptions/OutOfBoundsException.h"
 #include <memory>
 
@@ -110,7 +111,13 @@ public:
      *  
      */
     double const getBetaSum() const;
-
+    /**
+     * Gets the list of TopicAssignments.
+     * 
+     * @return the list of TopicAssignments.
+     * 
+     */
+    vector<TopicAssignment> const * const getTopicAssignments() const;
     /**
      * Estimates the topic model.
      * 
@@ -125,6 +132,7 @@ protected:
     double beta;
     double betaSum;
     auto_ptr<InstanceList> instanceList;
+    vector<TopicAssignment> * topicsAssignments;
     Alphabet const * alphabet;
 };
 

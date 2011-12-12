@@ -11,6 +11,7 @@
  */
 
 #include "tmte-cpp/main/model/TopicModel.h"
+#include "tmte-cpp/main/output/TopicAssignment.h"
 #include <cstring>
 
 TopicModel::TopicModel(int const noIterations,
@@ -26,6 +27,8 @@ TopicModel::TopicModel(int const noIterations,
     alphaSum = 0.0;
     beta = DEFAULT_BETA;
     betaSum = 0.0;
+    
+    topicsAssignments = new vector<TopicAssignment>();
 }
 
 TopicModel::TopicModel(const TopicModel& orig) {

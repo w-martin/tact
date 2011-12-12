@@ -18,7 +18,7 @@
 #include <sys/types.h>
 
 LatentDirichletAllocation::LatentDirichletAllocation(
-        int const noIterations, 
+        int const noIterations,
         int const noTopics,
         int const noThreads)
 : TopicModel(noIterations, noTopics) {
@@ -40,8 +40,11 @@ int const LatentDirichletAllocation::getNoThreads() const {
 
 void LatentDirichletAllocation::estimate() {
     long startTime = time(NULL);
+    int const noDocumentsPerThread = topicsAssignments->size() / noThreads;
     pthread_t * threads = new pthread_t[noThreads];
-    
+    for (int i = 0; i < noThreads; i++) {
+
+    }
 }
 
 //void * thread(void *argv) {
