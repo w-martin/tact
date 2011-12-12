@@ -132,7 +132,7 @@ protected:
     double beta;
     double betaSum;
     auto_ptr<InstanceList> instanceList;
-    vector<TopicAssignment> * topicsAssignments;
+    vector<TopicAssignment> * topicAssignments;
     Alphabet const * alphabet;
 };
 

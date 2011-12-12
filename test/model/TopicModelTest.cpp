@@ -118,6 +118,16 @@ namespace {
     }
 
     /*
+     * Tests whether the getBetaSum method works correctly.
+     * 
+     */
+    TEST_F(TopicModelTest, GetTopicAssignmentsTest) {
+        vector<TopicAssignment> const * const assignments =
+                topicModel->getTopicAssignments();
+        EXPECT_EQ(0, assignments->size());
+    }
+
+    /*
      * Tests whether the copy constructor works correctly.
      * 
      */

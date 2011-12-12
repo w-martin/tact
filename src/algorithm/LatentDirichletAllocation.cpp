@@ -40,10 +40,10 @@ int const LatentDirichletAllocation::getNoThreads() const {
 
 void LatentDirichletAllocation::estimate() {
     long startTime = time(NULL);
-    int const noDocumentsPerThread = topicsAssignments->size() / noThreads;
+    int const noDocumentsPerThread = topicAssignments->size() / noThreads;
     pthread_t * threads = new pthread_t[noThreads];
     for (int i = 0; i < noThreads; i++) {
-
+        
     }
 }
 

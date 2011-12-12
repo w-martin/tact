@@ -18,36 +18,45 @@ TopicModel::TopicModel(int const noIterations,
         int const noTopics) {
     TopicModel::noIterations = noIterations;
     TopicModel::noTopics = noTopics;
-    
+
     alpha = new double[noTopics];
     for (int i = 0; i < noTopics; i++) {
         alpha[i] = 0;
     }
-    
+
     alphaSum = 0.0;
     beta = DEFAULT_BETA;
     betaSum = 0.0;
-    
-    topicsAssignments = new vector<TopicAssignment>();
+
+    topicAssignments = new vector<TopicAssignment > ();
 }
 
 TopicModel::TopicModel(const TopicModel& orig) {
     noIterations = orig.getNoIterations();
     noTopics = orig.getNoTopics();
-    
+
     double const * const tmp = orig.getAlpha();
     alpha = new double[noTopics];
     for (int i = 0; i < noTopics; i++) {
         alpha[i] = tmp[i];
     }
-    
+
     alphaSum = orig.getAlphaSum();
     beta = orig.getBeta();
     betaSum = orig.getBetaSum();
+
+    topicAssignments = new vector<TopicAssignment > ();
+    vector<TopicAssignment> const * const originalAssignments =
+            orig.getTopicAssignments();
+    for (int i = 0; i < originalAssignments->size(); i++) {
+        TopicAssignment copy(originalAssignments->at(i));
+        topicAssignments->push_back(copy);
+    }
 }
 
 TopicModel::~TopicModel() {
     delete [] alpha;
+    delete topicAssignments;
 }
 
 int const TopicModel::getNoIterations() const {
@@ -88,4 +97,8 @@ void TopicModel::setBeta(const double beta) {
 
 double const TopicModel::getBetaSum() const {
     return betaSum;
+}
+
+vector<TopicAssignment> const * const TopicModel::getTopicAssignments() const {
+    return topicAssignments;
 }
