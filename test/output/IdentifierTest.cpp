@@ -43,6 +43,17 @@ namespace {
     }
 
     /*
+     * Tests whether the equals method works correctly.
+     * 
+     */
+    TEST_F(IdentifierTest, EqualsTest) {
+        Identifier const same(testWord);
+        Identifier const different("different");
+        EXPECT_TRUE(identifier->equals(same));
+        EXPECT_FALSE(identifier->equals(different));
+    }
+
+    /*
      * Tests whether the copy constructor works correctly.
      * 
      */

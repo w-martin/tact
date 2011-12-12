@@ -26,7 +26,22 @@ public:
     Identifier(string const name);
     Identifier(Identifier const & orig);
     virtual ~Identifier();
+    /**
+     * Gets the name of this Identifier.
+     * 
+     * @return the name of this Identifier.
+     * 
+     */
     string const getName() const;
+    /**
+     * Checks if this Identifier is equal to the given Identifier.
+     * 
+     * @param other the Identifier to compare to.
+     * @return true if this Identifier is equal to the given Identifier,
+     * false otherwise.
+     * 
+     */
+    bool const equals(Identifier const & other) const;
 private:
     string name;
 };

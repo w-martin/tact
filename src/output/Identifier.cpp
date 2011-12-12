@@ -26,3 +26,7 @@ Identifier::~Identifier() {
 string const Identifier::getName() const {
     return name;
 }
+
+bool const Identifier::equals(Identifier const & other) const {
+    return (0 == name.compare(other.getName()));
+}
