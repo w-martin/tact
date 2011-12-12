@@ -135,5 +135,6 @@ namespace {
         TopicModel tmp = (*topicModel);
         EXPECT_EQ(noIterations, tmp.getNoIterations());
         EXPECT_EQ(noTopics, tmp.getNoTopics());
+        EXPECT_EQ(0, tmp.getTopicAssignments()->size());
     }
 }
