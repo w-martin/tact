@@ -25,7 +25,9 @@ namespace {
         LatentDirichletAllocationTest() {
             noIterations = 5;
             noTopics = 100;
-            lda = new LatentDirichletAllocation(noIterations, noTopics);
+            noThreads = 8;
+            lda = new LatentDirichletAllocation(
+                    noIterations, noTopics, noThreads);
         }
 
         virtual ~LatentDirichletAllocationTest() {
@@ -34,6 +36,7 @@ namespace {
         LatentDirichletAllocation * lda;
         int noIterations;
         int noTopics;
+        int noThreads;
     };
 
     /*
@@ -43,6 +46,14 @@ namespace {
     TEST_F(LatentDirichletAllocationTest, SuperConstructionTest) {
         EXPECT_EQ(noIterations, lda->getNoIterations());
         EXPECT_EQ(noTopics, lda->getNoTopics());
+    }
+
+    /*
+     * Tests whether the getNoThreads method works correctly.
+     * 
+     */
+    TEST_F(LatentDirichletAllocationTest, GetNoThreadsTest) {
+        EXPECT_EQ(noThreads, lda->getNoThreads());
     }
 
     /*
@@ -61,5 +72,6 @@ namespace {
         LatentDirichletAllocation tmp = (*lda);
         EXPECT_EQ(noIterations, tmp.getNoIterations());
         EXPECT_EQ(noTopics, tmp.getNoTopics());
+        EXPECT_EQ(noThreads, tmp.getNoThreads());
     }
 }

@@ -21,7 +21,10 @@
  */
 class LatentDirichletAllocation : public TopicModel {
 public:
-    LatentDirichletAllocation(int const noIterations, int const noTopics);
+    LatentDirichletAllocation(
+            int const noIterations,
+            int const noTopics,
+            int const noThreads);
     LatentDirichletAllocation(const LatentDirichletAllocation& orig);
     virtual ~LatentDirichletAllocation();
     /**
@@ -29,8 +32,15 @@ public:
      * 
      */
     virtual void estimate();
+    /**
+     * Gets the number of threads for this algorithm to use.
+     * 
+     * @return the number of threads for this algorithm to use.
+     * 
+     */
+    int const getNoThreads() const;
 private:
-
+    int noThreads;
 };
 
 #endif	/* LATENTDIRICHLETALLOCATION_H */
