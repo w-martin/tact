@@ -12,7 +12,7 @@
 
 #include "gtest/gtest.h"
 #include "tmte-cpp/model/Corpus.h"
-#include "test/include/tmte-cpp/model/MockDocument.h"
+#include "test/mock/tmte-cpp/model/MockDocument.h"
 
 using ::testing::Return;
 using ::testing::_;
