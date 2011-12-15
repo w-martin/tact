@@ -21,11 +21,12 @@ using std::string;
  * Represents an Identifier for some element.
  * 
  */
-class Identifier{
+class Identifier {
 public:
     Identifier(string const name);
     Identifier(Identifier const & orig);
     virtual ~Identifier();
+    bool const operator<(const Identifier& rhs) const;
     /**
      * Gets the name of this Identifier.
      * 

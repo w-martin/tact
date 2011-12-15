@@ -19,8 +19,7 @@ public:
     ParallelTopicModelWorker(const ParallelTopicModelWorker& orig);
     virtual ~ParallelTopicModelWorker();
 private:
-
+    
 };
 
 #endif	/* PARALLELTOPICMODELWORKER_H */
-

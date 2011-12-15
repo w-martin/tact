@@ -30,6 +30,7 @@ add_library (${TMTE_LIB}
     ${TMTE_SOURCE_DIR}/model/Corpus.cpp
     ${TMTE_SOURCE_DIR}/model/Document.cpp
     ${TMTE_SOURCE_DIR}/model/TopicModel.cpp
+    ${TMTE_SOURCE_DIR}/output/Assignment.cpp
     ${TMTE_SOURCE_DIR}/output/Identifier.cpp
     ${TMTE_SOURCE_DIR}/output/TopicAssignment.cpp
     )
@@ -86,7 +87,9 @@ add_executable(ModelTests
 target_link_libraries(ModelTests gmock gmock_main ${TMTE_LIB}) 
 add_test(ModelTests ModelTests)
 
-add_executable(OutputTests 
+add_executable(OutputTests
+	${TMTE_TEST_DIR}/output/exceptions/ElementNotPresentExceptionTest.cpp
+	${TMTE_TEST_DIR}/output/AssignmentTest.cpp
 	${TMTE_TEST_DIR}/output/IdentifierTest.cpp
 	${TMTE_TEST_DIR}/output/TopicAssignmentTest.cpp
 	) 

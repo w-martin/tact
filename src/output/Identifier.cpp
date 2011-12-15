@@ -23,6 +23,10 @@ Identifier::Identifier(Identifier const & orig) {
 Identifier::~Identifier() {
 }
 
+bool const Identifier::operator<(const Identifier& rhs) const {
+    return name < rhs.getName();
+}
+
 string const Identifier::getName() const {
     return name;
 }

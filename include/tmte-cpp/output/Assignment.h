@@ -22,17 +22,29 @@ using std::map;
  * Represents an assignment some elements with corresponding counts.
  * 
  */
-class Assignment : map<Identifier, double> {
+class Assignment : private map<Identifier, double> {
 public:
+    Assignment();
+    Assignment(Assignment const & orig);
+    virtual ~Assignment();
 
-    Assignment() {
-    }
-
-    Assignment(Assignment const & orig)
-    : map<Identifier, double >(orig) {
-    }
-    virtual ~Assignment(){
-    }
+    /**
+     * Adds the given key and value pair to this Assignment.
+     * 
+     * @param key the key of the pair.
+     * @param value the value of the pair.
+     * @return true if the pair was added successfully, false otherwise.
+     * 
+     */
+    bool const add(Identifier const key, double const value);
+    /**
+     * Checks if this Assignment contains the given key.
+     * 
+     * @param key the key to check for.
+     * @return true if this Assignment contains the given key, false otherwise.
+     * 
+     */
+    bool const contains(Identifier const key) const;
 };
 
 #endif	/* ASSIGNMENT_H */

@@ -64,8 +64,7 @@ public:
      * @param instances the Instances to add to this TopicModel.
      * 
      */
-    virtual void addInstances(auto_ptr<InstanceList> instanceList) {
-    }
+    virtual void addInstances(auto_ptr<InstanceList> instanceList);
     /**
      * Gets the array of alpha values.
      * 
@@ -117,7 +116,7 @@ public:
      * @return the list of TopicAssignments.
      * 
      */
-    vector<TopicAssignment> const * const getTopicAssignments() const;
+    vector<TopicAssignment*> const * const getTopicAssignments() const;
     /**
      * Estimates the topic model.
      * 
@@ -132,7 +131,7 @@ protected:
     double beta;
     double betaSum;
     auto_ptr<InstanceList> instanceList;
-    vector<TopicAssignment> * topicAssignments;
+    vector<TopicAssignment*> * topicAssignments;
     Alphabet const * alphabet;
 };
 

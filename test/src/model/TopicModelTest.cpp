@@ -122,7 +122,7 @@ namespace {
      * 
      */
     TEST_F(TopicModelTest, GetTopicAssignmentsTest) {
-        vector<TopicAssignment> const * const assignments =
+        vector<TopicAssignment*> const * const assignments =
                 topicModel->getTopicAssignments();
         EXPECT_EQ(0, assignments->size());
     }

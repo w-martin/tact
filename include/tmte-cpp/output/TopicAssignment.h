@@ -20,7 +20,7 @@
  * Represents an assignment of Topics to an Instance.
  * 
  */
-class TopicAssignment : Assignment {
+class TopicAssignment : public Assignment {
 public:
     TopicAssignment(Instance const * const instance);
     TopicAssignment(TopicAssignment const & orig);

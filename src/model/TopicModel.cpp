@@ -28,7 +28,7 @@ TopicModel::TopicModel(int const noIterations,
     beta = DEFAULT_BETA;
     betaSum = 0.0;
 
-    topicAssignments = new vector<TopicAssignment > ();
+    topicAssignments = new vector<TopicAssignment*> ();
 }
 
 TopicModel::TopicModel(const TopicModel& orig) {
@@ -45,17 +45,21 @@ TopicModel::TopicModel(const TopicModel& orig) {
     beta = orig.getBeta();
     betaSum = orig.getBetaSum();
 
-    topicAssignments = new vector<TopicAssignment > ();
-    vector<TopicAssignment> const * const originalAssignments =
+    topicAssignments = new vector<TopicAssignment*> ();
+    vector<TopicAssignment*> const * const originalAssignments =
             orig.getTopicAssignments();
     for (int i = 0; i < originalAssignments->size(); i++) {
-        TopicAssignment copy(originalAssignments->at(i));
+        TopicAssignment * copy =
+                new TopicAssignment(*originalAssignments->at(i));
         topicAssignments->push_back(copy);
     }
 }
 
 TopicModel::~TopicModel() {
     delete [] alpha;
+    for (int i = 0; i < topicAssignments->size(); i++) {
+        delete topicAssignments->at(i);
+    }
     delete topicAssignments;
 }
 
@@ -99,6 +103,22 @@ double const TopicModel::getBetaSum() const {
     return betaSum;
 }
 
-vector<TopicAssignment> const * const TopicModel::getTopicAssignments() const {
+vector<TopicAssignment*> const * const TopicModel::getTopicAssignments() const {
     return topicAssignments;
+}
+
+void TopicModel::addInstances(auto_ptr<InstanceList> instanceList) {
+    TopicModel::instanceList = instanceList;
+    topicAssignments = new vector<TopicAssignment*>();
+    vector<Instance*> const * const instances =
+            TopicModel::instanceList->getInstances();
+    for (int i = 0; i < TopicModel::instanceList->getSize(); i++) {
+        Instance const * const instance = instances->at(i);
+        TopicAssignment * assignment = new TopicAssignment(instance);
+        for (int t = 0; t < noTopics; t++) {
+            Identifier id("hello");
+            assignment->add(id, 0.0);
+        }
+        topicAssignments->push_back(assignment);
+    }
 }
