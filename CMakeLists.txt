@@ -22,6 +22,7 @@ include_directories(${TMTE_INCLUDE_DIR}
 
 add_library (${TMTE_LIB}
     ${TMTE_SOURCE_DIR}/algorithm/ParallelTopicModel.cpp
+    ${TMTE_SOURCE_DIR}/algorithm/ParallelTopicModelWorker.cpp
     ${TMTE_SOURCE_DIR}/input/FeatureVector.cpp
     ${TMTE_SOURCE_DIR}/input/InstanceList.cpp
     ${TMTE_SOURCE_DIR}/input/Pipe.cpp
@@ -60,6 +61,7 @@ include_directories(
 
 add_executable(AlgorithmTests
 	${TMTE_TEST_DIR}/algorithm/ParallelTopicModelTest.cpp
+	${TMTE_TEST_DIR}/algorithm/ParallelTopicModelWorkerTest.cpp
 	) 
 target_link_libraries(AlgorithmTests gmock gmock_main ${TMTE_LIB})
 add_test(AlgorithmTests AlgorithmTests)
