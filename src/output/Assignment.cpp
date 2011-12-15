@@ -32,6 +32,50 @@ bool const Assignment::add(const Identifier key, const double value) {
     return true;
 }
 
-bool const Assignment::contains(const Identifier key) const {
+bool const Assignment::contains(const Identifier & key) const {
     return (end() != find(key));
+}
+
+double const Assignment::get(Identifier const & key) const
+throw (ElementNotPresentException) {
+    const_iterator iter = find(key);
+    if (end() != iter) {
+        return iter->second;
+    } else {
+        throw ElementNotPresentException(
+                "Pair with Identifier " + key.getName() + " not present.");
+    }
+}
+
+double const Assignment::get(int const & position) const
+throw (OutOfBoundsException) {
+    if (position < size()) {
+        int n = 0;
+        for (map<Identifier, double>::const_iterator iter = begin();
+                iter != end(); iter++) {
+            if (position == n) {
+                return iter->second;
+            } else {
+                n++;
+            }
+        }
+    }
+    throw OutOfBoundsException(position, size());
+}
+
+int const Assignment::getSize() const {
+    return size();
+}
+
+double const Assignment::remove(const Identifier & key)
+throw (ElementNotPresentException) {
+    iterator iter = find(key);
+    if (end() == iter) {
+        throw ElementNotPresentException(
+                "Pair with Identifier " + key.getName() + " not present.");
+    } else {
+        double value = iter->second;
+        erase(iter);
+        return value;
+    }
 }

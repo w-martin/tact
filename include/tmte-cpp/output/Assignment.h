@@ -13,7 +13,9 @@
 #ifndef ASSIGNMENT_H
 #define	ASSIGNMENT_H
 
+#include "tmte-cpp/output/exceptions/ElementNotPresentException.h"
 #include "tmte-cpp/output/Identifier.h"
+#include "tmte-cpp/util/exceptions/OutOfBoundsException.h"
 #include <map>
 
 using std::map;
@@ -44,7 +46,45 @@ public:
      * @return true if this Assignment contains the given key, false otherwise.
      * 
      */
-    bool const contains(Identifier const key) const;
+    bool const contains(Identifier const & key) const;
+    /**
+     * Gets the value with the given key.
+     * @param key the key to get the value for.
+     * @return the value with the given key.
+     * @throw ElementNotPresentException if the key could not be found 
+     * in this Assignment.
+     * 
+     */
+    double const get(Identifier const & key) const
+    throw (ElementNotPresentException);
+    /**
+     * Gets the value with the given key.
+     * @param key the key to get the value for.
+     * @return the value with the given key.
+     * @throw ElementNotPresentException if the key could not be found 
+     * in this Assignment.
+     * 
+     */
+    double const get(int const & position) const
+    throw (OutOfBoundsException);
+    /**
+     * Gets the size of this set of Assignments.
+     * 
+     * @return the size of this set of Assignments.
+     * 
+     */
+    int const getSize() const;
+    /**
+     * Removes the pair identified by the given key.
+     * 
+     * @param key the key of the pair to remove.
+     * @return the value associated with the given key.
+     * @throw ElementNotPresentException if the key could not be found 
+     * in this Assignment.
+     * 
+     */
+    double const remove(Identifier const & key)
+    throw (ElementNotPresentException);
 };
 
 #endif	/* ASSIGNMENT_H */
