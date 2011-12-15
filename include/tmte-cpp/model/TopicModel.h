@@ -133,6 +133,11 @@ protected:
     auto_ptr<InstanceList> instanceList;
     vector<TopicAssignment*> * topicAssignments;
     Alphabet const * alphabet;
+    /**
+     * Deletes the TopicAssignments.
+     * 
+     */
+    void deleteAssignments();
 };
 
 #endif	/* TOPICMODEL_H */

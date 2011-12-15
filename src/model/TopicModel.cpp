@@ -12,7 +12,9 @@
 
 #include "tmte-cpp/model/TopicModel.h"
 #include "tmte-cpp/output/TopicAssignment.h"
-#include <cstring>
+#include <sstream>
+
+using std::stringstream;
 
 TopicModel::TopicModel(int const noIterations,
         int const noTopics) {
@@ -57,10 +59,7 @@ TopicModel::TopicModel(const TopicModel& orig) {
 
 TopicModel::~TopicModel() {
     delete [] alpha;
-    for (int i = 0; i < topicAssignments->size(); i++) {
-        delete topicAssignments->at(i);
-    }
-    delete topicAssignments;
+    deleteAssignments();
 }
 
 int const TopicModel::getNoIterations() const {
@@ -109,6 +108,7 @@ vector<TopicAssignment*> const * const TopicModel::getTopicAssignments() const {
 
 void TopicModel::addInstances(auto_ptr<InstanceList> instanceList) {
     TopicModel::instanceList = instanceList;
+    deleteAssignments();
     topicAssignments = new vector<TopicAssignment*>();
     vector<Instance*> const * const instances =
             TopicModel::instanceList->getInstances();
@@ -116,9 +116,19 @@ void TopicModel::addInstances(auto_ptr<InstanceList> instanceList) {
         Instance const * const instance = instances->at(i);
         TopicAssignment * assignment = new TopicAssignment(instance);
         for (int t = 0; t < noTopics; t++) {
-            Identifier id("hello");
+            stringstream stream;
+            stream << t;
+            string name = stream.str();
+            Identifier id(name);
             assignment->add(id, 0.0);
         }
         topicAssignments->push_back(assignment);
     }
+}
+
+void TopicModel::deleteAssignments() {
+    for (int i = 0; i < topicAssignments->size(); i++) {
+        delete topicAssignments->at(i);
+    }
+    delete topicAssignments;
 }
