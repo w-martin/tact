@@ -10,8 +10,8 @@
  * 
  */
 
-#include "tmte-cpp/main/model/TopicModel.h"
-#include "tmte-cpp/main/output/TopicAssignment.h"
+#include "tmte-cpp/model/TopicModel.h"
+#include "tmte-cpp/output/TopicAssignment.h"
 #include <cstring>
 
 TopicModel::TopicModel(int const noIterations,

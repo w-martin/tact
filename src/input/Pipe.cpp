@@ -10,7 +10,7 @@
  * 
  */
 
-#include "tmte-cpp/main/input/Pipe.h"
+#include "tmte-cpp/input/Pipe.h"
 
 Pipe::Pipe() {
 }

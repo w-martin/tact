@@ -10,7 +10,7 @@
  * 
  */
 
-#include "tmte-cpp/main/input/FeatureVector.h"
+#include "tmte-cpp/input/FeatureVector.h"
 
 FeatureVector::FeatureVector(auto_ptr<Alphabet> alphabet,
         auto_ptr<vector<int> > features) {

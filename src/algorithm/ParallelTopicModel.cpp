@@ -10,7 +10,7 @@
  * 
  */
 
-#include "tmte-cpp/main/algorithm/ParallelTopicModel.h"
+#include "tmte-cpp/algorithm/ParallelTopicModel.h"
 #include <time.h>
 #include <iostream>
 #include <pthread.h>

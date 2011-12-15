@@ -10,7 +10,7 @@
  * 
  */
 
-#include "tmte-cpp/main/output/TopicAssignment.h"
+#include "tmte-cpp/output/TopicAssignment.h"
 
 TopicAssignment::TopicAssignment(Instance const * const instance) {
     TopicAssignment::instance = instance;

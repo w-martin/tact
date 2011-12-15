@@ -13,7 +13,7 @@
 #include <stddef.h>
 #include <memory>
 
-#include "tmte-cpp/main/model/Corpus.h"
+#include "tmte-cpp/model/Corpus.h"
 
 Corpus::Corpus() {
     noTerms = 0;

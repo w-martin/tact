@@ -10,7 +10,7 @@
  * 
  */
 
-#include "tmte-cpp/main/output/Identifier.h"
+#include "tmte-cpp/output/Identifier.h"
 
 Identifier::Identifier(const string name) {
     Identifier::name = name;

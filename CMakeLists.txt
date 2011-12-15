@@ -12,7 +12,7 @@ set(TMTE_NAME tmte-cpp)
 set(TMTE_LIB tmte-lib)
 set(TMTE_SOURCE_DIR src)
 set(TMTE_INCLUDE_DIR include)
-set(TMTE_TEST_DIR test)
+set(TMTE_TEST_DIR test/src)
 
 include_directories(${TMTE_INCLUDE_DIR}
 )
@@ -21,7 +21,7 @@ include_directories(${TMTE_INCLUDE_DIR}
 # TODO: replace this with a macro
 
 add_library (${TMTE_LIB}
-    ${TMTE_SOURCE_DIR}/algorithm/LatentDirichletAllocation.cpp
+    ${TMTE_SOURCE_DIR}/algorithm/ParallelTopicModel.cpp
     ${TMTE_SOURCE_DIR}/input/FeatureVector.cpp
     ${TMTE_SOURCE_DIR}/input/InstanceList.cpp
     ${TMTE_SOURCE_DIR}/input/Pipe.cpp
@@ -48,7 +48,9 @@ target_link_libraries(${TMTE_NAME}
 add_subdirectory(gmock-1.6.0)
 enable_testing(true) 
 
-include_directories(${gtest_SOURCE_DIR}/include 
+include_directories(
+        .
+        ${gtest_SOURCE_DIR}/include 
 	${gtest_SOURCE_DIR}
         ${gmock_SOURCE_DIR}/include 
 	${gmock_SOURCE_DIR})
@@ -57,7 +59,7 @@ include_directories(${gtest_SOURCE_DIR}/include
 # TODO: replace this with a macro
 
 add_executable(AlgorithmTests
-	${TMTE_TEST_DIR}/algorithm/LatentDirichletAllocationTest.cpp
+	${TMTE_TEST_DIR}/algorithm/ParallelTopicModelTest.cpp
 	) 
 target_link_libraries(AlgorithmTests gmock gmock_main ${TMTE_LIB})
 add_test(AlgorithmTests AlgorithmTests)

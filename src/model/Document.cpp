@@ -13,7 +13,7 @@
 #include <stddef.h>
 #include <memory>
 
-#include "tmte-cpp/main/model/Document.h"
+#include "tmte-cpp/model/Document.h"
 
 Document::Document(int const length) {
     Document::total = 0;

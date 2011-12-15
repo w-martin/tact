@@ -10,7 +10,7 @@
  * 
  */
 
-#include "tmte-cpp/main/input/InstanceList.h"
+#include "tmte-cpp/input/InstanceList.h"
 
 InstanceList::InstanceList(auto_ptr<Pipe> pipe) {
     InstanceList::pipe = pipe;
