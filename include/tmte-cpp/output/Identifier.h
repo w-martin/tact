@@ -26,7 +26,32 @@ public:
     Identifier(string const name);
     Identifier(Identifier const & orig);
     virtual ~Identifier();
+    /**
+     * Overloaded 'less than' operator.
+     * 
+     * @param rhs the right hand side of the comparison.
+     * @return true if this Identifier is 'less than' the rhs, according to
+     * string comparison.
+     * 
+     */
     bool const operator<(const Identifier& rhs) const;
+    /**
+     * Overloaded 'not equal to' operator.
+     * 
+     * @param rhs the right hand side of the comparison.
+     * @return true if this Identifier is not equal to the right hand side,
+     * false otherwise.
+     * 
+     */
+    bool const operator!=(const Identifier& rhs) const;
+    /**
+     * Overloaded 'equal to' operator.
+     * 
+     * @param rhs the right hand side of the comparison.
+     * @return true if this Identifier is equal to the rhs, false otherwise.
+     * 
+     */
+    bool const operator==(const Identifier& rhs) const;
     /**
      * Gets the name of this Identifier.
      * 

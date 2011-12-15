@@ -27,6 +27,14 @@ bool const Identifier::operator<(const Identifier& rhs) const {
     return name < rhs.getName();
 }
 
+bool const Identifier::operator !=(const Identifier& rhs) const {
+    return !equals(rhs);
+}
+
+bool const Identifier::operator ==(const Identifier& rhs) const {
+    return equals(rhs);
+}
+
 string const Identifier::getName() const {
     return name;
 }

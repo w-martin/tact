@@ -10,7 +10,7 @@
  * 
  */
 
-#define testWord "testWord"
+#define testWord "1"
 
 #include "gtest/gtest.h"
 #include "tmte-cpp/output/Identifier.h"
@@ -40,6 +40,36 @@ namespace {
      */
     TEST_F(IdentifierTest, GetNameTest) {
         EXPECT_STREQ(testWord, identifier->getName().c_str());
+    }
+
+    /*
+     * Tests whether the less than operator works correctly.
+     * 
+     */
+    TEST_F(IdentifierTest, LessThanOperatorTest) {
+        Identifier different("0");
+        EXPECT_TRUE(different < (*identifier));
+        EXPECT_FALSE((*identifier) < (*identifier));
+    }
+
+    /*
+     * Tests whether the not equal to operator works correctly.
+     * 
+     */
+    TEST_F(IdentifierTest, NotEqualToOperatorTest) {
+        Identifier different("0");
+        EXPECT_TRUE(different != (*identifier));
+        EXPECT_FALSE((*identifier) != (*identifier));
+    }
+
+    /*
+     * Tests whether the equal to operator works correctly.
+     * 
+     */
+    TEST_F(IdentifierTest, EqualToOperatorTest) {
+        Identifier different("0");
+        EXPECT_FALSE(different == (*identifier));
+        EXPECT_TRUE((*identifier) == (*identifier));
     }
 
     /*
