@@ -1,5 +1,5 @@
 /**
- * @file LatentDirichletAllocationTest.cpp
+ * @file ParallelTopicModelTest.cpp
  * @author  William Martin <will.st4@gmail.com>
  * @version 0.1
  *
@@ -16,24 +16,24 @@
 namespace {
 
     /**
-     * Tests LatentDirichletAllocation.
+     * Tests ParallelTopicModelTest.
      * 
      */
-    class LatentDirichletAllocationTest : public ::testing::Test {
+    class ParallelTopicModelTest : public ::testing::Test {
     protected:
 
-        LatentDirichletAllocationTest() {
+        ParallelTopicModelTest() {
             noIterations = 5;
             noTopics = 100;
             noThreads = 8;
-            lda = new LatentDirichletAllocation(
+            lda = new ParallelTopicModel(
                     noIterations, noTopics, noThreads);
         }
 
-        virtual ~LatentDirichletAllocationTest() {
+        virtual ~ParallelTopicModelTest() {
             delete lda;
         }
-        LatentDirichletAllocation * lda;
+        ParallelTopicModel * lda;
         int noIterations;
         int noTopics;
         int noThreads;
@@ -43,7 +43,7 @@ namespace {
      * Tests whether the pass to the super constructor worked correctly.
      * 
      */
-    TEST_F(LatentDirichletAllocationTest, SuperConstructionTest) {
+    TEST_F(ParallelTopicModelTest, SuperConstructionTest) {
         EXPECT_EQ(noIterations, lda->getNoIterations());
         EXPECT_EQ(noTopics, lda->getNoTopics());
     }
@@ -52,7 +52,7 @@ namespace {
      * Tests whether the getNoThreads method works correctly.
      * 
      */
-    TEST_F(LatentDirichletAllocationTest, GetNoThreadsTest) {
+    TEST_F(ParallelTopicModelTest, GetNoThreadsTest) {
         EXPECT_EQ(noThreads, lda->getNoThreads());
     }
 
@@ -60,7 +60,7 @@ namespace {
      * Tests whether the pass to the estimate method correctly.
      * 
      */
-    TEST_F(LatentDirichletAllocationTest, EstimateTest) {
+    TEST_F(ParallelTopicModelTest, EstimateTest) {
         lda->estimate();
     }
 
@@ -68,8 +68,8 @@ namespace {
      * Tests whether the copy constructor works correctly.
      * 
      */
-    TEST_F(LatentDirichletAllocationTest, CopyConstructorTest) {
-        LatentDirichletAllocation tmp = (*lda);
+    TEST_F(ParallelTopicModelTest, CopyConstructorTest) {
+        ParallelTopicModel tmp = (*lda);
         EXPECT_EQ(noIterations, tmp.getNoIterations());
         EXPECT_EQ(noTopics, tmp.getNoTopics());
         EXPECT_EQ(noThreads, tmp.getNoThreads());

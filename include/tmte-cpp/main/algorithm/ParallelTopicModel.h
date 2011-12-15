@@ -1,5 +1,5 @@
 /**
- * @file LatentDirichletAllocation.h
+ * @file ParallelTopicModel.h
  * @author  William Martin <will.st4@gmail.com>
  * @version 0.1
  *
@@ -19,14 +19,14 @@
  * Performs LDA on a corpus.
  * 
  */
-class LatentDirichletAllocation : public TopicModel {
+class ParallelTopicModel : public TopicModel {
 public:
-    LatentDirichletAllocation(
+    ParallelTopicModel(
             int const noIterations,
             int const noTopics,
             int const noThreads);
-    LatentDirichletAllocation(const LatentDirichletAllocation& orig);
-    virtual ~LatentDirichletAllocation();
+    ParallelTopicModel(const ParallelTopicModel& orig);
+    virtual ~ParallelTopicModel();
     /**
      * Estimates the topic model.
      * 

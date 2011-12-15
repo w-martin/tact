@@ -1,5 +1,5 @@
 /**
- * @file LatentDirichletAllocation.cpp
+ * @file ParallelTopicModel.cpp
  * @author  William Martin <will.st4@gmail.com>
  * @version 0.1
  *
@@ -10,35 +10,33 @@
  * 
  */
 
-#include "tmte-cpp/main/algorithm/LatentDirichletAllocation.h"
+#include "tmte-cpp/main/algorithm/ParallelTopicModel.h"
 #include <time.h>
 #include <iostream>
-#include <vector>
 #include <pthread.h>
-#include <sys/types.h>
 
-LatentDirichletAllocation::LatentDirichletAllocation(
+ParallelTopicModel::ParallelTopicModel(
         int const noIterations,
         int const noTopics,
         int const noThreads)
 : TopicModel(noIterations, noTopics) {
-    LatentDirichletAllocation::noThreads = noThreads;
+    ParallelTopicModel::noThreads = noThreads;
 }
 
-LatentDirichletAllocation::LatentDirichletAllocation(
-        const LatentDirichletAllocation& orig)
+ParallelTopicModel::ParallelTopicModel(
+        const ParallelTopicModel& orig)
 : TopicModel(orig) {
     noThreads = orig.getNoThreads();
 }
 
-LatentDirichletAllocation::~LatentDirichletAllocation() {
+ParallelTopicModel::~ParallelTopicModel() {
 }
 
-int const LatentDirichletAllocation::getNoThreads() const {
+int const ParallelTopicModel::getNoThreads() const {
     return noThreads;
 }
 
-void LatentDirichletAllocation::estimate() {
+void ParallelTopicModel::estimate() {
     long startTime = time(NULL);
     int const noDocumentsPerThread = topicAssignments->size() / noThreads;
     pthread_t * threads = new pthread_t[noThreads];
