@@ -58,14 +58,14 @@ public:
     double const get(Identifier const & key) const
     throw (ElementNotPresentException);
     /**
-     * Gets the value with the given key.
-     * @param key the key to get the value for.
-     * @return the value with the given key.
+     * Gets the key at the given position.
+     * @param position the position of the key to get.
+     * @return the key at the given position.
      * @throw ElementNotPresentException if the key could not be found 
      * in this Assignment.
      * 
      */
-    double const get(int const & position) const
+    Identifier const getKey(int const & position) const
     throw (OutOfBoundsException);
     /**
      * Gets the size of this set of Assignments.

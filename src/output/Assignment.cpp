@@ -47,14 +47,14 @@ throw (ElementNotPresentException) {
     }
 }
 
-double const Assignment::get(int const & position) const
+Identifier const Assignment::getKey(int const & position) const
 throw (OutOfBoundsException) {
     if (position < size()) {
         int n = 0;
         for (map<Identifier, double>::const_iterator iter = begin();
                 iter != end(); iter++) {
             if (position == n) {
-                return iter->second;
+                return iter->first;
             } else {
                 n++;
             }
