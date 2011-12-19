@@ -26,6 +26,7 @@ add_library (${TMTE_LIB}
     ${TMTE_SOURCE_DIR}/input/FeatureVector.cpp
     ${TMTE_SOURCE_DIR}/input/InstanceList.cpp
     ${TMTE_SOURCE_DIR}/input/Pipe.cpp
+    ${TMTE_SOURCE_DIR}/model/AbstractTopicModel.cpp
     ${TMTE_SOURCE_DIR}/model/Alphabet.cpp
     ${TMTE_SOURCE_DIR}/model/Corpus.cpp
     ${TMTE_SOURCE_DIR}/model/Document.cpp
@@ -77,6 +78,7 @@ target_link_libraries(InputTests gmock gmock_main ${TMTE_LIB})
 add_test(InputTests InputTests)
 
 add_executable(ModelTests 
+	${TMTE_TEST_DIR}/model/AbstractTopicModelTest.cpp
 	${TMTE_TEST_DIR}/model/AlphabetTest.cpp
 	${TMTE_TEST_DIR}/model/CorpusTest.cpp
 	${TMTE_TEST_DIR}/model/DocumentTest.cpp

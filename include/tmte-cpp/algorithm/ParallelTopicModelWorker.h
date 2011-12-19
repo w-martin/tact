@@ -36,22 +36,19 @@ public:
      * 
      */
     ParallelTopicModelWorker(
-            int noTopics,
             double * alpha,
             double alphaSum,
             double beta,
-            vector<TopicAssignment*> * topicAssignments,
-            int * * typeTopicCounts,
-            int * tokensPerTopic,
+            int noDocuments,
+            int noTopics,
             int startDocument,
-            int noDocuments);
+            int * tokensPerTopic,
+            vector<TopicAssignment*> * topicAssignments,
+            int * * typeTopicCounts);
     ParallelTopicModelWorker(const ParallelTopicModelWorker& orig);
     virtual ~ParallelTopicModelWorker();
+    
 protected:
-    vector<TopicAssignment*> * topicAssignments;
-    int startDocument;
-    int noDocuments;
-    int noTopics;
     /**
      * Dirichlet(alpha,alpha,...) is the distribution over topics.
      * 
@@ -64,38 +61,46 @@ protected:
      */
     double beta;
     double betaSum;
-    /******************************************************
-     * These values are used to encode type/topic counts as
-     * count/topic pairs in a single int.
-     */
-    int topicMask;
-    int topicBits;
-    int noTypes;
     /**
-     * Indexed by [feature index, topic index].
+     * Histogram of document lengths.
+     * Used for dirichlet estimation.
      * 
      */
-    int * * typeTopicCounts;
+    int * documentLengthCounts;
+    int noDocuments;
+    int noTopics;
+    int noTypes;
+    int startDocument;
     /**
      * Indexed by topic.
      * 
      */
     int * tokensPerTopic;
-    /******************************************************
-     * Used for dirichlet estimation.
-     * 
-     */
+    vector<TopicAssignment*> * topicAssignments;
     /**
-     * Histogram of document lengths.
+     * Used to encode type/topic counts as count/topic pairs in a single 
+     * integer.
      * 
      */
-    int * documentLengthCounts;
+    int topicBits;
     /**
      *  Histogram of document/topic counts, indexed by: 
      * [topic index, sequence position index].
+     * Used for dirichlet estimation.
      * 
      */
     int * * topicDocumentCounts;
+    /**
+     * Used to encode type/topic counts as count/topic pairs in a single 
+     * integer.
+     * 
+     */
+    int topicMask;
+    /**
+     * Indexed by [feature index, topic index].
+     * 
+     */
+    int * * typeTopicCounts;
 };
 
 #endif	/* PARALLELTOPICMODELWORKER_H */

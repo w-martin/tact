@@ -1,5 +1,5 @@
 /**
- * @file TopicModelTest.cpp
+ * @file AbstractTopicModelTest.cpp
  * @author  William Martin <will.st4@gmail.com>
  * @version 0.1
  *
@@ -11,7 +11,7 @@
  */
 
 #include "gtest/gtest.h"
-#include "tmte-cpp/model/TopicModel.h"
+#include "tmte-cpp/model/AbstractTopicModel.h"
 
 namespace {
 
@@ -23,21 +23,33 @@ namespace {
     protected:
 
         TopicModelTest() {
-            topicModel = new TopicModel();
+            noIterations = 7;
+            noTopics = 60;
+            topicModel = new AbstractTopicModel(noIterations, noTopics);
         }
 
         virtual ~TopicModelTest() {
             delete topicModel;
         }
-        TopicModel * topicModel;
+        AbstractTopicModel * topicModel;
+        int noIterations;
+        int noTopics;
     };
+
+    /*
+     * Tests whether the getNoIterations method works correctly.
+     * 
+     */
+    TEST_F(TopicModelTest, GetNoIterationsTest) {
+        EXPECT_EQ(noIterations, topicModel->getNoIterations());
+    }
 
     /*
      * Tests whether the getNoTopics method works correctly.
      * 
      */
     TEST_F(TopicModelTest, GetNoTopicsTest) {
-        EXPECT_EQ(0, topicModel->getNoTopics());
+        EXPECT_EQ(noTopics, topicModel->getNoTopics());
     }
 
     /*
@@ -46,9 +58,20 @@ namespace {
      */
     TEST_F(TopicModelTest, GetAlphaTest) {
         double const * const alpha = topicModel->getAlpha();
-        for (int i = 0; i < 0; i++) {
+        for (int i = 0; i < noTopics; i++) {
             EXPECT_EQ(0.0, alpha[i]);
         }
+    }
+
+    /*
+     * Tests whether the setAlpha method works correctly.
+     * 
+     */
+    TEST_F(TopicModelTest, SetAlphaTest) {
+        double value = 0.456;
+        topicModel->setAlpha(noTopics - 1, value);
+        EXPECT_EQ(value, topicModel->getAlpha()[noTopics - 1]);
+        EXPECT_EQ(value, topicModel->getAlphaSum());
     }
 
     /*
@@ -56,7 +79,7 @@ namespace {
      * 
      */
     TEST_F(TopicModelTest, SetAlphaExceptionTest) {
-        EXPECT_THROW(topicModel->setAlpha(1, 0.0),
+        EXPECT_THROW(topicModel->setAlpha(noTopics, 0.0),
                 OutOfBoundsException);
     }
 
@@ -73,7 +96,7 @@ namespace {
      * 
      */
     TEST_F(TopicModelTest, GetBetaTest) {
-        EXPECT_EQ(0.0, topicModel->getBeta());
+        EXPECT_EQ(DEFAULT_BETA, topicModel->getBeta());
     }
 
     /*
@@ -109,8 +132,9 @@ namespace {
      * 
      */
     TEST_F(TopicModelTest, CopyConstructorTest) {
-        TopicModel tmp = (*topicModel);
-        EXPECT_EQ(0.0, tmp.getNoTopics());
+        AbstractTopicModel tmp = (*topicModel);
+        EXPECT_EQ(noIterations, tmp.getNoIterations());
+        EXPECT_EQ(noTopics, tmp.getNoTopics());
         EXPECT_EQ(0, tmp.getTopicAssignments()->size());
     }
 }

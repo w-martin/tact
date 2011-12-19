@@ -10,16 +10,16 @@
  * 
  */
 
-#ifndef LATENTDIRICHLETALLOCATION_H
-#define	LATENTDIRICHLETALLOCATION_H
+#ifndef PARALLELTOPICMODEL_H
+#define	PARALLELTOPICMODEL_H
 
-#include "tmte-cpp/model/TopicModel.h"
+#include "tmte-cpp/model/AbstractTopicModel.h"
 
 /**
  * Performs LDA on a corpus.
  * 
  */
-class ParallelTopicModel : public TopicModel {
+class ParallelTopicModel : public AbstractTopicModel {
 public:
     ParallelTopicModel(
             int const noIterations,
@@ -43,5 +43,5 @@ private:
     int noThreads;
 };
 
-#endif	/* LATENTDIRICHLETALLOCATION_H */
+#endif	/* PARALLELTOPICMODEL_H */
 

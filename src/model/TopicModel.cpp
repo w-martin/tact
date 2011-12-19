@@ -11,15 +11,9 @@
  */
 
 #include "tmte-cpp/model/TopicModel.h"
-#include "tmte-cpp/output/TopicAssignment.h"
-#include <sstream>
 
-using std::stringstream;
-
-TopicModel::TopicModel(int const noIterations,
-        int const noTopics) {
-    TopicModel::noIterations = noIterations;
-    TopicModel::noTopics = noTopics;
+TopicModel::TopicModel() {
+    noTopics = 0;
 
     alpha = new double[noTopics];
     for (int i = 0; i < noTopics; i++) {
@@ -27,14 +21,13 @@ TopicModel::TopicModel(int const noIterations,
     }
 
     alphaSum = 0.0;
-    beta = DEFAULT_BETA;
+    beta = 0.0;
     betaSum = 0.0;
 
     topicAssignments = new vector<TopicAssignment*> ();
 }
 
 TopicModel::TopicModel(const TopicModel& orig) {
-    noIterations = orig.getNoIterations();
     noTopics = orig.getNoTopics();
 
     double const * const tmp = orig.getAlpha();
@@ -60,10 +53,6 @@ TopicModel::TopicModel(const TopicModel& orig) {
 TopicModel::~TopicModel() {
     delete [] alpha;
     deleteAssignments();
-}
-
-int const TopicModel::getNoIterations() const {
-    return noIterations;
 }
 
 int const TopicModel::getNoTopics() const {
@@ -102,28 +91,9 @@ double const TopicModel::getBetaSum() const {
     return betaSum;
 }
 
-vector<TopicAssignment*> const * const TopicModel::getTopicAssignments() const {
+vector<TopicAssignment*> const * const TopicModel::getTopicAssignments()
+const {
     return topicAssignments;
-}
-
-void TopicModel::addInstances(auto_ptr<InstanceList> instanceList) {
-    TopicModel::instanceList = instanceList;
-    deleteAssignments();
-    topicAssignments = new vector<TopicAssignment*>();
-    vector<Instance*> const * const instances =
-            TopicModel::instanceList->getInstances();
-    for (int i = 0; i < TopicModel::instanceList->getSize(); i++) {
-        Instance const * const instance = instances->at(i);
-        TopicAssignment * assignment = new TopicAssignment(instance);
-        for (int t = 0; t < noTopics; t++) {
-            stringstream stream;
-            stream << t;
-            string name = stream.str();
-            Identifier id(name);
-            assignment->add(id, 0.0);
-        }
-        topicAssignments->push_back(assignment);
-    }
 }
 
 void TopicModel::deleteAssignments() {

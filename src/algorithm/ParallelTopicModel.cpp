@@ -19,13 +19,13 @@ ParallelTopicModel::ParallelTopicModel(
         int const noIterations,
         int const noTopics,
         int const noThreads)
-: TopicModel(noIterations, noTopics) {
+: AbstractTopicModel(noIterations, noTopics) {
     ParallelTopicModel::noThreads = noThreads;
 }
 
 ParallelTopicModel::ParallelTopicModel(
         const ParallelTopicModel& orig)
-: TopicModel(orig) {
+: AbstractTopicModel(orig) {
     noThreads = orig.getNoThreads();
 }
 
