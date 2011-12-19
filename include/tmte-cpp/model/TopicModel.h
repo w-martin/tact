@@ -141,4 +141,3 @@ protected:
 };
 
 #endif	/* TOPICMODEL_H */
-
