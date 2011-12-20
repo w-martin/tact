@@ -16,10 +16,11 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
         double * alpha,
         double alphaSum,
         double beta,
-        int noDocuments,
-        int noTopics,
-        int startDocument,
-        int * tokensPerTopic,
+        int const noDocuments,
+        int const noTopics,
+        int const noTypes,
+        int const startDocument,
+        int * const tokensPerTopic,
         vector<TopicAssignment*> * topicAssignments,
         int * * typeTopicCounts) {
     ParallelTopicModelWorker::alpha = alpha;
@@ -27,12 +28,12 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
     ParallelTopicModelWorker::beta = beta;
     ParallelTopicModelWorker::noDocuments = noDocuments;
     ParallelTopicModelWorker::noTopics = noTopics;
+    ParallelTopicModelWorker::noTypes = noTypes;
     ParallelTopicModelWorker::startDocument = startDocument;
     ParallelTopicModelWorker::tokensPerTopic = tokensPerTopic;
     ParallelTopicModelWorker::topicAssignments = topicAssignments;
     ParallelTopicModelWorker::typeTopicCounts = typeTopicCounts;
 
-    noTypes = sizeof (typeTopicCounts) / sizeof (int*);
     betaSum = beta * noTypes;
     documentLengthCounts = new int[noDocuments];
     for (int i = 0; i < noDocuments; i++) {

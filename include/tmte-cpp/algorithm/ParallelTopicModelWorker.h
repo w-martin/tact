@@ -38,6 +38,7 @@ public:
             double beta,
             int const noDocuments,
             int const noTopics,
+            int const noTypes,
             int const startDocument,
             int * const tokensPerTopic,
             vector<TopicAssignment*> * topicAssignments,
