@@ -16,23 +16,27 @@
 using std::stringstream;
 
 AbstractTopicModel::AbstractTopicModel(int const noIterations,
-        int const noTopics) : TopicModel() {
+        int const noTopics) {
     AbstractTopicModel::noIterations = noIterations;
     AbstractTopicModel::noTopics = noTopics;
 
     alpha = new double[noTopics];
     for (int i = 0; i < noTopics; i++) {
-        alpha[i] = 0;
+        alpha[i] = 0.0;
     }
 
     beta = DEFAULT_BETA;
+    topicAssignments = new vector<TopicAssignment*>();
 }
 
 AbstractTopicModel::AbstractTopicModel(const AbstractTopicModel& orig)
 : TopicModel(orig) {
+    noIterations = orig.getNoIterations();
 }
 
 AbstractTopicModel::~AbstractTopicModel() {
+    delete [] alpha;
+    deleteAssignments();
 }
 
 int const AbstractTopicModel::getNoIterations() const {

@@ -15,9 +15,8 @@
 
 #include "tmte-cpp/output/TopicAssignment.h"
 #include "tmte-cpp/util/exceptions/OutOfBoundsException.h"
-#include <memory>
+#include <vector>
 
-using std::auto_ptr;
 using std::vector;
 
 /**
@@ -87,10 +86,18 @@ public:
      * @return the list of TopicAssignments.
      * 
      */
-    vector<TopicAssignment*> const * const getTopicAssignments() const;
+    vector<TopicAssignment*> * const getTopicAssignments() const;
 protected:
+    /**
+     * Dirichlet(alpha,alpha,...) is the distribution over topics.
+     * 
+     */
     double * alpha;
     double alphaSum;
+    /**
+     * Prior on per-topic multinomial distribution over words.
+     * 
+     */
     double beta;
     double betaSum;
     int noTopics;

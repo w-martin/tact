@@ -35,17 +35,29 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
     noTypes = sizeof (typeTopicCounts) / sizeof (int*);
     betaSum = beta * noTypes;
     documentLengthCounts = new int[noDocuments];
+    for (int i = 0; i < noDocuments; i++) {
+        documentLengthCounts[i] = 0;
+    }
     topicBits = 0;
-    topicDocumentCounts = new int[noTopics][noDocuments];
+    topicDocumentCounts = new int*[noTopics];
+    for (int i = 0; i < noTopics; i++) {
+        topicDocumentCounts[i] = new int[noDocuments];
+        for (int j = 0; j < noDocuments; j++) {
+            topicDocumentCounts[i][j] = 0.0;
+        }
+    }
     topicMask = 0;
 }
 
 ParallelTopicModelWorker::ParallelTopicModelWorker(
-        const ParallelTopicModelWorker& orig) {
+        const ParallelTopicModelWorker& orig)
+: TopicModel(orig) {
 }
 
 ParallelTopicModelWorker::~ParallelTopicModelWorker() {
-    delete documentLengthCounts;
-    delete topicDocumentCounts;
+    delete [] documentLengthCounts;
+    for (int i = 0; i < noTopics; i++) {
+        delete [] topicDocumentCounts[i];
+    }
+    delete [] topicDocumentCounts;
 }
-

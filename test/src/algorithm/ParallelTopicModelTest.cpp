@@ -57,6 +57,14 @@ namespace {
     }
 
     /*
+     * Tests whether the getNoIterations method works correctly.
+     * 
+     */
+    TEST_F(ParallelTopicModelTest, GetNoIterationsTest) {
+        EXPECT_EQ(noIterations, lda->getNoIterations());
+    }
+
+    /*
      * Tests whether the pass to the estimate method correctly.
      * 
      */

@@ -19,16 +19,16 @@ namespace {
      * Tests TopicModel.
      * 
      */
-    class TopicModelTest : public ::testing::Test {
+    class AbstractTopicModelTest : public ::testing::Test {
     protected:
 
-        TopicModelTest() {
+        AbstractTopicModelTest() {
             noIterations = 7;
             noTopics = 60;
             topicModel = new AbstractTopicModel(noIterations, noTopics);
         }
 
-        virtual ~TopicModelTest() {
+        virtual ~AbstractTopicModelTest() {
             delete topicModel;
         }
         AbstractTopicModel * topicModel;
@@ -40,7 +40,7 @@ namespace {
      * Tests whether the getNoIterations method works correctly.
      * 
      */
-    TEST_F(TopicModelTest, GetNoIterationsTest) {
+    TEST_F(AbstractTopicModelTest, GetNoIterationsTest) {
         EXPECT_EQ(noIterations, topicModel->getNoIterations());
     }
 
@@ -48,7 +48,7 @@ namespace {
      * Tests whether the getNoTopics method works correctly.
      * 
      */
-    TEST_F(TopicModelTest, GetNoTopicsTest) {
+    TEST_F(AbstractTopicModelTest, GetNoTopicsTest) {
         EXPECT_EQ(noTopics, topicModel->getNoTopics());
     }
 
@@ -56,7 +56,7 @@ namespace {
      * Tests whether the getAlpha method works correctly.
      * 
      */
-    TEST_F(TopicModelTest, GetAlphaTest) {
+    TEST_F(AbstractTopicModelTest, GetAlphaTest) {
         double const * const alpha = topicModel->getAlpha();
         for (int i = 0; i < noTopics; i++) {
             EXPECT_EQ(0.0, alpha[i]);
@@ -67,7 +67,7 @@ namespace {
      * Tests whether the setAlpha method works correctly.
      * 
      */
-    TEST_F(TopicModelTest, SetAlphaTest) {
+    TEST_F(AbstractTopicModelTest, SetAlphaTest) {
         double value = 0.456;
         topicModel->setAlpha(noTopics - 1, value);
         EXPECT_EQ(value, topicModel->getAlpha()[noTopics - 1]);
@@ -78,7 +78,7 @@ namespace {
      * Tests whether the setAlpha method throws an exception correctly.
      * 
      */
-    TEST_F(TopicModelTest, SetAlphaExceptionTest) {
+    TEST_F(AbstractTopicModelTest, SetAlphaExceptionTest) {
         EXPECT_THROW(topicModel->setAlpha(noTopics, 0.0),
                 OutOfBoundsException);
     }
@@ -87,7 +87,7 @@ namespace {
      * Tests whether the getAlphaSum method works correctly.
      * 
      */
-    TEST_F(TopicModelTest, GetAlphaSumTest) {
+    TEST_F(AbstractTopicModelTest, GetAlphaSumTest) {
         EXPECT_EQ(0.0, topicModel->getAlphaSum());
     }
 
@@ -95,7 +95,7 @@ namespace {
      * Tests whether the getBeta method works correctly.
      * 
      */
-    TEST_F(TopicModelTest, GetBetaTest) {
+    TEST_F(AbstractTopicModelTest, GetBetaTest) {
         EXPECT_EQ(DEFAULT_BETA, topicModel->getBeta());
     }
 
@@ -103,7 +103,7 @@ namespace {
      * Tests whether the setBeta method works correctly.
      * 
      */
-    TEST_F(TopicModelTest, SetBetaTest) {
+    TEST_F(AbstractTopicModelTest, SetBetaTest) {
         double value = 0.876;
         topicModel->setBeta(value);
         EXPECT_EQ(value, topicModel->getBeta());
@@ -113,7 +113,7 @@ namespace {
      * Tests whether the getBetaSum method works correctly.
      * 
      */
-    TEST_F(TopicModelTest, GetBetaSumTest) {
+    TEST_F(AbstractTopicModelTest, GetBetaSumTest) {
         EXPECT_EQ(0.0, topicModel->getBetaSum());
     }
 
@@ -121,7 +121,7 @@ namespace {
      * Tests whether the getBetaSum method works correctly.
      * 
      */
-    TEST_F(TopicModelTest, GetTopicAssignmentsTest) {
+    TEST_F(AbstractTopicModelTest, GetTopicAssignmentsTest) {
         vector<TopicAssignment*> const * const assignments =
                 topicModel->getTopicAssignments();
         EXPECT_EQ(0, assignments->size());
@@ -131,7 +131,7 @@ namespace {
      * Tests whether the copy constructor works correctly.
      * 
      */
-    TEST_F(TopicModelTest, CopyConstructorTest) {
+    TEST_F(AbstractTopicModelTest, CopyConstructorTest) {
         AbstractTopicModel tmp = (*topicModel);
         EXPECT_EQ(noIterations, tmp.getNoIterations());
         EXPECT_EQ(noTopics, tmp.getNoTopics());

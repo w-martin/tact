@@ -13,12 +13,9 @@
 #ifndef PARALLELTOPICMODELWORKER_H
 #define	PARALLELTOPICMODELWORKER_H
 
-#include "tmte-cpp/output/TopicAssignment.h"
-#include <vector>
+#include "tmte-cpp/model/TopicModel.h"
 
-using std::vector;
-
-class ParallelTopicModelWorker {
+class ParallelTopicModelWorker : public TopicModel {
 public:
     /**
      * Default constructor.
@@ -47,20 +44,7 @@ public:
             int * * typeTopicCounts);
     ParallelTopicModelWorker(const ParallelTopicModelWorker& orig);
     virtual ~ParallelTopicModelWorker();
-    
 protected:
-    /**
-     * Dirichlet(alpha,alpha,...) is the distribution over topics.
-     * 
-     */
-    double * alpha;
-    double alphaSum;
-    /**
-     * Prior on per-topic multinomial distribution over words.
-     * 
-     */
-    double beta;
-    double betaSum;
     /**
      * Histogram of document lengths.
      * Used for dirichlet estimation.
@@ -68,7 +52,6 @@ protected:
      */
     int * documentLengthCounts;
     int noDocuments;
-    int noTopics;
     int noTypes;
     int startDocument;
     /**
@@ -76,7 +59,6 @@ protected:
      * 
      */
     int * tokensPerTopic;
-    vector<TopicAssignment*> * topicAssignments;
     /**
      * Used to encode type/topic counts as count/topic pairs in a single 
      * integer.

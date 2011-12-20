@@ -13,18 +13,6 @@
 #include "tmte-cpp/model/TopicModel.h"
 
 TopicModel::TopicModel() {
-    noTopics = 0;
-
-    alpha = new double[noTopics];
-    for (int i = 0; i < noTopics; i++) {
-        alpha[i] = 0;
-    }
-
-    alphaSum = 0.0;
-    beta = 0.0;
-    betaSum = 0.0;
-
-    topicAssignments = new vector<TopicAssignment*> ();
 }
 
 TopicModel::TopicModel(const TopicModel& orig) {
@@ -40,19 +28,10 @@ TopicModel::TopicModel(const TopicModel& orig) {
     beta = orig.getBeta();
     betaSum = orig.getBetaSum();
 
-    topicAssignments = new vector<TopicAssignment*> ();
-    vector<TopicAssignment*> const * const originalAssignments =
-            orig.getTopicAssignments();
-    for (int i = 0; i < originalAssignments->size(); i++) {
-        TopicAssignment * copy =
-                new TopicAssignment(*originalAssignments->at(i));
-        topicAssignments->push_back(copy);
-    }
+    topicAssignments = orig.getTopicAssignments();
 }
 
 TopicModel::~TopicModel() {
-    delete [] alpha;
-    deleteAssignments();
 }
 
 int const TopicModel::getNoTopics() const {
@@ -91,7 +70,7 @@ double const TopicModel::getBetaSum() const {
     return betaSum;
 }
 
-vector<TopicAssignment*> const * const TopicModel::getTopicAssignments()
+vector<TopicAssignment*> * const TopicModel::getTopicAssignments()
 const {
     return topicAssignments;
 }
