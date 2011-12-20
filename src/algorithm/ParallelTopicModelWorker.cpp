@@ -44,7 +44,7 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
     for (int i = 0; i < noTopics; i++) {
         topicDocumentCounts[i] = new int[noDocuments];
         for (int j = 0; j < noDocuments; j++) {
-            topicDocumentCounts[i][j] = 0.0;
+            topicDocumentCounts[i][j] = 0;
         }
     }
     topicMask = 0;
