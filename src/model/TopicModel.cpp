@@ -27,8 +27,6 @@ TopicModel::TopicModel(const TopicModel& orig) {
     alphaSum = orig.getAlphaSum();
     beta = orig.getBeta();
     betaSum = orig.getBetaSum();
-
-    topicAssignments = orig.getTopicAssignments();
 }
 
 TopicModel::~TopicModel() {
@@ -80,4 +78,14 @@ void TopicModel::deleteAssignments() {
         delete topicAssignments->at(i);
     }
     delete topicAssignments;
+}
+
+void TopicModel::copyTopicAssignments(TopicModel const & orig) {
+    vector<TopicAssignment*> const * const originalAssignments =
+            orig.getTopicAssignments();
+    topicAssignments = new vector<TopicAssignment*>();
+    for (int i = 0; i < originalAssignments->size(); i++) {
+        topicAssignments->push_back(
+                new TopicAssignment(*originalAssignments->at(i)));
+    }
 }

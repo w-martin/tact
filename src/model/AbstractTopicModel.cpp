@@ -24,14 +24,17 @@ AbstractTopicModel::AbstractTopicModel(int const noIterations,
     for (int i = 0; i < noTopics; i++) {
         alpha[i] = 0.0;
     }
+    alphaSum = 0.0;
 
     beta = DEFAULT_BETA;
+    betaSum = 0.0;
     topicAssignments = new vector<TopicAssignment*>();
 }
 
 AbstractTopicModel::AbstractTopicModel(const AbstractTopicModel& orig)
 : TopicModel(orig) {
     noIterations = orig.getNoIterations();
+    copyTopicAssignments(orig);
 }
 
 AbstractTopicModel::~AbstractTopicModel() {

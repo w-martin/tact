@@ -65,7 +65,7 @@ namespace {
         }
 
         virtual ~ParallelTopicModelWorkerTest() {
-//            delete worker;
+            delete worker;
             delete [] alpha;
             delete [] tokensPerTopic;
             delete topicAssignments;

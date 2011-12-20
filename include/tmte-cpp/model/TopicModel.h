@@ -107,6 +107,13 @@ protected:
      * 
      */
     void deleteAssignments();
+    /**
+     * Copies the TopicAssignments from the given TopicModel.
+     * 
+     * @param orig The TopicModel to copy the TopicAssignments from.
+     * 
+     */
+    void copyTopicAssignments(TopicModel const & orig);
 };
 
 #endif	/* TOPICMODEL_H */

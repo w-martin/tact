@@ -36,14 +36,77 @@ public:
             double * alpha,
             double alphaSum,
             double beta,
-            int noDocuments,
-            int noTopics,
-            int startDocument,
-            int * tokensPerTopic,
+            int const noDocuments,
+            int const noTopics,
+            int const startDocument,
+            int * const tokensPerTopic,
             vector<TopicAssignment*> * topicAssignments,
             int * * typeTopicCounts);
     ParallelTopicModelWorker(const ParallelTopicModelWorker& orig);
     virtual ~ParallelTopicModelWorker();
+    /**
+     * Gets the histogram of document lengths. Used for dirichlet estimation.
+     * 
+     * @return the histogram of document lengths.
+     * 
+     */
+    int const * const getDocumentLengthCounts() const;
+    /**
+     * Gets the number of documents.
+     * 
+     * @return the number of documents.
+     * 
+     */
+    int const getNoDocuments() const;
+    /**
+     * Gets the starting document.
+     * 
+     * @return the starting document.
+     * 
+     */
+    int const getStartDocument() const;
+    /**
+     * Gets the histogram of tokens per topic. Indexed by Topic.
+     * 
+     * @return the histogram of tokens per topic.
+     * 
+     */
+    int * const getTokensPerTopic() const;
+    /**
+     * Gets the topic bits encoding.
+     * Used to encode type/topic counts as count/topic pairs in a single 
+     * integer.
+     * 
+     * @return the topic bits encoding.
+     * 
+     */
+    int const getTopicBits() const;
+    /**
+     * Gets the histogram of document/topic counts, indexed by: 
+     * [topic index, sequence position index].
+     * Used for dirichlet estimation.
+     * 
+     * @return the histogram of document/topic counts.
+     * 
+     */
+    int const * const * const getTopicDocumentCounts() const;
+    /**
+     * Gets the topic encoding mask.
+     * Used to encode type/topic counts as count/topic pairs in a single 
+     * integer.
+     * 
+     * @return the topic encoding mask.
+     * 
+     */
+    int const getTopicMask() const;
+    /**
+     * Gets the type/topic counts.
+     * Indexed by [feature index, topic index].
+     * 
+     * @return the type/topic counts.
+     * 
+     */
+    int * * const getTypeTopicCounts() const;
 protected:
     /**
      * Histogram of document lengths.
