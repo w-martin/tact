@@ -105,10 +105,6 @@ int const ParallelTopicModelWorker::getStartDocument() const {
     return startDocument;
 }
 
-vector<int> const * const ParallelTopicModelWorker::getTokensPerTopic() const {
-    return tokensPerTopic;
-}
-
 int const ParallelTopicModelWorker::getTopicBits() const {
     return topicBits;
 }
@@ -120,11 +116,6 @@ const {
 
 int const ParallelTopicModelWorker::getTopicMask() const {
     return topicMask;
-}
-
-vector<vector<int>*> const * const
-ParallelTopicModelWorker::getTypeTopicCounts() const {
-    return typeTopicCounts;
 }
 
 void ParallelTopicModelWorker::copyTokensPerTopic(

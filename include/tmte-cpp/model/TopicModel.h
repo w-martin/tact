@@ -81,12 +81,27 @@ public:
      */
     double const getBetaSum() const;
     /**
+     * Gets the histogram of tokens per topic. Indexed by Topic.
+     * 
+     * @return the histogram of tokens per topic.
+     * 
+     */
+    vector<int> const * const getTokensPerTopic() const;
+    /**
      * Gets the list of TopicAssignments.
      * 
      * @return the list of TopicAssignments.
      * 
      */
     vector<TopicAssignment*> * const getTopicAssignments() const;
+    /**
+     * Gets the type/topic counts.
+     * Indexed by [feature index, topic index].
+     * 
+     * @return the type/topic counts.
+     * 
+     */
+    vector<vector<int>*> const * const getTypeTopicCounts() const;
 protected:
     /**
      * Dirichlet(alpha,alpha,...) is the distribution over topics.
@@ -101,12 +116,17 @@ protected:
     double beta;
     double betaSum;
     int noTopics;
-    vector<TopicAssignment*> * topicAssignments;
     /**
-     * Deletes the TopicAssignments.
+     * Indexed by topic.
      * 
      */
-    void deleteAssignments();
+    vector<int> * tokensPerTopic;
+    vector<TopicAssignment*> * topicAssignments;
+    /**
+     * Indexed by [feature index, topic index].
+     * 
+     */
+    vector<vector<int>*> * typeTopicCounts;
     /**
      * Copies the TopicAssignments from the given TopicModel.
      * 
@@ -114,6 +134,11 @@ protected:
      * 
      */
     void copyTopicAssignments(TopicModel const & orig);
+    /**
+     * Deletes the TopicAssignments.
+     * 
+     */
+    void deleteAssignments();
 };
 
 #endif	/* TOPICMODEL_H */

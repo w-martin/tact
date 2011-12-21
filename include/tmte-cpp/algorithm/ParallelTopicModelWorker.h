@@ -67,13 +67,6 @@ public:
      */
     int const getStartDocument() const;
     /**
-     * Gets the histogram of tokens per topic. Indexed by Topic.
-     * 
-     * @return the histogram of tokens per topic.
-     * 
-     */
-    vector<int> const * const getTokensPerTopic() const;
-    /**
      * Gets the topic bits encoding.
      * Used to encode type/topic counts as count/topic pairs in a single 
      * integer.
@@ -100,14 +93,6 @@ public:
      * 
      */
     int const getTopicMask() const;
-    /**
-     * Gets the type/topic counts.
-     * Indexed by [feature index, topic index].
-     * 
-     * @return the type/topic counts.
-     * 
-     */
-    vector<vector<int>*> const * const getTypeTopicCounts() const;
 protected:
     /**
      * Histogram of document lengths.
@@ -118,11 +103,6 @@ protected:
     int noDocuments;
     int noTypes;
     int startDocument;
-    /**
-     * Indexed by topic.
-     * 
-     */
-    vector<int> * tokensPerTopic;
     /**
      * Used to encode type/topic counts as count/topic pairs in a single 
      * integer.
@@ -142,11 +122,6 @@ protected:
      * 
      */
     int topicMask;
-    /**
-     * Indexed by [feature index, topic index].
-     * 
-     */
-    vector<vector<int>*> * typeTopicCounts;
     /**
      * Copies the given tokensPerTopic.
      * 

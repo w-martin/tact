@@ -68,9 +68,17 @@ double const TopicModel::getBetaSum() const {
     return betaSum;
 }
 
+vector<int> const * const TopicModel::getTokensPerTopic() const {
+    return tokensPerTopic;
+}
+
 vector<TopicAssignment*> * const TopicModel::getTopicAssignments()
 const {
     return topicAssignments;
+}
+
+vector<vector<int>*> const * const TopicModel::getTypeTopicCounts() const {
+    return typeTopicCounts;
 }
 
 void TopicModel::deleteAssignments() {
