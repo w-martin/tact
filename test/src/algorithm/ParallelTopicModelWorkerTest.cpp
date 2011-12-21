@@ -38,17 +38,17 @@ namespace {
             noDocuments = TESTNO - 1;
             noTopics = TESTNO * 3;
             startDocument = rand();
-            tokensPerTopic = new int[noTopics];
+            tokensPerTopic = new vector<int>();
             for (int i = 0; i < noTopics; i++) {
-                tokensPerTopic[i] = rand();
+                tokensPerTopic->push_back(rand());
             }
             topicAssignments = new vector<TopicAssignment*>();
             noTypes = TESTNO * 5;
-            typeTopicCounts = new int*[noTypes];
+            typeTopicCounts = new vector<vector<int>*>();
             for (int i = 0; i < noTypes; i++) {
-                typeTopicCounts[i] = new int[noTopics];
+                typeTopicCounts->push_back(new vector<int>());
                 for (int j = 0; j < noTopics; j++) {
-                    typeTopicCounts[i][j] = rand();
+                    typeTopicCounts->at(i)->push_back(rand());
                 }
             }
 
@@ -68,12 +68,12 @@ namespace {
         virtual ~ParallelTopicModelWorkerTest() {
             delete worker;
             delete [] alpha;
-            delete [] tokensPerTopic;
+            delete tokensPerTopic;
             delete topicAssignments;
-            for (int i = 0; i < noTypes; i++) {
-                delete [] typeTopicCounts[i];
+            for (int i = 0; i < typeTopicCounts->size(); i++) {
+                delete typeTopicCounts->at(i);
             }
-            delete [] typeTopicCounts;
+            delete typeTopicCounts;
         }
         ParallelTopicModelWorker * worker;
         double * alpha;
@@ -82,9 +82,9 @@ namespace {
         int noDocuments;
         int noTopics;
         int startDocument;
-        int * tokensPerTopic;
+        vector<int> * tokensPerTopic;
         vector<TopicAssignment*> * topicAssignments;
-        int * * typeTopicCounts;
+        vector<vector<int>*> * typeTopicCounts;
         int noTypes;
     };
 
@@ -164,9 +164,10 @@ namespace {
      * 
      */
     TEST_F(ParallelTopicModelWorkerTest, GetTokensPerTopicTest) {
-        int const * const actual = worker->getTokensPerTopic();
+        vector<int> const * const actual = worker->getTokensPerTopic();
+        EXPECT_EQ(tokensPerTopic->size(), actual->size());
         for (int i = 0; i < noTopics; i++) {
-            EXPECT_EQ(tokensPerTopic[i], actual[i]);
+            EXPECT_EQ(tokensPerTopic->at(i), actual->at(i));
         }
     }
 
@@ -216,10 +217,13 @@ namespace {
      * 
      */
     TEST_F(ParallelTopicModelWorkerTest, GetTypeTopicCountsTest) {
-        int const * const * const actual = worker->getTypeTopicCounts();
+        vector<vector<int>*> const * const actual =
+                worker->getTypeTopicCounts();
+        EXPECT_EQ(typeTopicCounts->size(), actual->size());
         for (int i = 0; i < noTypes; i++) {
+            EXPECT_EQ(typeTopicCounts->at(i)->size(), actual->at(i)->size());
             for (int j = 0; j < noTopics; j++) {
-                EXPECT_EQ(typeTopicCounts[i][j], actual[i][j]);
+                EXPECT_EQ(typeTopicCounts->at(i)->at(j), actual->at(i)->at(j));
             }
         }
     }
@@ -245,10 +249,13 @@ namespace {
         EXPECT_EQ(noDocuments, tmp.getNoDocuments());
         EXPECT_EQ(noTopics, tmp.getNoTopics());
         EXPECT_EQ(startDocument, tmp.getStartDocument());
-        int const * const actual3 = tmp.getTokensPerTopic();
+
+        vector<int> const * const actual3 = worker->getTokensPerTopic();
+        EXPECT_EQ(tokensPerTopic->size(), actual3->size());
         for (int i = 0; i < noTopics; i++) {
-            EXPECT_EQ(tokensPerTopic[i], actual3[i]);
+            EXPECT_EQ(tokensPerTopic->at(i), actual3->at(i));
         }
+
         vector<TopicAssignment*> const * const actual4 =
                 tmp.getTopicAssignments();
         EXPECT_EQ(0, actual4->size());
@@ -260,10 +267,14 @@ namespace {
             }
         }
         EXPECT_EQ(0, tmp.getTopicMask());
-        int const * const * const actual6 = tmp.getTypeTopicCounts();
+
+        vector<vector<int>*> const * const actual6 =
+                worker->getTypeTopicCounts();
+        EXPECT_EQ(typeTopicCounts->size(), actual6->size());
         for (int i = 0; i < noTypes; i++) {
+            EXPECT_EQ(typeTopicCounts->at(i)->size(), actual6->at(i)->size());
             for (int j = 0; j < noTopics; j++) {
-                EXPECT_EQ(typeTopicCounts[i][j], actual6[i][j]);
+                EXPECT_EQ(typeTopicCounts->at(i)->at(j), actual6->at(i)->at(j));
             }
         }
     }

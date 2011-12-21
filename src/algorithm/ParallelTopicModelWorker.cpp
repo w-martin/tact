@@ -13,16 +13,17 @@
 #include "tmte-cpp/algorithm/ParallelTopicModelWorker.h"
 
 ParallelTopicModelWorker::ParallelTopicModelWorker(
-        double * alpha,
+        double * const alpha,
         double alphaSum,
         double beta,
         int const noDocuments,
         int const noTopics,
         int const noTypes,
         int const startDocument,
-        int * const tokensPerTopic,
+        vector<int> const * const tokensPerTopic,
         vector<TopicAssignment*> * topicAssignments,
-        int * * typeTopicCounts) {
+        vector<vector<int>*> const * const typeTopicCounts) {
+
     ParallelTopicModelWorker::alpha = alpha;
     ParallelTopicModelWorker::alphaSum = alphaSum;
     ParallelTopicModelWorker::beta = beta;
@@ -30,9 +31,9 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
     ParallelTopicModelWorker::noTopics = noTopics;
     ParallelTopicModelWorker::noTypes = noTypes;
     ParallelTopicModelWorker::startDocument = startDocument;
-    ParallelTopicModelWorker::tokensPerTopic = tokensPerTopic;
+    copyTokensPerTopic(tokensPerTopic);
     ParallelTopicModelWorker::topicAssignments = topicAssignments;
-    ParallelTopicModelWorker::typeTopicCounts = typeTopicCounts;
+    copyTypeTopicCounts(typeTopicCounts);
 
     betaSum = beta * noTypes;
     documentLengthCounts = new int[noDocuments];
@@ -55,9 +56,9 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
 : TopicModel(orig) {
     noDocuments = orig.getNoDocuments();
     startDocument = orig.getStartDocument();
-    tokensPerTopic = orig.getTokensPerTopic();
+    copyTokensPerTopic(orig.getTokensPerTopic());
     topicAssignments = orig.getTopicAssignments();
-    typeTopicCounts = orig.getTypeTopicCounts();
+    copyTypeTopicCounts(orig.getTypeTopicCounts());
 
     noTypes = sizeof (typeTopicCounts) / sizeof (int*);
     int const * const originalDocumentLengthCounts =
@@ -81,10 +82,15 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
 
 ParallelTopicModelWorker::~ParallelTopicModelWorker() {
     delete [] documentLengthCounts;
+    delete tokensPerTopic;
     for (int i = 0; i < noTopics; i++) {
         delete [] topicDocumentCounts[i];
     }
     delete [] topicDocumentCounts;
+    for (int i = 0; i < typeTopicCounts->size(); i++) {
+        delete typeTopicCounts->at(i);
+    }
+    delete typeTopicCounts;
 }
 
 int const * const ParallelTopicModelWorker::getDocumentLengthCounts() const {
@@ -99,7 +105,7 @@ int const ParallelTopicModelWorker::getStartDocument() const {
     return startDocument;
 }
 
-int * const ParallelTopicModelWorker::getTokensPerTopic() const {
+vector<int> const * const ParallelTopicModelWorker::getTokensPerTopic() const {
     return tokensPerTopic;
 }
 
@@ -116,7 +122,20 @@ int const ParallelTopicModelWorker::getTopicMask() const {
     return topicMask;
 }
 
-int * * const ParallelTopicModelWorker::getTypeTopicCounts()
-const {
+vector<vector<int>*> const * const
+ParallelTopicModelWorker::getTypeTopicCounts() const {
     return typeTopicCounts;
+}
+
+void ParallelTopicModelWorker::copyTokensPerTopic(
+        vector<int> const * const orig) {
+    tokensPerTopic = new vector<int>(*orig);
+}
+
+void ParallelTopicModelWorker::copyTypeTopicCounts(
+        vector<vector<int>*> const * const orig) {
+    typeTopicCounts = new vector<vector<int>*>();
+    for (int i = 0; i < orig->size(); i++) {
+        typeTopicCounts->push_back(new vector<int>(*orig->at(i)));
+    }
 }

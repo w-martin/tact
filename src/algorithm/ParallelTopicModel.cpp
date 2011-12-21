@@ -71,7 +71,7 @@ void ParallelTopicModel::estimate() {
 
     // free memory
     for (int i = 0; i < noThreads; i++) {
-        delete workers->at(i);
+//        delete workers->at(i);
     }
     delete workers;
     delete threads;

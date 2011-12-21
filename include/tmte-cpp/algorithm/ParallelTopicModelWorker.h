@@ -33,16 +33,16 @@ public:
      * 
      */
     ParallelTopicModelWorker(
-            double * alpha,
+            double * const alpha,
             double alphaSum,
             double beta,
             int const noDocuments,
             int const noTopics,
             int const noTypes,
             int const startDocument,
-            int * const tokensPerTopic,
+            vector<int> const * const tokensPerTopic,
             vector<TopicAssignment*> * topicAssignments,
-            int * * typeTopicCounts);
+            vector<vector<int>*> const * const typeTopicCounts);
     ParallelTopicModelWorker(const ParallelTopicModelWorker& orig);
     virtual ~ParallelTopicModelWorker();
     /**
@@ -72,7 +72,7 @@ public:
      * @return the histogram of tokens per topic.
      * 
      */
-    int * const getTokensPerTopic() const;
+    vector<int> const * const getTokensPerTopic() const;
     /**
      * Gets the topic bits encoding.
      * Used to encode type/topic counts as count/topic pairs in a single 
@@ -107,7 +107,7 @@ public:
      * @return the type/topic counts.
      * 
      */
-    int * * const getTypeTopicCounts() const;
+    vector<vector<int>*> const * const getTypeTopicCounts() const;
 protected:
     /**
      * Histogram of document lengths.
@@ -122,7 +122,7 @@ protected:
      * Indexed by topic.
      * 
      */
-    int * tokensPerTopic;
+    vector<int> * tokensPerTopic;
     /**
      * Used to encode type/topic counts as count/topic pairs in a single 
      * integer.
@@ -146,7 +146,21 @@ protected:
      * Indexed by [feature index, topic index].
      * 
      */
-    int * * typeTopicCounts;
+    vector<vector<int>*> * typeTopicCounts;
+    /**
+     * Copies the given tokensPerTopic.
+     * 
+     * @param orig The tokensPerTopic to copy.
+     * 
+     */
+    void copyTokensPerTopic(vector<int> const * const orig);
+    /**
+     * Copies the given typeTopicCounts.
+     * 
+     * @param orig the typeTopicCounts to copy.
+     * 
+     */
+    void copyTypeTopicCounts(vector<vector<int>*> const * const orig);
 };
 
 #endif	/* PARALLELTOPICMODELWORKER_H */
