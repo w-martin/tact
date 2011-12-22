@@ -44,12 +44,10 @@ void ParallelTopicModel::estimate() {
     vector<ParallelTopicModelWorker*> * const workers
             = new vector<ParallelTopicModelWorker*>();
     int startingDocument = 0;
-    int * * tokensPerTopic = new int*[noThreads];
-    int * * * typeTopicCounts = new int**[noThreads];
     
     for (int i = 0; i < noThreads; i++) {
         
-        tokensPerTopic[i] = new int[noTopics];
+//        tokensPerTopic[i] = new int[noTopics];
         for(int j=0;j<noTopics;j++){
 //            tokensPerTopic[i][j] = ParallelTopicModel::tokensPerTopic[j];
         }

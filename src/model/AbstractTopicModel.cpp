@@ -28,18 +28,21 @@ AbstractTopicModel::AbstractTopicModel(int const noIterations,
 
     beta = DEFAULT_BETA;
     betaSum = 0.0;
+    tokensPerTopic = new vector<int>(noTopics, 0);
     topicAssignments = new vector<TopicAssignment*>();
+    typeTopicCounts = new vector<vector<int> >();
 }
 
 AbstractTopicModel::AbstractTopicModel(const AbstractTopicModel& orig)
 : TopicModel(orig) {
     noIterations = orig.getNoIterations();
-    copyTopicAssignments(orig);
 }
 
 AbstractTopicModel::~AbstractTopicModel() {
     delete [] alpha;
     deleteAssignments();
+    delete tokensPerTopic;
+    delete typeTopicCounts;
 }
 
 int const AbstractTopicModel::getNoIterations() const {

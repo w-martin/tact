@@ -22,7 +22,7 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
         int const startDocument,
         vector<int> const * const tokensPerTopic,
         vector<TopicAssignment*> * topicAssignments,
-        vector<vector<int>*> const * const typeTopicCounts) {
+        vector<vector<int> > const * const typeTopicCounts) {
 
     ParallelTopicModelWorker::alpha = alpha;
     ParallelTopicModelWorker::alphaSum = alphaSum;
@@ -32,7 +32,7 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
     ParallelTopicModelWorker::noTypes = noTypes;
     ParallelTopicModelWorker::startDocument = startDocument;
     copyTokensPerTopic(tokensPerTopic);
-    ParallelTopicModelWorker::topicAssignments = topicAssignments;
+    copyTopicAssignments(topicAssignments);
     copyTypeTopicCounts(typeTopicCounts);
 
     betaSum = beta * noTypes;
@@ -57,7 +57,7 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
     noDocuments = orig.getNoDocuments();
     startDocument = orig.getStartDocument();
     copyTokensPerTopic(orig.getTokensPerTopic());
-    topicAssignments = orig.getTopicAssignments();
+    copyTopicAssignments(orig.getTopicAssignments());
     copyTypeTopicCounts(orig.getTypeTopicCounts());
 
     noTypes = sizeof (typeTopicCounts) / sizeof (int*);
@@ -82,14 +82,10 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
 
 ParallelTopicModelWorker::~ParallelTopicModelWorker() {
     delete [] documentLengthCounts;
-    delete tokensPerTopic;
     for (int i = 0; i < noTopics; i++) {
         delete [] topicDocumentCounts[i];
     }
     delete [] topicDocumentCounts;
-    for (int i = 0; i < typeTopicCounts->size(); i++) {
-        delete typeTopicCounts->at(i);
-    }
     delete typeTopicCounts;
 }
 
@@ -116,17 +112,4 @@ const {
 
 int const ParallelTopicModelWorker::getTopicMask() const {
     return topicMask;
-}
-
-void ParallelTopicModelWorker::copyTokensPerTopic(
-        vector<int> const * const orig) {
-    tokensPerTopic = new vector<int>(*orig);
-}
-
-void ParallelTopicModelWorker::copyTypeTopicCounts(
-        vector<vector<int>*> const * const orig) {
-    typeTopicCounts = new vector<vector<int>*>();
-    for (int i = 0; i < orig->size(); i++) {
-        typeTopicCounts->push_back(new vector<int>(*orig->at(i)));
-    }
 }

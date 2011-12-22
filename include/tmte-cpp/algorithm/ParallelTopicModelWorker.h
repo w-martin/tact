@@ -42,7 +42,7 @@ public:
             int const startDocument,
             vector<int> const * const tokensPerTopic,
             vector<TopicAssignment*> * topicAssignments,
-            vector<vector<int>*> const * const typeTopicCounts);
+            vector<vector<int> > const * const typeTopicCounts);
     ParallelTopicModelWorker(const ParallelTopicModelWorker& orig);
     virtual ~ParallelTopicModelWorker();
     /**
@@ -122,20 +122,6 @@ protected:
      * 
      */
     int topicMask;
-    /**
-     * Copies the given tokensPerTopic.
-     * 
-     * @param orig The tokensPerTopic to copy.
-     * 
-     */
-    void copyTokensPerTopic(vector<int> const * const orig);
-    /**
-     * Copies the given typeTopicCounts.
-     * 
-     * @param orig the typeTopicCounts to copy.
-     * 
-     */
-    void copyTypeTopicCounts(vector<vector<int>*> const * const orig);
 };
 
 #endif	/* PARALLELTOPICMODELWORKER_H */

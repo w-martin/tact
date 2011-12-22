@@ -101,7 +101,7 @@ public:
      * @return the type/topic counts.
      * 
      */
-    vector<vector<int>*> const * const getTypeTopicCounts() const;
+    vector<vector<int> > const * const getTypeTopicCounts() const;
 protected:
     /**
      * Dirichlet(alpha,alpha,...) is the distribution over topics.
@@ -126,14 +126,28 @@ protected:
      * Indexed by [feature index, topic index].
      * 
      */
-    vector<vector<int>*> * typeTopicCounts;
+    vector<vector<int> > * typeTopicCounts;
+    /**
+     * Copies the given tokensPerTopic.
+     * 
+     * @param orig The tokensPerTopic to copy.
+     * 
+     */
+    void copyTokensPerTopic(vector<int> const * const orig);
     /**
      * Copies the TopicAssignments from the given TopicModel.
      * 
      * @param orig The TopicModel to copy the TopicAssignments from.
      * 
      */
-    void copyTopicAssignments(TopicModel const & orig);
+    void copyTopicAssignments(vector<TopicAssignment*> const * const orig);
+    /**
+     * Copies the given typeTopicCounts.
+     * 
+     * @param orig the typeTopicCounts to copy.
+     * 
+     */
+    void copyTypeTopicCounts(vector<vector<int> > const * const orig);
     /**
      * Deletes the TopicAssignments.
      * 

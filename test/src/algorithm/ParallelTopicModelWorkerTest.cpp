@@ -44,11 +44,11 @@ namespace {
             }
             topicAssignments = new vector<TopicAssignment*>();
             noTypes = TESTNO * 5;
-            typeTopicCounts = new vector<vector<int>*>();
+            typeTopicCounts = new vector<vector<int> >();
             for (int i = 0; i < noTypes; i++) {
-                typeTopicCounts->push_back(new vector<int>());
+                typeTopicCounts->push_back(vector<int>());
                 for (int j = 0; j < noTopics; j++) {
-                    typeTopicCounts->at(i)->push_back(rand());
+                    typeTopicCounts->at(i).push_back(rand());
                 }
             }
 
@@ -70,9 +70,6 @@ namespace {
             delete [] alpha;
             delete tokensPerTopic;
             delete topicAssignments;
-            for (int i = 0; i < typeTopicCounts->size(); i++) {
-                delete typeTopicCounts->at(i);
-            }
             delete typeTopicCounts;
         }
         ParallelTopicModelWorker * worker;
@@ -84,7 +81,7 @@ namespace {
         int startDocument;
         vector<int> * tokensPerTopic;
         vector<TopicAssignment*> * topicAssignments;
-        vector<vector<int>*> * typeTopicCounts;
+        vector<vector<int> > * typeTopicCounts;
         int noTypes;
     };
 
@@ -217,13 +214,13 @@ namespace {
      * 
      */
     TEST_F(ParallelTopicModelWorkerTest, GetTypeTopicCountsTest) {
-        vector<vector<int>*> const * const actual =
+        vector<vector<int> > const * const actual =
                 worker->getTypeTopicCounts();
         EXPECT_EQ(typeTopicCounts->size(), actual->size());
         for (int i = 0; i < noTypes; i++) {
-            EXPECT_EQ(typeTopicCounts->at(i)->size(), actual->at(i)->size());
+            EXPECT_EQ(typeTopicCounts->at(i).size(), actual->at(i).size());
             for (int j = 0; j < noTopics; j++) {
-                EXPECT_EQ(typeTopicCounts->at(i)->at(j), actual->at(i)->at(j));
+                EXPECT_EQ(typeTopicCounts->at(i).at(j), actual->at(i).at(j));
             }
         }
     }
@@ -268,13 +265,13 @@ namespace {
         }
         EXPECT_EQ(0, tmp.getTopicMask());
 
-        vector<vector<int>*> const * const actual6 =
+        vector<vector<int> > const * const actual6 =
                 worker->getTypeTopicCounts();
         EXPECT_EQ(typeTopicCounts->size(), actual6->size());
         for (int i = 0; i < noTypes; i++) {
-            EXPECT_EQ(typeTopicCounts->at(i)->size(), actual6->at(i)->size());
+            EXPECT_EQ(typeTopicCounts->at(i).size(), actual6->at(i).size());
             for (int j = 0; j < noTopics; j++) {
-                EXPECT_EQ(typeTopicCounts->at(i)->at(j), actual6->at(i)->at(j));
+                EXPECT_EQ(typeTopicCounts->at(i).at(j), actual6->at(i).at(j));
             }
         }
     }

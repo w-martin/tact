@@ -27,6 +27,9 @@ TopicModel::TopicModel(const TopicModel& orig) {
     alphaSum = orig.getAlphaSum();
     beta = orig.getBeta();
     betaSum = orig.getBetaSum();
+    copyTokensPerTopic(orig.getTokensPerTopic());
+    copyTopicAssignments(orig.getTopicAssignments());
+    copyTypeTopicCounts(orig.getTypeTopicCounts());
 }
 
 TopicModel::~TopicModel() {
@@ -77,7 +80,7 @@ const {
     return topicAssignments;
 }
 
-vector<vector<int>*> const * const TopicModel::getTypeTopicCounts() const {
+vector<vector<int> > const * const TopicModel::getTypeTopicCounts() const {
     return typeTopicCounts;
 }
 
@@ -88,12 +91,24 @@ void TopicModel::deleteAssignments() {
     delete topicAssignments;
 }
 
-void TopicModel::copyTopicAssignments(TopicModel const & orig) {
-    vector<TopicAssignment*> const * const originalAssignments =
-            orig.getTopicAssignments();
+void TopicModel::copyTokensPerTopic(
+        vector<int> const * const orig) {
+    tokensPerTopic = new vector<int>(*orig);
+}
+
+void TopicModel::copyTopicAssignments(
+        vector<TopicAssignment*> const * const orig) {
     topicAssignments = new vector<TopicAssignment*>();
-    for (int i = 0; i < originalAssignments->size(); i++) {
+    for (int i = 0; i < orig->size(); i++) {
         topicAssignments->push_back(
-                new TopicAssignment(*originalAssignments->at(i)));
+                new TopicAssignment(*orig->at(i)));
+    }
+}
+
+void TopicModel::copyTypeTopicCounts(
+        vector<vector<int> > const * const orig) {
+    typeTopicCounts = new vector<vector<int> >();
+    for (int i = 0; i < orig->size(); i++) {
+        typeTopicCounts->push_back(vector<int>(orig->at(i)));
     }
 }
