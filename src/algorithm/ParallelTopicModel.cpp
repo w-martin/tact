@@ -44,32 +44,74 @@ void ParallelTopicModel::estimate() {
     vector<ParallelTopicModelWorker*> * const workers
             = new vector<ParallelTopicModelWorker*>();
     int startingDocument = 0;
-    
+
     for (int i = 0; i < noThreads; i++) {
-        
-//        tokensPerTopic[i] = new int[noTopics];
-        for(int j=0;j<noTopics;j++){
-//            tokensPerTopic[i][j] = ParallelTopicModel::tokensPerTopic[j];
+        // skip copy
+        // runnableTotals is tokensPertopic
+        //        int[] runnableTotals = new int[numTopics];
+        //        System.arraycopy(tokensPerTopic, 0, runnableTotals, 0, numTopics);
+
+        // runnableCounts is typeTopicCounts
+        //        int[][] runnableCounts = new int[numTypes][];
+        //        for (int type = 0; type < numTypes; type++) {
+        //            int[] counts = new int[typeTopicCounts[type].length];
+        //            System.arraycopy(typeTopicCounts[type], 0, counts, 0, counts.length);
+        //            runnableCounts[type] = counts;
+        //        }
+
+        //        // some docs may be missing at the end due to integer division
+        //        if (thread == numThreads - 1) {
+        //            docsPerThread = data.size() - offset;
+        //        }
+        if (noThreads - 1 == i) {
+            noDocumentsPerThread = topicAssignments->size() - startingDocument;
         }
-        
-//        typeTopicCounts[i] = new int*[noTypes];
-//        for(int j=0;j<noTypes;j++){
-//        typeTopicCounts[i][j] = new int[]
-//        }
-                
+
+        // ignoring random number generator for now
+        //        Randoms random = null;
+        //        if (randomSeed == -1) {
+        //            random = new Randoms();
+        //        } else {
+        //            random = new Randoms(randomSeed);
+        //        }
+
+        // assign thread objects
+        //        runnables[thread] = new WorkerRunnable(numTopics,
+        //                alpha, alphaSum, beta,
+        //                random, data,
+        //                runnableCounts, runnableTotals,
+        //                offset, docsPerThread);
+        workers->push_back(new ParallelTopicModelWorker(
+                alpha,
+                alphaSum,
+                beta,
+                noDocumentsPerThread,
+                noTopics,
+                typeTopicCounts->size(),
+                startingDocument,
+                tokensPerTopic,
+                topicAssignments,
+                typeTopicCounts));
+
+        // ignored as this is done in worker constructor
+        // initializes statistics gathering
+        //        runnables[thread].initializeAlphaStatistics(docLengthCounts.length);
+
+        // increment starting document for thread
+        //        offset += docsPerThread;
         startingDocument += noDocumentsPerThread;
     }
     // start threads
     pthread_t * threads = new pthread_t[noThreads];
     for (int i = 0; i < noThreads; i++) {
-        
+
     }
     // wait on threads
     // evaluate
 
     // free memory
-    for (int i = 0; i < noThreads; i++) {
-//        delete workers->at(i);
+    for (int i = 0; i < workers->size(); i++) {
+        delete workers->at(i);
     }
     delete workers;
     delete threads;
