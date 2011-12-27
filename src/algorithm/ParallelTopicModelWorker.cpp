@@ -49,7 +49,7 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
         }
     }
     topicMask = 0;
-    
+
     // needed for estimation
     shouldSaveState = false;
 }
@@ -81,7 +81,7 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
         }
     }
     topicMask = orig.getTopicMask();
-    
+
     // needed for estimation
     shouldSaveState = false;
 }

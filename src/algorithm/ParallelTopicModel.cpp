@@ -57,6 +57,8 @@ int const ParallelTopicModel::getNoThreads() const {
     return noThreads;
 }
 
+void * run(void* argv);
+
 void ParallelTopicModel::estimate() {
     long startTime = time(NULL);
     int noDocumentsPerThread = topicAssignments->size() / noThreads;
@@ -121,7 +123,7 @@ void ParallelTopicModel::estimate() {
         //        offset += docsPerThread;
         startingDocument += noDocumentsPerThread;
     }
-    pthread_t * threads = new pthread_t[noThreads];
+    pthread_t ** threads = new pthread_t*[noThreads];
     for (int iteration = 0; iteration < noIterations; iteration++) {
         // note start time
         //            long iterationStart = System.currentTimeMillis();
@@ -153,14 +155,19 @@ void ParallelTopicModel::estimate() {
             // log thread started
             //            logger.fine("submitting thread " + thread);
 
-            //            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             // start thread
-            //            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             //            executor.submit(runnables[thread]);
+            pthread_t thread;
+            pthread_create(&thread, NULL, run, (void*) workers->at(i));
+            threads[i] = &thread;
         }
         // wait on threads
+        for (int i = 0; i < noThreads; i++) {
+            pthread_t thread = *threads[i];
+            pthread_join(thread, NULL);
+        }
         // evaluate
-
+        // here
     }
 
     // free memory
@@ -169,6 +176,13 @@ void ParallelTopicModel::estimate() {
     }
     delete workers;
     delete threads;
+}
+
+void * run(void* argv) {
+    ParallelTopicModelWorker * worker = (ParallelTopicModelWorker*) argv;
+    //    int i = *(int*) argv;
+    //    cout << "I am thread " << i << endl;
+    return NULL;
 }
 
 //void * thread(void *argv) {
