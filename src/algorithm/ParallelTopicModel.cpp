@@ -39,7 +39,7 @@ int const ParallelTopicModel::getNoThreads() const {
 
 void ParallelTopicModel::estimate() {
     long startTime = time(NULL);
-    int const noDocumentsPerThread = topicAssignments->size() / noThreads;
+    int noDocumentsPerThread = topicAssignments->size() / noThreads;
     // create worker objects
     vector<ParallelTopicModelWorker*> * const workers
             = new vector<ParallelTopicModelWorker*>();
