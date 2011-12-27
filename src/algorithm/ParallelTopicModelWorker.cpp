@@ -113,3 +113,7 @@ const {
 int const ParallelTopicModelWorker::getTopicMask() const {
     return topicMask;
 }
+
+void ParallelTopicModelWorker::collectAlphaStatistics() {
+    shouldSaveState = true;
+}

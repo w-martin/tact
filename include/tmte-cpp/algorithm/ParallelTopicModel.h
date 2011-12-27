@@ -41,6 +41,14 @@ public:
     int const getNoThreads() const;
 private:
     int noThreads;
+    // needed for estimation
+    int burnInPeriod = 200;
+    int saveSampleInterval = 10;
+    int optimizeInterval = 50;
+    int temperingInterval = 0;
+    int showTopicsInterval = 50;
+    int wordsPerTopic = 7;
+    int saveStateInterval = 0;
 };
 
 #endif	/* PARALLELTOPICMODEL_H */

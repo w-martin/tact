@@ -101,13 +101,47 @@ void ParallelTopicModel::estimate() {
         //        offset += docsPerThread;
         startingDocument += noDocumentsPerThread;
     }
-    // start threads
     pthread_t * threads = new pthread_t[noThreads];
-    for (int i = 0; i < noThreads; i++) {
+    for (int iteration = 0; iteration < noIterations; iteration++) {
+        // note start time
+        //            long iterationStart = System.currentTimeMillis();
+        long iterationStartTime = time(NULL);
+
+        // ignored for now
+        // log information and save state and model
+        //        if (showTopicsInterval != 0 && iteration != 0 && iteration % showTopicsInterval == 0) {
+        //                logger.info("\n" + displayTopWords(wordsPerTopic, false));
+        //            }
+        //
+        //            if (saveStateInterval != 0 && iteration % saveStateInterval == 0) {
+        //                this.printState(new File(stateFilename + '.' + iteration));
+        //            }
+        //
+        //            if (saveModelInterval != 0 && iteration % saveModelInterval == 0) {
+        //                this.write(new File(modelFilename + '.' + iteration));
+        //            }
+
+        // start threads
+        for (int i = 0; i < noThreads; i++) {
+            // collect statistics
+            if (iteration > burnInPeriod
+                    && optimizeInterval != 0
+                    && iteration % saveSampleInterval == 0) {
+                workers->at(i)->collectAlphaStatistics();
+            }
+
+            // log thread started
+            //            logger.fine("submitting thread " + thread);
+
+            //            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            // start thread
+            //            !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            //            executor.submit(runnables[thread]);
+        }
+        // wait on threads
+        // evaluate
 
     }
-    // wait on threads
-    // evaluate
 
     // free memory
     for (int i = 0; i < workers->size(); i++) {

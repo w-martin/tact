@@ -93,6 +93,11 @@ public:
      * 
      */
     int const getTopicMask() const;
+    /**
+     * Collects alpha statistics.
+     * 
+     */
+    void collectAlphaStatistics();
 protected:
     /**
      * Histogram of document lengths.
@@ -122,6 +127,8 @@ protected:
      * 
      */
     int topicMask;
+    // needed for estimation
+    bool shouldSaveState = false;
 };
 
 #endif	/* PARALLELTOPICMODELWORKER_H */
