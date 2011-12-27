@@ -128,7 +128,7 @@ protected:
      */
     int topicMask;
     // needed for estimation
-    bool shouldSaveState = false;
+    bool shouldSaveState;
 };
 
 #endif	/* PARALLELTOPICMODELWORKER_H */

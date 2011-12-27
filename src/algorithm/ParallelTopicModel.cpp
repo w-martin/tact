@@ -21,13 +21,33 @@ ParallelTopicModel::ParallelTopicModel(
         int const noTopics,
         int const noThreads)
 : AbstractTopicModel(noIterations, noTopics) {
+
     ParallelTopicModel::noThreads = noThreads;
+
+    // needed for estimation
+    burnInPeriod = 200;
+    saveSampleInterval = 10;
+    optimizeInterval = 50;
+    temperingInterval = 0;
+    showTopicsInterval = 50;
+    wordsPerTopic = 7;
+    saveStateInterval = 0;
 }
 
 ParallelTopicModel::ParallelTopicModel(
         const ParallelTopicModel& orig)
 : AbstractTopicModel(orig) {
+
     noThreads = orig.getNoThreads();
+
+    // needed for estimation
+    burnInPeriod = 200;
+    saveSampleInterval = 10;
+    optimizeInterval = 50;
+    temperingInterval = 0;
+    showTopicsInterval = 50;
+    wordsPerTopic = 7;
+    saveStateInterval = 0;
 }
 
 ParallelTopicModel::~ParallelTopicModel() {

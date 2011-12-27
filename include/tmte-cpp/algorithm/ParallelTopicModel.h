@@ -42,13 +42,13 @@ public:
 private:
     int noThreads;
     // needed for estimation
-    int burnInPeriod = 200;
-    int saveSampleInterval = 10;
-    int optimizeInterval = 50;
-    int temperingInterval = 0;
-    int showTopicsInterval = 50;
-    int wordsPerTopic = 7;
-    int saveStateInterval = 0;
+    int burnInPeriod;
+    int saveSampleInterval;
+    int optimizeInterval;
+    int temperingInterval;
+    int showTopicsInterval;
+    int wordsPerTopic;
+    int saveStateInterval;
 };
 
 #endif	/* PARALLELTOPICMODEL_H */
