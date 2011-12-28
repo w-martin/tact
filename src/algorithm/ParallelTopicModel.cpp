@@ -182,6 +182,9 @@ void * run(void* argv) {
     ParallelTopicModelWorker * worker = (ParallelTopicModelWorker*) argv;
     //    int i = *(int*) argv;
     //    cout << "I am thread " << i << endl;
+
+    worker->run();
+
     return NULL;
 }
 

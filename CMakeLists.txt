@@ -24,6 +24,7 @@ add_library (${TMTE_LIB}
     ${TMTE_SOURCE_DIR}/algorithm/ParallelTopicModel.cpp
     ${TMTE_SOURCE_DIR}/algorithm/ParallelTopicModelWorker.cpp
     ${TMTE_SOURCE_DIR}/input/FeatureVector.cpp
+    ${TMTE_SOURCE_DIR}/input/Instance.cpp
     ${TMTE_SOURCE_DIR}/input/InstanceList.cpp
     ${TMTE_SOURCE_DIR}/input/Pipe.cpp
     ${TMTE_SOURCE_DIR}/model/AbstractTopicModel.cpp
@@ -71,6 +72,7 @@ add_test(AlgorithmTests AlgorithmTests)
 add_executable(InputTests
 	${TMTE_TEST_DIR}/input/exceptions/AlphabetSetExceptionTest.cpp
 	${TMTE_TEST_DIR}/input/FeatureVectorTest.cpp
+	${TMTE_TEST_DIR}/input/InstanceTest.cpp
 	${TMTE_TEST_DIR}/input/InstanceListTest.cpp
 	${TMTE_TEST_DIR}/input/PipeTest.cpp
 	) 

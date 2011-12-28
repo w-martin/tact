@@ -32,11 +32,21 @@ namespace {
             testPipe->setDataAlphabet(alphabetPTR);
             pipePTR = auto_ptr<Pipe > (testPipe);
             instanceList = new InstanceList(pipePTR);
+            
+            auto_ptr<Alphabet > alphabet =
+                    auto_ptr<Alphabet > (new Alphabet());
+            auto_ptr<vector<int> > features =
+                    auto_ptr<vector<int> >(new vector<int>());
+            data = new FeatureVector(alphabet, features);
+            instance = new Instance(auto_ptr<FeatureVector > (data));
         }
 
         virtual ~InstanceListTest() {
             delete instanceList;
+            delete instance;
         }
+        Instance * instance;
+        FeatureVector * data;
         InstanceList * instanceList;
         Pipe * testPipe;
         auto_ptr<Pipe> pipePTR;
@@ -50,13 +60,13 @@ namespace {
      */
     TEST_F(InstanceListTest, InstancesTest) {
         EXPECT_EQ(0, instanceList->getInstances()->size());
-        Instance * i = new Instance();
+        Instance * i = new Instance(*instance);
         EXPECT_TRUE(instanceList->addInstance(i));
         vector<Instance*> const * tmp = instanceList->getInstances();
         EXPECT_EQ(1, tmp->size());
         EXPECT_EQ(i, tmp->at(0));
         EXPECT_FALSE(instanceList->addInstance(i));
-        i = new Instance();
+        i = new Instance(*instance);
         EXPECT_TRUE(instanceList->addInstance(i));
         tmp = instanceList->getInstances();
         EXPECT_EQ(2, tmp->size());
@@ -70,7 +80,7 @@ namespace {
      */
     TEST_F(InstanceListTest, GetSizeTest) {
         EXPECT_EQ(0, instanceList->getSize());
-        Instance * i = new Instance();
+        Instance * i = new Instance(*instance);
         instanceList->addInstance(i);
         EXPECT_EQ(1, instanceList->getSize());
     }
@@ -115,7 +125,7 @@ namespace {
      * 
      */
     TEST_F(InstanceListTest, CopyConstructorTest) {
-        Instance * i = new Instance();
+        Instance * i = new Instance(*instance);
         instanceList->addInstance(i);
         InstanceList const * const tmp = new InstanceList(*instanceList);
         EXPECT_NE(tmp, instanceList);

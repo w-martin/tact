@@ -187,7 +187,8 @@ void ParallelTopicModelWorker::run() {
     for (int doc = startDocument;
             doc < noDocuments && doc < (startDocument + noDocuments);
             doc++) {
-//        FeatureVector * tokenSequence = data->at(i)->getData();
+        FeatureVector * tokenSequence =
+                topicAssignments->at(doc)->getInstance()->getData();
     }
 
     //        if (shouldBuildLocalCounts) {

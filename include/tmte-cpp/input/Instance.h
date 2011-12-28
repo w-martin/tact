@@ -13,21 +13,26 @@
 #ifndef INSTANCE_H
 #define	INSTANCE_H
 
+#include "tmte-cpp/input/FeatureVector.h"
+
 /**
  * Instance class for inputting corpus files.
  * 
  */
 class Instance {
 public:
-
-    Instance() {
-    }
-
-    Instance(const Instance& orig) {
-    }
-
-    virtual ~Instance() {
-    }
+    Instance(auto_ptr<FeatureVector> data);
+    Instance(const Instance& orig);
+    virtual ~Instance();
+    /**
+     * Gets the data.
+     * 
+     * @return the data.
+     * 
+     */
+    FeatureVector * const getData() const;
+private:
+    auto_ptr<FeatureVector> data;
 };
 
 #endif	/* INSTANCE_H */
