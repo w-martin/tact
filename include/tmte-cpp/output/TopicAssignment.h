@@ -22,7 +22,8 @@
  */
 class TopicAssignment : public Assignment {
 public:
-    TopicAssignment(Instance const * const instance);
+    TopicAssignment(Instance const * const instance,
+            FeatureVector * const topicSequence);
     TopicAssignment(TopicAssignment const & orig);
     virtual ~TopicAssignment();
     /**
@@ -32,8 +33,16 @@ public:
      * 
      */
     Instance const * const getInstance() const;
+    /**
+     * Gets the Topic sequence.
+     * 
+     * @return the Topic sequence.
+     * 
+     */
+    FeatureVector * const getTopicSequence() const;
 private:
     Instance const * instance;
+    FeatureVector * topicSequence;
 };
 
 #endif	/* TOPICASSIGNMENT_H */

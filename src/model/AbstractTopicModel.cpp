@@ -57,7 +57,10 @@ void AbstractTopicModel::addInstances(auto_ptr<InstanceList> instanceList) {
             AbstractTopicModel::instanceList->getInstances();
     for (int i = 0; i < AbstractTopicModel::instanceList->getSize(); i++) {
         Instance const * const instance = instances->at(i);
-        TopicAssignment * assignment = new TopicAssignment(instance);
+        TopicAssignment * assignment = new TopicAssignment(instance,
+                new FeatureVector(
+                auto_ptr<Alphabet > (new Alphabet()),
+                auto_ptr<vector<int> >(new vector<int>())));
         for (int t = 0; t < noTopics; t++) {
             stringstream stream;
             stream << t;

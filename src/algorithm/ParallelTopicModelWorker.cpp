@@ -13,7 +13,6 @@
 #include <iostream>
 
 #include "tmte-cpp/algorithm/ParallelTopicModelWorker.h"
-#include "tmte-cpp/input/FeatureVector.h"
 
 ParallelTopicModelWorker::ParallelTopicModelWorker(
         double * const alpha,
@@ -189,6 +188,11 @@ void ParallelTopicModelWorker::run() {
             doc++) {
         FeatureVector * tokenSequence =
                 topicAssignments->at(doc)->getInstance()->getData();
+        FeatureVector * topicSequence =
+                topicAssignments->at(doc)->getTopicSequence();
+        
+        
+        
     }
 
     //        if (shouldBuildLocalCounts) {

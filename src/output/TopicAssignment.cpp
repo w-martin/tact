@@ -12,13 +12,16 @@
 
 #include "tmte-cpp/output/TopicAssignment.h"
 
-TopicAssignment::TopicAssignment(Instance const * const instance) {
+TopicAssignment::TopicAssignment(Instance const * const instance,
+        FeatureVector * const topicSequence) {
     TopicAssignment::instance = instance;
+    TopicAssignment::topicSequence = topicSequence;
 }
 
 TopicAssignment::TopicAssignment(TopicAssignment const & orig)
 : Assignment(orig) {
     TopicAssignment::instance = orig.getInstance();
+    TopicAssignment::topicSequence = orig.getTopicSequence();
 }
 
 TopicAssignment::~TopicAssignment() {
@@ -26,4 +29,8 @@ TopicAssignment::~TopicAssignment() {
 
 Instance const * const TopicAssignment::getInstance() const {
     return instance;
+}
+
+FeatureVector * const TopicAssignment::getTopicSequence() const {
+    return topicSequence;
 }

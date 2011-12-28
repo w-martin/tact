@@ -28,18 +28,21 @@ namespace {
             auto_ptr<vector<int> > features =
                     auto_ptr<vector<int> >(new vector<int>());
             data = new FeatureVector(alphabet, features);
+            topicSequence = new FeatureVector(*data);
             instance = new Instance(auto_ptr<FeatureVector > (data));
-            
-            assignment = new TopicAssignment(instance);
+
+            assignment = new TopicAssignment(instance, topicSequence);
         }
 
         virtual ~TopicAssignmentTest() {
             delete assignment;
             delete instance;
+            delete topicSequence;
         }
         TopicAssignment * assignment;
         Instance * instance;
         FeatureVector * data;
+        FeatureVector * topicSequence;
     };
 
     /*
@@ -51,12 +54,21 @@ namespace {
     }
 
     /*
+     * Tests whether the getTopicSequence method works correctly.
+     * 
+     */
+    TEST_F(TopicAssignmentTest, GetTopicSequenceTest) {
+        EXPECT_EQ(topicSequence, assignment->getTopicSequence());
+    }
+
+    /*
      * Tests whether the copy constructor works correctly.
      * 
      */
     TEST_F(TopicAssignmentTest, CopyConstructorTest) {
         TopicAssignment * tmp = new TopicAssignment(*assignment);
         EXPECT_EQ(instance, tmp->getInstance());
+        EXPECT_EQ(topicSequence, tmp->getTopicSequence());
         delete tmp;
     }
 }
