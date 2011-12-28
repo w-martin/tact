@@ -35,3 +35,7 @@ Alphabet const * const FeatureVector::getAlphabet() const {
 vector<int> const * const FeatureVector::getFeatures() const {
     return features.get();
 }
+
+int const FeatureVector::getSize() const {
+    return features->size();
+}

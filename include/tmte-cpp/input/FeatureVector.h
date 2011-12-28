@@ -44,6 +44,13 @@ public:
      * 
      */
     vector<int> const * const getFeatures() const;
+    /**
+     * Gets the size of this FeatureVector.
+     * 
+     * @return the size of this FeatureVector.
+     * 
+     */
+    int const getSize() const;
 private:
     auto_ptr<Alphabet> alphabet;
     auto_ptr<vector<int> > features;

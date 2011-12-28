@@ -97,7 +97,13 @@ public:
      * Collects alpha statistics.
      * 
      */
-    void collectAlphaStatistics();
+    virtual void collectAlphaStatistics();
+    /**
+     * Runs an iteration of the algorithm on the given data 
+     * with the given parameters.
+     * 
+     */
+    virtual void run();
 protected:
     /**
      * Histogram of document lengths.
@@ -128,7 +134,10 @@ protected:
      */
     int topicMask;
     // needed for estimation
+    double * cachedCoefficients;
+    bool isFinished;
     bool shouldSaveState;
+    int smoothingOnlyMass;
 };
 
 #endif	/* PARALLELTOPICMODELWORKER_H */

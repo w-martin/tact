@@ -35,13 +35,13 @@ namespace {
             testFeatures = new vector<int>();
             testFeatures->push_back(0);
             featuresPTR = auto_ptr<vector<int> >(testFeatures);
-            featureVector = new FeatureVector(alphabetPTR, featuresPTR);
+            fv = new FeatureVector(alphabetPTR, featuresPTR);
         }
 
         virtual ~FeatureVectorTest() {
-            delete featureVector;
+            delete fv;
         }
-        FeatureVector * featureVector;
+        FeatureVector * fv;
         Alphabet * testAlphabet;
         auto_ptr<Alphabet> alphabetPTR;
         vector<int> * testFeatures;
@@ -53,9 +53,9 @@ namespace {
      * 
      */
     TEST_F(FeatureVectorTest, GetAlphabetTest) {
-        EXPECT_EQ(testAlphabet, featureVector->getAlphabet());
+        EXPECT_EQ(testAlphabet, fv->getAlphabet());
         EXPECT_STREQ(testWord,
-                featureVector->getAlphabet()->getWord(0).c_str());
+                fv->getAlphabet()->getWord(0).c_str());
     }
 
     /*
@@ -63,8 +63,16 @@ namespace {
      * 
      */
     TEST_F(FeatureVectorTest, GetFeaturesTest) {
-        EXPECT_EQ(testFeatures, featureVector->getFeatures());
-        EXPECT_EQ(0, featureVector->getFeatures()->at(0));
+        EXPECT_EQ(testFeatures, fv->getFeatures());
+        EXPECT_EQ(0, fv->getFeatures()->at(0));
+    }
+
+    /*
+     * Tests whether the getSize method works correctly.
+     * 
+     */
+    TEST_F(FeatureVectorTest, GetSizeTest) {
+        EXPECT_EQ(1, fv->getSize());
     }
 
     /*
@@ -72,13 +80,14 @@ namespace {
      * 
      */
     TEST_F(FeatureVectorTest, CopyConstructorTest) {
-        FeatureVector const * tmp = new FeatureVector(*featureVector);
+        FeatureVector const * tmp = new FeatureVector(*fv);
         Alphabet const * const a = tmp->getAlphabet();
         EXPECT_EQ(1, a->getSize());
         EXPECT_STREQ(testWord, a->getWord(0).c_str());
         vector<int> const * const f = tmp->getFeatures();
         EXPECT_EQ(1, f->size());
         EXPECT_EQ(0, f->at(0));
+        EXPECT_EQ(1, tmp->getSize());
         delete tmp;
     }
 }

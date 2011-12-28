@@ -10,7 +10,10 @@
  * 
  */
 
+#include <iostream>
+
 #include "tmte-cpp/algorithm/ParallelTopicModelWorker.h"
+#include "tmte-cpp/input/FeatureVector.h"
 
 ParallelTopicModelWorker::ParallelTopicModelWorker(
         double * const alpha,
@@ -51,6 +54,8 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
     topicMask = 0;
 
     // needed for estimation
+    cachedCoefficients = new double[noTopics];
+    isFinished = false;
     shouldSaveState = false;
 }
 
@@ -83,6 +88,8 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
     topicMask = orig.getTopicMask();
 
     // needed for estimation
+    cachedCoefficients = new double[noTopics];
+    isFinished = true;
     shouldSaveState = false;
 }
 
@@ -122,4 +129,75 @@ int const ParallelTopicModelWorker::getTopicMask() const {
 
 void ParallelTopicModelWorker::collectAlphaStatistics() {
     shouldSaveState = true;
+}
+
+void ParallelTopicModelWorker::run() {
+
+    //    try {
+    //
+    //        if (!isFinished) {
+    //            System.out.println("already running!");
+    //            return;
+    //        }
+    if (!isFinished) {
+        std::cout << "already running!";
+        return;
+    }
+
+    //        isFinished = false;
+    isFinished = false;
+
+    //        // Initialize the smoothing-only sampling bucket
+    //        smoothingOnlyMass = 0;
+    smoothingOnlyMass = 0;
+
+    //        // Initialize the cached coefficients, using only smoothing.
+    //        //  These values will be selectively replaced in documents with
+    //        //  non-zero counts in particular topics.
+    //
+    //        for (int topic = 0; topic < numTopics; topic++) {
+    //            smoothingOnlyMass += alpha[topic] * beta / (tokensPerTopic[topic] + betaSum);
+    //            cachedCoefficients[topic] = alpha[topic] / (tokensPerTopic[topic] + betaSum);
+    //        }
+    for (int topic = 0; topic < noTopics; topic++) {
+        smoothingOnlyMass += alpha[topic] * beta /
+                (tokensPerTopic->at(topic) + betaSum);
+        cachedCoefficients[topic] = alpha[topic] /
+                (tokensPerTopic->at(topic) + betaSum);
+    }
+
+    //        for (int doc = startDoc;
+    //                doc < data.size() && doc < startDoc + numDocs;
+    //                doc++) {
+    //
+    //            /*
+    //            if (doc % 10000 == 0) {
+    //            System.out.println("processing doc " + doc);
+    //            }
+    //             */
+    //
+    //            FeatureSequence tokenSequence =
+    //                    (FeatureSequence) data.get(doc).instance.getData();
+    //            LabelSequence topicSequence =
+    //                    (LabelSequence) data.get(doc).topicSequence;
+    //
+    //            sampleTopicsForOneDoc(tokenSequence, topicSequence,
+    //                    true);
+    //        }
+    for (int doc = startDocument;
+            doc < noDocuments && doc < (startDocument + noDocuments);
+            doc++) {
+//        FeatureVector * tokenSequence = data->at(i)->getData();
+    }
+
+    //        if (shouldBuildLocalCounts) {
+    //            buildLocalTypeTopicCounts();
+    //        }
+    //
+    //        shouldSaveState = false;
+    //        isFinished = true;
+    //
+    //    } catch (Exception e) {
+    //        e.printStackTrace();
+    //    }
 }
