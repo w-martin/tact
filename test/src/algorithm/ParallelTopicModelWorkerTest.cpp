@@ -86,6 +86,15 @@ namespace {
     };
 
     /*
+     * Tests whether the pass to the collectAlphaStatistics method works 
+     * correctly.
+     * 
+     */
+    TEST_F(ParallelTopicModelWorkerTest, CollectAlphaStatisticsTest) {
+        worker->collectAlphaStatistics();
+    }
+
+    /*
      * Tests whether the pass to the getAlpha method works correctly.
      * 
      */
