@@ -38,9 +38,9 @@ namespace {
             noDocuments = TESTNO - 1;
             noTopics = TESTNO * 3;
             startDocument = rand();
-            tokensPerTopic = new vector<int>();
+            tokensPerTopic = new int[noTopics];
             for (int i = 0; i < noTopics; i++) {
-                tokensPerTopic->push_back(rand());
+                tokensPerTopic[i] = rand();
             }
             topicAssignments = new vector<TopicAssignment*>();
             noTypes = TESTNO * 5;
@@ -68,7 +68,7 @@ namespace {
         virtual ~ParallelTopicModelWorkerTest() {
             delete worker;
             delete [] alpha;
-            delete tokensPerTopic;
+            delete [] tokensPerTopic;
             delete topicAssignments;
             delete typeTopicCounts;
         }
@@ -79,7 +79,7 @@ namespace {
         int noDocuments;
         int noTopics;
         int startDocument;
-        vector<int> * tokensPerTopic;
+        int * tokensPerTopic;
         vector<TopicAssignment*> * topicAssignments;
         vector<vector<int> > * typeTopicCounts;
         int noTypes;
@@ -170,10 +170,9 @@ namespace {
      * 
      */
     TEST_F(ParallelTopicModelWorkerTest, GetTokensPerTopicTest) {
-        vector<int> const * const actual = worker->getTokensPerTopic();
-        EXPECT_EQ(tokensPerTopic->size(), actual->size());
+        int const * const actual = worker->getTokensPerTopic();
         for (int i = 0; i < noTopics; i++) {
-            EXPECT_EQ(tokensPerTopic->at(i), actual->at(i));
+            EXPECT_EQ(tokensPerTopic[i], actual[i]);
         }
     }
 
@@ -256,10 +255,9 @@ namespace {
         EXPECT_EQ(noTopics, tmp.getNoTopics());
         EXPECT_EQ(startDocument, tmp.getStartDocument());
 
-        vector<int> const * const actual3 = worker->getTokensPerTopic();
-        EXPECT_EQ(tokensPerTopic->size(), actual3->size());
+        int const * const actual3 = worker->getTokensPerTopic();
         for (int i = 0; i < noTopics; i++) {
-            EXPECT_EQ(tokensPerTopic->at(i), actual3->at(i));
+            EXPECT_EQ(tokensPerTopic[i], actual3[i]);
         }
 
         vector<TopicAssignment*> const * const actual4 =

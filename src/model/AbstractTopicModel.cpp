@@ -28,7 +28,7 @@ AbstractTopicModel::AbstractTopicModel(int const noIterations,
 
     beta = DEFAULT_BETA;
     betaSum = 0.0;
-    tokensPerTopic = new vector<int>(noTopics, 0);
+    tokensPerTopic = new int[noTopics];
     topicAssignments = new vector<TopicAssignment*>();
     typeTopicCounts = new vector<vector<int> >();
 }

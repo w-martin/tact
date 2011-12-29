@@ -86,7 +86,7 @@ public:
      * @return the histogram of tokens per topic.
      * 
      */
-    vector<int> const * const getTokensPerTopic() const;
+    int const * const getTokensPerTopic() const;
     /**
      * Gets the list of TopicAssignments.
      * 
@@ -120,7 +120,7 @@ protected:
      * Indexed by topic.
      * 
      */
-    vector<int> * tokensPerTopic;
+    int * tokensPerTopic;
     vector<TopicAssignment*> * topicAssignments;
     /**
      * Indexed by [feature index, topic index].
@@ -133,7 +133,7 @@ protected:
      * @param orig The tokensPerTopic to copy.
      * 
      */
-    void copyTokensPerTopic(vector<int> const * const orig);
+    void copyTokensPerTopic(int const * const orig);
     /**
      * Copies the TopicAssignments from the given TopicModel.
      * 

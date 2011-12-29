@@ -14,6 +14,9 @@
 
 #include "tmte-cpp/algorithm/ParallelTopicModelWorker.h"
 #include "tmte-cpp/algorithm/ParallelTopicModel.h"
+#include <assert.h>
+
+using std::cout;
 
 ParallelTopicModelWorker::ParallelTopicModelWorker(
         double * const alpha,
@@ -23,7 +26,7 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
         int const noTopics,
         int const noTypes,
         int const startDocument,
-        vector<int> const * const tokensPerTopic,
+        int const * const tokensPerTopic,
         vector<TopicAssignment*> * topicAssignments,
         vector<vector<int> > const * const typeTopicCounts) {
 
@@ -161,9 +164,9 @@ void ParallelTopicModelWorker::run() {
     //        }
     for (int topic = 0; topic < noTopics; topic++) {
         smoothingOnlyMass += alpha[topic] * beta /
-                (tokensPerTopic->at(topic) + betaSum);
+                (tokensPerTopic[topic] + betaSum);
         cachedCoefficients[topic] = alpha[topic] /
-                (tokensPerTopic->at(topic) + betaSum);
+                (tokensPerTopic[topic] + betaSum);
     }
 
     //        for (int doc = startDoc;
@@ -218,7 +221,7 @@ void ParallelTopicModelWorker::sampleTopics(
     //		int type, oldTopic, newTopic;
     //		double topicWeightsSum;
     //		int docLength = tokenSequence.getLength();
-    int * currentTypeTopicCounts;
+    vector<int> currentTypeTopicCounts;
     int type;
     int oldTopic;
     int newTopic;
@@ -283,9 +286,9 @@ void ParallelTopicModelWorker::sampleTopics(
     for (denseIndex = 0; denseIndex < nonZeroTopics; denseIndex++) {
         int topic = localTopicIndex[denseIndex];
         int n = localTopicCounts[topic];
-        topicBetaMass += (beta * n) / (tokensPerTopic->at(topic) + betaSum);
+        topicBetaMass += (beta * n) / (tokensPerTopic[topic] + betaSum);
         cachedCoefficients[topic] =
-                (alpha[topic] + n) / (tokensPerTopic->at(topic) + betaSum);
+                (alpha[topic] + n) / (tokensPerTopic[topic] + betaSum);
     }
 
     //		double topicTermMass = 0.0;
@@ -310,65 +313,97 @@ void ParallelTopicModelWorker::sampleTopics(
         oldTopic = oneDocTopics->at(position);
 
         //			currentTypeTopicCounts = typeTopicCounts[type];
-        //
+        currentTypeTopicCounts = typeTopicCounts->at(type);
+
         //			if (oldTopic != ParallelTopicModel.UNASSIGNED_TOPIC) {
         //				//	Remove this token from all counts. 
-        //				
-        //				// Remove this topic's contribution to the 
-        //				//  normalizing constants
-        //				smoothingOnlyMass -= alpha[oldTopic] * beta / 
-        //					(tokensPerTopic[oldTopic] + betaSum);
-        //				topicBetaMass -= beta * localTopicCounts[oldTopic] /
-        //					(tokensPerTopic[oldTopic] + betaSum);
-        //				
-        //				// Decrement the local doc/topic counts
-        //				
-        //				localTopicCounts[oldTopic]--;
-        //				
-        //				// Maintain the dense index, if we are deleting
-        //				//  the old topic
-        //				if (localTopicCounts[oldTopic] == 0) {
-        //					
-        //					// First get to the dense location associated with
-        //					//  the old topic.
-        //					
-        //					denseIndex = 0;
-        //					
-        //					// We know it's in there somewhere, so we don't 
-        //					//  need bounds checking.
-        //					while (localTopicIndex[denseIndex] != oldTopic) {
-        //						denseIndex++;
-        //					}
-        //				
-        //					// shift all remaining dense indices to the left.
-        //					while (denseIndex < nonZeroTopics) {
-        //						if (denseIndex < localTopicIndex.length - 1) {
-        //							localTopicIndex[denseIndex] = 
-        //								localTopicIndex[denseIndex + 1];
-        //						}
-        //						denseIndex++;
-        //					}
-        //					
-        //					nonZeroTopics --;
-        //				}
-        //
-        //				// Decrement the global topic count totals
-        //				tokensPerTopic[oldTopic]--;
-        //				assert(tokensPerTopic[oldTopic] >= 0) : "old Topic " + oldTopic + " below 0";
-        //			
-        //
-        //				// Add the old topic's contribution back into the
-        //				//  normalizing constants.
-        //				smoothingOnlyMass += alpha[oldTopic] * beta / 
-        //					(tokensPerTopic[oldTopic] + betaSum);
-        //				topicBetaMass += beta * localTopicCounts[oldTopic] /
-        //					(tokensPerTopic[oldTopic] + betaSum);
-        //
-        //				// Reset the cached coefficient for this topic
-        //				cachedCoefficients[oldTopic] = 
-        //					(alpha[oldTopic] + localTopicCounts[oldTopic]) /
-        //					(tokensPerTopic[oldTopic] + betaSum);
-        //			}
+        if (oldTopic != UNASSIGNED_TOPIC) {
+
+            //				// Remove this topic's contribution to the 
+            //				//  normalizing constants
+            //				smoothingOnlyMass -= alpha[oldTopic] * beta / 
+            //					(tokensPerTopic[oldTopic] + betaSum);
+            //				topicBetaMass -= beta * localTopicCounts[oldTopic] /
+            //					(tokensPerTopic[oldTopic] + betaSum);
+            smoothingOnlyMass -= (alpha[oldTopic] * beta)
+                    / (tokensPerTopic[oldTopic] + betaSum);
+            topicBetaMass -= (beta * localTopicCounts[oldTopic])
+                    / (tokensPerTopic[oldTopic] + betaSum);
+
+            //				// Decrement the local doc/topic counts
+            //				localTopicCounts[oldTopic]--;
+            localTopicCounts[oldTopic]--;
+
+            //				// Maintain the dense index, if we are deleting
+            //				//  the old topic
+            //				if (localTopicCounts[oldTopic] == 0) {
+            if (0 == localTopicCounts[oldTopic]) {
+
+                //					// First get to the dense location associated with
+                //					//  the old topic.
+                //					
+                //					denseIndex = 0;
+                denseIndex = 0;
+
+                //					// We know it's in there somewhere, so we don't 
+                //					//  need bounds checking.
+                //					while (localTopicIndex[denseIndex] != oldTopic) {
+                //						denseIndex++;
+                //					}
+                while (localTopicIndex[denseIndex] != oldTopic) {
+                    denseIndex++;
+                }
+
+                //					// shift all remaining dense indices to the left.
+                //					while (denseIndex < nonZeroTopics) {
+                //						if (denseIndex < localTopicIndex.length - 1) {
+                //							localTopicIndex[denseIndex] = 
+                //								localTopicIndex[denseIndex + 1];
+                //						}
+                //						denseIndex++;
+                //					}
+                //					nonZeroTopics --;
+                //				}
+                while (denseIndex < nonZeroTopics) {
+                    if (denseIndex < noTopics - 1) {
+                        localTopicIndex[denseIndex] =
+                                localTopicIndex[denseIndex + 1];
+                    }
+                    denseIndex++;
+                }
+                nonZeroTopics--;
+            }
+
+            //				// Decrement the global topic count totals
+            //				tokensPerTopic[oldTopic]--;
+            //				assert(tokensPerTopic[oldTopic] >= 0) : "old Topic " + oldTopic + " below 0";
+            tokensPerTopic[oldTopic]--;
+            if (0 <= tokensPerTopic[oldTopic]) {
+                cout << "old Topic " << oldTopic << " below 0";
+                assert(0 <= tokensPerTopic[oldTopic]);
+            }
+
+            //				// Add the old topic's contribution back into the
+            //				//  normalizing constants.
+            //				smoothingOnlyMass += alpha[oldTopic] * beta / 
+            //					(tokensPerTopic[oldTopic] + betaSum);
+            //				topicBetaMass += beta * localTopicCounts[oldTopic] /
+            //					(tokensPerTopic[oldTopic] + betaSum);
+            smoothingOnlyMass += (alpha[oldTopic] * beta) /
+                    (tokensPerTopic[oldTopic] + betaSum);
+            topicBetaMass += (beta * localTopicCounts[oldTopic]) /
+                    (tokensPerTopic[oldTopic] + betaSum);
+
+            //				// Reset the cached coefficient for this topic
+            //				cachedCoefficients[oldTopic] = 
+            //					(alpha[oldTopic] + localTopicCounts[oldTopic]) /
+            //					(tokensPerTopic[oldTopic] + betaSum);
+            //			}
+            cachedCoefficients[oldTopic] =
+                    (alpha[oldTopic] + localTopicCounts[oldTopic]) /
+                    (tokensPerTopic[oldTopic] + betaSum);
+        }
+
         //
         //
         //			// Now go over the type/topic counts, decrementing

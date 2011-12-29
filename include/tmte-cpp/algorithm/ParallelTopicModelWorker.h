@@ -40,7 +40,7 @@ public:
             int const noTopics,
             int const noTypes,
             int const startDocument,
-            vector<int> const * const tokensPerTopic,
+            int const * const tokensPerTopic,
             vector<TopicAssignment*> * topicAssignments,
             vector<vector<int> > const * const typeTopicCounts);
     ParallelTopicModelWorker(const ParallelTopicModelWorker& orig);

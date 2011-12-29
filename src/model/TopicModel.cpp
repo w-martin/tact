@@ -71,7 +71,7 @@ double const TopicModel::getBetaSum() const {
     return betaSum;
 }
 
-vector<int> const * const TopicModel::getTokensPerTopic() const {
+int const * const TopicModel::getTokensPerTopic() const {
     return tokensPerTopic;
 }
 
@@ -92,8 +92,11 @@ void TopicModel::deleteAssignments() {
 }
 
 void TopicModel::copyTokensPerTopic(
-        vector<int> const * const orig) {
-    tokensPerTopic = new vector<int>(*orig);
+        int const * const orig) {
+    tokensPerTopic = new int[noTopics];
+    for (int i = 0; i < noTopics; i++) {
+        tokensPerTopic[i] = orig[i];
+    }
 }
 
 void TopicModel::copyTopicAssignments(
