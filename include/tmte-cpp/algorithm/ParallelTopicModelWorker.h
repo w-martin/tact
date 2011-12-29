@@ -104,6 +104,16 @@ public:
      * 
      */
     virtual void run();
+    /**
+     * Samples the topics for a single document whose tokenSequence and
+     * topicSequence is given.
+     * 
+     * @param tokenSequence the tokenSequence for sampling.
+     * @param topicSequence the topicSequence for sampling.
+     * 
+     */
+    virtual void sampleTopics(FeatureVector * const tokenSequence,
+            FeatureVector * const topicSequence);
 protected:
     /**
      * Histogram of document lengths.

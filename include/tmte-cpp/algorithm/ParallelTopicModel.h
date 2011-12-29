@@ -13,6 +13,8 @@
 #ifndef PARALLELTOPICMODEL_H
 #define	PARALLELTOPICMODEL_H
 
+#define UNASSIGNED_TOPIC -1
+
 #include "tmte-cpp/model/AbstractTopicModel.h"
 
 /**
