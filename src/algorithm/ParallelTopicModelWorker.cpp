@@ -17,6 +17,7 @@
 #include <assert.h>
 
 using std::cout;
+using std::endl;
 
 ParallelTopicModelWorker::ParallelTopicModelWorker(
         double * const alpha,
@@ -223,7 +224,7 @@ void ParallelTopicModelWorker::sampleTopics(
         FeatureVector * const tokenSequence,
         FeatureVector * const topicSequence) {
     //		int[] oneDocTopics = topicSequence.getFeatures();
-    vector<int> const * const oneDocTopics = topicSequence->getFeatures();
+    int * const oneDocTopics = topicSequence->getFeatures();
 
     //		int[] currentTypeTopicCounts;
     //		int type, oldTopic, newTopic;
@@ -387,7 +388,7 @@ void ParallelTopicModelWorker::sampleTopics(
             //				assert(tokensPerTopic[oldTopic] >= 0) : "old Topic " + oldTopic + " below 0";
             tokensPerTopic[oldTopic]--;
             if (0 <= tokensPerTopic[oldTopic]) {
-                cout << "old Topic " << oldTopic << " below 0";
+                cout << "old Topic " << oldTopic << " below 0" << endl;
                 assert(0 <= tokensPerTopic[oldTopic]);
             }
 
@@ -613,7 +614,6 @@ void ParallelTopicModelWorker::sampleTopics(
             //				// Move to the position for the new topic,
             //				//  which may be the first empty position if this
             //				//  is a new topic for this word.
-            //				
             //				index = 0;
             //				while (currentTypeTopicCounts[index] > 0 &&
             //					   (currentTypeTopicCounts[index] & topicMask) != newTopic) {
@@ -625,35 +625,62 @@ void ParallelTopicModelWorker::sampleTopics(
             //											 (currentTypeTopicCounts[k] >> topicBits) + " ");
             //						}
             //						System.err.println();
-            //
             //					}
             //				}
-            //
-            //
+            index = 0;
+            while (0 < currentTypeTopicCounts[index]
+                    && (currentTypeTopicCounts[index] & topicMask) != newTopic) {
+                index++;
+                if (currentTypeTopicCounts.size() == index) {
+                    cout << "ERROR: " << "type : "
+                            << type << " new topic : " << newTopic << endl;
+                    for (int k = 0; k < currentTypeTopicCounts.size(); k++) {
+                        cout << (currentTypeTopicCounts[k] & topicMask) << ":"
+                                << (currentTypeTopicCounts[k] >> topicBits)
+                                << " ";
+                    }
+                    cout << endl;
+                }
+            }
+
             //				// index should now be set to the position of the new topic,
             //				//  which may be an empty cell at the end of the list.
-            //
             //				if (currentTypeTopicCounts[index] == 0) {
             //					// inserting a new topic, guaranteed to be in
             //					//  order w.r.t. count, if not topic.
             //					currentTypeTopicCounts[index] = (1 << topicBits) + newTopic;
             //				}
-            //				else {
-            //					currentValue = currentTypeTopicCounts[index] >> topicBits;
-            //					currentTypeTopicCounts[index] = ((currentValue + 1) << topicBits) + newTopic;
-            //
-            //					// Bubble the increased value left, if necessary
-            //					while (index > 0 &&
-            //						   currentTypeTopicCounts[index] > currentTypeTopicCounts[index - 1]) {
-            //						int temp = currentTypeTopicCounts[index];
-            //						currentTypeTopicCounts[index] = currentTypeTopicCounts[index - 1];
-            //						currentTypeTopicCounts[index - 1] = temp;
-            //
-            //						index--;
-            //					}
-            //				}
-            //
-            //			}
+            if (0 == currentTypeTopicCounts[index]) {
+                currentTypeTopicCounts[index] = (1 << topicBits) + newTopic;
+
+                //				else {
+                //					currentValue = currentTypeTopicCounts[index] >> topicBits;
+                //					currentTypeTopicCounts[index] = ((currentValue + 1) << topicBits) + newTopic;
+            } else {
+                currentValue = currentTypeTopicCounts[index] >> topicBits;
+                currentTypeTopicCounts[index] =
+                        ((currentValue + 1) << topicBits) + newTopic;
+
+                //					// Bubble the increased value left, if necessary
+                //					while (index > 0 &&
+                //						   currentTypeTopicCounts[index] > currentTypeTopicCounts[index - 1]) {
+                //						int temp = currentTypeTopicCounts[index];
+                //						currentTypeTopicCounts[index] = currentTypeTopicCounts[index - 1];
+                //						currentTypeTopicCounts[index - 1] = temp;
+                //						index--;
+                //					}
+                //				}
+                //			}
+                while (0 < index
+                        && currentTypeTopicCounts[index - 1]
+                        < currentTypeTopicCounts[index]) {
+                    int tmp = currentTypeTopicCounts[index];
+                    currentTypeTopicCounts[index] =
+                            currentTypeTopicCounts[index - 1];
+                    currentTypeTopicCounts[index - 1] = tmp;
+                    index--;
+                }
+            }
         }
 
         //			if (newTopic == -1) {
@@ -663,77 +690,112 @@ void ParallelTopicModelWorker::sampleTopics(
         //				//throw new IllegalStateException ("WorkerRunnable: New topic not sampled.");
         //			}
         //			//assert(newTopic != -1);
-        //
+        if (-1 == newTopic) {
+            cout << "ERROR: " << "WorkerRunnable sampling error: "
+                    << origSample << " " << sample << " "
+                    << smoothingOnlyMass << " " << topicBetaMass << " "
+                    << topicTermMass << endl;
+            newTopic = noTopics - 1;
+        }
+
         //			//			Put that new topic into the counts
         //			oneDocTopics[position] = newTopic;
-        //
+        oneDocTopics[position] = newTopic;
+
         //			smoothingOnlyMass -= alpha[newTopic] * beta / 
         //				(tokensPerTopic[newTopic] + betaSum);
         //			topicBetaMass -= beta * localTopicCounts[newTopic] /
         //				(tokensPerTopic[newTopic] + betaSum);
-        //
         //			localTopicCounts[newTopic]++;
-        //
+        smoothingOnlyMass -= (alpha[newTopic] * beta)
+                / (tokensPerTopic[newTopic] + betaSum);
+        topicBetaMass -= (localTopicCounts[newTopic] * beta)
+                / (tokensPerTopic[newTopic] + betaSum);
+        localTopicCounts[newTopic]++;
+
         //			// If this is a new topic for this document,
         //			//  add the topic to the dense index.
         //			if (localTopicCounts[newTopic] == 1) {
-        //				
-        //				// First find the point where we 
-        //				//  should insert the new topic by going to
-        //				//  the end (which is the only reason we're keeping
-        //				//  track of the number of non-zero
-        //				//  topics) and working backwards
-        //
-        //				denseIndex = nonZeroTopics;
-        //
-        //				while (denseIndex > 0 &&
-        //					   localTopicIndex[denseIndex - 1] > newTopic) {
-        //
-        //					localTopicIndex[denseIndex] =
-        //						localTopicIndex[denseIndex - 1];
-        //					denseIndex--;
-        //				}
-        //				
-        //				localTopicIndex[denseIndex] = newTopic;
-        //				nonZeroTopics++;
-        //			}
-        //
+        if (1 == localTopicCounts[newTopic]) {
+
+            //				// First find the point where we 
+            //				//  should insert the new topic by going to
+            //				//  the end (which is the only reason we're keeping
+            //				//  track of the number of non-zero
+            //				//  topics) and working backwards
+            //
+            //				denseIndex = nonZeroTopics;
+            denseIndex = nonZeroTopics;
+
+            //				while (denseIndex > 0 &&
+            //					   localTopicIndex[denseIndex - 1] > newTopic) {
+            //					localTopicIndex[denseIndex] =
+            //						localTopicIndex[denseIndex - 1];
+            //					denseIndex--;
+            //				}
+            //				localTopicIndex[denseIndex] = newTopic;
+            //				nonZeroTopics++;
+            //			}
+            while (0 < denseIndex
+                    && newTopic < localTopicIndex[denseIndex - 1]) {
+                localTopicIndex[denseIndex] = localTopicIndex[denseIndex - 1];
+                denseIndex--;
+            }
+            localTopicIndex[denseIndex] = newTopic;
+            nonZeroTopics++;
+        }
+
         //			tokensPerTopic[newTopic]++;
-        //
         //			//	update the coefficients for the non-zero topics
         //			cachedCoefficients[newTopic] =
         //				(alpha[newTopic] + localTopicCounts[newTopic]) /
         //				(tokensPerTopic[newTopic] + betaSum);
-        //
+        tokensPerTopic[newTopic]++;
+        cachedCoefficients[newTopic] =
+                (alpha[newTopic] + localTopicCounts[newTopic])
+                / (tokensPerTopic[newTopic] + betaSum);
+
         //			smoothingOnlyMass += alpha[newTopic] * beta / 
         //				(tokensPerTopic[newTopic] + betaSum);
         //			topicBetaMass += beta * localTopicCounts[newTopic] /
         //				(tokensPerTopic[newTopic] + betaSum);
-        //
         //		}
+        smoothingOnlyMass += (alpha[newTopic] * beta)
+                / (tokensPerTopic[newTopic] + betaSum);
+        topicBetaMass += (localTopicCounts[newTopic] * beta)
+                / (tokensPerTopic[newTopic] + betaSum);
     }
 
     //		if (shouldSaveState) {
     //			// Update the document-topic count histogram,
     //			//  for dirichlet estimation
     //			docLengthCounts[ docLength ]++;
-    //
+    if (shouldSaveState) {
+        documentLengthCounts[documentLength]++;
+    }
+
     //			for (denseIndex = 0; denseIndex < nonZeroTopics; denseIndex++) {
     //				int topic = localTopicIndex[denseIndex];
-    //				
     //				topicDocCounts[topic][ localTopicCounts[topic] ]++;
     //			}
     //		}
-    //
+    for (denseIndex = 0; denseIndex < nonZeroTopics; denseIndex++) {
+        int topic = localTopicIndex[denseIndex];
+        topicDocumentCounts[topic][localTopicCounts[topic]]++;
+    }
+
     //		//	Clean up our mess: reset the coefficients to values with only
     //		//	smoothing. The next doc will update its own non-zero topics...
-    //
     //		for (denseIndex = 0; denseIndex < nonZeroTopics; denseIndex++) {
     //			int topic = localTopicIndex[denseIndex];
-    //
     //			cachedCoefficients[topic] =
     //				alpha[topic] / (tokensPerTopic[topic] + betaSum);
     //		}
+    for (denseIndex = 0; denseIndex < nonZeroTopics; denseIndex++) {
+        int topic = localTopicIndex[denseIndex];
+        cachedCoefficients[topic] = (alpha[topic])
+                / (tokensPerTopic[topic] + betaSum);
+    }
 
     delete localTopicCounts;
     delete localTopicIndex;

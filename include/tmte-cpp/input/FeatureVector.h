@@ -27,7 +27,7 @@ using std::vector;
 class FeatureVector {
 public:
     FeatureVector(auto_ptr<Alphabet> alphabet,
-            auto_ptr<vector<int> > features);
+            int const * const features);
     FeatureVector(const FeatureVector& orig);
     virtual ~FeatureVector();
     /**
@@ -53,7 +53,8 @@ public:
     int const getSize() const;
 private:
     auto_ptr<Alphabet> alphabet;
-    auto_ptr<vector<int> > features;
+    int * features;
+    void copyFeatures()
 };
 
 #endif	/* FEATUREVECTOR_H */

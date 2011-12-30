@@ -32,8 +32,8 @@ Alphabet const * const FeatureVector::getAlphabet() const {
     return alphabet.get();
 }
 
-vector<int> const * const FeatureVector::getFeatures() const {
-    return features.get();
+int * const FeatureVector::getFeatures() const {
+    return features;
 }
 
 int const FeatureVector::getSize() const {
