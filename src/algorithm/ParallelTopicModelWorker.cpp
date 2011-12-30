@@ -25,6 +25,7 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
         int const noDocuments,
         int const noTopics,
         int const noTypes,
+        RandomNumberGenerator * const randomNumberGenerator,
         int const startDocument,
         int const * const tokensPerTopic,
         vector<TopicAssignment*> * topicAssignments,
@@ -36,6 +37,7 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
     ParallelTopicModelWorker::noDocuments = noDocuments;
     ParallelTopicModelWorker::noTopics = noTopics;
     ParallelTopicModelWorker::noTypes = noTypes;
+    ParallelTopicModelWorker::randomNumberGenerator = randomNumberGenerator;
     ParallelTopicModelWorker::startDocument = startDocument;
     copyTokensPerTopic(tokensPerTopic);
     copyTopicAssignments(topicAssignments);
@@ -66,6 +68,7 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
         const ParallelTopicModelWorker& orig)
 : TopicModel(orig) {
     noDocuments = orig.getNoDocuments();
+    randomNumberGenerator = orig.getRandomNumberGenerator();
     startDocument = orig.getStartDocument();
     copyTokensPerTopic(orig.getTokensPerTopic());
     copyTopicAssignments(orig.getTopicAssignments());
@@ -111,6 +114,11 @@ int const * const ParallelTopicModelWorker::getDocumentLengthCounts() const {
 
 int const ParallelTopicModelWorker::getNoDocuments() const {
     return noDocuments;
+}
+
+RandomNumberGenerator * const
+ParallelTopicModelWorker::getRandomNumberGenerator() const {
+    return randomNumberGenerator;
 }
 
 int const ParallelTopicModelWorker::getStartDocument() const {
@@ -495,8 +503,8 @@ void ParallelTopicModelWorker::sampleTopics(
 
         //			double sample = random.nextUniform() * (smoothingOnlyMass + topicBetaMass + topicTermMass);
         //			double origSample = sample;
-        
-        
+
+
         //			//	Make sure it actually gets set
         //			newTopic = -1;
         //

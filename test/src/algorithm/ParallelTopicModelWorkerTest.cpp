@@ -37,6 +37,7 @@ namespace {
             beta = random();
             noDocuments = TESTNO - 1;
             noTopics = TESTNO * 3;
+            randomNumberGenerator = new RandomNumberGenerator();
             startDocument = rand();
             tokensPerTopic = new int[noTopics];
             for (int i = 0; i < noTopics; i++) {
@@ -59,6 +60,7 @@ namespace {
                     noDocuments,
                     noTopics,
                     noTypes,
+                    randomNumberGenerator,
                     startDocument,
                     tokensPerTopic,
                     topicAssignments,
@@ -69,6 +71,7 @@ namespace {
             delete worker;
             delete [] alpha;
             delete [] tokensPerTopic;
+            delete randomNumberGenerator;
             delete topicAssignments;
             delete typeTopicCounts;
         }
@@ -78,6 +81,7 @@ namespace {
         double beta;
         int noDocuments;
         int noTopics;
+        RandomNumberGenerator * randomNumberGenerator;
         int startDocument;
         int * tokensPerTopic;
         vector<TopicAssignment*> * topicAssignments;
@@ -155,6 +159,15 @@ namespace {
      */
     TEST_F(ParallelTopicModelWorkerTest, GetNoTopicsTest) {
         EXPECT_EQ(noTopics, worker->getNoTopics());
+    }
+
+    /*
+     * Tests whether the pass to the getRandomNumberGenerator method 
+     * works correctly.
+     * 
+     */
+    TEST_F(ParallelTopicModelWorkerTest, GetRandomNumberGeneratorTest) {
+        EXPECT_EQ(randomNumberGenerator, worker->getRandomNumberGenerator());
     }
 
     /*
@@ -253,6 +266,7 @@ namespace {
         }
         EXPECT_EQ(noDocuments, tmp.getNoDocuments());
         EXPECT_EQ(noTopics, tmp.getNoTopics());
+        EXPECT_EQ(randomNumberGenerator, tmp.getRandomNumberGenerator());
         EXPECT_EQ(startDocument, tmp.getStartDocument());
 
         int const * const actual3 = worker->getTokensPerTopic();

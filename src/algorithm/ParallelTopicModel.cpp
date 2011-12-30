@@ -103,6 +103,8 @@ void ParallelTopicModel::estimate() {
         //                random, data,
         //                runnableCounts, runnableTotals,
         //                offset, docsPerThread);
+        RandomNumberGenerator * const randomNumberGenerator =
+                new RandomNumberGenerator();
         workers->push_back(new ParallelTopicModelWorker(
                 alpha,
                 alphaSum,
@@ -110,6 +112,7 @@ void ParallelTopicModel::estimate() {
                 noDocumentsPerThread,
                 noTopics,
                 typeTopicCounts->size(),
+                randomNumberGenerator,
                 startingDocument,
                 tokensPerTopic,
                 topicAssignments,

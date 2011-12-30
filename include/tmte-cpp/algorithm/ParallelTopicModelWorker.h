@@ -13,6 +13,7 @@
 #ifndef PARALLELTOPICMODELWORKER_H
 #define	PARALLELTOPICMODELWORKER_H
 
+#include "tmte-cpp/algorithm/RandomNumberGenerator.h"
 #include "tmte-cpp/model/TopicModel.h"
 
 class ParallelTopicModelWorker : public TopicModel {
@@ -39,6 +40,7 @@ public:
             int const noDocuments,
             int const noTopics,
             int const noTypes,
+            RandomNumberGenerator * const randomNumberGenerator,
             int const startDocument,
             int const * const tokensPerTopic,
             vector<TopicAssignment*> * topicAssignments,
@@ -59,6 +61,13 @@ public:
      * 
      */
     int const getNoDocuments() const;
+    /**
+     * Gets the RandomNumberGenerator.
+     * 
+     * @return the RandomNumberGenerator.
+     * 
+     */
+    RandomNumberGenerator * const getRandomNumberGenerator() const;
     /**
      * Gets the starting document.
      * 
@@ -123,6 +132,7 @@ protected:
     int * documentLengthCounts;
     int noDocuments;
     int noTypes;
+    RandomNumberGenerator * randomNumberGenerator;
     int startDocument;
     /**
      * Used to encode type/topic counts as count/topic pairs in a single 
