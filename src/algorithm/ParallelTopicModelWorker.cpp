@@ -58,7 +58,7 @@ ParallelTopicModelWorker::ParallelTopicModelWorker(
 
     // needed for estimation
     cachedCoefficients = new double[noTopics];
-    isFinished = false;
+    isFinished = true;
     shouldSaveState = false;
 }
 
@@ -405,68 +405,98 @@ void ParallelTopicModelWorker::sampleTopics(
         }
 
         //
-        //
         //			// Now go over the type/topic counts, decrementing
         //			//  where appropriate, and calculating the score
         //			//  for each topic at the same time.
-        //
         //			int index = 0;
         //			int currentTopic, currentValue;
-        //
+        int index = 0;
+        int currentTopic;
+        int currentValue;
+
         //			boolean alreadyDecremented = (oldTopic == ParallelTopicModel.UNASSIGNED_TOPIC);
-        //
         //			topicTermMass = 0.0;
-        //
+        bool alreadyDecremented = (UNASSIGNED_TOPIC == oldTopic);
+        topicTermMass = 0.0;
+
         //			while (index < currentTypeTopicCounts.length && 
         //				   currentTypeTopicCounts[index] > 0) {
         //				currentTopic = currentTypeTopicCounts[index] & topicMask;
         //				currentValue = currentTypeTopicCounts[index] >> topicBits;
-        //
-        //				if (! alreadyDecremented && 
-        //					currentTopic == oldTopic) {
-        //
-        //					// We're decrementing and adding up the 
-        //					//  sampling weights at the same time, but
-        //					//  decrementing may require us to reorder
-        //					//  the topics, so after we're done here,
-        //					//  look at this cell in the array again.
-        //
-        //					currentValue --;
-        //					if (currentValue == 0) {
-        //						currentTypeTopicCounts[index] = 0;
-        //					}
-        //					else {
-        //						currentTypeTopicCounts[index] =
-        //							(currentValue << topicBits) + oldTopic;
-        //					}
-        //					
-        //					// Shift the reduced value to the right, if necessary.
-        //
-        //					int subIndex = index;
-        //					while (subIndex < currentTypeTopicCounts.length - 1 && 
-        //						   currentTypeTopicCounts[subIndex] < currentTypeTopicCounts[subIndex + 1]) {
-        //						int temp = currentTypeTopicCounts[subIndex];
-        //						currentTypeTopicCounts[subIndex] = currentTypeTopicCounts[subIndex + 1];
-        //						currentTypeTopicCounts[subIndex + 1] = temp;
-        //						
-        //						subIndex++;
-        //					}
-        //
-        //					alreadyDecremented = true;
-        //				}
-        //				else {
-        //					score = 
-        //						cachedCoefficients[currentTopic] * currentValue;
-        //					topicTermMass += score;
-        //					topicTermScores[index] = score;
-        //
-        //					index++;
-        //				}
-        //			}
-        //			
+        while (index < currentTypeTopicCounts.size()
+                && 0 < currentTypeTopicCounts[index]) {
+            currentTopic = currentTypeTopicCounts[index] & topicMask;
+            currentValue = currentTypeTopicCounts[index] >> topicBits;
+
+            //				if (! alreadyDecremented && 
+            //					currentTopic == oldTopic) {
+            if (!alreadyDecremented
+                    && currentTopic == oldTopic) {
+
+                //					// We're decrementing and adding up the 
+                //					//  sampling weights at the same time, but
+                //					//  decrementing may require us to reorder
+                //					//  the topics, so after we're done here,
+                //					//  look at this cell in the array again.
+                //					currentValue --;
+                //					if (currentValue == 0) {
+                //						currentTypeTopicCounts[index] = 0;
+                //					}
+                //					else {
+                //						currentTypeTopicCounts[index] =
+                //							(currentValue << topicBits) + oldTopic;
+                //					}
+                currentValue--;
+                if (0 == currentValue) {
+                    currentTypeTopicCounts[index] = 0;
+                } else {
+                    currentTypeTopicCounts[index] =
+                            (currentValue << topicBits) + oldTopic;
+                }
+
+                //					// Shift the reduced value to the right, if necessary.
+                //					int subIndex = index;
+                //					while (subIndex < currentTypeTopicCounts.length - 1 && 
+                //						   currentTypeTopicCounts[subIndex] < currentTypeTopicCounts[subIndex + 1]) {
+                //						int temp = currentTypeTopicCounts[subIndex];
+                //						currentTypeTopicCounts[subIndex] = currentTypeTopicCounts[subIndex + 1];
+                //						currentTypeTopicCounts[subIndex + 1] = temp;
+                //						
+                //						subIndex++;
+                //					}
+                int subIndex = index;
+                while (subIndex < currentTypeTopicCounts.size() - 1
+                        && currentTypeTopicCounts[subIndex] < currentTypeTopicCounts[subIndex + 1]) {
+                    int temp = currentTypeTopicCounts[subIndex];
+                    currentTypeTopicCounts[subIndex] = currentTypeTopicCounts[subIndex + 1];
+                    currentTypeTopicCounts[subIndex + 1] = temp;
+                    subIndex++;
+                }
+
+                //					alreadyDecremented = true;
+                //				}
+                //				else {
+                //					score = 
+                //						cachedCoefficients[currentTopic] * currentValue;
+                //					topicTermMass += score;
+                //					topicTermScores[index] = score;
+                //
+                //					index++;
+                //				}
+                //			}
+                alreadyDecremented = true;
+            } else {
+                score = cachedCoefficients[currentTopic] + currentValue;
+                topicTermMass += score;
+                topicTermScores[index] = score;
+                index++;
+            }
+        }
+
         //			double sample = random.nextUniform() * (smoothingOnlyMass + topicBetaMass + topicTermMass);
         //			double origSample = sample;
-        //
+        
+        
         //			//	Make sure it actually gets set
         //			newTopic = -1;
         //
