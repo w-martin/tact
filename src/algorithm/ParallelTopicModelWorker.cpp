@@ -503,122 +503,159 @@ void ParallelTopicModelWorker::sampleTopics(
 
         //			double sample = random.nextUniform() * (smoothingOnlyMass + topicBetaMass + topicTermMass);
         //			double origSample = sample;
-
+        double sample = randomNumberGenerator->nextUniform() *
+                (smoothingOnlyMass + topicBetaMass + topicTermMass);
+        double origSample = sample;
 
         //			//	Make sure it actually gets set
         //			newTopic = -1;
-        //
+        newTopic = -1;
+
         //			if (sample < topicTermMass) {
         //				//topicTermCount++;
-        //
         //				i = -1;
         //				while (sample > 0) {
         //					i++;
         //					sample -= topicTermScores[i];
         //				}
-        //
-        //				newTopic = currentTypeTopicCounts[i] & topicMask;
-        //				currentValue = currentTypeTopicCounts[i] >> topicBits;
-        //				
-        //				currentTypeTopicCounts[i] = ((currentValue + 1) << topicBits) + newTopic;
-        //
-        //				// Bubble the new value up, if necessary
-        //				
-        //				while (i > 0 &&
-        //					   currentTypeTopicCounts[i] > currentTypeTopicCounts[i - 1]) {
-        //					int temp = currentTypeTopicCounts[i];
-        //					currentTypeTopicCounts[i] = currentTypeTopicCounts[i - 1];
-        //					currentTypeTopicCounts[i - 1] = temp;
-        //
-        //					i--;
-        //				}
-        //
-        //			}
-        //			else {
-        //				sample -= topicTermMass;
-        //
-        //				if (sample < topicBetaMass) {
-        //					//betaTopicCount++;
-        //
-        //					sample /= beta;
-        //
-        //					for (denseIndex = 0; denseIndex < nonZeroTopics; denseIndex++) {
-        //						int topic = localTopicIndex[denseIndex];
-        //
-        //						sample -= localTopicCounts[topic] /
-        //							(tokensPerTopic[topic] + betaSum);
-        //
-        //						if (sample <= 0.0) {
-        //							newTopic = topic;
-        //							break;
-        //						}
-        //					}
-        //
-        //				}
-        //				else {
-        //					//smoothingOnlyCount++;
-        //
-        //					sample -= topicBetaMass;
-        //
-        //					sample /= beta;
-        //
-        //					newTopic = 0;
-        //					sample -= alpha[newTopic] /
-        //						(tokensPerTopic[newTopic] + betaSum);
-        //
-        //					while (sample > 0.0) {
-        //						newTopic++;
-        //						sample -= alpha[newTopic] / 
-        //							(tokensPerTopic[newTopic] + betaSum);
-        //					}
-        //					
-        //				}
-        //
-        //				// Move to the position for the new topic,
-        //				//  which may be the first empty position if this
-        //				//  is a new topic for this word.
-        //				
-        //				index = 0;
-        //				while (currentTypeTopicCounts[index] > 0 &&
-        //					   (currentTypeTopicCounts[index] & topicMask) != newTopic) {
-        //					index++;
-        //					if (index == currentTypeTopicCounts.length) {
-        //						System.err.println("type: " + type + " new topic: " + newTopic);
-        //						for (int k=0; k<currentTypeTopicCounts.length; k++) {
-        //							System.err.print((currentTypeTopicCounts[k] & topicMask) + ":" + 
-        //											 (currentTypeTopicCounts[k] >> topicBits) + " ");
-        //						}
-        //						System.err.println();
-        //
-        //					}
-        //				}
-        //
-        //
-        //				// index should now be set to the position of the new topic,
-        //				//  which may be an empty cell at the end of the list.
-        //
-        //				if (currentTypeTopicCounts[index] == 0) {
-        //					// inserting a new topic, guaranteed to be in
-        //					//  order w.r.t. count, if not topic.
-        //					currentTypeTopicCounts[index] = (1 << topicBits) + newTopic;
-        //				}
-        //				else {
-        //					currentValue = currentTypeTopicCounts[index] >> topicBits;
-        //					currentTypeTopicCounts[index] = ((currentValue + 1) << topicBits) + newTopic;
-        //
-        //					// Bubble the increased value left, if necessary
-        //					while (index > 0 &&
-        //						   currentTypeTopicCounts[index] > currentTypeTopicCounts[index - 1]) {
-        //						int temp = currentTypeTopicCounts[index];
-        //						currentTypeTopicCounts[index] = currentTypeTopicCounts[index - 1];
-        //						currentTypeTopicCounts[index - 1] = temp;
-        //
-        //						index--;
-        //					}
-        //				}
-        //
-        //			}
-        //
+        if (sample < topicTermMass) {
+            i = -1;
+            while (0 < sample) {
+                i++;
+                sample -= topicTermScores[i];
+            }
+
+            //				newTopic = currentTypeTopicCounts[i] & topicMask;
+            //				currentValue = currentTypeTopicCounts[i] >> topicBits;
+            //				currentTypeTopicCounts[i] = ((currentValue + 1) << topicBits) + newTopic;
+            newTopic = currentTypeTopicCounts[i] & topicMask;
+            currentValue = currentTypeTopicCounts[i] >> topicBits;
+            currentTypeTopicCounts[i] = ((currentValue + 1) << topicBits)
+                    + newTopic;
+
+            //				// Bubble the new value up, if necessary
+            //				while (i > 0 &&
+            //					   currentTypeTopicCounts[i] > currentTypeTopicCounts[i - 1]) {
+            //					int temp = currentTypeTopicCounts[i];
+            //					currentTypeTopicCounts[i] = currentTypeTopicCounts[i - 1];
+            //					currentTypeTopicCounts[i - 1] = temp;
+            //					i--;
+            //				}
+            while (0 < i
+                    && currentTypeTopicCounts[i - 1]
+                    < currentTypeTopicCounts[i]) {
+                int tmp = currentTypeTopicCounts[i];
+                currentTypeTopicCounts[i] = currentTypeTopicCounts[i - 1];
+                currentTypeTopicCounts[i - 1] = tmp;
+                i--;
+            }
+
+            //			}
+            //			else {
+            //				sample -= topicTermMass;
+        } else {
+            sample -= topicTermMass;
+
+            //				if (sample < topicBetaMass) {
+            //					//betaTopicCount++;
+            //					sample /= beta;
+            if (sample < topicBetaMass) {
+                sample /= beta;
+
+                //					for (denseIndex = 0; denseIndex < nonZeroTopics; denseIndex++) {
+                //						int topic = localTopicIndex[denseIndex];
+                //
+                //						sample -= localTopicCounts[topic] /
+                //							(tokensPerTopic[topic] + betaSum);
+                //
+                //						if (sample <= 0.0) {
+                //							newTopic = topic;
+                //							break;
+                //						}
+                //					}
+                for (denseIndex = 0; denseIndex < nonZeroTopics; denseIndex++) {
+                    int topic = localTopicIndex[denseIndex];
+                    sample -= localTopicCounts[index]
+                            / (tokensPerTopic[topic] + betaSum);
+                    if (0 >= sample) {
+                        newTopic = topic;
+                        break;
+                    }
+                }
+
+                //				}
+                //				else {
+                //					//smoothingOnlyCount++;
+                //					sample -= topicBetaMass;
+                //					sample /= beta;
+                //					newTopic = 0;
+                //					sample -= alpha[newTopic] /
+                //						(tokensPerTopic[newTopic] + betaSum);
+                //					while (sample > 0.0) {
+                //						newTopic++;
+                //						sample -= alpha[newTopic] / 
+                //							(tokensPerTopic[newTopic] + betaSum);
+                //					}
+                //				}
+            } else {
+                sample -= topicBetaMass;
+                sample /= beta;
+                newTopic = 0;
+                sample -= alpha[newTopic]
+                        / (tokensPerTopic[newTopic] + betaSum);
+                while (0 < sample) {
+                    newTopic++;
+                    sample -= alpha[newTopic] /
+                            (tokensPerTopic[newTopic] + betaSum);
+                }
+            }
+
+            //				// Move to the position for the new topic,
+            //				//  which may be the first empty position if this
+            //				//  is a new topic for this word.
+            //				
+            //				index = 0;
+            //				while (currentTypeTopicCounts[index] > 0 &&
+            //					   (currentTypeTopicCounts[index] & topicMask) != newTopic) {
+            //					index++;
+            //					if (index == currentTypeTopicCounts.length) {
+            //						System.err.println("type: " + type + " new topic: " + newTopic);
+            //						for (int k=0; k<currentTypeTopicCounts.length; k++) {
+            //							System.err.print((currentTypeTopicCounts[k] & topicMask) + ":" + 
+            //											 (currentTypeTopicCounts[k] >> topicBits) + " ");
+            //						}
+            //						System.err.println();
+            //
+            //					}
+            //				}
+            //
+            //
+            //				// index should now be set to the position of the new topic,
+            //				//  which may be an empty cell at the end of the list.
+            //
+            //				if (currentTypeTopicCounts[index] == 0) {
+            //					// inserting a new topic, guaranteed to be in
+            //					//  order w.r.t. count, if not topic.
+            //					currentTypeTopicCounts[index] = (1 << topicBits) + newTopic;
+            //				}
+            //				else {
+            //					currentValue = currentTypeTopicCounts[index] >> topicBits;
+            //					currentTypeTopicCounts[index] = ((currentValue + 1) << topicBits) + newTopic;
+            //
+            //					// Bubble the increased value left, if necessary
+            //					while (index > 0 &&
+            //						   currentTypeTopicCounts[index] > currentTypeTopicCounts[index - 1]) {
+            //						int temp = currentTypeTopicCounts[index];
+            //						currentTypeTopicCounts[index] = currentTypeTopicCounts[index - 1];
+            //						currentTypeTopicCounts[index - 1] = temp;
+            //
+            //						index--;
+            //					}
+            //				}
+            //
+            //			}
+        }
+
         //			if (newTopic == -1) {
         //				System.err.println("WorkerRunnable sampling error: "+ origSample + " " + sample + " " + smoothingOnlyMass + " " + 
         //						topicBetaMass + " " + topicTermMass);
