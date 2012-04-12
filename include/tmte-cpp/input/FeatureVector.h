@@ -54,7 +54,7 @@ public:
 private:
     auto_ptr<Alphabet> alphabet;
     int * features;
-    void copyFeatures()
+    void copyFeatures();
 };
 
 #endif	/* FEATUREVECTOR_H */
