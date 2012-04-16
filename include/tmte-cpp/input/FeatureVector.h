@@ -13,7 +13,7 @@
 #ifndef FEATUREVECTOR_H
 #define	FEATUREVECTOR_H
 
-#include "tmte-cpp/model/Alphabet.h"
+#include "tmte-cpp/input/Alphabet.h"
 #include <memory>
 #include <vector>
 

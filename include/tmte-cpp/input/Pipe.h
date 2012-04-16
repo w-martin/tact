@@ -15,7 +15,7 @@
 
 #include "tmte-cpp/input/exceptions/AlphabetSetException.h"
 #include "tmte-cpp/input/Instance.h"
-#include "tmte-cpp/model/Alphabet.h"
+#include "tmte-cpp/input/Alphabet.h"
 #include <vector>
 #include <memory>
 

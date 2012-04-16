@@ -16,7 +16,7 @@
 #define DEFAULT_BETA 0.01
 
 #include "tmte-cpp/input/InstanceList.h"
-#include "tmte-cpp/model/Alphabet.h"
+#include "tmte-cpp/input/Alphabet.h"
 #include "tmte-cpp/model/TopicModel.h"
 
 /**

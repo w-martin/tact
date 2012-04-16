@@ -14,7 +14,7 @@
 
 #include "gtest/gtest.h"
 #include "tmte-cpp/input/Pipe.h"
-#include "tmte-cpp/model/Alphabet.h"
+#include "tmte-cpp/input/Alphabet.h"
 #include <memory>
 
 using std::auto_ptr;

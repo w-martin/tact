@@ -10,7 +10,7 @@
  * 
  */
 
-#include "tmte-cpp/model/AbstractTopicModel.h"
+#include "tmte-cpp/algorithm/AbstractTopicModel.h"
 #include <sstream>
 
 using std::stringstream;

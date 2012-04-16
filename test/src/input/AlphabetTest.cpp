@@ -13,7 +13,7 @@
 #define testWord "testWord"
 
 #include "gtest/gtest.h"
-#include "tmte-cpp/model/Alphabet.h"
+#include "tmte-cpp/input/Alphabet.h"
 
 namespace {
 

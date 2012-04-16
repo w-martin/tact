@@ -14,7 +14,7 @@
 
 #include "gtest/gtest.h"
 #include "tmte-cpp/input/FeatureVector.h"
-#include "tmte-cpp/model/Alphabet.h"
+#include "tmte-cpp/input/Alphabet.h"
 #include <memory>
 
 using std::auto_ptr;

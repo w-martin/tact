@@ -10,7 +10,7 @@
  * 
  */
 
-#include "tmte-cpp/model/Alphabet.h"
+#include "tmte-cpp/input/Alphabet.h"
 #include <sstream>
 
 using std::stringstream;

@@ -15,7 +15,7 @@
 
 #define UNASSIGNED_TOPIC -1
 
-#include "tmte-cpp/model/AbstractTopicModel.h"
+#include "tmte-cpp/algorithm/AbstractTopicModel.h"
 
 /**
  * Performs LDA on a corpus.
