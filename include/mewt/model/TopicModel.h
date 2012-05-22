@@ -92,28 +92,6 @@ public:
      *  
      */
     double const getBetaSum() const;
-    /**
-     * Gets the histogram of tokens per topic. Indexed by Topic.
-     * 
-     * @return the histogram of tokens per topic.
-     * 
-     */
-    int const * const getTokensPerTopic() const;
-    /**
-     * Gets the list of TopicAssignments.
-     * 
-     * @return the list of TopicAssignments.
-     * 
-     */
-    vector<TopicAssignment*> * const getTopicAssignments() const;
-    /**
-     * Gets the type/topic counts.
-     * Indexed by [feature index, topic index].
-     * 
-     * @return the type/topic counts.
-     * 
-     */
-    vector<vector<int> > const * const getTypeTopicCounts() const;
 protected:
     /**
      * Dirichlet(alpha,alpha,...) is the distribution over topics.
@@ -129,42 +107,17 @@ protected:
     double betaSum;
     int noTopics;
     /**
-     * Indexed by topic.
+     * Topic-Document probability matrix.
+     * Indexed by [document][topic].
      * 
      */
-    int * tokensPerTopic;
-    vector<TopicAssignment*> * topicAssignments;
+    double * * topicDocumentMatrix;
     /**
-     * Indexed by [feature index, topic index].
+     * Term-Topic probability matrix.
+     * Indexed by [topic][term].
      * 
      */
-    vector<vector<int> > * typeTopicCounts;
-    /**
-     * Copies the given tokensPerTopic.
-     * 
-     * @param orig The tokensPerTopic to copy.
-     * 
-     */
-    void copyTokensPerTopic(int const * const orig);
-    /**
-     * Copies the TopicAssignments from the given TopicModel.
-     * 
-     * @param orig The TopicModel to copy the TopicAssignments from.
-     * 
-     */
-    void copyTopicAssignments(vector<TopicAssignment*> const * const orig);
-    /**
-     * Copies the given typeTopicCounts.
-     * 
-     * @param orig the typeTopicCounts to copy.
-     * 
-     */
-    void copyTypeTopicCounts(vector<vector<int> > const * const orig);
-    /**
-     * Deletes the TopicAssignments.
-     * 
-     */
-    void deleteAssignments();
+    double * * termTopicMatrix;
 };
 
 #endif	/* TOPICMODEL_H */
