@@ -25,7 +25,7 @@
 #ifndef TOPICMODEL_H
 #define	TOPICMODEL_H
 
-#include "mewt/output/TopicAssignment.h"
+#include "mewt/model/ProbabilityMatrix.h"
 #include "mewt/util/exceptions/OutOfBoundsException.h"
 #include <vector>
 
@@ -40,6 +40,13 @@ public:
     TopicModel();
     TopicModel(const TopicModel& orig);
     virtual ~TopicModel();
+    /**
+     * Gets the number of documents in this Topic Model.
+     * 
+     * @return  the number of documents in this Topic Model.
+     * 
+     */
+    int const getNoDocuments() const;
     /**
      * Gets the number of Topics.
      * 
@@ -92,6 +99,21 @@ public:
      *  
      */
     double const getBetaSum() const;
+    /**
+     * Gets the topic-document probability matrix, indexed by 
+     * [document][topic].
+     * 
+     * @return the topic-document probability matrix.
+     * 
+     */
+    ProbabilityMatrix const * const getTopicDocumentMatrix() const;
+    /**
+     * Gets the term-topic probability matrix, indexed by [topic][term].
+     * 
+     * @return the term-topic probability matrix.
+     * 
+     */
+    ProbabilityMatrix const * const getTermTopicMatrix() const;
 protected:
     /**
      * Dirichlet(alpha,alpha,...) is the distribution over topics.
@@ -105,19 +127,20 @@ protected:
      */
     double beta;
     double betaSum;
+    int noDocuments;
     int noTopics;
     /**
      * Topic-Document probability matrix.
      * Indexed by [document][topic].
      * 
      */
-    double * * topicDocumentMatrix;
+    ProbabilityMatrix * topicDocumentMatrix;
     /**
      * Term-Topic probability matrix.
      * Indexed by [topic][term].
      * 
      */
-    double * * termTopicMatrix;
+    ProbabilityMatrix * termTopicMatrix;
 };
 
 #endif	/* TOPICMODEL_H */

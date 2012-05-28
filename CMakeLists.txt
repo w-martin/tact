@@ -59,6 +59,7 @@ add_library (${MEWT_OUTPUT}
 add_library (${MEWT_MODEL}
     ${MEWT_SOURCE_DIR}/model/Corpus.cpp
     ${MEWT_SOURCE_DIR}/model/Document.cpp
+    ${MEWT_SOURCE_DIR}/model/ProbabilityMatrix.cpp
     ${MEWT_SOURCE_DIR}/model/TopicModel.cpp
     )
 
@@ -126,6 +127,7 @@ add_test(OutputTests OutputTests)
 add_executable(ModelTests 
 	${MEWT_TEST_DIR}/model/CorpusTest.cpp
 	${MEWT_TEST_DIR}/model/DocumentTest.cpp
+	${MEWT_TEST_DIR}/model/ProbabilityMatrixTest.cpp
 	${MEWT_TEST_DIR}/model/TopicModelTest.cpp
 	${MEWT_TEST_DIR}/model/exceptions/DuplicatedWordExceptionTest.cpp
 	${MEWT_TEST_DIR}/model/exceptions/WordNotPresentExceptionTest.cpp

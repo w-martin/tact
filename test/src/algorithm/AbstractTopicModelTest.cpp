@@ -130,16 +130,6 @@ namespace {
     }
 
     /*
-     * Tests whether the getBetaSum method works correctly.
-     * 
-     */
-    TEST_F(AbstractTopicModelTest, GetTopicAssignmentsTest) {
-        vector<TopicAssignment*> const * const assignments =
-                topicModel->getTopicAssignments();
-        EXPECT_EQ(0, assignments->size());
-    }
-
-    /*
      * Tests whether the copy constructor works correctly.
      * 
      */
@@ -147,6 +137,5 @@ namespace {
         AbstractTopicModel tmp = (*topicModel);
         EXPECT_EQ(noIterations, tmp.getNoIterations());
         EXPECT_EQ(noTopics, tmp.getNoTopics());
-        EXPECT_EQ(0, tmp.getTopicAssignments()->size());
     }
 }

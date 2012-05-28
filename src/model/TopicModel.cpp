@@ -28,6 +28,7 @@ TopicModel::TopicModel() {
 }
 
 TopicModel::TopicModel(const TopicModel& orig) {
+    noDocuments = orig.getNoDocuments();
     noTopics = orig.getNoTopics();
 
     double const * const tmp = orig.getAlpha();
@@ -39,12 +40,15 @@ TopicModel::TopicModel(const TopicModel& orig) {
     alphaSum = orig.getAlphaSum();
     beta = orig.getBeta();
     betaSum = orig.getBetaSum();
-    copyTokensPerTopic(orig.getTokensPerTopic());
-    copyTopicAssignments(orig.getTopicAssignments());
-    copyTypeTopicCounts(orig.getTypeTopicCounts());
+    topicDocumentMatrix = new ProbabilityMatrix(*orig.getTopicDocumentMatrix());
+    termTopicMatrix = new ProbabilityMatrix(*orig.getTermTopicMatrix());
 }
 
 TopicModel::~TopicModel() {
+}
+
+int const TopicModel::getNoDocuments() const {
+    return noDocuments;
 }
 
 int const TopicModel::getNoTopics() const {
@@ -83,47 +87,10 @@ double const TopicModel::getBetaSum() const {
     return betaSum;
 }
 
-int const * const TopicModel::getTokensPerTopic() const {
-    return tokensPerTopic;
+ProbabilityMatrix const * const TopicModel::getTopicDocumentMatrix() const {
+    return topicDocumentMatrix;
 }
 
-vector<TopicAssignment*> * const TopicModel::getTopicAssignments()
-const {
-    return topicAssignments;
-}
-
-vector<vector<int> > const * const TopicModel::getTypeTopicCounts() const {
-    return typeTopicCounts;
-}
-
-void TopicModel::deleteAssignments() {
-    for (int i = 0; i < topicAssignments->size(); i++) {
-        delete topicAssignments->at(i);
-    }
-    delete topicAssignments;
-}
-
-void TopicModel::copyTokensPerTopic(
-        int const * const orig) {
-    tokensPerTopic = new int[noTopics];
-    for (int i = 0; i < noTopics; i++) {
-        tokensPerTopic[i] = orig[i];
-    }
-}
-
-void TopicModel::copyTopicAssignments(
-        vector<TopicAssignment*> const * const orig) {
-    topicAssignments = new vector<TopicAssignment*>();
-    for (int i = 0; i < orig->size(); i++) {
-        topicAssignments->push_back(
-                new TopicAssignment(*orig->at(i)));
-    }
-}
-
-void TopicModel::copyTypeTopicCounts(
-        vector<vector<int> > const * const orig) {
-    typeTopicCounts = new vector<vector<int> >();
-    for (int i = 0; i < orig->size(); i++) {
-        typeTopicCounts->push_back(vector<int>(orig->at(i)));
-    }
+ProbabilityMatrix const * const TopicModel::getTermTopicMatrix() const {
+    return termTopicMatrix;
 }

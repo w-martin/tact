@@ -40,9 +40,6 @@ AbstractTopicModel::AbstractTopicModel(int const noIterations,
 
     beta = DEFAULT_BETA;
     betaSum = 0.0;
-    tokensPerTopic = new int[noTopics];
-    topicAssignments = new vector<TopicAssignment*>();
-    typeTopicCounts = new vector<vector<int> >();
 }
 
 AbstractTopicModel::AbstractTopicModel(const AbstractTopicModel& orig)
@@ -52,9 +49,6 @@ AbstractTopicModel::AbstractTopicModel(const AbstractTopicModel& orig)
 
 AbstractTopicModel::~AbstractTopicModel() {
     delete [] alpha;
-    deleteAssignments();
-    delete tokensPerTopic;
-    delete typeTopicCounts;
 }
 
 int const AbstractTopicModel::getNoIterations() const {
@@ -63,23 +57,4 @@ int const AbstractTopicModel::getNoIterations() const {
 
 void AbstractTopicModel::addInstances(auto_ptr<InstanceList> instanceList) {
     AbstractTopicModel::instanceList = instanceList;
-    deleteAssignments();
-    topicAssignments = new vector<TopicAssignment*>();
-    vector<Instance*> const * const instances =
-            AbstractTopicModel::instanceList->getInstances();
-    for (int i = 0; i < AbstractTopicModel::instanceList->getSize(); i++) {
-        Instance const * const instance = instances->at(i);
-        TopicAssignment * assignment = new TopicAssignment(instance,
-                new FeatureVector(
-                auto_ptr<Alphabet > (new Alphabet()),
-                auto_ptr<vector<int> >(new vector<int>())));
-        for (int t = 0; t < noTopics; t++) {
-            stringstream stream;
-            stream << t;
-            string name = stream.str();
-            Identifier id(name);
-            assignment->add(id, 0.0);
-        }
-        topicAssignments->push_back(assignment);
-    }
 }
