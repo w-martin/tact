@@ -1,22 +1,24 @@
 #
 # CMake build script for mewt.
 #
-#######################################################################
-# This file is part of mewt.
-# 
-# mewt is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-# 
-# mewt is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License
-# along with mewt.  If not, see <http://www.gnu.org/licenses/>.
-#######################################################################
+########################################################################
+#                                                                      #
+# This file is part of mewt.                                           #
+#                                                                      #
+# mewt is free software: you can redistribute it and/or modify         #
+# it under the terms of the GNU General Public License as published by #
+# the Free Software Foundation, either version 3 of the License, or    #
+# (at your option) any later version.                                  #
+#                                                                      #
+# mewt is distributed in the hope that it will be useful,              #
+# but WITHOUT ANY WARRANTY; without even the implied warranty of       #
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        #
+# GNU General Public License for more details.                         #
+#                                                                      #
+# You should have received a copy of the GNU General Public License    #
+# along with mewt.  If not, see <http://www.gnu.org/licenses/>.        #
+#                                                                      #
+########################################################################
 #
 
 cmake_minimum_required (VERSION 2.6.2)
@@ -51,9 +53,7 @@ add_library (${MEWT_INPUT}
     )
 
 add_library (${MEWT_OUTPUT}
-    ${MEWT_SOURCE_DIR}/output/Assignment.cpp
     ${MEWT_SOURCE_DIR}/output/Identifier.cpp
-    ${MEWT_SOURCE_DIR}/output/TopicAssignment.cpp
     )
 
 add_library (${MEWT_MODEL}
@@ -64,8 +64,6 @@ add_library (${MEWT_MODEL}
 
 add_library (${MEWT_ALGORITHM}
     ${MEWT_SOURCE_DIR}/algorithm/AbstractTopicModel.cpp
-    ${MEWT_SOURCE_DIR}/algorithm/ParallelTopicModel.cpp
-    ${MEWT_SOURCE_DIR}/algorithm/ParallelTopicModelWorker.cpp
     ${MEWT_SOURCE_DIR}/algorithm/RandomNumberGenerator.cpp
     )
 
@@ -119,9 +117,7 @@ add_test(InputTests InputTests)
 
 add_executable(OutputTests
 	${MEWT_TEST_DIR}/output/exceptions/ElementNotPresentExceptionTest.cpp
-	${MEWT_TEST_DIR}/output/AssignmentTest.cpp
 	${MEWT_TEST_DIR}/output/IdentifierTest.cpp
-	${MEWT_TEST_DIR}/output/TopicAssignmentTest.cpp
 	) 
 target_link_libraries(OutputTests gmock gmock_main
     ${MEWT_INPUT} ${MEWT_OUTPUT})
@@ -140,8 +136,6 @@ add_test(ModelTests ModelTests)
 
 add_executable(AlgorithmTests
 	${MEWT_TEST_DIR}/algorithm/AbstractTopicModelTest.cpp
-	${MEWT_TEST_DIR}/algorithm/ParallelTopicModelTest.cpp
-	${MEWT_TEST_DIR}/algorithm/ParallelTopicModelWorkerTest.cpp
 	${MEWT_TEST_DIR}/algorithm/RandomNumberGeneratorTest.cpp
 	) 
 target_link_libraries(AlgorithmTests gmock gmock_main
