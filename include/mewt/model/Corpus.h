@@ -1,7 +1,7 @@
 /**
  * @file Corpus.h
  * @author  William Martin <will.st4@gmail.com>
- * @version 0.0
+ * @since 0.0
  *
  * @section LICENSE
  *
