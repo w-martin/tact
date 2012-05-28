@@ -24,17 +24,17 @@
 
 #include "mewt/input/Instance.h"
 
-Instance::Instance(auto_ptr<FeatureVector> data) {
-    Instance::data = data;
+Instance::Instance(const string name) {
+    Instance::name = name;
 }
 
 Instance::Instance(const Instance& orig) {
-    data = auto_ptr<FeatureVector > (new FeatureVector(*orig.getData()));
+    name = orig.getName();
 }
 
 Instance::~Instance() {
 }
 
-FeatureVector * const Instance::getData() const {
-    return data.get();
+string const Instance::getName() const {
+    return name;
 }

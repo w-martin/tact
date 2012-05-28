@@ -26,25 +26,42 @@
 #define	INSTANCE_H
 
 #include "mewt/input/FeatureVector.h"
+#include <string>
 
 /**
- * Instance class for inputting corpus files.
+ * Instance class for corpus files. Stores the name of the file.
  * 
  */
 class Instance {
 public:
-    Instance(auto_ptr<FeatureVector> data);
-    Instance(const Instance& orig);
-    virtual ~Instance();
     /**
-     * Gets the data.
+     * Default constructor.
      * 
-     * @return the data.
+     * @param name the name of the file.
      * 
      */
-    FeatureVector * const getData() const;
+    Instance(string const name);
+    /**
+     * Copy constructor.
+     * 
+     * @param orig the Instance to copy.
+     * 
+     */
+    Instance(const Instance& orig);
+    /**
+     * Default destructor.
+     * 
+     */
+    virtual ~Instance();
+    /**
+     * Gets the name of this Instance.
+     * 
+     * @return the name of this Instance.
+     * 
+     */
+    string const getName() const;
 private:
-    auto_ptr<FeatureVector> data;
+    string name;
 };
 
 #endif	/* INSTANCE_H */

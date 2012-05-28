@@ -22,8 +22,6 @@
  * 
  */
 
-#define testWord "testWord"
-
 #include "gtest/gtest.h"
 #include "mewt/input/Instance.h"
 
@@ -37,27 +35,23 @@ namespace {
     protected:
 
         InstanceTest() {
-            auto_ptr<Alphabet > alphabet =
-                    auto_ptr<Alphabet > (new Alphabet());
-            auto_ptr<vector<int> > features =
-                    auto_ptr<vector<int> >(new vector<int>());
-            data = new FeatureVector(alphabet, features);
-            instance = new Instance(auto_ptr<FeatureVector > (data));
+            name = "test name";
+            instance = new Instance(name);
         }
 
         virtual ~InstanceTest() {
             delete instance;
         }
         Instance * instance;
-        FeatureVector * data;
+        string name;
     };
 
     /*
-     * Tests whether the getData method works correctly.
+     * Tests whether the getName method works correctly.
      * 
      */
-    TEST_F(InstanceTest, GetDataTest) {
-        EXPECT_EQ(data, instance->getData());
+    TEST_F(InstanceTest, GetNameTest) {
+        EXPECT_EQ(0, strcmp(name.c_str(), instance->getName().c_str()));
     }
 
     /*
@@ -66,7 +60,6 @@ namespace {
      */
     TEST_F(InstanceTest, CopyConstructorTest) {
         Instance tmp(*instance);
-        EXPECT_NE(data, tmp.getData());
-        EXPECT_EQ(data->getSize(), tmp.getData()->getSize());
+        EXPECT_EQ(0, strcmp(name.c_str(), tmp.getName().c_str()));
     }
 }
