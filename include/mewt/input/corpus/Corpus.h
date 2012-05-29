@@ -27,14 +27,12 @@
 
 #include <string>
 #include <vector>
-#include <list>
 #include <memory>
 
 #include "mewt/input/corpus/Document.h"
 
 using std::string;
 using std::vector;
-using std::list;
 using std::auto_ptr;
 
 /**
