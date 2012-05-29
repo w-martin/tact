@@ -87,7 +87,8 @@ include_directories(
     ${gtest_SOURCE_DIR}/include 
     ${gtest_SOURCE_DIR}
     ${gmock_SOURCE_DIR}/include 
-    ${gmock_SOURCE_DIR})
+    ${gmock_SOURCE_DIR}
+)
 	
 # list test definitions here
 # TODO: replace this with a macro
@@ -96,7 +97,7 @@ add_executable(UtilTests
     ${MEWT_TEST_DIR}/util/exceptions/ExceptionTest.cpp
     ${MEWT_TEST_DIR}/util/exceptions/IllegalArgumentExceptionTest.cpp
     ${MEWT_TEST_DIR}/util/exceptions/OutOfBoundsExceptionTest.cpp
-    ) 
+) 
 target_link_libraries(UtilTests gmock gmock_main) 
 add_test(UtilTests UtilTests)
 
@@ -105,7 +106,7 @@ add_executable(InputTests
     ${MEWT_TEST_DIR}/input/corpus/CorpusTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/DocumentTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/PipeTest.cpp
-    ) 
+) 
 target_link_libraries(InputTests gmock gmock_main
     ${MEWT_INPUT})
 add_test(InputTests InputTests)
@@ -113,7 +114,7 @@ add_test(InputTests InputTests)
 add_executable(OutputTests
     ${MEWT_TEST_DIR}/output/exceptions/ElementNotPresentExceptionTest.cpp
     ${MEWT_TEST_DIR}/output/IdentifierTest.cpp
-    ) 
+) 
 target_link_libraries(OutputTests gmock gmock_main
     ${MEWT_INPUT} ${MEWT_OUTPUT})
 add_test(OutputTests OutputTests)
@@ -123,14 +124,14 @@ add_executable(ModelTests
     ${MEWT_TEST_DIR}/model/TopicModelTest.cpp
     ${MEWT_TEST_DIR}/model/exceptions/DuplicatedWordExceptionTest.cpp
     ${MEWT_TEST_DIR}/model/exceptions/WordNotPresentExceptionTest.cpp
-    ) 
+) 
 target_link_libraries(ModelTests gmock gmock_main
     ${MEWT_OUTPUT} ${MEWT_MODEL})
 add_test(ModelTests ModelTests)
 
 add_executable(AlgorithmTests
     ${MEWT_TEST_DIR}/algorithm/RandomNumberGeneratorTest.cpp
-    ) 
+) 
 target_link_libraries(AlgorithmTests gmock gmock_main
     ${MEWT_INPUT} ${MEWT_OUTPUT} ${MEWT_MODEL} ${MEWT_ALGORITHM})
 add_test(AlgorithmTests AlgorithmTests)
