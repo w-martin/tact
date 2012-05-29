@@ -25,13 +25,7 @@
 #ifndef PIPE_H
 #define	PIPE_H
 
-#include "mewt/input/exceptions/AlphabetSetException.h"
 #include "mewt/input/Alphabet.h"
-#include <vector>
-#include <memory>
-
-using std::vector;
-using std::auto_ptr;
 
 /**
  * Pipe class for transforming Corpus objects.
@@ -42,39 +36,7 @@ public:
     Pipe();
     Pipe(const Pipe& orig);
     virtual ~Pipe();
-    /**
-     * Gets the data Alphabet.
-     * 
-     * @return the data Alphabet.
-     * 
-     */
-    Alphabet const * const getDataAlphabet() const;
-    /**
-     * Sets the data Alphabet.
-     * 
-     * @param dataAlphabet the data Alphabet.
-     * 
-     */
-    void setDataAlphabet(auto_ptr<Alphabet> dataAlphabet)
-    throw (AlphabetSetException);
-    /**
-     * Gets the target Alphabet.
-     * 
-     * @return the target Alphabet.
-     * 
-     */
-    Alphabet const * const getTargetAlphabet() const;
-    /**
-     * Sets the target Alphabet.
-     * 
-     * @param targetAlphabet the target Alphabet.
-     * 
-     */
-    void setTargetAlphabet(auto_ptr<Alphabet> targetAlphabet)
-    throw (AlphabetSetException);
 private:
-    auto_ptr<Alphabet> dataAlphabet;
-    auto_ptr<Alphabet> targetAlphabet;
 };
 
 #endif	/* PIPE_H */

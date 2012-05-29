@@ -101,7 +101,6 @@ target_link_libraries(UtilTests gmock gmock_main)
 add_test(UtilTests UtilTests)
 
 add_executable(InputTests
-	${MEWT_TEST_DIR}/input/exceptions/AlphabetSetExceptionTest.cpp
 	${MEWT_TEST_DIR}/input/AlphabetTest.cpp
 	${MEWT_TEST_DIR}/input/corpus/CorpusTest.cpp
 	${MEWT_TEST_DIR}/input/corpus/DocumentTest.cpp
