@@ -46,6 +46,7 @@ include_directories(${MEWT_INCLUDE_DIR}
 
 add_library (${MEWT_INPUT}
     ${MEWT_SOURCE_DIR}/input/Alphabet.cpp
+    ${MEWT_SOURCE_DIR}/input/corpus/Corpus.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/Document.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/Pipe.cpp
     )
@@ -102,6 +103,7 @@ add_test(UtilTests UtilTests)
 add_executable(InputTests
 	${MEWT_TEST_DIR}/input/exceptions/AlphabetSetExceptionTest.cpp
 	${MEWT_TEST_DIR}/input/AlphabetTest.cpp
+	${MEWT_TEST_DIR}/input/corpus/CorpusTest.cpp
 	${MEWT_TEST_DIR}/input/corpus/DocumentTest.cpp
 	${MEWT_TEST_DIR}/input/pipe/PipeTest.cpp
 	) 

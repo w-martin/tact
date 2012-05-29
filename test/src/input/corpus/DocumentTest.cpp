@@ -36,13 +36,13 @@ namespace {
 
         DocumentTest() {
             name = "test name";
-            instance = new Document(name);
+            document = new Document(name);
         }
 
         virtual ~DocumentTest() {
-            delete instance;
+            delete document;
         }
-        Document * instance;
+        Document * document;
         string name;
     };
 
@@ -51,7 +51,7 @@ namespace {
      * 
      */
     TEST_F(DocumentTest, GetNameTest) {
-        EXPECT_EQ(0, strcmp(name.c_str(), instance->getName().c_str()));
+        EXPECT_EQ(0, strcmp(name.c_str(), document->getName().c_str()));
     }
 
     /*
@@ -59,7 +59,7 @@ namespace {
      * 
      */
     TEST_F(DocumentTest, CopyConstructorTest) {
-        Document tmp(*instance);
+        Document tmp(*document);
         EXPECT_EQ(0, strcmp(name.c_str(), tmp.getName().c_str()));
     }
 }
