@@ -23,7 +23,7 @@
  */
 
 #include "gtest/gtest.h"
-#include "mewt/input/instance/Document.h"
+#include "mewt/input/corpus/Document.h"
 
 namespace {
 

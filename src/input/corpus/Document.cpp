@@ -22,7 +22,7 @@
  * 
  */
 
-#include "mewt/input/instance/Document.h"
+#include "mewt/input/corpus/Document.h"
 
 Document::Document(const string name) {
     Document::name = name;

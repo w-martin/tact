@@ -46,8 +46,7 @@ include_directories(${MEWT_INCLUDE_DIR}
 
 add_library (${MEWT_INPUT}
     ${MEWT_SOURCE_DIR}/input/Alphabet.cpp
-    ${MEWT_SOURCE_DIR}/input/instance/FeatureVector.cpp
-    ${MEWT_SOURCE_DIR}/input/instance/Document.cpp
+    ${MEWT_SOURCE_DIR}/input/corpus/Document.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/Pipe.cpp
     )
 
@@ -103,8 +102,7 @@ add_test(UtilTests UtilTests)
 add_executable(InputTests
 	${MEWT_TEST_DIR}/input/exceptions/AlphabetSetExceptionTest.cpp
 	${MEWT_TEST_DIR}/input/AlphabetTest.cpp
-	${MEWT_TEST_DIR}/input/instance/FeatureVectorTest.cpp
-	${MEWT_TEST_DIR}/input/instance/DocumentTest.cpp
+	${MEWT_TEST_DIR}/input/corpus/DocumentTest.cpp
 	${MEWT_TEST_DIR}/input/pipe/PipeTest.cpp
 	) 
 target_link_libraries(InputTests gmock gmock_main
