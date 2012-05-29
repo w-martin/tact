@@ -22,7 +22,7 @@
  * 
  */
 
-#include "mewt/input/FeatureVector.h"
+#include "mewt/input/instance/FeatureVector.h"
 
 FeatureVector::FeatureVector(auto_ptr<Alphabet> alphabet,
         auto_ptr<vector<int> > features) {

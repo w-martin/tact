@@ -1,7 +1,7 @@
 /**
- * @file Corpus.cpp
+ * @file Document.cpp
  * @author  William Martin <will.st4@gmail.com>
- * @since 0.0
+ * @since 0.1
  *
  * @section LICENSE
  *
@@ -22,32 +22,19 @@
  * 
  */
 
-#include <stddef.h>
-#include <memory>
+#include "mewt/input/instance/Document.h"
 
-#include "mewt/model/Corpus.h"
-
-Corpus::Corpus() {
-    noTerms = 0;
-    documents = new vector<Document const *>();
+Document::Document(const string name) {
+    Document::name = name;
 }
 
-Corpus::~Corpus() {
-    delete documents;
+Document::Document(const Document& orig) {
+    name = orig.getName();
 }
 
-vector<Document const *> const * const Corpus::getDocuments() const {
-    return documents;
+Document::~Document() {
 }
 
-void Corpus::addDocument(auto_ptr<Document> document) {
-    documents->push_back(document.release());
-}
-
-int const Corpus::getNoTerms() const {
-    return noTerms;
-}
-
-void Corpus::setNoTerms(const int noTerms) {
-    Corpus::noTerms = noTerms;
+string const Document::getName() const {
+    return name;
 }

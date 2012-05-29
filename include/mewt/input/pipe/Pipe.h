@@ -26,7 +26,6 @@
 #define	PIPE_H
 
 #include "mewt/input/exceptions/AlphabetSetException.h"
-#include "mewt/input/Instance.h"
 #include "mewt/input/Alphabet.h"
 #include <vector>
 #include <memory>
@@ -35,10 +34,10 @@ using std::vector;
 using std::auto_ptr;
 
 /**
- * Pipe class for transforming Instance objects.
+ * Pipe class for transforming Corpus objects.
  * 
  */
-class Pipe : vector<Instance> {
+class Pipe {
 public:
     Pipe();
     Pipe(const Pipe& orig);
@@ -73,14 +72,6 @@ public:
      */
     void setTargetAlphabet(auto_ptr<Alphabet> targetAlphabet)
     throw (AlphabetSetException);
-    /**
-     * Performs the pipe operation of this Pipe.
-     * 
-     * @param instance the Instance to perform the pipe operation on.
-     * @return the transformed Instance.
-     * 
-     */
-    virtual Instance const pipe(Instance const & instance) const;
 private:
     auto_ptr<Alphabet> dataAlphabet;
     auto_ptr<Alphabet> targetAlphabet;

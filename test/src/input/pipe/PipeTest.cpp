@@ -25,7 +25,7 @@
 #define testWord "testWord"
 
 #include "gtest/gtest.h"
-#include "mewt/input/Pipe.h"
+#include "mewt/input/pipe/Pipe.h"
 #include "mewt/input/Alphabet.h"
 #include <memory>
 

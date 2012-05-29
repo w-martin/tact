@@ -22,7 +22,7 @@
  * 
  */
 
-#include "mewt/input/Pipe.h"
+#include "mewt/input/pipe/Pipe.h"
 
 Pipe::Pipe() {
 }
@@ -67,8 +67,4 @@ throw (AlphabetSetException) {
     } else {
         Pipe::targetAlphabet = targetAlphabet;
     }
-}
-
-Instance const Pipe::pipe(Instance const & instance) const {
-    return instance;
 }

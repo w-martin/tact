@@ -1,5 +1,5 @@
 /**
- * @file InstanceTest.cpp
+ * @file DocumentTest.cpp
  * @author  William Martin <will.st4@gmail.com>
  * @since 0.1
  *
@@ -23,26 +23,26 @@
  */
 
 #include "gtest/gtest.h"
-#include "mewt/input/Instance.h"
+#include "mewt/input/instance/Document.h"
 
 namespace {
 
     /**
-     * Tests Instance.
+     * Tests Document.
      * 
      */
-    class InstanceTest : public ::testing::Test {
+    class DocumentTest : public ::testing::Test {
     protected:
 
-        InstanceTest() {
+        DocumentTest() {
             name = "test name";
-            instance = new Instance(name);
+            instance = new Document(name);
         }
 
-        virtual ~InstanceTest() {
+        virtual ~DocumentTest() {
             delete instance;
         }
-        Instance * instance;
+        Document * instance;
         string name;
     };
 
@@ -50,7 +50,7 @@ namespace {
      * Tests whether the getName method works correctly.
      * 
      */
-    TEST_F(InstanceTest, GetNameTest) {
+    TEST_F(DocumentTest, GetNameTest) {
         EXPECT_EQ(0, strcmp(name.c_str(), instance->getName().c_str()));
     }
 
@@ -58,8 +58,8 @@ namespace {
      * Tests whether the copy constructor works correctly.
      * 
      */
-    TEST_F(InstanceTest, CopyConstructorTest) {
-        Instance tmp(*instance);
+    TEST_F(DocumentTest, CopyConstructorTest) {
+        Document tmp(*instance);
         EXPECT_EQ(0, strcmp(name.c_str(), tmp.getName().c_str()));
     }
 }

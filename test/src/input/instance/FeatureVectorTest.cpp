@@ -25,7 +25,7 @@
 #define testWord "testWord"
 
 #include "gtest/gtest.h"
-#include "mewt/input/FeatureVector.h"
+#include "mewt/input/instance/FeatureVector.h"
 #include "mewt/input/Alphabet.h"
 #include <memory>
 

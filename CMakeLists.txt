@@ -46,9 +46,9 @@ include_directories(${MEWT_INCLUDE_DIR}
 
 add_library (${MEWT_INPUT}
     ${MEWT_SOURCE_DIR}/input/Alphabet.cpp
-    ${MEWT_SOURCE_DIR}/input/FeatureVector.cpp
-    ${MEWT_SOURCE_DIR}/input/Instance.cpp
-    ${MEWT_SOURCE_DIR}/input/Pipe.cpp
+    ${MEWT_SOURCE_DIR}/input/instance/FeatureVector.cpp
+    ${MEWT_SOURCE_DIR}/input/instance/Document.cpp
+    ${MEWT_SOURCE_DIR}/input/pipe/Pipe.cpp
     )
 
 add_library (${MEWT_OUTPUT}
@@ -56,14 +56,11 @@ add_library (${MEWT_OUTPUT}
     )
 
 add_library (${MEWT_MODEL}
-    ${MEWT_SOURCE_DIR}/model/Corpus.cpp
-    ${MEWT_SOURCE_DIR}/model/Document.cpp
     ${MEWT_SOURCE_DIR}/model/ProbabilityMatrix.cpp
     ${MEWT_SOURCE_DIR}/model/TopicModel.cpp
     )
 
 add_library (${MEWT_ALGORITHM}
-    ${MEWT_SOURCE_DIR}/algorithm/AbstractTopicModel.cpp
     ${MEWT_SOURCE_DIR}/algorithm/RandomNumberGenerator.cpp
     )
 
@@ -106,9 +103,9 @@ add_test(UtilTests UtilTests)
 add_executable(InputTests
 	${MEWT_TEST_DIR}/input/exceptions/AlphabetSetExceptionTest.cpp
 	${MEWT_TEST_DIR}/input/AlphabetTest.cpp
-	${MEWT_TEST_DIR}/input/FeatureVectorTest.cpp
-	${MEWT_TEST_DIR}/input/InstanceTest.cpp
-	${MEWT_TEST_DIR}/input/PipeTest.cpp
+	${MEWT_TEST_DIR}/input/instance/FeatureVectorTest.cpp
+	${MEWT_TEST_DIR}/input/instance/DocumentTest.cpp
+	${MEWT_TEST_DIR}/input/pipe/PipeTest.cpp
 	) 
 target_link_libraries(InputTests gmock gmock_main
     ${MEWT_INPUT})
@@ -122,9 +119,7 @@ target_link_libraries(OutputTests gmock gmock_main
     ${MEWT_INPUT} ${MEWT_OUTPUT})
 add_test(OutputTests OutputTests)
 
-add_executable(ModelTests 
-	${MEWT_TEST_DIR}/model/CorpusTest.cpp
-	${MEWT_TEST_DIR}/model/DocumentTest.cpp
+add_executable(ModelTests
 	${MEWT_TEST_DIR}/model/ProbabilityMatrixTest.cpp
 	${MEWT_TEST_DIR}/model/TopicModelTest.cpp
 	${MEWT_TEST_DIR}/model/exceptions/DuplicatedWordExceptionTest.cpp
@@ -135,7 +130,6 @@ target_link_libraries(ModelTests gmock gmock_main
 add_test(ModelTests ModelTests)
 
 add_executable(AlgorithmTests
-	${MEWT_TEST_DIR}/algorithm/AbstractTopicModelTest.cpp
 	${MEWT_TEST_DIR}/algorithm/RandomNumberGeneratorTest.cpp
 	) 
 target_link_libraries(AlgorithmTests gmock gmock_main

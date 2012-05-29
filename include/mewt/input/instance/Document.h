@@ -1,7 +1,7 @@
 /**
  * @file Document.h
  * @author  William Martin <will.st4@gmail.com>
- * @since 0.0
+ * @since 0.1
  *
  * @section LICENSE
  *
@@ -25,16 +25,12 @@
 #ifndef DOCUMENT_H
 #define	DOCUMENT_H
 
-#include <utility>
-#include <vector>
+#include <string>
 
-using std::auto_ptr;
-using std::vector;
+using std::string;
 
 /**
- * Represents a Document class.
- * 
- * @param length the length of this Document's file.
+ * Document class for corpus files. Stores the name of the file.
  * 
  */
 class Document {
@@ -42,51 +38,31 @@ public:
     /**
      * Default constructor.
      * 
+     * @param name the name of the file.
+     * 
      */
-    Document(int const length);
+    Document(string const name);
+    /**
+     * Copy constructor.
+     * 
+     * @param orig the Document to copy.
+     * 
+     */
+    Document(const Document& orig);
+    /**
+     * Default destructor.
+     * 
+     */
     virtual ~Document();
     /**
-     * Gets the words.
+     * Gets the name of this Document.
      * 
-     * @return the words.
-     * 
-     */
-    vector<char const *> const * const getWords() const;
-    /**
-     * Adds the given word with its corresponding count.
-     * 
-     * @param word the word to add.
-     * @param count the count of the given word.
+     * @return the name of this Document.
      * 
      */
-    void addWord(auto_ptr<char const> word, int const count);
-    /**
-     * Gets the counts.
-     * 
-     * @return the counts.
-     * 
-     */
-    vector<int> const * const getCounts() const;
-    /**
-     * Gets the length.
-     * 
-     * @return the length.
-     * 
-     */
-    int const getLength() const;
-    /**
-     * Gets the total.
-     * 
-     * @return the total.
-     * 
-     */
-    int const getTotal() const;
+    string const getName() const;
 private:
-    vector<char const *> * words;
-    vector<int> * counts;
-    int length;
-    int total;
+    string name;
 };
 
 #endif	/* DOCUMENT_H */
-
