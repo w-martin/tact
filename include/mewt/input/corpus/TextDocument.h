@@ -1,5 +1,5 @@
 /**
- * @file Pipe.cpp
+ * @file TextDocument.h
  * @author  William Martin <will.st4@gmail.com>
  * @since 0.1
  *
@@ -22,30 +22,40 @@
  * 
  */
 
-#include "mewt/input/pipe/Pipe.h"
+#ifndef TEXTDOCUMENT_H
+#define	TEXTDOCUMENT_H
 
-Pipe::Pipe() {
-}
+#include <string>
 
-Pipe::~Pipe() {
-}
+using std::string;
 
-Pipe const * const Pipe::getNextPipe() const {
-    return nextPipe.get();
-}
+/**
+ * TextDocument class for corpus files. Stores the name of the file.
+ * 
+ */
+class TextDocument {
+public:
+    /**
+     * Default constructor.
+     * 
+     * @param name the name of the file.
+     * 
+     */
+    TextDocument(string const name);
+    /**
+     * Copy constructor.
+     * 
+     * @param orig the TextDocument to copy.
+     * 
+     */
+    TextDocument(const TextDocument& orig);
+    /**
+     * Default destructor.
+     * 
+     */
+    virtual ~TextDocument();
+private:
+    string text;
+};
 
-void Pipe::attachPipe(auto_ptr<Pipe> nextPipe) {
-    if (NULL == Pipe::nextPipe.get()) {
-        Pipe::nextPipe = nextPipe;
-    } else {
-        Pipe::nextPipe->attachPipe(nextPipe);
-    }
-}
-
-auto_ptr< Corpus > Pipe::pipe(auto_ptr<Corpus> corpus) const {
-    if (NULL == nextPipe.get()) {
-        return process(corpus);
-    } else {
-        return nextPipe->pipe(process(corpus));
-    }
-}
+#endif	/* TEXTDOCUMENT_H */

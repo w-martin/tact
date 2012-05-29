@@ -1,7 +1,7 @@
 /**
- * @file Pipe.cpp
+ * @file MockPipe.h
  * @author  William Martin <will.st4@gmail.com>
- * @since 0.1
+ * @since 0.0
  *
  * @section LICENSE
  *
@@ -22,30 +22,16 @@
  * 
  */
 
+#include "gmock/gmock.h"
 #include "mewt/input/pipe/Pipe.h"
 
-Pipe::Pipe() {
-}
-
-Pipe::~Pipe() {
-}
-
-Pipe const * const Pipe::getNextPipe() const {
-    return nextPipe.get();
-}
-
-void Pipe::attachPipe(auto_ptr<Pipe> nextPipe) {
-    if (NULL == Pipe::nextPipe.get()) {
-        Pipe::nextPipe = nextPipe;
-    } else {
-        Pipe::nextPipe->attachPipe(nextPipe);
+/**
+ * Mock Pipe class.
+ * 
+ */
+class MockPipe : protected Pipe {
+protected:
+    auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) {
+        return corpus;
     }
-}
-
-auto_ptr< Corpus > Pipe::pipe(auto_ptr<Corpus> corpus) const {
-    if (NULL == nextPipe.get()) {
-        return process(corpus);
-    } else {
-        return nextPipe->pipe(process(corpus));
-    }
-}
+};

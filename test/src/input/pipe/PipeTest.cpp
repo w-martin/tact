@@ -26,6 +26,7 @@
 
 #include "gtest/gtest.h"
 #include "mewt/input/pipe/Pipe.h"
+#include "mewt/input/pipe/MockPipe.h"
 
 using std::auto_ptr;
 
@@ -39,7 +40,7 @@ namespace {
     protected:
 
         PipeTest() {
-            pipe = new Pipe();
+            pipe = new MockPipe();
         }
 
         virtual ~PipeTest() {
@@ -47,6 +48,21 @@ namespace {
         }
         Pipe * pipe;
     };
+
+    /*
+     * Tests whether the attachPipe method works correctly.
+     * 
+     */
+    TEST_F(PipeTest, AttachPipeTest) {
+        EXPECT_EQ(NULL, pipe->getNextPipe());
+        
+        Pipe * pipe1 = new Pipe();
+        Pipe * pipe2 = new Pipe();
+        pipe->attachPipe(auto_ptr< Pipe > (pipe1));
+        pipe->attachPipe(auto_ptr< Pipe > (pipe2));
+        EXPECT_EQ(pipe1, pipe->getNextPipe());
+        EXPECT_EQ(pipe2, pipe1->getNextPipe());
+    }
 
     /*
      * Tests whether the copy constructor works correctly.

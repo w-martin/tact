@@ -25,7 +25,10 @@
 #ifndef PIPE_H
 #define	PIPE_H
 
-#include "mewt/input/Alphabet.h"
+#include "mewt/input/corpus/Corpus.h"
+#include <memory>
+
+using std::auto_ptr;
 
 /**
  * Pipe class for transforming Corpus objects.
@@ -33,10 +36,51 @@
  */
 class Pipe {
 public:
+    /**
+     * Default constructor.
+     * 
+     */
     Pipe();
-    Pipe(const Pipe& orig);
+    /**
+     * Default destructor.
+     * 
+     */
     virtual ~Pipe();
+    /**
+     * Gets the next Pipe in the sequence.
+     * 
+     * @param nextPipe the next Pipe in the sequence.
+     * 
+     */
+    Pipe const * const getNextPipe() const;
+    /**
+     * Attaches a pipe that will process the output at the end of this 
+     * Pipe sequence.
+     * 
+     * @param nextPipe the next Pipe in the sequence.
+     * 
+     */
+    void attachPipe(auto_ptr< Pipe > nextPipe);
+    /**
+     * Processes the given input and passes it to the next Pipe in the 
+     * sequence.
+     * 
+     * @param corpus the Corpus to pipe.
+     * @return the piped corpus.
+     * 
+     */
+    auto_ptr< Corpus > pipe(auto_ptr< Corpus > corpus) const;
+protected:
+    /**
+     * Process the given corpus.
+     * 
+     * @param corpus the Corpus to process.
+     * @return the processed Corpus.
+     * 
+     */
+    virtual auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const = 0;
 private:
+    auto_ptr< Pipe > nextPipe;
 };
 
 #endif	/* PIPE_H */

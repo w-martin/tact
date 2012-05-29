@@ -24,8 +24,6 @@
 
 #include "gtest/gtest.h"
 #include "mewt/model/ProbabilityMatrix.h"
-#include "gmock-1.6.0/gtest/fused-src/gtest/gtest.h"
-#include "gmock-1.6.0/fused-src/gtest/gtest.h"
 
 namespace {
 

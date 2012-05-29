@@ -24,7 +24,6 @@
 
 #include "gtest/gtest.h"
 #include "mewt/input/corpus/Corpus.h"
-#include "gmock-1.6.0/fused-src/gtest/gtest.h"
 
 namespace {
 

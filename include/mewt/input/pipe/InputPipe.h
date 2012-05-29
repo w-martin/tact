@@ -1,5 +1,5 @@
 /**
- * @file Pipe.cpp
+ * @file Pipe.h
  * @author  William Martin <will.st4@gmail.com>
  * @since 0.1
  *
@@ -22,30 +22,19 @@
  * 
  */
 
-#include "mewt/input/pipe/Pipe.h"
+#ifndef PIPE_H
+#define	PIPE_H
 
-Pipe::Pipe() {
-}
+/**
+ * Pipe class for transforming Corpus objects.
+ * 
+ */
+class Pipe {
+public:
+    Pipe();
+    Pipe(const Pipe& orig);
+    virtual ~Pipe();
+private:
+};
 
-Pipe::~Pipe() {
-}
-
-Pipe const * const Pipe::getNextPipe() const {
-    return nextPipe.get();
-}
-
-void Pipe::attachPipe(auto_ptr<Pipe> nextPipe) {
-    if (NULL == Pipe::nextPipe.get()) {
-        Pipe::nextPipe = nextPipe;
-    } else {
-        Pipe::nextPipe->attachPipe(nextPipe);
-    }
-}
-
-auto_ptr< Corpus > Pipe::pipe(auto_ptr<Corpus> corpus) const {
-    if (NULL == nextPipe.get()) {
-        return process(corpus);
-    } else {
-        return nextPipe->pipe(process(corpus));
-    }
-}
+#endif	/* PIPE_H */

@@ -37,6 +37,7 @@ set(MEWT_ALGORITHM mewt-algorithm)
 set(MEWT_SOURCE_DIR src)
 set(MEWT_INCLUDE_DIR include)
 set(MEWT_TEST_DIR test/src)
+set(MEWT_MOCK_DIR test/mock)
 
 include_directories(${MEWT_INCLUDE_DIR}
 )
@@ -83,11 +84,11 @@ add_subdirectory(gmock-1.6.0)
 enable_testing(true) 
 
 include_directories(
-    .
     ${gtest_SOURCE_DIR}/include 
     ${gtest_SOURCE_DIR}
     ${gmock_SOURCE_DIR}/include 
     ${gmock_SOURCE_DIR}
+    ${MEWT_MOCK_DIR}
 )
 	
 # list test definitions here
