@@ -56,20 +56,11 @@ namespace {
     TEST_F(PipeTest, AttachPipeTest) {
         EXPECT_EQ(NULL, pipe->getNextPipe());
         
-        Pipe * pipe1 = new Pipe();
-        Pipe * pipe2 = new Pipe();
+        Pipe * pipe1 = new MockPipe();
+        Pipe * pipe2 = new MockPipe();
         pipe->attachPipe(auto_ptr< Pipe > (pipe1));
         pipe->attachPipe(auto_ptr< Pipe > (pipe2));
         EXPECT_EQ(pipe1, pipe->getNextPipe());
         EXPECT_EQ(pipe2, pipe1->getNextPipe());
-    }
-
-    /*
-     * Tests whether the copy constructor works correctly.
-     * 
-     */
-    TEST_F(PipeTest, CopyConstructorTest) {
-        Pipe * tmp = new Pipe(*pipe);
-        delete tmp;
     }
 }

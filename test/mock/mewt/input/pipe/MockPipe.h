@@ -1,7 +1,7 @@
 /**
  * @file MockPipe.h
  * @author  William Martin <will.st4@gmail.com>
- * @since 0.0
+ * @since 0.1
  *
  * @section LICENSE
  *
@@ -29,9 +29,17 @@
  * Mock Pipe class.
  * 
  */
-class MockPipe : protected Pipe {
+class MockPipe : public Pipe {
+public:
+
+    MockPipe() : Pipe() {
+    }
+
+    ~MockPipe() {
+    }
 protected:
-    auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) {
+
+    virtual auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const {
         return corpus;
     }
 };
