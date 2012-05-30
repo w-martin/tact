@@ -45,6 +45,36 @@ namespace {
     };
 
     /*
+     * Tests whether the addFeature method works correctly.
+     * 
+     */
+    TEST_F(FeatureMapTest, AddFeatureTest) {
+        EXPECT_TRUE(featureMap->addFeature(0, 10));
+        EXPECT_FALSE(featureMap->addFeature(0, 10));
+        EXPECT_TRUE(featureMap->addFeature(1, 10));
+    }
+
+    /*
+     * Tests whether the getFeature method works correctly.
+     * 
+     */
+    TEST_F(FeatureMapTest, GetFeatureTest) {
+        EXPECT_EQ(0, featureMap->getFeature(0));
+        featureMap->addFeature(0, 10);
+        EXPECT_EQ(10, featureMap->getFeature(0));
+    }
+
+    /*
+     * Tests whether the removeFeature method works correctly.
+     * 
+     */
+    TEST_F(FeatureMapTest, RemoveFeatureTest) {
+        featureMap->addFeature(0, 10);
+        featureMap->removeFeature(0);
+        EXPECT_EQ(0, featureMap->getFeature(0));
+    }
+
+    /*
      * Tests whether the copy constructor works correctly.
      * 
      */

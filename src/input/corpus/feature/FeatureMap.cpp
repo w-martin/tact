@@ -24,11 +24,34 @@
 
 #include "mewt/input/corpus/feature/FeatureMap.h"
 
-FeatureMap::FeatureMap() {
+FeatureMap::FeatureMap() : map() {
 }
 
-FeatureMap::FeatureMap(const FeatureMap& orig) {
+FeatureMap::FeatureMap(const FeatureMap& orig) : map(orig) {
 }
 
 FeatureMap::~FeatureMap() {
+}
+
+bool const FeatureMap::addFeature(const int feature, const int count) {
+    if (0 == getFeature(feature)) {
+        pair< int, int > p = make_pair(feature, count);
+        insert(p);
+        return true;
+    } else {
+        return false;
+    }
+}
+
+int const FeatureMap::getFeature(int const & featureID) const {
+    const_iterator iter = find(featureID);
+    if (end() == iter) {
+        return 0;
+    } else {
+        return iter->second;
+    }
+}
+
+void FeatureMap::removeFeature(int const & featureID) {
+    erase(featureID);
 }

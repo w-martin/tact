@@ -25,11 +25,17 @@
 #ifndef FEATUREMAP_H
 #define	FEATUREMAP_H
 
+#include <map>
+
+using std::make_pair;
+using std::map;
+using std::pair;
+
 /**
  * FeatureMap class for storing a map of a Document's features.
  * 
  */
-class FeatureMap {
+class FeatureMap : private map< int, int > {
 public:
     /**
      * Default constructor.
@@ -50,6 +56,30 @@ public:
      * 
      */
     virtual ~FeatureMap();
+    /**
+     * Adds the given feature to this FeatureMap if it is not already present.
+     * 
+     * @param feature the feature to add.
+     * @param count the count of the given feature.
+     * @return true if the feature was added, false otherwise.
+     * 
+     */
+    bool const addFeature(int const feature, int const count);
+    /**
+     * Gets the count of the given feature.
+     * 
+     * @param featureID the feature to get.
+     * @return the count of the given feature.
+     * 
+     */
+    int const getFeature(int const & featureID) const;
+    /**
+     * Removes the feature with the given feature ID.
+     * 
+     * @param featureID the ID of the feature to remove.
+     * 
+     */
+    void removeFeature(int const & featureID);
 };
 
 #endif	/* FEATUREMAP_H */
