@@ -30,14 +30,7 @@
  * 
  */
 class MockPipe : public Pipe {
-public:
-
-    MockPipe() : Pipe() {
-    }
-
-    ~MockPipe() {
-    }
-protected:
+private:
 
     virtual auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const {
         return corpus;

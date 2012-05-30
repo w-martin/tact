@@ -70,7 +70,8 @@ public:
      * 
      */
     auto_ptr< Corpus > pipe(auto_ptr< Corpus > corpus) const;
-protected:
+private:
+    auto_ptr< Pipe > nextPipe;
     /**
      * Process the given corpus.
      * 
@@ -79,8 +80,6 @@ protected:
      * 
      */
     virtual auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const = 0;
-private:
-    auto_ptr< Pipe > nextPipe;
 };
 
 #endif	/* PIPE_H */
