@@ -46,9 +46,12 @@ include_directories(${MEWT_INCLUDE_DIR}
 # TODO: replace this with a macro
 
 add_library (${MEWT_INPUT}
-    ${MEWT_SOURCE_DIR}/input/Alphabet.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/Corpus.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/Document.cpp
+    ${MEWT_SOURCE_DIR}/input/corpus/feature/Alphabet.cpp
+    ${MEWT_SOURCE_DIR}/input/corpus/feature/FeatureCorpus.cpp
+    ${MEWT_SOURCE_DIR}/input/corpus/feature/FeatureDocument.cpp
+    ${MEWT_SOURCE_DIR}/input/corpus/feature/FeatureMap.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/text/TextCorpus.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/text/TextDocument.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/Pipe.cpp
@@ -105,9 +108,12 @@ target_link_libraries(UtilTests gmock gmock_main)
 add_test(UtilTests UtilTests)
 
 add_executable(InputTests
-    ${MEWT_TEST_DIR}/input/AlphabetTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/CorpusTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/DocumentTest.cpp
+    ${MEWT_TEST_DIR}/input/corpus/feature/AlphabetTest.cpp
+    ${MEWT_TEST_DIR}/input/corpus/feature/FeatureCorpusTest.cpp
+    ${MEWT_TEST_DIR}/input/corpus/feature/FeatureDocumentTest.cpp
+    ${MEWT_TEST_DIR}/input/corpus/feature/FeatureMapTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/text/TextCorpusTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/text/TextDocumentTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/PipeTest.cpp

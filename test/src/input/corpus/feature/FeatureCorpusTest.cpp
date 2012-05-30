@@ -1,5 +1,5 @@
 /**
- * @file TextCorpusTest.cpp
+ * @file FeatureCorpusTest.cpp
  * @author  William Martin <will.st4@gmail.com>
  * @since 0.1
  *
@@ -23,43 +23,58 @@
  */
 
 #include "gtest/gtest.h"
-#include "mewt/input/corpus/text/TextCorpus.h"
+#include "mewt/input/corpus/feature/FeatureCorpus.h"
 
 namespace {
 
     /**
-     * Tests TextCorpus.
+     * Tests FeatureCorpus.
      * 
      */
-    class TextCorpusTest : public ::testing::Test {
+    class FeatureCorpusTest : public ::testing::Test {
     protected:
 
-        TextCorpusTest() {
+        FeatureCorpusTest() {
             location = "testLocation/";
-            corpus = new TextCorpus(location);
+            alphabet = new Alphabet();
+            alphabet->addWord("hello");
+            corpus = new FeatureCorpus(location,
+                    auto_ptr< Alphabet > (new Alphabet(*alphabet)));
         }
 
-        virtual ~TextCorpusTest() {
+        virtual ~FeatureCorpusTest() {
             delete corpus;
+            delete alphabet;
         }
-        TextCorpus * corpus;
+        FeatureCorpus * corpus;
         string location;
+        Alphabet * alphabet;
     };
 
     /*
      * Tests whether the documents type is set correctly.
      * 
      */
-    TEST_F(TextCorpusTest, GetDocumentsTypeTest) {
-        EXPECT_EQ(DOCUMENT_TYPE_TEXT, corpus->getDocumentsType());
+    TEST_F(FeatureCorpusTest, GetDocumentsTypeTest) {
+        EXPECT_EQ(DOCUMENT_TYPE_FEATURE, corpus->getDocumentsType());
+    }
+
+    /*
+     * Tests whether the documents type is set correctly.
+     * 
+     */
+    TEST_F(FeatureCorpusTest, GetAlphabetTest) {
+        Alphabet const * const a = corpus->getAlphabet();
+        EXPECT_EQ(1, a->getSize());
     }
 
     /*
      * Tests whether the copy constructor correctly.
      * 
      */
-    TEST_F(TextCorpusTest, CopyConstructorTest) {
-        TextCorpus tmp(*corpus);
-        EXPECT_EQ(DOCUMENT_TYPE_TEXT, tmp.getDocumentsType());
+    TEST_F(FeatureCorpusTest, CopyConstructorTest) {
+        FeatureCorpus tmp(*corpus);
+        EXPECT_EQ(DOCUMENT_TYPE_FEATURE, tmp.getDocumentsType());
+        EXPECT_EQ(1, tmp.getAlphabet()->getSize());
     }
 }

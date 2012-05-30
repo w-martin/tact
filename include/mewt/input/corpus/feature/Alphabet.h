@@ -25,10 +25,10 @@
 #ifndef ALPHABET_H
 #define	ALPHABET_H
 
-#include <vector>
-#include <string>
 #include "mewt/model/exceptions/DuplicatedWordException.h"
 #include "mewt/model/exceptions/WordNotPresentException.h"
+#include <string>
+#include <vector>
 
 using std::auto_ptr;
 using std::vector;

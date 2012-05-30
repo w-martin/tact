@@ -25,7 +25,7 @@
 #define testWord "testWord"
 
 #include "gtest/gtest.h"
-#include "mewt/input/Alphabet.h"
+#include "mewt/input/corpus/feature/Alphabet.h"
 
 namespace {
 

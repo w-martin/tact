@@ -1,5 +1,5 @@
 /**
- * @file TextCorpusTest.cpp
+ * @file FeatureMapTest.cpp
  * @author  William Martin <will.st4@gmail.com>
  * @since 0.1
  *
@@ -23,43 +23,32 @@
  */
 
 #include "gtest/gtest.h"
-#include "mewt/input/corpus/text/TextCorpus.h"
+#include "mewt/input/corpus/feature/FeatureMap.h"
 
 namespace {
 
     /**
-     * Tests TextCorpus.
+     * Tests FeatureMap.
      * 
      */
-    class TextCorpusTest : public ::testing::Test {
+    class FeatureMapTest : public ::testing::Test {
     protected:
 
-        TextCorpusTest() {
-            location = "testLocation/";
-            corpus = new TextCorpus(location);
+        FeatureMapTest() {
+            featureMap = new FeatureMap();
         }
 
-        virtual ~TextCorpusTest() {
-            delete corpus;
+        virtual ~FeatureMapTest() {
+            delete featureMap;
         }
-        TextCorpus * corpus;
-        string location;
+        FeatureMap * featureMap;
     };
 
     /*
-     * Tests whether the documents type is set correctly.
+     * Tests whether the copy constructor works correctly.
      * 
      */
-    TEST_F(TextCorpusTest, GetDocumentsTypeTest) {
-        EXPECT_EQ(DOCUMENT_TYPE_TEXT, corpus->getDocumentsType());
-    }
-
-    /*
-     * Tests whether the copy constructor correctly.
-     * 
-     */
-    TEST_F(TextCorpusTest, CopyConstructorTest) {
-        TextCorpus tmp(*corpus);
-        EXPECT_EQ(DOCUMENT_TYPE_TEXT, tmp.getDocumentsType());
+    TEST_F(FeatureMapTest, CopyConstructorTest) {
+        FeatureMap tmp(*featureMap);
     }
 }

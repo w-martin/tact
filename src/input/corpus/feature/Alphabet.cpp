@@ -22,7 +22,7 @@
  * 
  */
 
-#include "mewt/input/Alphabet.h"
+#include "mewt/input/corpus/feature/Alphabet.h"
 #include <sstream>
 
 using std::stringstream;
