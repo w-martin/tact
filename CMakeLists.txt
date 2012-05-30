@@ -49,6 +49,7 @@ add_library (${MEWT_INPUT}
     ${MEWT_SOURCE_DIR}/input/Alphabet.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/Corpus.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/Document.cpp
+    ${MEWT_SOURCE_DIR}/input/corpus/TextDocument.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/Pipe.cpp
     )
 
@@ -106,6 +107,7 @@ add_executable(InputTests
     ${MEWT_TEST_DIR}/input/AlphabetTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/CorpusTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/DocumentTest.cpp
+    ${MEWT_TEST_DIR}/input/corpus/TextDocumentTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/PipeTest.cpp
 ) 
 target_link_libraries(InputTests gmock gmock_main

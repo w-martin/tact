@@ -25,15 +25,16 @@
 #ifndef TEXTDOCUMENT_H
 #define	TEXTDOCUMENT_H
 
-#include <string>
+#include "mewt/input/corpus/Document.h"
+#include <memory>
 
-using std::string;
+using std::auto_ptr;
 
 /**
  * TextDocument class for corpus files. Stores the name of the file.
  * 
  */
-class TextDocument {
+class TextDocument : public Document {
 public:
     /**
      * Default constructor.
@@ -41,7 +42,7 @@ public:
      * @param name the name of the file.
      * 
      */
-    TextDocument(string const name);
+    TextDocument(string const name, auto_ptr< string > text);
     /**
      * Copy constructor.
      * 
@@ -54,8 +55,15 @@ public:
      * 
      */
     virtual ~TextDocument();
+    /**
+     * Gets the text from this TextDocument.
+     * 
+     * @return the text from this TextDocument.
+     * 
+     */
+    string const * const getText() const;
 private:
-    string text;
+    auto_ptr< string > text;
 };
 
 #endif	/* TEXTDOCUMENT_H */
