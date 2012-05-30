@@ -74,6 +74,7 @@ public:
      * 
      */
     int const getSize() const;
+protected:
     /**
      * Gets the Documents that constitute this Corpus.
      * 

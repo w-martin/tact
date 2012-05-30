@@ -24,6 +24,7 @@
 
 #include "gtest/gtest.h"
 #include "mewt/input/corpus/Corpus.h"
+#include "mewt/input/corpus/MockCorpus.h"
 
 namespace {
 
@@ -36,13 +37,13 @@ namespace {
 
         CorpusTest() {
             location = "testLocation/";
-            corpus = new Corpus(location);
+            corpus = new MockCorpus(location);
         }
 
         virtual ~CorpusTest() {
             delete corpus;
         }
-        Corpus * corpus;
+        MockCorpus * corpus;
         string location;
     };
 
@@ -96,7 +97,7 @@ namespace {
         Document * d = new Document(testName);
         corpus->addDocument(auto_ptr< Document > (d));
 
-        Corpus tmp(*corpus);
+        MockCorpus tmp(*corpus);
         EXPECT_EQ(0, strcmp(location.c_str(), tmp.getLocation().c_str()));
         vector< Document * > const * const documents = tmp.getDocuments();
         EXPECT_EQ(1, tmp.getSize());
