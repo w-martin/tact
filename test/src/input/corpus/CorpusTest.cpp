@@ -24,7 +24,6 @@
 
 #include "gtest/gtest.h"
 #include "mewt/input/corpus/Corpus.h"
-#include "mewt/input/corpus/MockCorpus.h"
 
 namespace {
 
@@ -37,36 +36,15 @@ namespace {
 
         CorpusTest() {
             location = "testLocation/";
-            corpus = new MockCorpus(location);
+            corpus = new Corpus(location, DOCUMENT_TYPE_BASIC);
         }
 
         virtual ~CorpusTest() {
             delete corpus;
         }
-        MockCorpus * corpus;
+        Corpus * corpus;
         string location;
     };
-
-    /*
-     * Tests whether the getName method works correctly.
-     * 
-     */
-    TEST_F(CorpusTest, GetSizeTest) {
-        EXPECT_EQ(0, corpus->getSize());
-
-        string testName = "testName";
-        Document * d = new Document(testName);
-        corpus->addDocument(auto_ptr< Document > (d));
-        EXPECT_EQ(1, corpus->getSize());
-    }
-
-    /*
-     * Tests whether the getName method works correctly.
-     * 
-     */
-    TEST_F(CorpusTest, GetNameTest) {
-        EXPECT_EQ(0, strcmp(location.c_str(), corpus->getLocation().c_str()));
-    }
 
     /*
      * Tests whether the getName method works correctly.
@@ -89,20 +67,72 @@ namespace {
     }
 
     /*
+     * Tests whether the contains method works correctly.
+     * 
+     */
+    TEST_F(CorpusTest, ConstainsTest) {
+        string testName = "testName";
+        Document * d = new Document(testName);
+        
+        EXPECT_FALSE(corpus->contains(d));
+        corpus->addDocument(auto_ptr< Document > (new Document(*d)));
+        EXPECT_TRUE(corpus->contains(d));
+    }
+
+    /*
+     * Tests whether the getDocuments method works correctly.
+     * 
+     */
+    TEST_F(CorpusTest, GetDocumentsTest) {
+        vector< Document * > const * const documents = corpus->getDocuments();
+        EXPECT_EQ(0, documents->size());
+    }
+
+    /*
+     * Tests whether the getDocumentsType method works correctly.
+     * 
+     */
+    TEST_F(CorpusTest, GetDocumentsTypeTest) {
+        EXPECT_EQ(DOCUMENT_TYPE_BASIC, corpus->getDocumentsType());
+    }
+
+    /*
+     * Tests whether the getLocation method works correctly.
+     * 
+     */
+    TEST_F(CorpusTest, GetLocationTest) {
+        EXPECT_EQ(0, strcmp(location.c_str(), corpus->getLocation().c_str()));
+    }
+
+    /*
+     * Tests whether the getName method works correctly.
+     * 
+     */
+    TEST_F(CorpusTest, GetSizeTest) {
+        EXPECT_EQ(0, corpus->getSize());
+
+        string testName = "testName";
+        Document * d = new Document(testName);
+        corpus->addDocument(auto_ptr< Document > (d));
+        EXPECT_EQ(1, corpus->getSize());
+    }
+
+    /*
      * Tests whether the copy constructor works correctly.
      * 
      */
     TEST_F(CorpusTest, CopyConstructorTest) {
         string testName = "testName";
         Document * d = new Document(testName);
-        corpus->addDocument(auto_ptr< Document > (d));
+        corpus->addDocument(auto_ptr< Document > (new Document(*d)));
 
-        MockCorpus tmp(*corpus);
-        EXPECT_EQ(0, strcmp(location.c_str(), tmp.getLocation().c_str()));
+        Corpus tmp(*corpus);
         vector< Document * > const * const documents = tmp.getDocuments();
+        EXPECT_EQ(0, strcmp(location.c_str(), tmp.getLocation().c_str()));
         EXPECT_EQ(1, tmp.getSize());
-        EXPECT_EQ(1, documents->size());
         EXPECT_EQ(0,
                 strcmp(documents->at(0)->getName().c_str(), testName.c_str()));
+        EXPECT_EQ(corpus->getDocumentsType(), tmp.getDocumentsType());
+        EXPECT_TRUE(tmp.contains(d));
     }
 }

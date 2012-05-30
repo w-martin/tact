@@ -25,13 +25,11 @@
 #ifndef CORPUS_H
 #define	CORPUS_H
 
-#include <string>
+#include "mewt/input/corpus/Document.h"
+
 #include <vector>
 #include <memory>
 
-#include "mewt/input/corpus/Document.h"
-
-using std::string;
 using std::vector;
 using std::auto_ptr;
 
@@ -47,7 +45,7 @@ public:
      * @param location the location of the corpus on disk.
      * 
      */
-    Corpus(string const location);
+    Corpus(string const location, int const documentsType);
     /**
      * Copy constructor.
      * 
@@ -61,9 +59,40 @@ public:
      */
     virtual ~Corpus();
     /**
-     * Gets the location of this Corpus.
+     * Adds a Document to this Corpus if it is not already present.
      * 
-     * @return the location of this Corpus.
+     * @param document the Document to add.
+     * @return true if the Document was added, false otherwise.
+     * 
+     */
+    bool const addDocument(auto_ptr< Document > document);
+    /**
+     * Checks if this Corpus contains the given Document.
+     * 
+     * @param document the Document to check.
+     * @return true if this Corpus contains the given Document, 
+     * false otherwise.
+     * 
+     */
+    bool const contains(Document const * const document) const;
+    /**
+     * Gets the Documents that constitute this Corpus.
+     * 
+     * @return the Documents that constitute this Corpus.
+     *
+     */
+    vector< Document * > const * const getDocuments() const;
+    /**
+     * Gets the type of accepted Documents.
+     * 
+     * @return the type of accepted Documents.
+     * 
+     */
+    int const getDocumentsType() const;
+    /**
+     * Gets the location of this AbstractCorpus.
+     * 
+     * @return the location of this AbstractCorpus.
      * 
      */
     string const getLocation() const;
@@ -74,25 +103,10 @@ public:
      * 
      */
     int const getSize() const;
-protected:
-    /**
-     * Gets the Documents that constitute this Corpus.
-     * 
-     * @return the Documents that constitute this Corpus.
-     *
-     */
-    vector< Document * > const * const getDocuments() const;
-    /**
-     * Adds a Document to this Corpus if it is not already present.
-     * 
-     * @param document the Document to add.
-     * @return true if the Document was added, false otherwise.
-     * 
-     */
-    bool const addDocument(auto_ptr<Document> document);
 private:
-    string location;
     vector< Document * > * documents;
+    int documentsType;
+    string location;
 };
 
 #endif	/* CORPUS_H */

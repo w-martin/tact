@@ -22,7 +22,7 @@
  * 
  */
 
-#include "mewt/input/corpus/TextDocument.h"
+#include "mewt/input/corpus/text/TextDocument.h"
 
 TextDocument::TextDocument(const string name, auto_ptr< string > text)
 : Document(name) {
@@ -38,4 +38,8 @@ TextDocument::~TextDocument() {
 
 string const * const TextDocument::getText() const {
     return text.get();
+}
+
+int const TextDocument::getType() const {
+    return DOCUMENT_TYPE_TEXT;
 }

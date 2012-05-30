@@ -23,7 +23,7 @@
  */
 
 #include "gtest/gtest.h"
-#include "mewt/input/corpus/TextDocument.h"
+#include "mewt/input/corpus/text/TextDocument.h"
 
 namespace {
 
@@ -63,6 +63,14 @@ namespace {
      */
     TEST_F(TextDocumentTest, GetTextTest) {
         EXPECT_EQ(0, strcmp(text.c_str(), document->getText()->c_str()));
+    }
+
+    /*
+     * Tests whether the getName method works correctly.
+     * 
+     */
+    TEST_F(TextDocumentTest, GetTypeTest) {
+        EXPECT_EQ(DOCUMENT_TYPE_TEXT, document->getType());
     }
 
     /*

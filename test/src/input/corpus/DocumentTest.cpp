@@ -47,11 +47,29 @@ namespace {
     };
 
     /*
+     * Tests whether the equals method works correctly.
+     * 
+     */
+    TEST_F(DocumentTest, EqualsTest) {
+        EXPECT_TRUE(document->equals(document));
+        Document tmp("different name");
+        EXPECT_FALSE(document->equals(&tmp));
+    }
+
+    /*
      * Tests whether the getName method works correctly.
      * 
      */
     TEST_F(DocumentTest, GetNameTest) {
         EXPECT_EQ(0, strcmp(name.c_str(), document->getName().c_str()));
+    }
+
+    /*
+     * Tests whether the getName method works correctly.
+     * 
+     */
+    TEST_F(DocumentTest, GetTypeTest) {
+        EXPECT_EQ(DOCUMENT_TYPE_BASIC, document->getType());
     }
 
     /*
@@ -61,5 +79,6 @@ namespace {
     TEST_F(DocumentTest, CopyConstructorTest) {
         Document tmp(*document);
         EXPECT_EQ(0, strcmp(name.c_str(), tmp.getName().c_str()));
+        EXPECT_EQ(document->getType(), tmp.getType());
     }
 }

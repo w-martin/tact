@@ -1,5 +1,5 @@
 /**
- * @file Document.h
+ * @file TextDocument.h
  * @author  William Martin <will.st4@gmail.com>
  * @since 0.1
  *
@@ -22,19 +22,20 @@
  * 
  */
 
-#ifndef DOCUMENT_H
-#define	DOCUMENT_H
-#define DOCUMENT_TYPE_BASIC 0
+#ifndef TEXTDOCUMENT_H
+#define	TEXTDOCUMENT_H
+#define DOCUMENT_TYPE_TEXT 1
 
-#include <string>
+#include "mewt/input/corpus/Document.h"
+#include <memory>
 
-using std::string;
+using std::auto_ptr;
 
 /**
- * Document class for corpus files. Stores the name of the file.
+ * TextDocument class for corpus files. Stores the name of the file.
  * 
  */
-class Document {
+class TextDocument : public Document {
 public:
     /**
      * Default constructor.
@@ -42,35 +43,26 @@ public:
      * @param name the name of the file.
      * 
      */
-    Document(string const name);
+    TextDocument(string const name, auto_ptr< string > text);
     /**
      * Copy constructor.
      * 
-     * @param orig the Document to copy.
+     * @param orig the TextDocument to copy.
      * 
      */
-    Document(const Document& orig);
+    TextDocument(const TextDocument& orig);
     /**
      * Default destructor.
      * 
      */
-    virtual ~Document();    
+    virtual ~TextDocument();
     /**
-     * Checks if this Document is equal to the other Document.
+     * Gets the text from this TextDocument.
      * 
-     * @param other the Document to check against.
-     * @return true if this Document is equal to the other Document,
-     * false otherwise.
+     * @return the text from this TextDocument.
      * 
      */
-    virtual bool const equals(Document const * const other) const;
-    /**
-     * Gets the name of this Document.
-     * 
-     * @return the name of this Document.
-     * 
-     */
-    string const getName() const;
+    string const * const getText() const;
     /**
      * Gets the type of this Document.
      * 
@@ -79,7 +71,7 @@ public:
      */
     virtual int const getType() const;
 private:
-    string name;
+    auto_ptr< string > text;
 };
 
-#endif	/* DOCUMENT_H */
+#endif	/* TEXTDOCUMENT_H */

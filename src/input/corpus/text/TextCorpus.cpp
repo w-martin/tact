@@ -1,5 +1,5 @@
 /**
- * @file MockCorpus.h
+ * @file TextCorpus.cpp
  * @author  William Martin <will.st4@gmail.com>
  * @since 0.1
  *
@@ -22,30 +22,15 @@
  * 
  */
 
-#include "gmock/gmock.h"
-#include "mewt/input/corpus/Corpus.h"
+#include "mewt/input/corpus/text/TextCorpus.h"
 
-/**
- * Mock Corpus class.
- * 
- */
-class MockCorpus : public Corpus {
-public:
+TextCorpus::TextCorpus(const string location)
+: Corpus(location, DOCUMENT_TYPE_TEXT) {
+}
 
-    MockCorpus(string const location) : Corpus(location) {
-    }
+TextCorpus::TextCorpus(const TextCorpus& orig)
+: Corpus(orig) {
+}
 
-    MockCorpus(MockCorpus const & orig) : Corpus(orig) {
-    }
-
-    virtual ~MockCorpus() {
-    }
-
-    vector< Document * > const * const getDocuments() const {
-        return Corpus::getDocuments();
-    }
-
-    bool const addDocument(auto_ptr< Document > document) {
-        return Corpus::addDocument(document);
-    }
-};
+TextCorpus::~TextCorpus() {
+}

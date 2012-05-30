@@ -24,24 +24,56 @@
 
 #include "mewt/input/corpus/Corpus.h"
 
-Corpus::Corpus(const string location) {
+Corpus::Corpus(const string location, const int documentsType) {
+    Corpus::documents = new vector< Document * > ();
+    Corpus::documentsType = documentsType;
     Corpus::location = location;
-    documents = new vector< Document * >();
 }
 
 Corpus::Corpus(const Corpus& orig) {
-    location = orig.getLocation();
-    documents = new vector< Document * >();
-
+    documents = new vector< Document * > ();
     vector< Document * > const * const originalDocuments = orig.getDocuments();
-    for (int i = 0; i < originalDocuments->size(); i++) {
-        Document * d = new Document(*originalDocuments->at(i));
-        documents->push_back(d);
+    for (int i = 0; i < orig.getSize(); i++) {
+        documents->push_back(new Document(*originalDocuments->at(i)));
     }
+
+    documentsType = orig.getDocumentsType();
+    location = orig.getLocation();
 }
 
 Corpus::~Corpus() {
     delete documents;
+}
+
+bool const Corpus::addDocument(auto_ptr<Document> document) {
+    if (document->getType() == documentsType
+            && !contains(document.get())) {
+        documents->push_back(document.release());
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool const Corpus::contains(Document const * const document) const {
+    if (document->getType() != documentsType) {
+        return false;
+    }
+    for (int i = 0; i < getSize(); i++) {
+        Document const * const other = documents->at(i);
+        if (document->equals(other)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+vector< Document * > const * const Corpus::getDocuments() const {
+    return documents;
+}
+
+int const Corpus::getDocumentsType() const {
+    return documentsType;
 }
 
 string const Corpus::getLocation() const {
@@ -50,19 +82,4 @@ string const Corpus::getLocation() const {
 
 int const Corpus::getSize() const {
     return documents->size();
-}
-
-vector< Document * > const * const Corpus::getDocuments() const {
-    return documents;
-}
-
-bool const Corpus::addDocument(auto_ptr<Document> document) {
-    for (int i = 0; i < getSize(); i++) {
-        Document * d = documents->at(i);
-        if (0 == strcmp(d->getName().c_str(), document->getName().c_str())) {
-            return false;
-        }
-    }
-    documents->push_back(document.release());
-    return true;
 }

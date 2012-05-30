@@ -1,5 +1,5 @@
 /**
- * @file TextDocument.h
+ * @file TextCorpus.h
  * @author  William Martin <will.st4@gmail.com>
  * @since 0.1
  *
@@ -22,48 +22,37 @@
  * 
  */
 
-#ifndef TEXTDOCUMENT_H
-#define	TEXTDOCUMENT_H
+#ifndef TEXTCORPUS_H
+#define	TEXTCORPUS_H
 
-#include "mewt/input/corpus/Document.h"
-#include <memory>
-
-using std::auto_ptr;
+#include "mewt/input/corpus/Corpus.h"
+#include "mewt/input/corpus/text/TextDocument.h"
 
 /**
- * TextDocument class for corpus files. Stores the name of the file.
+ * Store of TextDocument objects.
  * 
  */
-class TextDocument : public Document {
+class TextCorpus : public Corpus {
 public:
     /**
      * Default constructor.
      * 
-     * @param name the name of the file.
+     * @param location the location of the corpus on disk.
      * 
      */
-    TextDocument(string const name, auto_ptr< string > text);
+    TextCorpus(string const location);
     /**
      * Copy constructor.
      * 
-     * @param orig the TextDocument to copy.
+     * @param orig the TextCorpus to copy.
      * 
      */
-    TextDocument(const TextDocument& orig);
+    TextCorpus(const TextCorpus& orig);
     /**
      * Default destructor.
      * 
      */
-    virtual ~TextDocument();
-    /**
-     * Gets the text from this TextDocument.
-     * 
-     * @return the text from this TextDocument.
-     * 
-     */
-    string const * const getText() const;
-private:
-    auto_ptr< string > text;
+    virtual ~TextCorpus();
 };
 
-#endif	/* TEXTDOCUMENT_H */
+#endif	/* TEXTCORPUS_H */
