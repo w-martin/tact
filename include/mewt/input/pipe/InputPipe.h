@@ -1,5 +1,5 @@
 /**
- * @file Pipe.h
+ * @file InputPipe.h
  * @author  William Martin <will.st4@gmail.com>
  * @since 0.1
  *
@@ -22,19 +22,56 @@
  * 
  */
 
-#ifndef PIPE_H
-#define	PIPE_H
+#ifndef INPUTPIPE_H
+#define	INPUTPIPE_H
+
+#include "mewt/input/corpus/text/TextCorpus.h"
+#include "mewt/input/pipe/Pipe.h"
 
 /**
- * Pipe class for transforming Corpus objects.
+ * InputPipe class for transforming Corpus objects.
  * 
  */
-class Pipe {
+class InputPipe : public Pipe {
 public:
-    Pipe();
-    Pipe(const Pipe& orig);
-    virtual ~Pipe();
+    /**
+     * Default constructor.
+     * 
+     */
+    InputPipe();
+    /**
+     * Default destructor.
+     * 
+     */
+    virtual ~InputPipe();
+    /**
+     * Computes the file name of a Document from its name and the location
+     * of the Corpus.
+     * 
+     * @param location the location of the corpus.
+     * @param name the name of the Document.
+     * @return the file name of a Document.
+     * 
+     */
+    static string const computeFileName(string const location,
+            string const name);
+    /**
+     * Reads the given file directly into a string.
+     * 
+     * @param location the location of the file on disk.
+     * @return the string which was read.
+     * 
+     */
+    static auto_ptr< string > readFileIntoString(string const location);
 private:
+    /**
+     * Process the given corpus.
+     * 
+     * @param corpus the Corpus to process.
+     * @return the processed Corpus.
+     * 
+     */
+    auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
 };
 
-#endif	/* PIPE_H */
+#endif	/* INPUTPIPE_H */
