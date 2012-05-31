@@ -33,16 +33,6 @@ FeatureMap::FeatureMap(const FeatureMap& orig) : map(orig) {
 FeatureMap::~FeatureMap() {
 }
 
-bool const FeatureMap::addFeature(const int feature, const int count) {
-    if (0 == getFeature(feature)) {
-        pair< int, int > p = make_pair(feature, count);
-        insert(p);
-        return true;
-    } else {
-        return false;
-    }
-}
-
 int const FeatureMap::getFeature(int const & featureID) const {
     const_iterator iter = find(featureID);
     if (end() == iter) {
@@ -50,6 +40,17 @@ int const FeatureMap::getFeature(int const & featureID) const {
     } else {
         return iter->second;
     }
+}
+
+int const FeatureMap::setFeature(const int feature, const int count) {
+    int const previousCount = getFeature(feature);
+    if (0 == count) {
+        removeFeature(feature);
+    } else {
+        pair< int, int > p = make_pair(feature, count);
+        insert(p);
+    }
+    return previousCount;
 }
 
 void FeatureMap::removeFeature(int const & featureID) {

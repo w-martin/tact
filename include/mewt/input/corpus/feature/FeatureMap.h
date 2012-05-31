@@ -57,15 +57,6 @@ public:
      */
     virtual ~FeatureMap();
     /**
-     * Adds the given feature to this FeatureMap if it is not already present.
-     * 
-     * @param feature the feature to add.
-     * @param count the count of the given feature.
-     * @return true if the feature was added, false otherwise.
-     * 
-     */
-    bool const addFeature(int const feature, int const count);
-    /**
      * Gets the count of the given feature.
      * 
      * @param featureID the feature to get.
@@ -73,6 +64,16 @@ public:
      * 
      */
     int const getFeature(int const & featureID) const;
+    /**
+     * Sets the given feature with the given count. Overwrites previous
+     * mapping if present.
+     * 
+     * @param feature the feature to add.
+     * @param count the count of the given feature.
+     * @return the previous mapping, or 0 if none was present.
+     * 
+     */
+    int const setFeature(int const feature, int const count);
     /**
      * Removes the feature with the given feature ID.
      * 
