@@ -30,9 +30,9 @@
 #include <fstream>
 #include <streambuf>
 
-using std::iterator;
 using std::ifstream;
 using std::ios;
+using std::istreambuf_iterator;
 
 InputPipe::InputPipe() {
 }
@@ -50,37 +50,35 @@ auto_ptr< Corpus > InputPipe::process(
 
     for (vector< Document * >::const_iterator iter = originalDocuments->begin();
             originalDocuments->end() != iter; iter++) {
-        
+
         string const name = (*iter)->getName();
         string filename = computeFileName(originalCorpus->getLocation(),
                 name);
         auto_ptr< string > text = readFileIntoString(filename);
-        
+
         auto_ptr< Document > doc = auto_ptr< Document > (
                 new TextDocument(name, text));
         corpus->addDocument(doc);
-        
+
     }
     return (auto_ptr< Corpus >) corpus;
 }
 
-string const InputPipe::computeFileName(const string location,
-        const string name) {
+string const InputPipe::computeFileName(const string & location,
+        const string & name) {
     return string(location).append(SEPARATOR). append(name);
 }
 
-auto_ptr< string > InputPipe::readFileIntoString(const string location) {
-    ifstream inputFileStream;
-    int length;
-    inputFileStream.open(location.c_str());
-    inputFileStream.seekg(0, ios::end);
-    length = inputFileStream.tellg();
-    inputFileStream.seekg(0, ios::beg);
-    char * buffer = new char[length];
-    inputFileStream.read(buffer, length);
-    inputFileStream.close();
+auto_ptr< string > InputPipe::readFileIntoString(const string & location) {
+    ifstream t(location.c_str());
+    auto_ptr< string > text = auto_ptr< string > (new string());
 
-    auto_ptr< string > text = auto_ptr< string > (new string(buffer));
-    delete buffer;
+    t.seekg(0, ios::end);
+    int const length = t.tellg();
+    t.seekg(0, ios::beg);
+    
+    text->reserve(length);
+    text->assign(istreambuf_iterator< char >(t), istreambuf_iterator< char >());
+    
     return text;
 }

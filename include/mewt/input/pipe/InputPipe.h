@@ -53,8 +53,8 @@ public:
      * @return the file name of a Document.
      * 
      */
-    static string const computeFileName(string const location,
-            string const name);
+    static string const computeFileName(string const & location,
+            string const & name);
     /**
      * Reads the given file directly into a string.
      * 
@@ -62,7 +62,7 @@ public:
      * @return the string which was read.
      * 
      */
-    static auto_ptr< string > readFileIntoString(string const location);
+    static auto_ptr< string > readFileIntoString(string const & location);
 private:
     /**
      * Process the given corpus.
