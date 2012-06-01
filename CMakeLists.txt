@@ -139,7 +139,6 @@ target_link_libraries(InputTests gmock gmock_main
 add_test(InputTests InputTests)
 
 add_executable(OutputTests
-    ${MEWT_TEST_DIR}/output/exceptions/ElementNotPresentExceptionTest.cpp
     ${MEWT_TEST_DIR}/output/IdentifierTest.cpp
 ) 
 target_link_libraries(OutputTests gmock gmock_main
