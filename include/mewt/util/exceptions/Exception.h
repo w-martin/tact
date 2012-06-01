@@ -28,6 +28,7 @@
 #include <exception>
 #include <string>
 
+using std::exception;
 using std::string;
 
 /**
@@ -37,9 +38,8 @@ using std::string;
  * <code>Exception</code>.
  * 
  */
-class Exception : public std::exception {
+class Exception : public exception {
 public:
-
     /**
      * Default constructor.
      * 
@@ -47,16 +47,21 @@ public:
      * <code>Exception</code>.
      * 
      */
-    Exception(string message) {
-        Exception::message = message;
-    }
-
-    virtual ~Exception() throw () {
-    }
-
-    virtual const char * what() const throw () {
-        return message.c_str();
-    }
+    Exception(string const message);
+    /**
+     * Default destructor.
+     * 
+     */
+    virtual ~Exception() throw ();
+    /**
+     * Returns a C-style character string describing the general cause of 
+     * the current error.
+     * 
+     * @return a C-style character string describing the general cause of 
+     * the current error.
+     * 
+     */
+    virtual char const * what() const throw ();
 private:
     string message;
 };

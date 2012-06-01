@@ -39,42 +39,36 @@ using std::stringstream;
  */
 class OutOfBoundsException : public Exception {
 public:
-
     /**
      * Default constructor. Uses the default message for this
      * Exception.
      * 
      */
-    OutOfBoundsException() : Exception(string(OUT_OF_BOUNDS_MESSAGE)) {
-    }
-
+    OutOfBoundsException();
     /**
      * Specific constructor. Generated an informative message
      * about the error.
      * 
      */
-    OutOfBoundsException(int const index, int const bounds)
-    : Exception(createErrorMessage(index, bounds)) {
-    }
-
+    OutOfBoundsException(int const & index, int const & bounds);
     /**
      * Uses the given message for this Exception.
      * 
      * @param message the message to use for this Exception.
      * 
      */
-    OutOfBoundsException(string const message)
-    : Exception(message) {
-    }
+    OutOfBoundsException(string const message);
 private:
-
-    string const createErrorMessage(int const & index,
-            int const & bounds) const {
-        stringstream stream;
-        stream << OUT_OF_BOUNDS_MESSAGE << " \nIndex: "
-                << index << " Bounds: " << bounds;
-        return stream.str();
-    }
+    /**
+     * Creates an error message with the given index and bounds.
+     * 
+     * @param index the index that was out of bounds.
+     * @param bounds the bounds that the index did not meet.
+     * @return an error message with the given index and bounds.
+     * 
+     */
+    string const createErrorMessage(
+            int const & index, int const & bounds) const;
 };
 
 #endif	/* OUTOFBOUNDSEXCEPTION_H */

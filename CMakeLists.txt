@@ -30,6 +30,7 @@ cmake_minimum_required (VERSION 2.6.2)
 project (mewt)
 
 set(MEWT_NAME mewt)
+set(MEWT_UTIL mewt-util)
 set(MEWT_INPUT mewt-input)
 set(MEWT_OUTPUT mewt-output)
 set(MEWT_MODEL mewt-model)
@@ -44,6 +45,12 @@ include_directories(${MEWT_INCLUDE_DIR}
 
 # list all source files here
 # TODO: replace this with a macro
+
+add_library (${MEWT_UTIL}
+    ${MEWT_SOURCE_DIR}/util/exceptions/Exception.cpp
+    ${MEWT_SOURCE_DIR}/util/exceptions/IllegalArgumentException.cpp
+    ${MEWT_SOURCE_DIR}/util/exceptions/OutOfBoundsException.cpp
+    )
 
 add_library (${MEWT_INPUT}
     ${MEWT_SOURCE_DIR}/input/corpus/Corpus.cpp
@@ -77,6 +84,7 @@ add_executable (${MEWT_NAME}
     ${MEWT_SOURCE_DIR}/main.cpp)
 target_link_libraries(${MEWT_NAME}
     ${CMAKE_THREAD_LIBS_INIT}
+    ${MEWT_UTIL}
     ${MEWT_INPUT}
     ${MEWT_OUTPUT}
     ${MEWT_MODEL}
@@ -105,7 +113,8 @@ add_executable(UtilTests
     ${MEWT_TEST_DIR}/util/exceptions/IllegalArgumentExceptionTest.cpp
     ${MEWT_TEST_DIR}/util/exceptions/OutOfBoundsExceptionTest.cpp
 ) 
-target_link_libraries(UtilTests gmock gmock_main) 
+target_link_libraries(UtilTests gmock gmock_main
+    ${MEWT_UTIL}) 
 add_test(UtilTests UtilTests)
 
 add_executable(InputTests
@@ -121,6 +130,7 @@ add_executable(InputTests
     ${MEWT_TEST_DIR}/input/pipe/PipeTest.cpp
 ) 
 target_link_libraries(InputTests gmock gmock_main
+    ${MEWT_UTIL}
     ${MEWT_INPUT})
 add_test(InputTests InputTests)
 
@@ -129,7 +139,9 @@ add_executable(OutputTests
     ${MEWT_TEST_DIR}/output/IdentifierTest.cpp
 ) 
 target_link_libraries(OutputTests gmock gmock_main
-    ${MEWT_INPUT} ${MEWT_OUTPUT})
+    ${MEWT_UTIL}
+    ${MEWT_INPUT}
+    ${MEWT_OUTPUT})
 add_test(OutputTests OutputTests)
 
 add_executable(ModelTests
@@ -139,12 +151,18 @@ add_executable(ModelTests
     ${MEWT_TEST_DIR}/model/exceptions/WordNotPresentExceptionTest.cpp
 ) 
 target_link_libraries(ModelTests gmock gmock_main
-    ${MEWT_OUTPUT} ${MEWT_MODEL})
+    ${MEWT_UTIL}
+    ${MEWT_OUTPUT}
+    ${MEWT_MODEL})
 add_test(ModelTests ModelTests)
 
 add_executable(AlgorithmTests
     ${MEWT_TEST_DIR}/algorithm/RandomNumberGeneratorTest.cpp
 ) 
 target_link_libraries(AlgorithmTests gmock gmock_main
-    ${MEWT_INPUT} ${MEWT_OUTPUT} ${MEWT_MODEL} ${MEWT_ALGORITHM})
+    ${MEWT_UTIL}
+    ${MEWT_INPUT}
+    ${MEWT_OUTPUT}
+    ${MEWT_MODEL}
+    ${MEWT_ALGORITHM})
 add_test(AlgorithmTests AlgorithmTests)
