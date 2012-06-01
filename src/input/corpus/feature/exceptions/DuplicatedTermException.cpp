@@ -1,5 +1,5 @@
 /**
- * @file OutOfBoundsException.cpp
+ * @file DuplicatedTermException.cpp
  * @author  William Martin <will.st4@gmail.com>
  * @since 0.2
  *
@@ -22,25 +22,28 @@
  * 
  */
 
-#include "mewt/util/exceptions/OutOfBoundsException.h"
+#include "mewt/input/corpus/feature/exceptions/DuplicatedTermException.h"
+#include <sstream>
 
-OutOfBoundsException::OutOfBoundsException()
-: Exception(string(OUT_OF_BOUNDS_MESSAGE)) {
+using std::stringstream;
+
+DuplicatedTermException::DuplicatedTermException()
+: Exception(string(DUPLICATED_TERM_MESSAGE)) {
 }
 
-OutOfBoundsException::OutOfBoundsException(
-        int const & index, int const & bounds)
-: Exception(createErrorMessage(index, bounds)) {
+DuplicatedTermException::DuplicatedTermException(
+        const string term, const bool & isMessage)
+: Exception(isMessage ? term : createErrorMessage(term)) {
 }
 
-OutOfBoundsException::OutOfBoundsException(const string message)
+DuplicatedTermException::DuplicatedTermException(const string message)
 : Exception(message) {
 }
 
-string const OutOfBoundsException::createErrorMessage(
-        int const & index, int const & bounds) const {
+string const DuplicatedTermException::createErrorMessage(
+        string const & term) const {
     stringstream stream;
-    stream << OUT_OF_BOUNDS_MESSAGE << " \nIndex: "
-            << index << " Bounds: " << bounds;
+    stream << DUPLICATED_TERM_MESSAGE << " \nDuplicated term: "
+            << term << ".";
     return stream.str();
 }

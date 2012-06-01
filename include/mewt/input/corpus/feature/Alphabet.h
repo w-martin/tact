@@ -25,23 +25,37 @@
 #ifndef ALPHABET_H
 #define	ALPHABET_H
 
-#include "mewt/model/exceptions/DuplicatedWordException.h"
-#include "mewt/model/exceptions/WordNotPresentException.h"
+#include "mewt/input/corpus/feature/exceptions/DuplicatedTermException.h"
+#include "mewt/input/corpus/feature/exceptions/TermNotPresentException.h"
 #include <string>
 #include <vector>
 
 using std::auto_ptr;
-using std::vector;
 using std::string;
+using std::vector;
 
 /**
- * Represents a finite collection of words.
+ * Represents a finite collection of terms.
  * 
  */
 class Alphabet {
 public:
+    /**
+     * Default constructor.
+     * 
+     */
     Alphabet();
+    /**
+     * Copy constructor.
+     * 
+     * @param orig the object to copy from.
+     * 
+     */
     Alphabet(Alphabet const & orig);
+    /**
+     * Default destructor.
+     * 
+     */
     virtual ~Alphabet();
     /**
      * Gets the size of this Alphabet.
@@ -51,52 +65,51 @@ public:
      */
     const int getSize() const;
     /**
-     * Gets the array of words.
+     * Gets the array of terms.
      * 
-     * @return the array of words.
-     * 
-     */
-    vector<string> const * const getWords() const;
-    /**
-     * Adds the given word to this Alphabet.
-     * 
-     * @param word the word to add.
-     * @return the index of the added word.
-     * @throws DuplicatedWordException if the word is already present.
+     * @return the array of terms.
      * 
      */
-    int const addWord(string const word)
-    throw (DuplicatedWordException);
+    vector<string> const * const getTerms() const;
     /**
-     * Removes the word with the given index.
+     * Adds the given term to this Alphabet.
      * 
-     * @param index the index of the word to remove.
-     * @return the word that was removed.
-     * @throws WordNotPresentException if the word is not present 
+     * @param term the term to add.
+     * @return the index of the added term.
+     * @throws DuplicatedTermException if the term is already present.
+     * 
+     */
+    int const addTerm(string const term) throw (DuplicatedTermException);
+    /**
+     * Removes the term with the given index.
+     * 
+     * @param index the index of the term to remove.
+     * @return the term that was removed.
+     * @throws TermNotPresentException if the term is not present 
      * in this Alphabet.
      * 
      */
-    string const removeWord(int const index)
-    throw (WordNotPresentException);
+    string const removeTerm(int const index)
+    throw (TermNotPresentException);
     /**
-     * Removes the given word from this Alphabet.
+     * Removes the given term from this Alphabet.
      * 
-     * @param word the word to remove.
-     * @return the index of the word that was removed.
-     * @throws WordNotPresentException if the word is not present 
+     * @param term the term to remove.
+     * @return the index of the term that was removed.
+     * @throws TermNotPresentException if the term is not present 
      * in this Alphabet.
      * 
      */
-    int const removeWord(string const word)
-    throw (WordNotPresentException);
+    int const removeTerm(string const term)
+    throw (TermNotPresentException);
     /**
-     * Checks if the given word is present in this Alphabet.
+     * Checks if the given term is present in this Alphabet.
      * 
-     * @param word the word to check for.
-     * @return true if the word is present, false otherwise.
+     * @param term the term to check for.
+     * @return true if the term is present, false otherwise.
      * 
      */
-    bool const hasWord(string const word) const;
+    bool const hasTerm(string const term) const;
     /**
      * Gets the array of indices.
      * 
@@ -105,25 +118,25 @@ public:
      */
     vector<int> const * const getIndices() const;
     /**
-     * Gets the index of the given word.
+     * Gets the index of the given term.
      * 
-     * @param word the word to get the index of.
-     * @return the index of the given word.
-     * @throws WordNotPresentException if the word is not present.
+     * @param term the term to get the index of.
+     * @return the index of the given term.
+     * @throws TermNotPresentException if the term is not present.
      * 
      */
-    int const getIndex(string const word) const
-    throw (WordNotPresentException);
+    int const getIndex(string const term) const
+    throw (TermNotPresentException);
     /**
-     * Gets the word with the given index.
+     * Gets the term with the given index.
      * 
-     * @param index the index of the word to get.
-     * @return the word with the given index.
-     * @throws WordNotPresentException if the word is not present.
+     * @param index the index of the term to get.
+     * @return the term with the given index.
+     * @throws TermNotPresentException if the term is not present.
      * 
      */
-    string const getWord(int const index) const
-    throw (WordNotPresentException);
+    string const getTerm(int const index) const
+    throw (TermNotPresentException);
     /**
      * Gets the next index.
      * 
@@ -133,23 +146,23 @@ public:
     int const getNextIndex() const;
 protected:
     /**
-     * Deletes the given word from this Alphabet.
-     * 
-     * @param word the word to delete.
-     * 
-     */
-    void deleteWord(string const word);
-    /**
      * Deletes the given index from this Alphabet.
      * 
      * @param index the index to delete.
      * 
      */
     void deleteIndex(int const index);
+    /**
+     * Deletes the given term from this Alphabet.
+     * 
+     * @param term the term to delete.
+     * 
+     */
+    void deleteTerm(string const term);
 private:
-    vector<string> * words;
     vector<int> * indices;
     int nextIndex;
+    vector<string> * terms;
 };
 
 #endif	/* ALPHABET_H */

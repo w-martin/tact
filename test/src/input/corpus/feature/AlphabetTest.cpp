@@ -38,7 +38,7 @@ namespace {
 
         AlphabetTest() {
             alphabet = new Alphabet();
-            alphabet->addWord(testWord);
+            alphabet->addTerm(testWord);
         }
 
         virtual ~AlphabetTest() {
@@ -62,7 +62,7 @@ namespace {
      * 
      */
     TEST_F(AlphabetTest, GetWordsTest) {
-        vector<string> const * const words = alphabet->getWords();
+        vector<string> const * const words = alphabet->getTerms();
         EXPECT_EQ(1, words->size());
         EXPECT_STREQ(testWord, words->at(0).c_str());
     }
@@ -72,7 +72,7 @@ namespace {
      * 
      */
     TEST_F(AlphabetTest, GetWordTest) {
-        string const word = alphabet->getWord(0);
+        string const word = alphabet->getTerm(0);
         EXPECT_STREQ(testWord, word.c_str());
     }
 
@@ -81,7 +81,7 @@ namespace {
      * 
      */
     TEST_F(AlphabetTest, HasWordTest) {
-        EXPECT_TRUE(alphabet->hasWord(testWord));
+        EXPECT_TRUE(alphabet->hasTerm(testWord));
     }
 
     /*
@@ -109,11 +109,11 @@ namespace {
      */
     TEST_F(AlphabetTest, AddRemoveWordTest) {
         EXPECT_EQ(1, alphabet->getSize());
-        EXPECT_STREQ(testWord, alphabet->removeWord(0).c_str());
+        EXPECT_STREQ(testWord, alphabet->removeTerm(0).c_str());
         EXPECT_EQ(0, alphabet->getSize());
-        EXPECT_EQ(1, alphabet->addWord(testWord));
+        EXPECT_EQ(1, alphabet->addTerm(testWord));
         EXPECT_EQ(1, alphabet->getSize());
-        EXPECT_EQ(1, alphabet->removeWord(testWord));
+        EXPECT_EQ(1, alphabet->removeTerm(testWord));
         EXPECT_EQ(0, alphabet->getSize());
     }
 
@@ -123,7 +123,7 @@ namespace {
      */
     TEST_F(AlphabetTest, GetNextIndexTest) {
         EXPECT_EQ(1, alphabet->getNextIndex());
-        alphabet->addWord("hello");
+        alphabet->addTerm("hello");
         EXPECT_EQ(2, alphabet->getNextIndex());
     }
 
@@ -134,7 +134,7 @@ namespace {
     TEST_F(AlphabetTest, CopyConstructorTest) {
         Alphabet * tmp = new Alphabet(*alphabet);
         EXPECT_EQ(1, tmp->getSize());
-        EXPECT_STREQ(testWord, tmp->getWord(0).c_str());
+        EXPECT_STREQ(testWord, tmp->getTerm(0).c_str());
         delete tmp;
     }
 }

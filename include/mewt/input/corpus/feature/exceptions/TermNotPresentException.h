@@ -1,5 +1,5 @@
 /**
- * @file DuplicatedWordException.h
+ * @file TermNotPresentException.h
  * @author  William Martin <will.st4@gmail.com>
  * @since 0.1
  *
@@ -22,57 +22,49 @@
  * 
  */
 
-#ifndef DUPLICATEDWORDEXCEPTION_H
-#define	DUPLICATEDWORDEXCEPTION_H
+#ifndef TERMNOTPRESENTEXCEPTION_H
+#define	TERMNOTPRESENTEXCEPTION_H
 
-#define DUPLICATED_WORD_MESSAGE "Error. Word already present in alphabet."
+#define TERM_NOT_PRESENT_MESSAGE "Error. Term not present in alphabet."
 
 #include "mewt/util/exceptions/Exception.h"
 
 /**
- * Exception class which indicates that a word was already
+ * Exception class which indicates that a term was already
  * present in an alphabet.
  * 
  */
-class DuplicatedWordException : public Exception {
+class TermNotPresentException : public Exception {
 public:
-
     /**
      * Default constructor. Uses the default message for this
      * Exception.
      * 
      */
-    DuplicatedWordException() : Exception(
-    string(DUPLICATED_WORD_MESSAGE)) {
-    }
-
+    TermNotPresentException();
     /**
      * Specific constructor. Generated an informative message
      * about the error.
      * 
      */
-    DuplicatedWordException(string const word, bool const isMessage)
-    : Exception(isMessage ? word : createErrorMessage(word)) {
-    }
-
+    TermNotPresentException(string const term, bool const & isMessage);
     /**
      * Uses the given message for this Exception.
      * 
      * @param message the message to use for this Exception.
      * 
      */
-    DuplicatedWordException(string const message)
-    : Exception(message) {
-    }
+    TermNotPresentException(string const message);
 private:
-
-    string const createErrorMessage(string word) const {
-        return string(DUPLICATED_WORD_MESSAGE)
-                + string(" \nDuplicated word: ")
-                + word
-                + string(".");
-    }
+    /**
+     * Creates an error message using the given term.
+     * 
+     * @param term the term to create an error message with.
+     * @return an error message using the given term.
+     * 
+     */
+    string const createErrorMessage(string const & term) const;
 };
 
-#endif	/* DUPLICATEDWORDEXCEPTION_H */
+#endif	/* TERMNOTPRESENTEXCEPTION_H */
 

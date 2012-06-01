@@ -1,5 +1,5 @@
 /**
- * @file DuplicatedWordExceptionTest.cpp
+ * @file TermNotPresentExceptionTest.cpp
  * @author  William Martin <will.st4@gmail.com>
  * @since 0.1
  *
@@ -23,34 +23,34 @@
  */
 
 #include "gtest/gtest.h"
-#include "mewt/model/exceptions/DuplicatedWordException.h"
+#include "mewt/input/corpus/feature/exceptions/TermNotPresentException.h"
 
 #define message "test message"
 
 namespace {
 
     /**
-     * Tests DuplicatedWordException.
+     * Tests TermNotPresentException.
      * 
      */
-    class DuplicatedWordExceptionTest : public ::testing::Test {
+    class TermNotPresentExceptionTest : public ::testing::Test {
     protected:
 
-        DuplicatedWordExceptionTest() {
-            testException = new DuplicatedWordException(message);
+        TermNotPresentExceptionTest() {
+            testException = new TermNotPresentException(message);
         }
 
-        virtual ~DuplicatedWordExceptionTest() {
+        virtual ~TermNotPresentExceptionTest() {
             delete testException;
         }
-        DuplicatedWordException *testException;
+        TermNotPresentException *testException;
     };
 
     /*
      * Tests whether the <code>Exception</code>'s message was set correctly.
      * 
      */
-    TEST_F(DuplicatedWordExceptionTest, MessageTest) {
+    TEST_F(TermNotPresentExceptionTest, MessageTest) {
         EXPECT_STREQ(message, testException->what());
     }
 
@@ -58,29 +58,29 @@ namespace {
      * Tests whether the default message is set correctly.
      * 
      */
-    TEST_F(DuplicatedWordExceptionTest, DefaultMessageTest) {
+    TEST_F(TermNotPresentExceptionTest, DefaultMessageTest) {
         delete testException;
-        testException = new DuplicatedWordException();
+        testException = new TermNotPresentException();
 
-        EXPECT_STREQ(DUPLICATED_WORD_MESSAGE, testException->what());
+        EXPECT_STREQ(TERM_NOT_PRESENT_MESSAGE, testException->what());
     }
 
     /*
      * Tests whether the specific message is generated correctly.
      * 
      */
-    TEST_F(DuplicatedWordExceptionTest, SpecificMessageTest) {
+    TEST_F(TermNotPresentExceptionTest, SpecificMessageTest) {
         delete testException;
-        testException = new DuplicatedWordException(message, false);
+        testException = new TermNotPresentException(message, false);
 
         char const * const whatMessage = testException->what();
         EXPECT_STRNE(NULL, whatMessage);
-        EXPECT_STRNE(DUPLICATED_WORD_MESSAGE, whatMessage);
+        EXPECT_STRNE(TERM_NOT_PRESENT_MESSAGE, whatMessage);
         EXPECT_STRNE(message, whatMessage);
         EXPECT_GT(strlen(whatMessage), 0);
 
         delete testException;
-        testException = new DuplicatedWordException(message, true);
+        testException = new TermNotPresentException(message, true);
         EXPECT_STREQ(message, testException->what());
     }
 }

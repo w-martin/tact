@@ -19,10 +19,6 @@
 
  * You should have received a copy of the GNU General Public License
  * along with mewt.  If not, see <http://www.gnu.org/licenses/>.
- *
- * @section DESCRIPTION
- *
- * This is the main entry point at runtime.
  * 
  */
 

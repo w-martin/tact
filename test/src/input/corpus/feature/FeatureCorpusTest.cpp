@@ -37,7 +37,7 @@ namespace {
         FeatureCorpusTest() {
             location = "testLocation/";
             alphabet = new Alphabet();
-            alphabet->addWord("hello");
+            alphabet->addTerm("hello");
             corpus = new FeatureCorpus(location,
                     auto_ptr< Alphabet > (new Alphabet(*alphabet)));
         }
