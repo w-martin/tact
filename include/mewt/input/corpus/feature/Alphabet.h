@@ -58,20 +58,6 @@ public:
      */
     virtual ~Alphabet();
     /**
-     * Gets the size of this Alphabet.
-     * 
-     * @return the size of this Alphabet.
-     * 
-     */
-    const int getSize() const;
-    /**
-     * Gets the array of terms.
-     * 
-     * @return the array of terms.
-     * 
-     */
-    vector<string> const * const getTerms() const;
-    /**
      * Adds the given term to this Alphabet.
      * 
      * @param term the term to add.
@@ -80,6 +66,62 @@ public:
      * 
      */
     int const addTerm(string const term) throw (DuplicatedTermException);
+    /**
+     * Gets the index of the given term.
+     * 
+     * @param term the term to get the index of.
+     * @return the index of the given term.
+     * @throws TermNotPresentException if the term is not present.
+     * 
+     */
+    int const getIndex(string const term) const
+    throw (TermNotPresentException);
+    /**
+     * Gets the array of indices.
+     * 
+     * @return the array of indices.
+     * 
+     */
+    vector<int> const * const getIndices() const;
+    /**
+     * Gets the next index.
+     * 
+     * @return the next index.
+     * 
+     */
+    int const getNextIndex() const;
+    /**
+     * Gets the size of this Alphabet.
+     * 
+     * @return the size of this Alphabet.
+     * 
+     */
+    const int getSize() const;
+    /**
+     * Gets the term with the given index.
+     * 
+     * @param index the index of the term to get.
+     * @return the term with the given index.
+     * @throws TermNotPresentException if the term is not present.
+     * 
+     */
+    string const getTerm(int const index) const
+    throw (TermNotPresentException);
+    /**
+     * Gets the array of terms.
+     * 
+     * @return the array of terms.
+     * 
+     */
+    vector<string> const * const getTerms() const;
+    /**
+     * Checks if the given term is present in this Alphabet.
+     * 
+     * @param term the term to check for.
+     * @return true if the term is present, false otherwise.
+     * 
+     */
+    bool const hasTerm(string const term) const;
     /**
      * Removes the term with the given index.
      * 
@@ -102,48 +144,6 @@ public:
      */
     int const removeTerm(string const term)
     throw (TermNotPresentException);
-    /**
-     * Checks if the given term is present in this Alphabet.
-     * 
-     * @param term the term to check for.
-     * @return true if the term is present, false otherwise.
-     * 
-     */
-    bool const hasTerm(string const term) const;
-    /**
-     * Gets the array of indices.
-     * 
-     * @return the array of indices.
-     * 
-     */
-    vector<int> const * const getIndices() const;
-    /**
-     * Gets the index of the given term.
-     * 
-     * @param term the term to get the index of.
-     * @return the index of the given term.
-     * @throws TermNotPresentException if the term is not present.
-     * 
-     */
-    int const getIndex(string const term) const
-    throw (TermNotPresentException);
-    /**
-     * Gets the term with the given index.
-     * 
-     * @param index the index of the term to get.
-     * @return the term with the given index.
-     * @throws TermNotPresentException if the term is not present.
-     * 
-     */
-    string const getTerm(int const index) const
-    throw (TermNotPresentException);
-    /**
-     * Gets the next index.
-     * 
-     * @return the next index.
-     * 
-     */
-    int const getNextIndex() const;
 protected:
     /**
      * Deletes the given index from this Alphabet.

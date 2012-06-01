@@ -43,15 +43,6 @@ Alphabet::~Alphabet() {
     delete terms;
     delete indices;
 }
-
-int const Alphabet::getSize() const {
-    return terms->size();
-}
-
-vector<string> const * const Alphabet::getTerms() const {
-    return terms;
-}
-
 int const Alphabet::addTerm(string term)
 throw (DuplicatedTermException) {
     if (hasTerm(term)) {
@@ -61,6 +52,53 @@ throw (DuplicatedTermException) {
         int index = nextIndex++;
         indices->push_back(index);
         return index;
+    }
+}
+
+int const Alphabet::getIndex(const string term) const
+throw (TermNotPresentException) {
+    for (vector<string>::size_type i = 0; i < terms->size(); i++) {
+        if (0 == terms->at(i).compare(term)) {
+            return indices->at(i);
+        }
+    }
+    throw TermNotPresentException(term);
+}
+
+vector<int> const * const Alphabet::getIndices() const {
+    return indices;
+}
+
+int const Alphabet::getNextIndex() const {
+    return nextIndex;
+}
+
+int const Alphabet::getSize() const {
+    return terms->size();
+}
+
+string const Alphabet::getTerm(const int index) const
+throw (TermNotPresentException) {
+    for (vector<string>::size_type i = 0; i < indices->size(); i++) {
+        if (index == indices->at(i)) {
+            return terms->at(i);
+        }
+    }
+    stringstream stream;
+    stream << "has index " << index;
+    throw TermNotPresentException(stream.str());
+}
+
+vector<string> const * const Alphabet::getTerms() const {
+    return terms;
+}
+
+bool const Alphabet::hasTerm(const string term) const {
+    try {
+        getIndex(term);
+        return true;
+    } catch (TermNotPresentException) {
+        return false;
     }
 }
 
@@ -80,50 +118,6 @@ throw (TermNotPresentException) {
     return index;
 }
 
-bool const Alphabet::hasTerm(const string term) const {
-    try {
-        getIndex(term);
-        return true;
-    } catch (TermNotPresentException) {
-        return false;
-    }
-}
-
-vector<int> const * const Alphabet::getIndices() const {
-    return indices;
-}
-
-int const Alphabet::getIndex(const string term) const
-throw (TermNotPresentException) {
-    for (vector<string>::size_type i = 0; i < terms->size(); i++) {
-        if (0 == terms->at(i).compare(term)) {
-            return indices->at(i);
-        }
-    }
-    throw TermNotPresentException(term);
-}
-
-string const Alphabet::getTerm(const int index) const
-throw (TermNotPresentException) {
-    for (vector<string>::size_type i = 0; i < indices->size(); i++) {
-        if (index == indices->at(i)) {
-            return terms->at(i);
-        }
-    }
-    stringstream stream;
-    stream << "has index " << index;
-    throw TermNotPresentException(stream.str());
-}
-
-void Alphabet::deleteTerm(const string term) {
-    for (vector<string>::size_type i = 0; i < terms->size(); i++) {
-        if (0 == terms->at(i).compare(term)) {
-            terms->erase(terms->begin() + i);
-            return;
-        }
-    }
-}
-
 void Alphabet::deleteIndex(const int index) {
     for (vector<string>::size_type i = 0; i < indices->size(); i++) {
         if (index == indices->at(i)) {
@@ -133,6 +127,11 @@ void Alphabet::deleteIndex(const int index) {
     }
 }
 
-int const Alphabet::getNextIndex() const {
-    return nextIndex;
+void Alphabet::deleteTerm(const string term) {
+    for (vector<string>::size_type i = 0; i < terms->size(); i++) {
+        if (0 == terms->at(i).compare(term)) {
+            terms->erase(terms->begin() + i);
+            return;
+        }
+    }
 }
