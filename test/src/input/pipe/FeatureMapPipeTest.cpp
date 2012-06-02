@@ -59,7 +59,7 @@ namespace {
         auto_ptr< Corpus > corpus = auto_ptr< Corpus > (
                 new TextCorpus("."));
         auto_ptr< string > text =
-                auto_ptr< string > (new string("this is some text"));
+                auto_ptr< string > (new string("this is some text this"));
         corpus->addDocument(auto_ptr< Document > (
                 new TextDocument("CMakeCache.txt", text)));
         auto_ptr< Corpus > featureCorpus = pipe->pipe(corpus);
@@ -67,10 +67,15 @@ namespace {
         FeatureDocument const * const onlyDocument =
                 (FeatureDocument const * const) featureCorpus->
                 getDocuments()->at(0);
-        //        EXPECT_GT(onlyDocument->getFeatureMap(), 0);
         Alphabet const * const alphabet =
                 ((FeatureCorpus *) featureCorpus.get())->getAlphabet();
         EXPECT_EQ(4, alphabet->getSize());
+        FeatureMap const * const featureMap = onlyDocument->getFeatureMap();
+        EXPECT_EQ(2, featureMap->getFeature(0));
+        EXPECT_EQ(1, featureMap->getFeature(1));
+        EXPECT_EQ(1, featureMap->getFeature(2));
+        EXPECT_EQ(1, featureMap->getFeature(3));
+        EXPECT_EQ(0, featureMap->getFeature(4));
     }
 
     /*
