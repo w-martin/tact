@@ -65,6 +65,14 @@ public:
      */
     int const getFeature(int const & featureID) const;
     /**
+     * Increments the count of the given feature, or adds it if it is 
+     * not present.
+     * 
+     * @param featureID the feature to increment.
+     * 
+     */
+    void incrementFeature(int const & featureID);
+    /**
      * Sets the given feature with the given count. Overwrites previous
      * mapping if present.
      * 

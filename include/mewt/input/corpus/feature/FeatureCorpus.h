@@ -61,7 +61,7 @@ public:
      * @return the Alphabet for this Corpus.
      * 
      */
-    Alphabet const * const getAlphabet() const;
+    Alphabet * const getAlphabet() const;
 private:
     auto_ptr< Alphabet > alphabet;
 };

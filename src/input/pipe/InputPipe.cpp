@@ -1,7 +1,7 @@
 /**
  * @file InputPipe.cpp
  * @author  William Martin <will.st4@gmail.com>
- * @since 0.1
+ * @since 0.2
  *
  * @section LICENSE
  *
@@ -24,6 +24,7 @@
 
 #define SEPARATOR "/"
 
+#include "mewt/input/corpus/text/TextCorpus.h"
 #include "mewt/input/pipe/InputPipe.h"
 
 #include <memory>

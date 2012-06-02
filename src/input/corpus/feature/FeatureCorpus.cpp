@@ -38,6 +38,6 @@ FeatureCorpus::FeatureCorpus(const FeatureCorpus& orig)
 FeatureCorpus::~FeatureCorpus() {
 }
 
-Alphabet const * const FeatureCorpus::getAlphabet() const {
+Alphabet * const FeatureCorpus::getAlphabet() const {
     return alphabet.get();
 }

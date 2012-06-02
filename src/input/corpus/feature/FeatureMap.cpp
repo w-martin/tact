@@ -42,9 +42,16 @@ int const FeatureMap::getFeature(int const & featureID) const {
     }
 }
 
+void FeatureMap::incrementFeature(int const & featureID) {
+    int const count = 1 + getFeature(featureID);
+    removeFeature(featureID);
+    setFeature(featureID, count);
+}
+
 int const FeatureMap::setFeature(const int feature, const int count) {
     int const previousCount = getFeature(feature);
-    if (0 == count) {
+    if (0 == count
+            || 0 != previousCount) {
         removeFeature(feature);
     } else {
         pair< int, int > p = make_pair(feature, count);

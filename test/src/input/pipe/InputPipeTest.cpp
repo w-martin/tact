@@ -1,7 +1,7 @@
 /**
  * @file InputPipeTest.cpp
  * @author  William Martin <will.st4@gmail.com>
- * @since 0.1
+ * @since 0.2
  *
  * @section LICENSE
  *
@@ -25,6 +25,7 @@
 #define testWord "testWord"
 
 #include "gtest/gtest.h"
+#include "mewt/input/corpus/text/TextDocument.h"
 #include "mewt/input/pipe/InputPipe.h"
 
 using std::auto_ptr;

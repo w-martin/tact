@@ -45,16 +45,6 @@ namespace {
     };
 
     /*
-     * Tests whether the setFeature method works correctly.
-     * 
-     */
-    TEST_F(FeatureMapTest, SetFeatureTest) {
-        EXPECT_EQ(0, featureMap->setFeature(0, 10));
-        EXPECT_EQ(10, featureMap->setFeature(0, 10));
-        EXPECT_EQ(0, featureMap->setFeature(1, 10));
-    }
-
-    /*
      * Tests whether the getFeature method works correctly.
      * 
      */
@@ -65,6 +55,18 @@ namespace {
     }
 
     /*
+     * Tests whether the incrementFeature method works correctly.
+     * 
+     */
+    TEST_F(FeatureMapTest, IncrementFeatureTest) {
+        EXPECT_EQ(0, featureMap->getFeature(0));
+        featureMap->incrementFeature(0);
+        EXPECT_EQ(1, featureMap->getFeature(0));
+        featureMap->incrementFeature(0);
+        EXPECT_EQ(2, featureMap->getFeature(0));
+    }
+
+    /*
      * Tests whether the removeFeature method works correctly.
      * 
      */
@@ -72,6 +74,16 @@ namespace {
         featureMap->setFeature(0, 10);
         featureMap->removeFeature(0);
         EXPECT_EQ(0, featureMap->getFeature(0));
+    }
+
+    /*
+     * Tests whether the setFeature method works correctly.
+     * 
+     */
+    TEST_F(FeatureMapTest, SetFeatureTest) {
+        EXPECT_EQ(0, featureMap->setFeature(0, 10));
+        EXPECT_EQ(10, featureMap->setFeature(0, 10));
+        EXPECT_EQ(0, featureMap->setFeature(1, 10));
     }
 
     /*

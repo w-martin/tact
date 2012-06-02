@@ -1,5 +1,5 @@
 /**
- * @file InputPipe.h
+ * @file FeatureMapPipe.h
  * @author  William Martin <will.st4@gmail.com>
  * @since 0.2
  *
@@ -22,46 +22,39 @@
  * 
  */
 
-#ifndef INPUTPIPE_H
-#define	INPUTPIPE_H
+#ifndef FEATUREMAPPIPE_H
+#define	FEATUREMAPPIPE_H
 
 #include "mewt/input/pipe/Pipe.h"
 
 /**
- * InputPipe class for transforming Corpus objects.
+ * FeatureMapPipe class for transforming TextCorpus objects into 
+ * FeatureMapCorpus objects.  A static assert is used to check that the
+ * correct corpus types are used as input.
  * 
  */
-class InputPipe : public Pipe {
+class FeatureMapPipe : public Pipe {
 public:
     /**
      * Default constructor.
      * 
      */
-    InputPipe();
+    FeatureMapPipe();
     /**
      * Default destructor.
      * 
      */
-    virtual ~InputPipe();
+    virtual ~FeatureMapPipe();
     /**
-     * Computes the file name of a Document from its name and the location
-     * of the Corpus.
+     * Splits the given string on whitespace.
      * 
-     * @param location the location of the corpus.
-     * @param name the name of the Document.
-     * @return the file name of a Document.
+     * @param text the string to split.
+     * @return a vector of the subsections of the given string which were
+     * separated by whitespace.
      * 
      */
-    static string const computeFileName(string const & location,
-            string const & name);
-    /**
-     * Reads the given file directly into a string.
-     * 
-     * @param location the location of the file on disk.
-     * @return the string which was read.
-     * 
-     */
-    static auto_ptr< string > readFileIntoString(string const & location);
+    static auto_ptr< vector< string > > splitString(
+            string const * const text);
 private:
     /**
      * Process the given corpus.
@@ -70,7 +63,7 @@ private:
      * @return the processed Corpus.
      * 
      */
-    auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+    auto_ptr< Corpus > process(auto_ptr< Corpus > const corpus) const;
 };
 
-#endif	/* INPUTPIPE_H */
+#endif	/* FEATUREMAPPIPE_H */
