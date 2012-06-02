@@ -28,8 +28,6 @@
 #include "mewt/input/corpus/text/TextDocument.h"
 #include "mewt/input/pipe/InputPipe.h"
 
-using std::auto_ptr;
-
 namespace {
 
     /**

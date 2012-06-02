@@ -62,7 +62,7 @@ throw (TermNotPresentException) {
             return indices->at(i);
         }
     }
-    throw TermNotPresentException(term);
+    throw TermNotPresentException(term, false);
 }
 
 vector<int> const * const Alphabet::getIndices() const {

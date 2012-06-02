@@ -37,7 +37,7 @@ FeatureDocument::FeatureDocument(const FeatureDocument& orig) : Document(orig) {
 FeatureDocument::~FeatureDocument() {
 }
 
-FeatureMap const * const FeatureDocument::getFeatureMap() const {
+FeatureMap * const FeatureDocument::getFeatureMap() const {
     return featureMap.get();
 }
 

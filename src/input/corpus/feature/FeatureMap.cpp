@@ -42,10 +42,12 @@ int const FeatureMap::getFeature(int const & featureID) const {
     }
 }
 
-void FeatureMap::incrementFeature(int const & featureID) {
-    int const count = 1 + getFeature(featureID);
+void FeatureMap::incrementFeature(int const & featureID, int const & amount) {
+    int const count = amount + getFeature(featureID);
     removeFeature(featureID);
-    setFeature(featureID, count);
+    if (0 < count) {
+        setFeature(featureID, count);
+    }
 }
 
 int const FeatureMap::setFeature(const int feature, const int count) {

@@ -1,7 +1,7 @@
 /**
  * @file FeatureCorpus.cpp
  * @author  William Martin <will.st4@gmail.com>
- * @since 0.1
+ * @since 0.2
  *
  * @section LICENSE
  *
@@ -40,4 +40,34 @@ FeatureCorpus::~FeatureCorpus() {
 
 Alphabet * const FeatureCorpus::getAlphabet() const {
     return alphabet.get();
+}
+
+void FeatureCorpus::replaceTerm(string const & originalTerm,
+        vector<string> const & terms) throw (TermNotPresentException) {
+    int const originalIndex = alphabet->removeTerm(originalTerm);
+    vector< int > replacementIndices;
+    for (vector< string >::const_iterator iter = terms.begin();
+            terms.end() != iter; iter++) {
+        replacementIndices.push_back(alphabet->addTerm(*iter));
+    }
+    for (vector< Document * >::const_iterator iter = getDocuments()->begin();
+            getDocuments()->end() != iter; iter++) {
+        FeatureMap * const featureMap =
+                ((FeatureDocument *) (* iter))->getFeatureMap();
+        int const count = featureMap->getFeature(originalIndex);
+        if (0 < count) {
+            featureMap->removeFeature(originalIndex);
+            for (vector< int >::const_iterator indexIter =
+                    replacementIndices.begin();
+                    replacementIndices.end() != indexIter; indexIter++) {
+                featureMap->incrementFeature(*indexIter, count);
+            }
+        }
+    }
+}
+
+auto_ptr< FeatureCorpus > FeatureCorpus::createInstance(
+        const string & location) {
+    return auto_ptr< FeatureCorpus > (new FeatureCorpus(
+            location, auto_ptr< Alphabet > (new Alphabet())));
 }

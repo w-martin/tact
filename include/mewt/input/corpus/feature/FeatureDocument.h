@@ -63,7 +63,7 @@ public:
      * @return the text from this FeatureDocument.
      * 
      */
-    FeatureMap const * const getFeatureMap() const;
+    FeatureMap * const getFeatureMap() const;
     /**
      * Gets the type of this Document.
      * 

@@ -1,7 +1,7 @@
 /**
  * @file FeatureCorpusTest.cpp
  * @author  William Martin <will.st4@gmail.com>
- * @since 0.1
+ * @since 0.2
  *
  * @section LICENSE
  *
@@ -66,6 +66,55 @@ namespace {
     TEST_F(FeatureCorpusTest, GetAlphabetTest) {
         Alphabet const * const a = corpus->getAlphabet();
         EXPECT_EQ(1, a->getSize());
+    }
+
+    /*
+     * Tests whether the replaceTerm method works correctly.
+     * 
+     */
+    TEST_F(FeatureCorpusTest, ReplaceTermTest) {
+        string const original = "FOO";
+        string const replacement1 = "foo";
+        string const replacement2 = "bar";
+        vector< string > replacements;
+        replacements.push_back(replacement1);
+        replacements.push_back(replacement2);
+
+        Alphabet * const alphabet = corpus->getAlphabet();
+        int const index = alphabet->addTerm(original);
+        int const count = 33;
+        auto_ptr< FeatureMap > featureMap =
+                auto_ptr< FeatureMap > (new FeatureMap());
+        featureMap->setFeature(index, count);
+        auto_ptr< Document > document = auto_ptr< Document > (
+                new FeatureDocument("testDoc", featureMap));
+        corpus->addDocument(document);
+
+        corpus->replaceTerm(original, replacements);
+        EXPECT_FALSE(alphabet->hasTerm(original));
+        EXPECT_TRUE(alphabet->hasTerm(replacement1));
+        EXPECT_TRUE(alphabet->hasTerm(replacement2));
+
+        FeatureDocument const * const featureDocument =
+                (FeatureDocument *) corpus->getDocuments()->at(0);
+        FeatureMap const * const map = featureDocument->getFeatureMap();
+        EXPECT_EQ(count, map->getFeature(alphabet->getIndex(replacement1)));
+        EXPECT_EQ(count, map->getFeature(alphabet->getIndex(replacement2)));
+        EXPECT_EQ(0, map->getFeature(index));
+    }
+
+    /*
+     * Tests whether the createInstance method works correctly.
+     * 
+     */
+    TEST_F(FeatureCorpusTest, CreateInstanceTest) {
+        auto_ptr< FeatureCorpus > featureCorpus =
+                FeatureCorpus::createInstance(location);
+        EXPECT_STREQ(location.c_str(), featureCorpus->getLocation().c_str());
+        EXPECT_EQ(0, featureCorpus->getAlphabet()->getSize());
+        EXPECT_EQ(0, featureCorpus->getDocuments()->size());
+        EXPECT_EQ(DOCUMENT_TYPE_FEATURE, featureCorpus->getDocumentsType());
+        EXPECT_EQ(0, featureCorpus->getSize());
     }
 
     /*

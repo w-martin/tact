@@ -1,7 +1,7 @@
 /**
  * @file FeatureCorpus.h
  * @author  William Martin <will.st4@gmail.com>
- * @since 0.1
+ * @since 0.2
  *
  * @section LICENSE
  *
@@ -62,6 +62,27 @@ public:
      * 
      */
     Alphabet * const getAlphabet() const;
+    /**
+     * Replaces the given term with the set of replacement terms.
+     * 
+     * @param originalTerm the term to replace.
+     * @param terms the terms to replace the given term with.
+     * @throw TermNotPresentException if the originalTerm to replace is not
+     * present in the Alphabet.
+     * 
+     */
+    void replaceTerm(string const & originalTerm,
+            vector< string > const & terms) throw (TermNotPresentException) ;
+    /**
+     * Creates an instance of FeatureCorpus with the given location and an
+     * empty Alphabet.
+     * 
+     * @param location the location of the created FeatureCorpus.
+     * @return an instance of FeatureCorpus with the given location and an
+     * empty Alphabet.
+     * 
+     */
+    static auto_ptr< FeatureCorpus > createInstance(string const & location);
 private:
     auto_ptr< Alphabet > alphabet;
 };

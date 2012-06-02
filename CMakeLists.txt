@@ -64,7 +64,12 @@ add_library (${MEWT_INPUT}
     ${MEWT_SOURCE_DIR}/input/corpus/text/TextDocument.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/FeatureMapPipe.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/InputPipe.cpp
+    ${MEWT_SOURCE_DIR}/input/pipe/LowerCasePipe.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/Pipe.cpp
+    )
+
+target_link_libraries (${MEWT_INPUT}
+    boost_regex-mt
     )
 
 add_library (${MEWT_OUTPUT}
@@ -131,6 +136,7 @@ add_executable(InputTests
     ${MEWT_TEST_DIR}/input/corpus/text/TextDocumentTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/FeatureMapPipeTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/InputPipeTest.cpp
+    ${MEWT_TEST_DIR}/input/pipe/LowerCasePipeTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/PipeTest.cpp
 ) 
 target_link_libraries(InputTests gmock gmock_main

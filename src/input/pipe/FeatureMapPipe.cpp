@@ -36,6 +36,7 @@ FeatureMapPipe::~FeatureMapPipe() {
 
 auto_ptr< Corpus > FeatureMapPipe::process(
         auto_ptr<Corpus> const corpus) const {
+    //TODO: replace with boost_static_assert
     assert(DOCUMENT_TYPE_TEXT == corpus->getDocumentsType());
 
     auto_ptr< FeatureCorpus > featureCorpus = auto_ptr< FeatureCorpus > (
@@ -55,7 +56,7 @@ auto_ptr< Corpus > FeatureMapPipe::process(
         for (vector< string >::const_iterator iter = split->begin();
                 iter != split->end(); iter++) {
             int const index = alphabet->addTerm(*iter);
-            featureMap->incrementFeature(index);
+            featureMap->incrementFeature(index, 1);
         }
         auto_ptr< FeatureDocument > document =
                 auto_ptr< FeatureDocument > (

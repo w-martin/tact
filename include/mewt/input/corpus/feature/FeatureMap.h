@@ -69,9 +69,10 @@ public:
      * not present.
      * 
      * @param featureID the feature to increment.
+     * @param amount the amount to increment the feature by.
      * 
      */
-    void incrementFeature(int const & featureID);
+    void incrementFeature(int const & featureID, int const & amount);
     /**
      * Sets the given feature with the given count. Overwrites previous
      * mapping if present.

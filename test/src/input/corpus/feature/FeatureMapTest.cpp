@@ -60,10 +60,10 @@ namespace {
      */
     TEST_F(FeatureMapTest, IncrementFeatureTest) {
         EXPECT_EQ(0, featureMap->getFeature(0));
-        featureMap->incrementFeature(0);
+        featureMap->incrementFeature(0, 1);
         EXPECT_EQ(1, featureMap->getFeature(0));
-        featureMap->incrementFeature(0);
-        EXPECT_EQ(2, featureMap->getFeature(0));
+        featureMap->incrementFeature(0, 32);
+        EXPECT_EQ(33, featureMap->getFeature(0));
     }
 
     /*
