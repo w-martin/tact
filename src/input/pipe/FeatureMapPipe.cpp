@@ -54,12 +54,7 @@ auto_ptr< Corpus > FeatureMapPipe::process(
         auto_ptr< vector< string > > split = splitString(text);
         for (vector< string >::const_iterator iter = split->begin();
                 iter != split->end(); iter++) {
-            int index;
-            try {
-                index = alphabet->addTerm(*iter);
-            } catch (DuplicatedTermException) {
-                index = alphabet->getIndex(*iter);
-            }
+            int const index = alphabet->addTerm(*iter);
             featureMap->incrementFeature(index);
         }
         auto_ptr< FeatureDocument > document =

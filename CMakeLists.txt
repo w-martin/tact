@@ -56,7 +56,6 @@ add_library (${MEWT_INPUT}
     ${MEWT_SOURCE_DIR}/input/corpus/Corpus.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/Document.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/feature/Alphabet.cpp
-    ${MEWT_SOURCE_DIR}/input/corpus/feature/exceptions/DuplicatedTermException.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/feature/exceptions/TermNotPresentException.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/feature/FeatureCorpus.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/feature/FeatureDocument.cpp
@@ -124,7 +123,6 @@ add_executable(InputTests
     ${MEWT_TEST_DIR}/input/corpus/CorpusTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/DocumentTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/feature/AlphabetTest.cpp
-    ${MEWT_TEST_DIR}/input/corpus/feature/exceptions/DuplicatedTermExceptionTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/feature/exceptions/TermNotPresentExceptionTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/feature/FeatureCorpusTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/feature/FeatureDocumentTest.cpp

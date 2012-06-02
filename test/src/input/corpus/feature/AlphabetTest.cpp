@@ -22,7 +22,7 @@
  * 
  */
 
-#define testWord "testWord"
+#define testTerm "testTerm"
 
 #include "gtest/gtest.h"
 #include "mewt/input/corpus/feature/Alphabet.h"
@@ -38,7 +38,7 @@ namespace {
 
         AlphabetTest() {
             alphabet = new Alphabet();
-            alphabet->addTerm(testWord);
+            alphabet->addTerm(testTerm);
         }
 
         virtual ~AlphabetTest() {
@@ -58,30 +58,31 @@ namespace {
     }
 
     /*
-     * Tests whether the getWords method works correctly.
+     * Tests whether the getTerms method works correctly.
      * 
      */
-    TEST_F(AlphabetTest, GetWordsTest) {
-        vector<string> const * const words = alphabet->getTerms();
-        EXPECT_EQ(1, words->size());
-        EXPECT_STREQ(testWord, words->at(0).c_str());
+    TEST_F(AlphabetTest, GetTermsTest) {
+        vector<string> const * const terms = alphabet->getTerms();
+        EXPECT_EQ(1, terms->size());
+        EXPECT_STREQ(testTerm, terms->at(0).c_str());
     }
 
     /*
-     * Tests whether the getWord method works correctly.
+     * Tests whether the getTerm method works correctly.
      * 
      */
-    TEST_F(AlphabetTest, GetWordTest) {
-        string const word = alphabet->getTerm(0);
-        EXPECT_STREQ(testWord, word.c_str());
+    TEST_F(AlphabetTest, GetTermTest) {
+        string const term = alphabet->getTerm(0);
+        EXPECT_STREQ(testTerm, term.c_str());
+        EXPECT_THROW(alphabet->getTerm(1), TermNotPresentException);
     }
 
     /*
-     * Tests whether the hasWord method works correctly.
+     * Tests whether the hasTerm method works correctly.
      * 
      */
-    TEST_F(AlphabetTest, HasWordTest) {
-        EXPECT_TRUE(alphabet->hasTerm(testWord));
+    TEST_F(AlphabetTest, HasTermTest) {
+        EXPECT_TRUE(alphabet->hasTerm(testTerm));
     }
 
     /*
@@ -89,8 +90,10 @@ namespace {
      * 
      */
     TEST_F(AlphabetTest, GetIndexTest) {
-        int const index = alphabet->getIndex(testWord);
+        int const index = alphabet->getIndex(testTerm);
         EXPECT_EQ(0, index);
+        EXPECT_THROW(alphabet->getIndex("not test term"),
+                TermNotPresentException);
     }
 
     /*
@@ -104,16 +107,16 @@ namespace {
     }
 
     /*
-     * Tests whether the add and remove word methods work correctly.
+     * Tests whether the add and remove term methods work correctly.
      * 
      */
-    TEST_F(AlphabetTest, AddRemoveWordTest) {
+    TEST_F(AlphabetTest, AddRemoveTermTest) {
         EXPECT_EQ(1, alphabet->getSize());
-        EXPECT_STREQ(testWord, alphabet->removeTerm(0).c_str());
+        EXPECT_STREQ(testTerm, alphabet->removeTerm(0).c_str());
         EXPECT_EQ(0, alphabet->getSize());
-        EXPECT_EQ(1, alphabet->addTerm(testWord));
+        EXPECT_EQ(1, alphabet->addTerm(testTerm));
         EXPECT_EQ(1, alphabet->getSize());
-        EXPECT_EQ(1, alphabet->removeTerm(testWord));
+        EXPECT_EQ(1, alphabet->removeTerm(testTerm));
         EXPECT_EQ(0, alphabet->getSize());
     }
 
@@ -134,7 +137,7 @@ namespace {
     TEST_F(AlphabetTest, CopyConstructorTest) {
         Alphabet * tmp = new Alphabet(*alphabet);
         EXPECT_EQ(1, tmp->getSize());
-        EXPECT_STREQ(testWord, tmp->getTerm(0).c_str());
+        EXPECT_STREQ(testTerm, tmp->getTerm(0).c_str());
         delete tmp;
     }
 }

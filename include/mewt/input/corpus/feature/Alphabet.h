@@ -25,7 +25,6 @@
 #ifndef ALPHABET_H
 #define	ALPHABET_H
 
-#include "mewt/input/corpus/feature/exceptions/DuplicatedTermException.h"
 #include "mewt/input/corpus/feature/exceptions/TermNotPresentException.h"
 #include <string>
 #include <vector>
@@ -62,10 +61,9 @@ public:
      * 
      * @param term the term to add.
      * @return the index of the added term.
-     * @throws DuplicatedTermException if the term is already present.
      * 
      */
-    int const addTerm(string const term) throw (DuplicatedTermException);
+    int const addTerm(string const term);
     /**
      * Gets the index of the given term.
      * 

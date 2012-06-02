@@ -34,7 +34,7 @@ Alphabet::Alphabet() {
 }
 
 Alphabet::Alphabet(Alphabet const & orig) {
-    terms = new vector<string>(*orig.getTerms());
+    terms = new vector<string > (*orig.getTerms());
     indices = new vector<int>(*orig.getIndices());
     nextIndex = orig.getNextIndex();
 }
@@ -43,11 +43,11 @@ Alphabet::~Alphabet() {
     delete terms;
     delete indices;
 }
-int const Alphabet::addTerm(string term)
-throw (DuplicatedTermException) {
-    if (hasTerm(term)) {
-        throw DuplicatedTermException(term);
-    } else {
+
+int const Alphabet::addTerm(string const term) {
+    try {
+        return getIndex(term);
+    } catch (TermNotPresentException) {
         terms->push_back(term);
         int index = nextIndex++;
         indices->push_back(index);
@@ -79,9 +79,11 @@ int const Alphabet::getSize() const {
 
 string const Alphabet::getTerm(const int index) const
 throw (TermNotPresentException) {
-    for (vector<string>::size_type i = 0; i < indices->size(); i++) {
-        if (index == indices->at(i)) {
-            return terms->at(i);
+    if (index < nextIndex) {
+        for (vector<string>::size_type i = 0; i < indices->size(); i++) {
+            if (index == indices->at(i)) {
+                return terms->at(i);
+            }
         }
     }
     stringstream stream;
