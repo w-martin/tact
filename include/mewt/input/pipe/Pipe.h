@@ -26,6 +26,7 @@
 #define	PIPE_H
 
 #include "mewt/input/corpus/Corpus.h"
+#include "mewt/input/pipe/exceptions/IncompatibleCorpusException.h"
 #include <memory>
 
 using std::auto_ptr;
@@ -67,9 +68,12 @@ public:
      * 
      * @param corpus the Corpus to pipe.
      * @return the piped corpus.
+     * @throw IncompatibleCorpusException if the given Corpus was of an
+     * incompatible type with this Pipe.
      * 
      */
-    auto_ptr< Corpus > pipe(auto_ptr< Corpus > corpus) const;
+    auto_ptr< Corpus > pipe(auto_ptr< Corpus > corpus) const
+    throw (IncompatibleCorpusException);
 private:
     auto_ptr< Pipe > nextPipe;
     /**
@@ -77,9 +81,12 @@ private:
      * 
      * @param corpus the Corpus to process.
      * @return the processed Corpus.
+     * @throw IncompatibleCorpusException if the given Corpus was of an
+     * incompatible type with this Pipe.
      * 
      */
-    virtual auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const = 0;
+    virtual auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const
+    throw (IncompatibleCorpusException) = 0;
 };
 
 #endif	/* PIPE_H */

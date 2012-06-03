@@ -25,8 +25,8 @@
 #include "mewt/input/pipe/LowerCasePipe.h"
 #include "mewt/input/corpus/feature/Alphabet.h"
 #include "mewt/input/corpus/feature/FeatureCorpus.h"
+#include "mewt/input/corpus/text/TextDocument.h"
 #include <boost/algorithm/string.hpp>
-#include <boost/static_assert.hpp>
 #include <boost/regex.hpp>
 
 LowerCasePipe::LowerCasePipe() {
@@ -36,9 +36,13 @@ LowerCasePipe::~LowerCasePipe() {
 }
 
 auto_ptr< Corpus > LowerCasePipe::process(
-        auto_ptr< Corpus > corpus) const {
-    //TODO: replace with boost_static_assert
-    assert(DOCUMENT_TYPE_FEATURE == corpus->getDocumentsType());
+        auto_ptr< Corpus > corpus) const
+throw (IncompatibleCorpusException) {
+    
+    if (DOCUMENT_TYPE_FEATURE != corpus->getDocumentsType()) {
+        throw IncompatibleCorpusException(corpus->getDocumentsType(),
+                DOCUMENT_TYPE_FEATURE);
+    }
 
     FeatureCorpus * const featureCorpus = (FeatureCorpus*) corpus.get();
     Alphabet * const alphabet = featureCorpus->getAlphabet();

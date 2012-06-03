@@ -26,6 +26,7 @@
 #include "mewt/input/pipe/LowerCasePipe.h"
 #include "mewt/input/corpus/feature/FeatureDocument.h"
 #include "mewt/input/corpus/feature/FeatureCorpus.h"
+#include "mewt/input/corpus/text/TextDocument.h"
 
 namespace {
 
@@ -45,6 +46,20 @@ namespace {
         }
         LowerCasePipe * pipe;
     };
+
+    /*
+     * Tests whether the process method works correctly.
+     * 
+     */
+    TEST_F(LowerCasePipeTest, ProcessExceptionTest) {
+        auto_ptr< Corpus > corpus = auto_ptr< Corpus > (
+                new Corpus(".", DOCUMENT_TYPE_BASIC));
+        EXPECT_THROW(pipe->pipe(corpus), IncompatibleCorpusException);
+        
+        corpus = auto_ptr< Corpus > (
+                new Corpus(".", DOCUMENT_TYPE_TEXT));
+        EXPECT_THROW(pipe->pipe(corpus), IncompatibleCorpusException);
+    }
 
     /*
      * Tests whether the process method works correctly.

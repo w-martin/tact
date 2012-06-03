@@ -66,9 +66,12 @@ private:
      * 
      * @param corpus the Corpus to process.
      * @return the processed Corpus.
+     * @throw IncompatibleCorpusException if the given Corpus was of an
+     * incompatible type with this Pipe.
      * 
      */
-    auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+    auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const
+    throw (IncompatibleCorpusException);
 };
 
 #endif	/* LOWERCASEPIPE_H */

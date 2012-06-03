@@ -25,7 +25,6 @@
 #include "mewt/input/pipe/FeatureMapPipe.h"
 #include "mewt/input/corpus/text/TextDocument.h"
 #include "mewt/input/corpus/feature/FeatureCorpus.h"
-#include <boost/static_assert.hpp>
 #include <boost/algorithm/string.hpp>
 
 FeatureMapPipe::FeatureMapPipe() {
@@ -35,9 +34,13 @@ FeatureMapPipe::~FeatureMapPipe() {
 }
 
 auto_ptr< Corpus > FeatureMapPipe::process(
-        auto_ptr<Corpus> const corpus) const {
-    //TODO: replace with boost_static_assert
-    assert(DOCUMENT_TYPE_TEXT == corpus->getDocumentsType());
+        auto_ptr<Corpus> corpus) const
+throw (IncompatibleCorpusException) {
+    
+    if (DOCUMENT_TYPE_TEXT != corpus->getDocumentsType()) {
+        throw IncompatibleCorpusException(corpus->getDocumentsType(),
+                DOCUMENT_TYPE_TEXT);
+    }
 
     auto_ptr< FeatureCorpus > featureCorpus = auto_ptr< FeatureCorpus > (
             new FeatureCorpus(

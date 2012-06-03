@@ -42,7 +42,8 @@ void Pipe::attachPipe(auto_ptr<Pipe> nextPipe) {
     }
 }
 
-auto_ptr< Corpus > Pipe::pipe(auto_ptr<Corpus> corpus) const {
+auto_ptr< Corpus > Pipe::pipe(auto_ptr<Corpus> corpus) const
+throw (IncompatibleCorpusException) {
     if (NULL == nextPipe.get()) {
         return process(corpus);
     } else {

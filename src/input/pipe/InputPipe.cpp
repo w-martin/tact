@@ -42,7 +42,9 @@ InputPipe::~InputPipe() {
 }
 
 auto_ptr< Corpus > InputPipe::process(
-        auto_ptr<Corpus> originalCorpus) const {
+        auto_ptr<Corpus> originalCorpus) const
+throw (IncompatibleCorpusException) {
+    
     string const location = originalCorpus->getLocation();
     vector< Document * > const * const originalDocuments =
             originalCorpus->getDocuments();

@@ -55,6 +55,20 @@ namespace {
      * Tests whether the process method works correctly.
      * 
      */
+    TEST_F(FeatureMapPipeTest, ProcessExceptionTest) {
+        auto_ptr< Corpus > corpus = auto_ptr< Corpus > (
+                new Corpus(".", DOCUMENT_TYPE_BASIC));
+        EXPECT_THROW(pipe->pipe(corpus), IncompatibleCorpusException);
+        
+        corpus = auto_ptr< Corpus > (
+                new Corpus(".", DOCUMENT_TYPE_FEATURE));
+        EXPECT_THROW(pipe->pipe(corpus), IncompatibleCorpusException);
+    }
+
+    /*
+     * Tests whether the process method works correctly.
+     * 
+     */
     TEST_F(FeatureMapPipeTest, ProcessTest) {
         auto_ptr< Corpus > corpus = auto_ptr< Corpus > (
                 new TextCorpus("."));
