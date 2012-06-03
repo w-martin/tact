@@ -68,8 +68,9 @@ add_library (${MEWT_INPUT}
     ${MEWT_SOURCE_DIR}/input/pipe/Pipe.cpp
     )
 
+find_package(Boost COMPONENTS regex-mt REQUIRED)
 target_link_libraries (${MEWT_INPUT}
-    boost_regex-mt
+    ${Boost_REGEX-MT_LIBRARY}
     )
 
 add_library (${MEWT_OUTPUT}
@@ -85,7 +86,7 @@ add_library (${MEWT_ALGORITHM}
     ${MEWT_SOURCE_DIR}/algorithm/RandomNumberGenerator.cpp
     )
 
-find_package(Threads REQUIRED)
+#find_package(Threads REQUIRED)
 
 add_executable (${MEWT_NAME}
     ${MEWT_SOURCE_DIR}/main.cpp)
