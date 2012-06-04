@@ -8,3 +8,6 @@ build/
 *cmake_install.cmake
 *.a
 *.pyc
+.project
+.pydevproject
+
