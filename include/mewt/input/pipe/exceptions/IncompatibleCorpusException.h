@@ -28,6 +28,9 @@
 #define INCOMPATIBLE_CORPUS_MESSAGE "Error. Corpus is not compatible with this Pipe."
 
 #include "mewt/util/exceptions/Exception.h"
+#include <vector>
+
+using std::vector;
 
 /**
  * Exception class which indicates that a corpus was piped to an incompatible
@@ -46,9 +49,13 @@ public:
      * Specific constructor. Generated an informative message
      * about the error.
      * 
+     * @param corpusType the type of the corpus.
+     * @param compatibleTypes the types that are compatible with the Pipe
+     * which was run.
+     * 
      */
     IncompatibleCorpusException(int const & corpusType,
-            int const & requiredType);
+            vector< int > const * const compatibleTypes);
     /**
      * Uses the given message for this Exception.
      * 
@@ -58,14 +65,16 @@ public:
     IncompatibleCorpusException(string const & message);
 private:
     /**
-     * Creates an error message using the given term.
+     * Creates an error message using the given type identifiers.
      * 
-     * @param term the term to create an error message with.
-     * @return an error message using the given term.
+     * @param corpusType the type of the corpus.
+     * @param compatibleTypes the types that are compatible with the Pipe
+     * which was run.
+     * @return an error message using the given type identifiers.
      * 
      */
     string const createErrorMessage(int const & corpusType,
-            int const & requiredType) const;
+            vector< int > const * const compatibleTypes) const;
 };
 
 #endif	/* INCOMPATIBLECORPUSEXCEPTION_H */

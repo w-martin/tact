@@ -27,20 +27,14 @@
 #include "mewt/input/corpus/feature/FeatureCorpus.h"
 #include <boost/algorithm/string.hpp>
 
-FeatureMapPipe::FeatureMapPipe() {
+FeatureMapPipe::FeatureMapPipe() : Pipe(DOCUMENT_TYPE_TEXT) {
 }
 
 FeatureMapPipe::~FeatureMapPipe() {
 }
 
 auto_ptr< Corpus > FeatureMapPipe::process(
-        auto_ptr<Corpus> corpus) const
-throw (IncompatibleCorpusException) {
-    
-    if (DOCUMENT_TYPE_TEXT != corpus->getDocumentsType()) {
-        throw IncompatibleCorpusException(corpus->getDocumentsType(),
-                DOCUMENT_TYPE_TEXT);
-    }
+        auto_ptr<Corpus> corpus) const {
 
     auto_ptr< FeatureCorpus > featureCorpus = auto_ptr< FeatureCorpus > (
             new FeatureCorpus(

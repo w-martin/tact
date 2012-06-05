@@ -37,15 +37,20 @@ IncompatibleCorpusException::IncompatibleCorpusException(
 }
 
 IncompatibleCorpusException::IncompatibleCorpusException(
-        int const & corpusType, int const & requiredType)
-: Exception(createErrorMessage(corpusType, requiredType)) {
+        int const & corpusType, vector< int > const * const compatibleTypes)
+: Exception(createErrorMessage(corpusType, compatibleTypes)) {
 }
 
 string const IncompatibleCorpusException::createErrorMessage(
-        int const & corpusType, int const & requiredType) const {
+        int const & corpusType,
+        vector< int > const * const compatibleTypes) const {
     stringstream stream;
     stream << INCOMPATIBLE_CORPUS_MESSAGE << " \nCorpus type: " << corpusType
-            << " \nPipe type: " << requiredType
-            << ".";
+            << " \nCompatible types:";
+    for (vector< int >::const_iterator iter = compatibleTypes->begin();
+            compatibleTypes->end() != iter; iter++) {
+        stream << " " << (*iter);
+    }
+    stream << ".";
     return stream.str();
 }

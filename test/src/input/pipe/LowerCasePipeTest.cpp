@@ -122,4 +122,14 @@ namespace {
         string const lower = LowerCasePipe::toLowerCase(upper);
         EXPECT_FALSE(LowerCasePipe::containsUpperCase(lower));
     }
+
+    /*
+     * Tests whether the getDocumentTypes method works correctly.
+     * 
+     */
+    TEST_F(LowerCasePipeTest, GetDocumentTypesTest) {
+        vector< int > const * compatibleTypes = pipe->getCompatibleTypes();
+        EXPECT_EQ(1, compatibleTypes->size());
+        EXPECT_EQ(DOCUMENT_TYPE_FEATURE, compatibleTypes->at(0));
+    }
 }

@@ -24,6 +24,7 @@
 
 #include "gtest/gtest.h"
 #include "mewt/input/pipe/exceptions/IncompatibleCorpusException.h"
+#include "mewt/input/corpus/Document.h"
 
 #define message "test message"
 
@@ -71,7 +72,9 @@ namespace {
      */
     TEST_F(IncompatibleCorpusExceptionTest, SpecificMessageTest) {
         delete testException;
-        testException = new IncompatibleCorpusException(0, 1);
+        vector< int > * types = new vector< int >();
+        types->push_back(0);
+        testException = new IncompatibleCorpusException(0, types);
 
         char const * const whatMessage = testException->what();
         EXPECT_STRNE(NULL, whatMessage);

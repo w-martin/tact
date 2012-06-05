@@ -105,4 +105,14 @@ namespace {
         EXPECT_STREQ("some", split->at(2).c_str());
         EXPECT_STREQ("text", split->at(3).c_str());
     }
+
+    /*
+     * Tests whether the getDocumentTypes method works correctly.
+     * 
+     */
+    TEST_F(FeatureMapPipeTest, GetDocumentTypesTest) {
+        vector< int > const * compatibleTypes = pipe->getCompatibleTypes();
+        EXPECT_EQ(1, compatibleTypes->size());
+        EXPECT_EQ(DOCUMENT_TYPE_TEXT, compatibleTypes->at(0));
+    }
 }

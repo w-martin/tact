@@ -82,4 +82,13 @@ namespace {
                 InputPipe::readFileIntoString("CMakeCache.txt");
         EXPECT_GT(text->size(), 0);
     }
+
+    /*
+     * Tests whether the getDocumentTypes method works correctly.
+     * 
+     */
+    TEST_F(InputPipeTest, GetDocumentTypesTest) {
+        vector< int > const * compatibleTypes = pipe->getCompatibleTypes();
+        EXPECT_EQ(0, compatibleTypes->size());
+    }
 }

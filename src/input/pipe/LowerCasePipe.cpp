@@ -29,21 +29,14 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/regex.hpp>
 
-LowerCasePipe::LowerCasePipe() {
+LowerCasePipe::LowerCasePipe() : Pipe(DOCUMENT_TYPE_FEATURE) {
 }
 
 LowerCasePipe::~LowerCasePipe() {
 }
 
 auto_ptr< Corpus > LowerCasePipe::process(
-        auto_ptr< Corpus > corpus) const
-throw (IncompatibleCorpusException) {
-    
-    if (DOCUMENT_TYPE_FEATURE != corpus->getDocumentsType()) {
-        throw IncompatibleCorpusException(corpus->getDocumentsType(),
-                DOCUMENT_TYPE_FEATURE);
-    }
-
+        auto_ptr< Corpus > corpus) const {
     FeatureCorpus * const featureCorpus = (FeatureCorpus*) corpus.get();
     Alphabet * const alphabet = featureCorpus->getAlphabet();
     vector< string > const * const terms = alphabet->getTerms();
@@ -55,7 +48,6 @@ throw (IncompatibleCorpusException) {
             featureCorpus->replaceTerm(term, transformed);
         }
     }
-
     return corpus;
 }
 

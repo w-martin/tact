@@ -30,6 +30,16 @@
  * 
  */
 class MockPipe : public Pipe {
+public:
+
+    MockPipe() : Pipe() {
+    }
+
+    MockPipe(int const & compatibleType) : Pipe(compatibleType) {
+    }
+
+    MockPipe(vector< int > const & compatibleTypes) : Pipe(compatibleTypes) {
+    }
 private:
 
     virtual auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const

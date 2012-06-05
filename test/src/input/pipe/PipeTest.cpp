@@ -27,6 +27,8 @@
 #include "gtest/gtest.h"
 #include "mewt/input/pipe/Pipe.h"
 #include "mewt/input/pipe/MockPipe.h"
+#include "mewt/input/corpus/feature/FeatureDocument.h"
+#include "mewt/input/corpus/text/TextDocument.h"
 
 using std::auto_ptr;
 
@@ -55,12 +57,37 @@ namespace {
      */
     TEST_F(PipeTest, AttachPipeTest) {
         EXPECT_EQ(NULL, pipe->getNextPipe());
-        
+
         Pipe * pipe1 = new MockPipe();
         Pipe * pipe2 = new MockPipe();
         pipe->attachPipe(auto_ptr< Pipe > (pipe1));
         pipe->attachPipe(auto_ptr< Pipe > (pipe2));
         EXPECT_EQ(pipe1, pipe->getNextPipe());
         EXPECT_EQ(pipe2, pipe1->getNextPipe());
+    }
+
+    /*
+     * Tests whether the getDocumentTypes method works correctly.
+     * 
+     */
+    TEST_F(PipeTest, GetDocumentTypesTest) {
+        vector< int > const * compatibleTypes = pipe->getCompatibleTypes();
+        EXPECT_EQ(0, compatibleTypes->size());
+        
+        delete pipe;
+        vector< int > types;
+        types.push_back(DOCUMENT_TYPE_BASIC);
+        types.push_back(DOCUMENT_TYPE_FEATURE);
+        pipe = new MockPipe(types);
+        compatibleTypes = pipe->getCompatibleTypes();
+        EXPECT_EQ(2, compatibleTypes->size());
+        EXPECT_EQ(DOCUMENT_TYPE_BASIC, compatibleTypes->at(0));
+        EXPECT_EQ(DOCUMENT_TYPE_FEATURE, compatibleTypes->at(1));
+        
+        delete pipe;
+        pipe = new MockPipe(DOCUMENT_TYPE_TEXT);
+        compatibleTypes = pipe->getCompatibleTypes();
+        EXPECT_EQ(1, compatibleTypes->size());
+        EXPECT_EQ(DOCUMENT_TYPE_TEXT, compatibleTypes->at(0));
     }
 }

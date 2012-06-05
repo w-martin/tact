@@ -27,9 +27,6 @@
 
 #include "mewt/input/corpus/Corpus.h"
 #include "mewt/input/pipe/exceptions/IncompatibleCorpusException.h"
-#include <memory>
-
-using std::auto_ptr;
 
 /**
  * Pipe class for transforming Corpus objects.
@@ -43,10 +40,33 @@ public:
      */
     Pipe();
     /**
+     * Compatible type constructor.
+     * 
+     * @param compatibleType the type of document that is compatible with
+     * this Pipe.
+     * 
+     */
+    Pipe(int const compatibleType);
+    /**
+     * Compatible types constructor.
+     * 
+     * @param compatibleTypes the types of documents that are compatible
+     * with this Pipe.
+     * 
+     */
+    Pipe(vector< int > const & compatibleTypes);
+    /**
      * Default destructor.
      * 
      */
     virtual ~Pipe();
+    /**
+     * Gets the document types that are compatible with this Pipe.
+     * 
+     * @return the document types that are compatible with this Pipe.
+     * 
+     */
+    vector< int > const * const getCompatibleTypes() const;
     /**
      * Gets the next Pipe in the sequence.
      * 
@@ -75,18 +95,34 @@ public:
     auto_ptr< Corpus > pipe(auto_ptr< Corpus > corpus) const
     throw (IncompatibleCorpusException);
 private:
+    /**
+     * Vector of compatible document type identifiers. Empty indicates
+     * that all documents are compatible.
+     * 
+     */
+    vector< int > * compatibleDocumentTypes;
+    /**
+     * The next Pipe in this sequence.
+     * 
+     */
     auto_ptr< Pipe > nextPipe;
+    /**
+     * Checks whether the given Corpus is compatible with this Pipe.
+     * 
+     * @param corpus the Corpus to check.
+     * @return true if the given Corpus is compatible with this Pipe, false
+     * otherwise.
+     * 
+     */
+    bool const checkCorpusCompatible(Corpus const * const corpus) const;
     /**
      * Process the given corpus.
      * 
      * @param corpus the Corpus to process.
      * @return the processed Corpus.
-     * @throw IncompatibleCorpusException if the given Corpus was of an
-     * incompatible type with this Pipe.
      * 
      */
-    virtual auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const
-    throw (IncompatibleCorpusException) = 0;
+    virtual auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const = 0;
 };
 
 #endif	/* PIPE_H */

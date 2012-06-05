@@ -42,9 +42,8 @@ InputPipe::~InputPipe() {
 }
 
 auto_ptr< Corpus > InputPipe::process(
-        auto_ptr<Corpus> originalCorpus) const
-throw (IncompatibleCorpusException) {
-    
+        auto_ptr<Corpus> originalCorpus) const {
+
     string const location = originalCorpus->getLocation();
     vector< Document * > const * const originalDocuments =
             originalCorpus->getDocuments();
@@ -79,9 +78,9 @@ auto_ptr< string > InputPipe::readFileIntoString(const string & location) {
     t.seekg(0, ios::end);
     int const length = t.tellg();
     t.seekg(0, ios::beg);
-    
+
     text->reserve(length);
     text->assign(istreambuf_iterator< char >(t), istreambuf_iterator< char >());
-    
+
     return text;
 }
