@@ -61,7 +61,7 @@ if len(sys.argv) != 7:
 # @return the name of the class to create.
 #
 def extractClassName(name):
-    matcher = re.compile("/")
+    matcher = re.compile(".*/")
     result = matcher.search(name)
     if (None == result):
         return name

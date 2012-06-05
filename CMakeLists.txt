@@ -67,6 +67,7 @@ add_library (${MEWT_INPUT}
     ${MEWT_SOURCE_DIR}/input/pipe/InputPipe.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/LowerCasePipe.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/Pipe.cpp
+    ${MEWT_SOURCE_DIR}/input/pipe/PunctuationFilter.cpp
     )
 
 find_package(Boost COMPONENTS regex-mt REQUIRED)
@@ -141,6 +142,7 @@ add_executable(InputTests
     ${MEWT_TEST_DIR}/input/pipe/InputPipeTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/LowerCasePipeTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/PipeTest.cpp
+    ${MEWT_TEST_DIR}/input/pipe/PunctuationFilterTest.cpp
 ) 
 target_link_libraries(InputTests gmock gmock_main
     ${MEWT_UTIL}
