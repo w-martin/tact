@@ -65,6 +65,7 @@ add_library (${MEWT_INPUT}
     ${MEWT_SOURCE_DIR}/input/pipe/exceptions/IncompatibleCorpusException.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/FeatureMapPipe.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/InputPipe.cpp
+    ${MEWT_SOURCE_DIR}/input/pipe/LengthFilter.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/LowerCasePipe.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/Pipe.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/PunctuationFilter.cpp
@@ -140,6 +141,7 @@ add_executable(InputTests
     ${MEWT_TEST_DIR}/input/pipe/exceptions/IncompatibleCorpusExceptionTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/FeatureMapPipeTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/InputPipeTest.cpp
+    ${MEWT_TEST_DIR}/input/pipe/LengthFilterTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/LowerCasePipeTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/PipeTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/PunctuationFilterTest.cpp
