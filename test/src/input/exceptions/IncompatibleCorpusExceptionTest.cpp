@@ -23,7 +23,7 @@
  */
 
 #include "gtest/gtest.h"
-#include "mewt/input/pipe/exceptions/IncompatibleCorpusException.h"
+#include "mewt/input/exceptions/IncompatibleCorpusException.h"
 #include "mewt/input/corpus/Document.h"
 
 #define message "test message"
@@ -76,7 +76,16 @@ namespace {
         types->push_back(0);
         testException = new IncompatibleCorpusException(0, types);
 
-        char const * const whatMessage = testException->what();
+        char const * whatMessage = testException->what();
+        EXPECT_STRNE(NULL, whatMessage);
+        EXPECT_STRNE(INCOMPATIBLE_CORPUS_MESSAGE, whatMessage);
+        EXPECT_STRNE(message, whatMessage);
+        EXPECT_GT(strlen(whatMessage), 0);
+        
+        delete testException;
+        testException = new IncompatibleCorpusException(0, 0);
+
+        whatMessage = testException->what();
         EXPECT_STRNE(NULL, whatMessage);
         EXPECT_STRNE(INCOMPATIBLE_CORPUS_MESSAGE, whatMessage);
         EXPECT_STRNE(message, whatMessage);

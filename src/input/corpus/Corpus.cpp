@@ -45,9 +45,13 @@ Corpus::~Corpus() {
     delete documents;
 }
 
-bool const Corpus::addDocument(auto_ptr<Document> document) {
-    if (document->getType() == documentsType
-            && !contains(document.get())) {
+bool const Corpus::addDocument(auto_ptr<Document> document)
+throw (IncompatibleCorpusException) {
+    if (document->getType() != documentsType) {
+        throw IncompatibleCorpusException(
+                getDocumentsType(), document->getType());
+    }
+    if (!contains(document.get())) {
         documents->push_back(document.release());
         return true;
     } else {
@@ -82,4 +86,19 @@ string const Corpus::getLocation() const {
 
 int const Corpus::getSize() const {
     return documents->size();
+}
+
+bool const Corpus::removeDocument(Document const * const document) {
+    if (document->getType() != getDocumentsType()) {
+        return false;
+    } else {
+        for (vector< Document * >::iterator iter = documents->begin();
+                documents->end() != iter; iter++) {
+            if (document->equals(*iter)) {
+                documents->erase(iter);
+                return true;
+            }
+        }
+    }
+    return false;
 }

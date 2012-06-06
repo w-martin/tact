@@ -62,7 +62,7 @@ add_library (${MEWT_INPUT}
     ${MEWT_SOURCE_DIR}/input/corpus/feature/FeatureMap.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/text/TextCorpus.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/text/TextDocument.cpp
-    ${MEWT_SOURCE_DIR}/input/pipe/exceptions/IncompatibleCorpusException.cpp
+    ${MEWT_SOURCE_DIR}/input/exceptions/IncompatibleCorpusException.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/DirectoryScannerPipe.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/FeatureMapPipe.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/InputPipe.cpp
@@ -70,6 +70,7 @@ add_library (${MEWT_INPUT}
     ${MEWT_SOURCE_DIR}/input/pipe/LowerCasePipe.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/Pipe.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/PunctuationFilter.cpp
+    ${MEWT_SOURCE_DIR}/input/pipe/XmlFilter.cpp
     )
 
 find_package(Boost COMPONENTS regex-mt filesystem-mt system-mt REQUIRED)
@@ -141,7 +142,7 @@ add_executable(InputTests
     ${MEWT_TEST_DIR}/input/corpus/feature/FeatureMapTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/text/TextCorpusTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/text/TextDocumentTest.cpp
-    ${MEWT_TEST_DIR}/input/pipe/exceptions/IncompatibleCorpusExceptionTest.cpp
+    ${MEWT_TEST_DIR}/input/exceptions/IncompatibleCorpusExceptionTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/DirectoryScannerPipeTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/FeatureMapPipeTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/InputPipeTest.cpp
@@ -149,6 +150,7 @@ add_executable(InputTests
     ${MEWT_TEST_DIR}/input/pipe/LowerCasePipeTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/PipeTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/PunctuationFilterTest.cpp
+    ${MEWT_TEST_DIR}/input/pipe/XmlFilterTest.cpp
 ) 
 target_link_libraries(InputTests gmock gmock_main
     ${MEWT_UTIL}

@@ -33,8 +33,8 @@
 using std::vector;
 
 /**
- * Exception class which indicates that a corpus was piped to an incompatible
- * Pipe.
+ * Exception class which indicates that a corpus was incompatible with a
+ * Document or Pipe due to its type constraints.
  * 
  */
 class IncompatibleCorpusException : public Exception {
@@ -50,12 +50,21 @@ public:
      * about the error.
      * 
      * @param corpusType the type of the corpus.
-     * @param compatibleTypes the types that are compatible with the Pipe
-     * which was run.
+     * @param compatibleTypes the types that are compatible.
      * 
      */
     IncompatibleCorpusException(int const & corpusType,
             vector< int > const * const compatibleTypes);
+    /**
+     * Specific constructor. Generated an informative message
+     * about the error.
+     * 
+     * @param corpusType the type of the corpus.
+     * @param compatibleType the type that is compatible.
+     * 
+     */
+    IncompatibleCorpusException(int const & corpusType,
+            int const & compatibleType);
     /**
      * Uses the given message for this Exception.
      * 
@@ -68,13 +77,22 @@ private:
      * Creates an error message using the given type identifiers.
      * 
      * @param corpusType the type of the corpus.
-     * @param compatibleTypes the types that are compatible with the Pipe
-     * which was run.
+     * @param compatibleTypes the types that are compatible.
      * @return an error message using the given type identifiers.
      * 
      */
     string const createErrorMessage(int const & corpusType,
             vector< int > const * const compatibleTypes) const;
+    /**
+     * Creates an error message using the given type identifiers.
+     * 
+     * @param corpusType the type of the corpus.
+     * @param compatibleType the type that is compatible.
+     * @return an error message using the given type identifiers.
+     * 
+     */
+    string const createErrorMessage(int const & corpusType,
+            int const & compatibleType) const;
 };
 
 #endif	/* INCOMPATIBLECORPUSEXCEPTION_H */

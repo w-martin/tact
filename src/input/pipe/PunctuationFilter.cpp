@@ -28,8 +28,6 @@
 #include <boost/algorithm/string_regex.hpp>
 #include <boost/regex.hpp>
 
-#include <iostream>
-
 PunctuationFilter::PunctuationFilter() : Pipe(DOCUMENT_TYPE_FEATURE) {
 }
 

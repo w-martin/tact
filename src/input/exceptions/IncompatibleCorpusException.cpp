@@ -22,7 +22,7 @@
  * 
  */
 
-#include "mewt/input/pipe/exceptions/IncompatibleCorpusException.h"
+#include "mewt/input/exceptions/IncompatibleCorpusException.h"
 #include <sstream>
 
 using std::stringstream;
@@ -41,6 +41,11 @@ IncompatibleCorpusException::IncompatibleCorpusException(
 : Exception(createErrorMessage(corpusType, compatibleTypes)) {
 }
 
+IncompatibleCorpusException::IncompatibleCorpusException(
+        int const & corpusType, int const & compatibleType)
+: Exception(createErrorMessage(corpusType, compatibleType)) {
+}
+
 string const IncompatibleCorpusException::createErrorMessage(
         int const & corpusType,
         vector< int > const * const compatibleTypes) const {
@@ -51,6 +56,15 @@ string const IncompatibleCorpusException::createErrorMessage(
             compatibleTypes->end() != iter; iter++) {
         stream << " " << (*iter);
     }
-    stream << ".";
+    stream << "\n";
+    return stream.str();
+}
+
+string const IncompatibleCorpusException::createErrorMessage(
+        int const & corpusType,
+        int const & compatibleType) const {
+    stringstream stream;
+    stream << INCOMPATIBLE_CORPUS_MESSAGE << " \nCorpus type: " << corpusType
+            << " \nCompatible type: " << compatibleType << "\n";
     return stream.str();
 }

@@ -24,6 +24,7 @@
 
 #include "gtest/gtest.h"
 #include "mewt/input/corpus/Corpus.h"
+#include "mewt/input/corpus/text/TextDocument.h"
 
 namespace {
 
@@ -47,7 +48,7 @@ namespace {
     };
 
     /*
-     * Tests whether the getName method works correctly.
+     * Tests whether the addDocument method works correctly.
      * 
      */
     TEST_F(CorpusTest, AddDocumentTest) {
@@ -67,13 +68,25 @@ namespace {
     }
 
     /*
+     * Tests whether the addDocument method throws an exception correctly.
+     * 
+     */
+    TEST_F(CorpusTest, AddDocumentExceptionTest) {
+        auto_ptr< Document > document =
+                auto_ptr< Document > (new TextDocument("testName",
+                auto_ptr< string > (new string("text"))));
+        EXPECT_THROW(
+                corpus->addDocument(document), IncompatibleCorpusException);
+    }
+
+    /*
      * Tests whether the contains method works correctly.
      * 
      */
     TEST_F(CorpusTest, ConstainsTest) {
         string testName = "testName";
         Document * d = new Document(testName);
-        
+
         EXPECT_FALSE(corpus->contains(d));
         corpus->addDocument(auto_ptr< Document > (new Document(*d)));
         EXPECT_TRUE(corpus->contains(d));
@@ -134,5 +147,17 @@ namespace {
                 strcmp(documents->at(0)->getName().c_str(), testName.c_str()));
         EXPECT_EQ(corpus->getDocumentsType(), tmp.getDocumentsType());
         EXPECT_TRUE(tmp.contains(d));
+    }
+
+    /*
+     * Tests whether the removeDocument method works correctly.
+     * 
+     */
+    TEST_F(CorpusTest, RemoveDocumentTest) {
+        vector< Document * > const * const documents = corpus->getDocuments();
+        corpus->addDocument(auto_ptr< Document > (new Document("testName")));
+        EXPECT_EQ(1, documents->size());
+        corpus->removeDocument(documents->at(0));
+        EXPECT_EQ(0, documents->size());
     }
 }

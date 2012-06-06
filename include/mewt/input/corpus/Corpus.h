@@ -26,7 +26,7 @@
 #define	CORPUS_H
 
 #include "mewt/input/corpus/Document.h"
-
+#include "mewt/input/exceptions/IncompatibleCorpusException.h"
 #include <vector>
 #include <memory>
 
@@ -65,7 +65,8 @@ public:
      * @return true if the Document was added, false otherwise.
      * 
      */
-    bool const addDocument(auto_ptr< Document > document);
+    bool const addDocument(auto_ptr< Document > document)
+    throw (IncompatibleCorpusException);
     /**
      * Checks if this Corpus contains the given Document.
      * 
@@ -103,9 +104,29 @@ public:
      * 
      */
     int const getSize() const;
+    /**
+     * Removes the given Document from this Corpus.
+     * 
+     * @param document the Document to remove.
+     * @return true if the Document was removed, false otherwise.
+     * 
+     */
+    bool const removeDocument(Document const * const document);
 private:
+    /**
+     * The documents constituting this Corpus.
+     * 
+     */
     vector< Document * > * documents;
+    /**
+     * The type of documents that this Corpus is made from.
+     * 
+     */
     int documentsType;
+    /**
+     * The location of this Corpus.
+     * 
+     */
     string location;
 };
 

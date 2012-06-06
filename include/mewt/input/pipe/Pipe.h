@@ -26,7 +26,7 @@
 #define	PIPE_H
 
 #include "mewt/input/corpus/Corpus.h"
-#include "mewt/input/pipe/exceptions/IncompatibleCorpusException.h"
+#include "mewt/input/exceptions/IncompatibleCorpusException.h"
 
 /**
  * Pipe class for transforming Corpus objects.
