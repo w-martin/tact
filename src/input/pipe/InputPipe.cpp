@@ -22,8 +22,6 @@
  * 
  */
 
-#define SEPARATOR "/"
-
 #include "mewt/input/corpus/text/TextCorpus.h"
 #include "mewt/input/pipe/InputPipe.h"
 
@@ -54,9 +52,7 @@ auto_ptr< Corpus > InputPipe::process(
             originalDocuments->end() != iter; iter++) {
 
         string const name = (*iter)->getName();
-        string filename = computeFileName(originalCorpus->getLocation(),
-                name);
-        auto_ptr< string > text = readFileIntoString(filename);
+        auto_ptr< string > text = readFileIntoString(name);
 
         auto_ptr< Document > doc = auto_ptr< Document > (
                 new TextDocument(name, text));
@@ -64,11 +60,6 @@ auto_ptr< Corpus > InputPipe::process(
 
     }
     return (auto_ptr< Corpus >) corpus;
-}
-
-string const InputPipe::computeFileName(const string & location,
-        const string & name) {
-    return string(location).append(SEPARATOR). append(name);
 }
 
 auto_ptr< string > InputPipe::readFileIntoString(const string & location) {

@@ -48,16 +48,6 @@ namespace {
     };
 
     /*
-     * Tests whether the computeFileName method works correctly.
-     * 
-     */
-    TEST_F(InputPipeTest, ComputeFileNameTest) {
-        string const filename =
-                InputPipe::computeFileName(".", "CMakeCache.txt");
-        EXPECT_STREQ("./CMakeCache.txt", filename.c_str());
-    }
-
-    /*
      * Tests whether the process method works correctly.
      * 
      */

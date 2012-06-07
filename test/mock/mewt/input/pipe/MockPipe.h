@@ -42,8 +42,7 @@ public:
     }
 private:
 
-    virtual auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const
-    throw (IncompatibleCorpusException) {
+    virtual auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const {
         return corpus;
     }
 };
