@@ -63,7 +63,9 @@ add_library (${MEWT_INPUT}
     ${MEWT_SOURCE_DIR}/input/corpus/text/TextCorpus.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/text/TextDocument.cpp
     ${MEWT_SOURCE_DIR}/input/exceptions/IncompatibleCorpusException.cpp
+    ${MEWT_SOURCE_DIR}/input/pipe/bundle/CompleteFilteredBundle.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/bundle/InputOptimiseBundle.cpp
+    ${MEWT_SOURCE_DIR}/input/pipe/bundle/ScanInputOptimiseBundle.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/DirectoryScannerPipe.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/FeatureMapPipe.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/InputPipe.cpp
@@ -145,7 +147,9 @@ add_executable(InputTests
     ${MEWT_TEST_DIR}/input/corpus/text/TextCorpusTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/text/TextDocumentTest.cpp
     ${MEWT_TEST_DIR}/input/exceptions/IncompatibleCorpusExceptionTest.cpp
+    ${MEWT_TEST_DIR}/input/pipe/bundle/CompleteFilteredBundleTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/bundle/InputOptimiseBundleTest.cpp
+    ${MEWT_TEST_DIR}/input/pipe/bundle/ScanInputOptimiseBundleTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/DirectoryScannerPipeTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/FeatureMapPipeTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/InputPipeTest.cpp
