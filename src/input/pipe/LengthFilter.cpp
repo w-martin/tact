@@ -36,13 +36,17 @@ LengthFilter::~LengthFilter() {
 auto_ptr< Corpus > LengthFilter::process(auto_ptr<Corpus> corpus) const {
     FeatureCorpus * const featureCorpus = (FeatureCorpus*) corpus.get();
     Alphabet * const alphabet = featureCorpus->getAlphabet();
-    vector< string > const terms(*alphabet->getTerms());
-    for (vector< string >::const_iterator iter = terms.begin();
-            terms.end() != iter; iter++) {
-        string const term = (*iter);
+    vector< string > termsToReplace;
+    for (AlphabetIterator iter = alphabet->begin();
+            alphabet->end() != iter; iter++) {
+        string const term = iter.getTerm();
         if (minimumLength > term.size()) {
-            featureCorpus->replaceTerm(term, vector< string > ());
+            termsToReplace.push_back(term);
         }
+    }
+    for(vector< string >::const_iterator iter = termsToReplace.begin();
+            termsToReplace.end() != iter; iter++){
+        featureCorpus->replaceTerm(*iter, vector< string > ());
     }
     return corpus;
 }

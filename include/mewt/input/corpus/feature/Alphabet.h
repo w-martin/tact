@@ -25,13 +25,18 @@
 #ifndef ALPHABET_H
 #define	ALPHABET_H
 
+#include "mewt/input/corpus/feature/AlphabetIterator.h"
 #include "mewt/input/corpus/feature/exceptions/TermNotPresentException.h"
 #include <string>
 #include <vector>
+#include <boost/bimap.hpp>
 
 using std::auto_ptr;
 using std::string;
 using std::vector;
+using boost::bimaps::bimap;
+
+typedef bimap< string, int > bmType;
 
 /**
  * Represents a finite collection of terms.
@@ -65,6 +70,29 @@ public:
      */
     int const addTerm(string const term);
     /**
+     * Gets the AlphabetIterator pointing to the first element.
+     * 
+     * @return the AlphabetIterator pointing to the first element.
+     * 
+     */
+    AlphabetIterator const begin() const;
+    /**
+     * Gets the AlphabetIterator pointing to the last element.
+     * 
+     * @return the AlphabetIterator pointing to the last element.
+     * 
+     */
+    AlphabetIterator const end() const;
+    /**
+     * Checks if this Alphabet is equal to the other Alphabet.
+     * 
+     * @param other the Alphabet to check against.
+     * @return true if this Alphabet is equal to the other Alphabet, false
+     * otherwise.
+     * 
+     */
+    bool const equals(Alphabet const * const other) const;
+    /**
      * Gets the index of the given term.
      * 
      * @param term the term to get the index of.
@@ -72,15 +100,8 @@ public:
      * @throws TermNotPresentException if the term is not present.
      * 
      */
-    int const getIndex(string const term) const
+    int const getIndex(string const & term) const
     throw (TermNotPresentException);
-    /**
-     * Gets the array of indices.
-     * 
-     * @return the array of indices.
-     * 
-     */
-    vector<int> const * const getIndices() const;
     /**
      * Gets the next index.
      * 
@@ -103,15 +124,8 @@ public:
      * @throws TermNotPresentException if the term is not present.
      * 
      */
-    string const getTerm(int const index) const
+    string const getTerm(int const & index) const
     throw (TermNotPresentException);
-    /**
-     * Gets the array of terms.
-     * 
-     * @return the array of terms.
-     * 
-     */
-    vector<string> const * const getTerms() const;
     /**
      * Checks if the given term is present in this Alphabet.
      * 
@@ -119,7 +133,7 @@ public:
      * @return true if the term is present, false otherwise.
      * 
      */
-    bool const hasTerm(string const term) const;
+    bool const hasTerm(string const & term) const;
     /**
      * Removes the term with the given index.
      * 
@@ -129,7 +143,7 @@ public:
      * in this Alphabet.
      * 
      */
-    string const removeTerm(int const index)
+    string const removeTerm(int const & index)
     throw (TermNotPresentException);
     /**
      * Removes the given term from this Alphabet.
@@ -140,28 +154,36 @@ public:
      * in this Alphabet.
      * 
      */
-    int const removeTerm(string const term)
+    int const removeTerm(string const & term)
     throw (TermNotPresentException);
 protected:
     /**
-     * Deletes the given index from this Alphabet.
+     * Creates an exception with information about the given index.
      * 
-     * @param index the index to delete.
+     * @param index the index that caused this exception.
+     * @return an exception with information about the given index.
      * 
      */
-    void deleteIndex(int const index);
+    TermNotPresentException const createExceptionWithIndex(
+            int const index) const;
     /**
-     * Deletes the given term from this Alphabet.
+     * Gets the data from this Alphabet.
      * 
-     * @param term the term to delete.
+     * @return the data from this Alphabet.
      * 
      */
-    void deleteTerm(string const term);
+    bmType const * const getData() const;
 private:
-    vector<int> * indices;
+    /**
+     * The data in this Alphabet.
+     * 
+     */
+    bmType * data;
+    /**
+     * The next index which will be assigned to a term.
+     * 
+     */
     int nextIndex;
-    vector<string> * terms;
 };
 
 #endif	/* ALPHABET_H */
-

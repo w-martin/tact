@@ -26,8 +26,13 @@
 #include "mewt/input/corpus/feature/Alphabet.h"
 #include "mewt/input/corpus/feature/FeatureCorpus.h"
 #include "mewt/input/corpus/text/TextDocument.h"
+#include <map>
 #include <boost/algorithm/string.hpp>
 #include <boost/regex.hpp>
+
+using std::map;
+
+typedef map< string, vector< string > > mapType;
 
 LowerCasePipe::LowerCasePipe() : Pipe(DOCUMENT_TYPE_FEATURE) {
 }
@@ -39,14 +44,19 @@ auto_ptr< Corpus > LowerCasePipe::process(
         auto_ptr< Corpus > corpus) const {
     FeatureCorpus * const featureCorpus = (FeatureCorpus*) corpus.get();
     Alphabet * const alphabet = featureCorpus->getAlphabet();
-    vector< string > const * const terms = alphabet->getTerms();
-    for (int i = 0; i < terms->size(); i++) {
-        string const term = terms->at(i);
+    mapType termsToReplace;
+    for (AlphabetIterator iter = alphabet->begin();
+            alphabet->end() != iter; iter++) {
+        string const term = iter.getTerm();
         if (containsUpperCase(term)) {
             vector< string > transformed;
             transformed.push_back(toLowerCase(term));
-            featureCorpus->replaceTerm(term, transformed);
+            termsToReplace.insert(std::make_pair(term, transformed));
         }
+    }
+    for (mapType::const_iterator iter = termsToReplace.begin();
+            termsToReplace.end() != iter; iter++) {
+        featureCorpus->replaceTerm((*iter).first, (*iter).second);
     }
     return corpus;
 }

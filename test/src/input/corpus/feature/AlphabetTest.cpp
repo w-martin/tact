@@ -58,16 +58,6 @@ namespace {
     }
 
     /*
-     * Tests whether the getTerms method works correctly.
-     * 
-     */
-    TEST_F(AlphabetTest, GetTermsTest) {
-        vector<string> const * const terms = alphabet->getTerms();
-        EXPECT_EQ(1, terms->size());
-        EXPECT_STREQ(testTerm, terms->at(0).c_str());
-    }
-
-    /*
      * Tests whether the getTerm method works correctly.
      * 
      */
@@ -94,16 +84,6 @@ namespace {
         EXPECT_EQ(0, index);
         EXPECT_THROW(alphabet->getIndex("not test term"),
                 TermNotPresentException);
-    }
-
-    /*
-     * Tests whether the getIndices method works correctly.
-     * 
-     */
-    TEST_F(AlphabetTest, GetIndicesTest) {
-        vector<int> const * const indices = alphabet->getIndices();
-        EXPECT_EQ(1, indices->size());
-        EXPECT_EQ(0, indices->at(0));
     }
 
     /*
@@ -138,6 +118,23 @@ namespace {
         Alphabet * tmp = new Alphabet(*alphabet);
         EXPECT_EQ(1, tmp->getSize());
         EXPECT_STREQ(testTerm, tmp->getTerm(0).c_str());
+        delete tmp;
+    }
+
+    /*
+     * Tests whether the equals method works correctly.
+     * 
+     */
+    TEST_F(AlphabetTest, EqualsTest) {
+        Alphabet * tmp = new Alphabet(*alphabet);
+        EXPECT_TRUE(alphabet->equals(tmp));
+        
+        tmp->addTerm("hello");
+        EXPECT_FALSE(alphabet->equals(tmp));
+        
+        alphabet->addTerm("hello");
+        EXPECT_TRUE(alphabet->equals(tmp));
+        
         delete tmp;
     }
 }

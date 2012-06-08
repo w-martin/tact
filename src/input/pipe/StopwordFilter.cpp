@@ -66,10 +66,15 @@ Alphabet const * const StopwordFilter::getStopwords() const {
 }
 
 auto_ptr< Corpus > StopwordFilter::process(auto_ptr<Corpus> corpus) const {
-    vector< string > const * const terms = stopwords->getTerms();
     vector< string > const empty;
-    for (vector< string >::const_iterator iter = terms->begin();
-            terms->end() != iter; iter++) {
+    vector< string > termsToReplace;
+    for (AlphabetIterator iter = stopwords->begin();
+            stopwords->end() != iter; iter++) {
+        string const term = iter.getTerm();
+        termsToReplace.push_back(term);
+    }
+    for(vector< string >::const_iterator iter = termsToReplace.begin();
+            termsToReplace.end() != iter; iter++){
         ((FeatureCorpus *) corpus.get())->replaceTerm(*iter, empty);
     }
     return corpus;

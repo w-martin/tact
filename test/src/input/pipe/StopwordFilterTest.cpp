@@ -97,11 +97,7 @@ namespace {
      */
     TEST_F(StopwordFilterTest, SpecificConstructorTest) {
         Alphabet const * const copiedAlphabet = pipe->getStopwords();
-        EXPECT_EQ(alphabet->getSize(), copiedAlphabet->getSize());
-        for (int i = 0; i < alphabet->getSize(); i++) {
-            EXPECT_STREQ(alphabet->getTerms()->at(i).c_str(),
-                    copiedAlphabet->getTerms()->at(i).c_str());
-        }
+        EXPECT_TRUE(alphabet->equals(copiedAlphabet));
     }
 
     /*
@@ -111,11 +107,7 @@ namespace {
     TEST_F(StopwordFilterTest, CopyConstructorTest) {
         StopwordFilter tmp(*pipe);
         Alphabet const * const copiedAlphabet = tmp.getStopwords();
-        EXPECT_EQ(alphabet->getSize(), copiedAlphabet->getSize());
-        for (int i = 0; i < alphabet->getSize(); i++) {
-            EXPECT_STREQ(alphabet->getTerms()->at(i).c_str(),
-                    copiedAlphabet->getTerms()->at(i).c_str());
-        }
+        EXPECT_TRUE(alphabet->equals(copiedAlphabet));
     }
 
     /*
@@ -124,10 +116,7 @@ namespace {
      */
     TEST_F(StopwordFilterTest, GetStopwordsTest) {
         Alphabet const * const stopwords = pipe->getStopwords();
-        for (int i = 0; i < alphabet->getSize(); i++) {
-            EXPECT_STREQ(alphabet->getTerms()->at(i).c_str(),
-                    stopwords->getTerms()->at(i).c_str());
-        }
+        EXPECT_TRUE(alphabet->equals(stopwords));
     }
 
     /*

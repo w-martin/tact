@@ -24,9 +24,14 @@
 
 #include "mewt/input/corpus/feature/FeatureCorpus.h"
 #include "mewt/input/pipe/PunctuationFilter.h"
+#include <map>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string_regex.hpp>
 #include <boost/regex.hpp>
+
+using std::map;
+
+typedef map< string, vector< string > > mapType;
 
 PunctuationFilter::PunctuationFilter() : Pipe(DOCUMENT_TYPE_FEATURE) {
 }
@@ -37,14 +42,18 @@ PunctuationFilter::~PunctuationFilter() {
 auto_ptr< Corpus > PunctuationFilter::process(auto_ptr<Corpus> corpus) const {
     FeatureCorpus * const featureCorpus = (FeatureCorpus*) corpus.get();
     Alphabet * const alphabet = featureCorpus->getAlphabet();
-    vector< string > const terms(*alphabet->getTerms());
-    for (vector< string >::const_iterator iter = terms.begin();
-            terms.end() != iter; iter++) {
-        string const term = (*iter);
+    mapType termsToReplace;
+    for (AlphabetIterator iter = alphabet->begin();
+            alphabet->end() != iter; iter++) {
+        string const term = iter.getTerm();
         if (containsPunctuation(term)) {
             vector< string > const transformed = removePunctuation(term);
-            featureCorpus->replaceTerm(term, transformed);
+            termsToReplace.insert(std::make_pair(term, transformed));
         }
+    }
+    for (mapType::const_iterator iter = termsToReplace.begin();
+            termsToReplace.end() != iter; iter++) {
+        featureCorpus->replaceTerm((*iter).first, (*iter).second);
     }
     return corpus;
 }
