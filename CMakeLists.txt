@@ -48,7 +48,6 @@ include_directories(${MEWT_INCLUDE_DIR}
 
 add_library (${MEWT_UTIL}
     ${MEWT_SOURCE_DIR}/util/exceptions/Exception.cpp
-    ${MEWT_SOURCE_DIR}/util/exceptions/IllegalArgumentException.cpp
     ${MEWT_SOURCE_DIR}/util/exceptions/OutOfBoundsException.cpp
     )
 
@@ -130,7 +129,6 @@ include_directories(
 
 add_executable(UtilTests 
     ${MEWT_TEST_DIR}/util/exceptions/ExceptionTest.cpp
-    ${MEWT_TEST_DIR}/util/exceptions/IllegalArgumentExceptionTest.cpp
     ${MEWT_TEST_DIR}/util/exceptions/OutOfBoundsExceptionTest.cpp
 ) 
 target_link_libraries(UtilTests gmock gmock_main

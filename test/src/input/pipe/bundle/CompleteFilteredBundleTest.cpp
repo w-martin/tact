@@ -35,7 +35,7 @@ namespace {
     /**
      * Tests CompleteFilteredBundle.
      * 
-     */ 
+     */
     class CompleteFilteredBundleTest : public ::testing::Test {
     protected:
 
@@ -54,11 +54,11 @@ namespace {
      * 
      */
     TEST_F(CompleteFilteredBundleTest, ProcessTest) {
+        string const file1 = ".CompleteFilteredBundleTest/file1";
+        string const file2 = ".CompleteFilteredBundleTest/dir/file2";
         fs::create_directories(".CompleteFilteredBundleTest/dir");
-        fs::copy_file("CTestTestfile.cmake",
-                ".CompleteFilteredBundleTest/file1");
-        fs::copy_file("CTestTestfile.cmake",
-                ".CompleteFilteredBundleTest/dir/file2");
+        fs::copy_file("CTestTestfile.cmake", file1);
+        fs::copy_file("CTestTestfile.cmake", file2);
 
         auto_ptr< Corpus > corpus = auto_ptr< Corpus > (
                 new Corpus(".CompleteFilteredBundleTest",
@@ -66,10 +66,10 @@ namespace {
         corpus = pipe->pipe(corpus);
         EXPECT_EQ(2, corpus->getSize());
         vector< Document * > const * documents = corpus->getDocuments();
-        EXPECT_STREQ(".CompleteFilteredBundleTest/file1",
-                documents->at(0)->getName().c_str());
-        EXPECT_STREQ(".CompleteFilteredBundleTest/dir/file2",
-                documents->at(1)->getName().c_str());
+        EXPECT_TRUE(file1 == documents->at(0)->getName()
+                || file1 == documents->at(1)->getName());
+        EXPECT_TRUE(file2 == documents->at(0)->getName()
+                || file2 == documents->at(1)->getName());
         FeatureCorpus const * const featureCorpus =
                 (FeatureCorpus *) corpus.get();
         EXPECT_EQ(0, featureCorpus->getAlphabet()->getSize());

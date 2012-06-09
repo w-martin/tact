@@ -43,21 +43,21 @@ auto_ptr< Corpus > FeatureMapPipe::process(
     Alphabet * const alphabet = featureCorpus->getAlphabet();
 
     vector< Document * > const * const documents = corpus->getDocuments();
-    for (vector< Document * >::const_iterator iter = documents->begin();
-            iter != documents->end(); iter++) {
-        string const * const text = ((TextDocument *) (*iter))->getText();
+    for (vector< Document * >::const_iterator iter1 = documents->begin();
+            iter1 != documents->end(); iter1++) {
+        string const * const text = ((TextDocument *) (*iter1))->getText();
         auto_ptr< FeatureMap > featureMap =
                 auto_ptr< FeatureMap > (new FeatureMap());
 
         auto_ptr< vector< string > > split = splitString(text);
-        for (vector< string >::const_iterator iter = split->begin();
-                iter != split->end(); iter++) {
-            int const index = alphabet->addTerm(*iter);
+        for (vector< string >::const_iterator iter2 = split->begin();
+                iter2 != split->end(); iter2++) {
+            int const index = alphabet->addTerm(*iter2);
             featureMap->incrementFeature(index, 1);
         }
         auto_ptr< FeatureDocument > document =
                 auto_ptr< FeatureDocument > (
-                new FeatureDocument((*iter)->getName(), featureMap));
+                new FeatureDocument((*iter1)->getName(), featureMap));
         featureCorpus->addDocument((auto_ptr< Document >) document);
     }
 

@@ -66,8 +66,7 @@ bool const Alphabet::equals(Alphabet const * const other) const {
         while (end() != iter1
                 && other->end() != iter2) {
             if (iter1.getIndex() != iter2.getIndex()
-                    || 0 != strcmp(iter1.getTerm().c_str(),
-                    iter2.getTerm().c_str())) {
+                    || iter1.getTerm() != iter2.getTerm()) {
                 return false;
             }
             iter1++;

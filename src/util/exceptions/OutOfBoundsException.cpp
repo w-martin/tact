@@ -33,12 +33,15 @@ OutOfBoundsException::OutOfBoundsException(
 : Exception(createErrorMessage(index, bounds)) {
 }
 
-OutOfBoundsException::OutOfBoundsException(const string message)
+OutOfBoundsException::OutOfBoundsException(const string & message)
 : Exception(message) {
 }
 
+OutOfBoundsException::~OutOfBoundsException() throw () {
+}
+
 string const OutOfBoundsException::createErrorMessage(
-        int const & index, int const & bounds) const {
+        int const & index, int const & bounds) {
     stringstream stream;
     stream << OUT_OF_BOUNDS_MESSAGE << " \nIndex: "
             << index << " Bounds: " << bounds;

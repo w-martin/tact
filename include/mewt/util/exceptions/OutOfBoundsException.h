@@ -57,7 +57,12 @@ public:
      * @param message the message to use for this Exception.
      * 
      */
-    OutOfBoundsException(string const message);
+    OutOfBoundsException(string const & message);
+    /**
+     * Default destructor.
+     * 
+     */
+    virtual ~OutOfBoundsException() throw ();
 private:
     /**
      * Creates an error message with the given index and bounds.
@@ -67,9 +72,8 @@ private:
      * @return an error message with the given index and bounds.
      * 
      */
-    string const createErrorMessage(
-            int const & index, int const & bounds) const;
+    static string const createErrorMessage(
+            int const & index, int const & bounds);
 };
 
 #endif	/* OUTOFBOUNDSEXCEPTION_H */
-

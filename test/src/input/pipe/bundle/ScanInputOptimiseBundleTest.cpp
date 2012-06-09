@@ -53,11 +53,11 @@ namespace {
      * 
      */
     TEST_F(ScanInputOptimiseBundleTest, ProcessTest) {
+        string const file1 = ".ScanInputOptimiseBundleTest/file1";
+        string const file2 = ".ScanInputOptimiseBundleTest/dir/file2";
         fs::create_directories(".ScanInputOptimiseBundleTest/dir");
-        fs::copy_file("CTestTestfile.cmake",
-                ".ScanInputOptimiseBundleTest/file1");
-        fs::copy_file("CTestTestfile.cmake",
-                ".ScanInputOptimiseBundleTest/dir/file2");
+        fs::copy_file("CTestTestfile.cmake", file1);
+        fs::copy_file("CTestTestfile.cmake", file2);
 
         auto_ptr< Corpus > corpus = auto_ptr< Corpus > (
                 new Corpus(".ScanInputOptimiseBundleTest",
@@ -65,10 +65,10 @@ namespace {
         corpus = pipe->pipe(corpus);
         EXPECT_EQ(2, corpus->getSize());
         vector< Document * > const * documents = corpus->getDocuments();
-        EXPECT_STREQ(".ScanInputOptimiseBundleTest/file1",
-                documents->at(0)->getName().c_str());
-        EXPECT_STREQ(".ScanInputOptimiseBundleTest/dir/file2",
-                documents->at(1)->getName().c_str());
+        EXPECT_TRUE(file1 == documents->at(0)->getName()
+                || file1 == documents->at(1)->getName());
+        EXPECT_TRUE(file2 == documents->at(0)->getName()
+                || file2 == documents->at(1)->getName());
         FeatureCorpus const * const featureCorpus =
                 (FeatureCorpus *) corpus.get();
         EXPECT_LT(0, featureCorpus->getAlphabet()->getSize());

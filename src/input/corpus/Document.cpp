@@ -37,7 +37,7 @@ Document::~Document() {
 
 bool const Document::equals(Document const * const other) const {
     return (getType() == other->getType()
-            && 0 == strcmp(name.c_str(), other->getName().c_str()));
+            && name == other->getName());
 }
 
 string const Document::getName() const {

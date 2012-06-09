@@ -55,24 +55,28 @@ namespace {
      * 
      */
     TEST_F(DirectoryScannerPipeTest, ProcessTest) {
+        string const file1 = ".processTest/file1";
+        string const file2 = ".processTest/dir/file2";
         fs::create_directories(".processTest/dir");
-        fs::copy_file("CMakeCache.txt", ".processTest/file1");
-        fs::copy_file("CMakeCache.txt", ".processTest/dir/file2");
+        fs::copy_file("CMakeCache.txt", file1);
+        fs::copy_file("CMakeCache.txt", file2);
 
         auto_ptr< Corpus > corpus = auto_ptr< Corpus > (
                 new Corpus(".processTest", DOCUMENT_TYPE_BASIC));
         corpus = pipe->pipe(corpus);
         EXPECT_EQ(1, corpus->getSize());
         vector< Document * > const * documents = corpus->getDocuments();
-        EXPECT_STREQ(".processTest/file1", documents->at(0)->getName().c_str());
+        EXPECT_TRUE(file1 == documents->at(0)->getName());
 
         corpus = auto_ptr< Corpus > (
                 new Corpus(".processTest", DOCUMENT_TYPE_BASIC));
         corpus = recursivePipe->pipe(corpus);
         EXPECT_EQ(2, corpus->getSize());
         documents = corpus->getDocuments();
-        EXPECT_STREQ(".processTest/file1", documents->at(1)->getName().c_str());
-        EXPECT_STREQ(".processTest/dir/file2", documents->at(0)->getName().c_str());
+        EXPECT_TRUE(file1 == documents->at(0)->getName()
+                || file1 == documents->at(1)->getName());
+        EXPECT_TRUE(file2 == documents->at(0)->getName()
+                || file2 == documents->at(1)->getName());
 
         fs::remove_all(".processTest");
     }
