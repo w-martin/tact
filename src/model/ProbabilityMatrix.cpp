@@ -23,6 +23,7 @@
  */
 
 #include "mewt/model/ProbabilityMatrix.h"
+#include <cstdlib>
 
 ProbabilityMatrix::ProbabilityMatrix(
         int const & noRows, int const & noColumns) {
