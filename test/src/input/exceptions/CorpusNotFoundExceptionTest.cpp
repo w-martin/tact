@@ -1,7 +1,7 @@
 /**
- * @file TermNotPresentExceptionTest.cpp
+ * @file CorpusNotFoundExceptionTest.cpp
  * @author  William Martin <will.st4@gmail.com>
- * @since 0.1
+ * @since 0.2
  *
  * @section LICENSE
  *
@@ -11,46 +11,46 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
-
+ * 
  * mewt is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
-
+ * 
  * You should have received a copy of the GNU General Public License
  * along with mewt.  If not, see <http://www.gnu.org/licenses/>.
  * 
  */
 
 #include "gtest/gtest.h"
-#include "mewt/input/corpus/feature/exceptions/TermNotPresentException.h"
+#include "mewt//input/exceptions/CorpusNotFoundException.h"
 
 #define message "test message"
 
 namespace {
 
     /**
-     * Tests TermNotPresentException.
+     * Tests CorpusNotFoundException.
      * 
      */
-    class TermNotPresentExceptionTest : public ::testing::Test {
+    class CorpusNotFoundExceptionTest : public ::testing::Test {
     protected:
 
-        TermNotPresentExceptionTest() {
-            testException = new TermNotPresentException(message);
+        CorpusNotFoundExceptionTest() {
+            testException = new CorpusNotFoundException(message);
         }
 
-        virtual ~TermNotPresentExceptionTest() {
+        virtual ~CorpusNotFoundExceptionTest() {
             delete testException;
         }
-        TermNotPresentException *testException;
+        CorpusNotFoundException *testException;
     };
 
     /*
      * Tests whether the <code>Exception</code>'s message was set correctly.
      * 
      */
-    TEST_F(TermNotPresentExceptionTest, MessageTest) {
+    TEST_F(CorpusNotFoundExceptionTest, MessageTest) {
         EXPECT_STREQ(message, testException->what());
     }
 
@@ -58,29 +58,29 @@ namespace {
      * Tests whether the default message is set correctly.
      * 
      */
-    TEST_F(TermNotPresentExceptionTest, DefaultMessageTest) {
+    TEST_F(CorpusNotFoundExceptionTest, DefaultMessageTest) {
         delete testException;
-        testException = new TermNotPresentException();
+        testException = new CorpusNotFoundException();
 
-        EXPECT_STREQ(TERM_NOT_PRESENT_MESSAGE, testException->what());
+        EXPECT_STREQ(CORPUS_NOT_FOUND_MESSAGE, testException->what());
     }
 
     /*
      * Tests whether the specific message is generated correctly.
      * 
      */
-    TEST_F(TermNotPresentExceptionTest, SpecificMessageTest) {
+    TEST_F(CorpusNotFoundExceptionTest, SpecificMessageTest) {
         delete testException;
-        testException = new TermNotPresentException(message, false);
+        testException = new CorpusNotFoundException(message, false);
 
         char const * const whatMessage = testException->what();
         EXPECT_STRNE(NULL, whatMessage);
-        EXPECT_STRNE(TERM_NOT_PRESENT_MESSAGE, whatMessage);
+        EXPECT_STRNE(CORPUS_NOT_FOUND_MESSAGE, whatMessage);
         EXPECT_STRNE(message, whatMessage);
         EXPECT_GT(strlen(whatMessage), 0);
 
         delete testException;
-        testException = new TermNotPresentException(message, true);
+        testException = new CorpusNotFoundException(message, true);
         EXPECT_STREQ(message, testException->what());
     }
 }

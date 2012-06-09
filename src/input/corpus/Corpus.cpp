@@ -11,12 +11,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
-
+ *
  * mewt is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
-
+ *
  * You should have received a copy of the GNU General Public License
  * along with mewt.  If not, see <http://www.gnu.org/licenses/>.
  * 
@@ -70,6 +70,29 @@ bool const Corpus::contains(Document const * const document) const {
         }
     }
     return false;
+}
+
+bool const Corpus::equals(Corpus const & other) const {
+    if (location != other.getLocation()
+            || documentsType != other.getDocumentsType()
+            || getSize() != other.getSize()) {
+        return false;
+    }
+    for (vector< Document * >::const_iterator iter = documents->begin();
+            documents->end() != iter; iter++) {
+        if (!other.contains(*iter)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool const Corpus::operator ==(Corpus const & other) const {
+    return equals(other);
+}
+
+bool const Corpus::operator !=(Corpus const & other) const {
+    return !equals(other);
 }
 
 vector< Document * > const * const Corpus::getDocuments() const {

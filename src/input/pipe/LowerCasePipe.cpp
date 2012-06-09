@@ -32,7 +32,7 @@
 
 using std::map;
 
-typedef map< string, vector< string > > mapType;
+typedef map< string, vector< string > > replacementMapType;
 
 LowerCasePipe::LowerCasePipe() : Pipe(DOCUMENT_TYPE_FEATURE) {
 }
@@ -44,7 +44,7 @@ auto_ptr< Corpus > LowerCasePipe::process(
         auto_ptr< Corpus > corpus) const {
     FeatureCorpus * const featureCorpus = (FeatureCorpus*) corpus.get();
     Alphabet * const alphabet = featureCorpus->getAlphabet();
-    mapType termsToReplace;
+    replacementMapType termsToReplace;
     for (AlphabetIterator iter = alphabet->begin();
             alphabet->end() != iter; iter++) {
         string const term = iter.getTerm();
@@ -54,7 +54,7 @@ auto_ptr< Corpus > LowerCasePipe::process(
             termsToReplace.insert(std::make_pair(term, transformed));
         }
     }
-    for (mapType::const_iterator iter = termsToReplace.begin();
+    for (replacementMapType::const_iterator iter = termsToReplace.begin();
             termsToReplace.end() != iter; iter++) {
         featureCorpus->replaceTerm((*iter).first, (*iter).second);
     }

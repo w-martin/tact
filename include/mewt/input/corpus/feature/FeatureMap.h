@@ -25,6 +25,7 @@
 #ifndef FEATUREMAP_H
 #define	FEATUREMAP_H
 
+#include "mewt/input/corpus/feature/FeatureMapIterator.h"
 #include <map>
 
 using std::make_pair;
@@ -35,7 +36,7 @@ using std::pair;
  * FeatureMap class for storing a map of a Document's features.
  * 
  */
-class FeatureMap : private map< int, int > {
+class FeatureMap {
 public:
     /**
      * Default constructor.
@@ -57,6 +58,49 @@ public:
      */
     virtual ~FeatureMap();
     /**
+     * Gets the FeatureMapIterator that points to the start of this FeatureMap.
+     * 
+     * @return the FeatureMapIterator that points to the start of this 
+     * FeatureMap.
+     * 
+     */
+    FeatureMapIterator const begin() const;
+    /**
+     * Gets the FeatureMapIterator that points to the end of this FeatureMap.
+     * 
+     * @return the FeatureMapIterator that points to the end of this 
+     * FeatureMap.
+     * 
+     */
+    FeatureMapIterator const end() const;
+    /**
+     * Checks if this FeatureMap is equal to the given FeatureMap.
+     * 
+     * @param other the FeatureMap to compare against.
+     * @return true if this FeatureMap is equal to the given FeatureMap,
+     * false otherwise.
+     * 
+     */
+    bool const equals(FeatureMap const & other) const;
+    /**
+     * Checks if this FeatureMap is equal to the given FeatureMap.
+     * 
+     * @param other the FeatureMap to compare against.
+     * @return true if this FeatureMap is equal to the given FeatureMap,
+     * false otherwise.
+     * 
+     */
+    bool const operator==(FeatureMap const & other) const;
+    /**
+     * Checks if this FeatureMap is not equal to the given FeatureMap.
+     * 
+     * @param other the FeatureMap to compare against.
+     * @return true if this FeatureMap is not equal to the given FeatureMap,
+     * false otherwise.
+     * 
+     */
+    bool const operator!=(FeatureMap const & other) const;
+    /**
      * Gets the count of the given feature.
      * 
      * @param featureID the feature to get.
@@ -64,6 +108,13 @@ public:
      * 
      */
     int const getFeature(int const & featureID) const;
+    /**
+     * Gets the number of distinct feature types present in this FeatureMap.
+     * 
+     * @return the number of distinct feature types present in this FeatureMap.
+     * 
+     */
+    int const getSize() const;
     /**
      * Increments the count of the given feature, or adds it if it is 
      * not present.
@@ -90,6 +141,18 @@ public:
      * 
      */
     void removeFeature(int const & featureID);
+protected:
+    /**
+     * Gets the internal representation of data.
+     * 
+     */
+    intMapType const * const getData() const;
+private:
+    /**
+     * Internal representation of data.
+     * 
+     */
+    intMapType * data;
 };
 
 #endif	/* FEATUREMAP_H */

@@ -64,14 +64,15 @@ auto_ptr< Corpus > InputPipe::process(
 
 auto_ptr< string > InputPipe::readFileIntoString(const string & location) {
     ifstream t(location.c_str());
-    auto_ptr< string > text = auto_ptr< string > (new string());
 
     t.seekg(0, ios::end);
     int const length = t.tellg();
     t.seekg(0, ios::beg);
 
+    auto_ptr< string > text = auto_ptr< string > (new string());
     text->reserve(length);
     text->assign(istreambuf_iterator< char >(t), istreambuf_iterator< char >());
+    t.close();
 
     return text;
 }

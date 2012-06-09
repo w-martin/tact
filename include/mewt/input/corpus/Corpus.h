@@ -11,12 +11,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
-
+ *
  * mewt is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
-
+ *
  * You should have received a copy of the GNU General Public License
  * along with mewt.  If not, see <http://www.gnu.org/licenses/>.
  * 
@@ -63,6 +63,8 @@ public:
      * 
      * @param document the Document to add.
      * @return true if the Document was added, false otherwise.
+     * @throw IncompatibleCorpusException if the given Document was not of
+     * a compatible type with this Corpus.
      * 
      */
     bool const addDocument(auto_ptr< Document > document)
@@ -76,6 +78,31 @@ public:
      * 
      */
     bool const contains(Document const * const document) const;
+    /**
+     * Checks if this Corpus equals the given Corpus.
+     * 
+     * @param other the Corpus to compare against.
+     * @return true if this Corpus equals the other Corpus, false otherwise.
+     * 
+     */
+    virtual bool const equals(Corpus const & other) const;
+    /**
+     * Checks if this Corpus equals the given Corpus.
+     * 
+     * @param other the Corpus to compare against.
+     * @return true if this Corpus equals the other Corpus, false otherwise.
+     * 
+     */
+    bool const operator==(Corpus const & other) const;
+    /**
+     * Checks if this Corpus does not equal the given Corpus.
+     * 
+     * @param other the Corpus to compare against.
+     * @return true if this Corpus does not equal the other Corpus, 
+     * false otherwise.
+     * 
+     */
+    bool const operator!=(Corpus const & other) const;
     /**
      * Gets the Documents that constitute this Corpus.
      * 

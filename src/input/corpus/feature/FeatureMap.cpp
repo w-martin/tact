@@ -23,23 +23,66 @@
  */
 
 #include "mewt/input/corpus/feature/FeatureMap.h"
+#include "mewt/input/corpus/feature/FeatureMapIterator.h"
 
-FeatureMap::FeatureMap() : map< int, int >() {
+FeatureMap::FeatureMap() {
+    data = new intMapType();
 }
 
-FeatureMap::FeatureMap(const FeatureMap& orig) : map< int, int >(orig) {
+FeatureMap::FeatureMap(const FeatureMap& orig) {
+    data = new intMapType(*orig.getData());
 }
 
 FeatureMap::~FeatureMap() {
+    delete data;
+}
+
+FeatureMapIterator const FeatureMap::begin() const {
+    return FeatureMapIterator(data->begin());
+}
+
+FeatureMapIterator const FeatureMap::end() const {
+    return FeatureMapIterator(data->end());
+}
+
+bool const FeatureMap::equals(FeatureMap const & other) const {
+    if (getSize() == other.getSize()) {
+        FeatureMapIterator iter1 = begin();
+        FeatureMapIterator iter2 = other.begin();
+        while (end() != iter1
+                && other.end() != iter2) {
+            if(iter1.getFeature() != iter2.getFeature()
+                    || iter1.getCount() != iter2.getCount()){
+                return false;
+            }
+            iter1++;
+            iter2++;
+        }
+    } else {
+        return false;
+    }
+    return true;
+}
+
+bool const FeatureMap::operator ==(FeatureMap const & other) const {
+    return equals(other);
+}
+
+bool const FeatureMap::operator !=(FeatureMap const & other) const {
+    return !equals(other);
 }
 
 int const FeatureMap::getFeature(int const & featureID) const {
-    const_iterator iter = find(featureID);
+    intMapType::const_iterator iter = data->find(featureID);
     if (end() == iter) {
         return 0;
     } else {
         return iter->second;
     }
+}
+
+int const FeatureMap::getSize() const {
+    return data->size();
 }
 
 void FeatureMap::incrementFeature(int const & featureID, int const & amount) {
@@ -57,11 +100,15 @@ int const FeatureMap::setFeature(const int feature, const int count) {
         removeFeature(feature);
     } else {
         pair< int, int > p = make_pair(feature, count);
-        insert(p);
+        data->insert(p);
     }
     return previousCount;
 }
 
 void FeatureMap::removeFeature(int const & featureID) {
-    erase(featureID);
+    data->erase(featureID);
+}
+
+intMapType const * const FeatureMap::getData() const {
+    return data;
 }

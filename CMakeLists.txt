@@ -52,7 +52,9 @@ include_directories(
 # TODO: replace this with a macro
 
 add_library (${MEWT_UTIL}
+    ${MEWT_SOURCE_DIR}/util/exceptions/DuplicateException.cpp
     ${MEWT_SOURCE_DIR}/util/exceptions/Exception.cpp
+    ${MEWT_SOURCE_DIR}/util/exceptions/FileNotFoundException.cpp
     ${MEWT_SOURCE_DIR}/util/exceptions/OutOfBoundsException.cpp
     )
 
@@ -61,13 +63,16 @@ add_library (${MEWT_INPUT}
     ${MEWT_SOURCE_DIR}/input/corpus/Document.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/feature/Alphabet.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/feature/AlphabetIterator.cpp
-    ${MEWT_SOURCE_DIR}/input/corpus/feature/exceptions/TermNotPresentException.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/feature/FeatureCorpus.cpp
+    ${MEWT_SOURCE_DIR}/input/corpus/feature/FeatureCorpusIO.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/feature/FeatureDocument.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/feature/FeatureMap.cpp
+    ${MEWT_SOURCE_DIR}/input/corpus/feature/FeatureMapIterator.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/text/TextCorpus.cpp
     ${MEWT_SOURCE_DIR}/input/corpus/text/TextDocument.cpp
+    ${MEWT_SOURCE_DIR}/input/exceptions/CorpusNotFoundException.cpp
     ${MEWT_SOURCE_DIR}/input/exceptions/IncompatibleCorpusException.cpp
+    ${MEWT_SOURCE_DIR}/input/exceptions/TermNotPresentException.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/bundle/CompleteFilteredBundle.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/bundle/InputOptimiseBundle.cpp
     ${MEWT_SOURCE_DIR}/input/pipe/bundle/ScanInputOptimiseBundle.cpp
@@ -130,7 +135,9 @@ include_directories(
 # TODO: replace this with a macro
 
 add_executable(UtilTests 
+    ${MEWT_TEST_DIR}/util/exceptions/DuplicateExceptionTest.cpp
     ${MEWT_TEST_DIR}/util/exceptions/ExceptionTest.cpp
+    ${MEWT_TEST_DIR}/util/exceptions/FileNotFoundExceptionTest.cpp
     ${MEWT_TEST_DIR}/util/exceptions/OutOfBoundsExceptionTest.cpp
 ) 
 target_link_libraries(UtilTests gmock gmock_main
@@ -142,13 +149,16 @@ add_executable(InputTests
     ${MEWT_TEST_DIR}/input/corpus/DocumentTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/feature/AlphabetTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/feature/AlphabetIteratorTest.cpp
-    ${MEWT_TEST_DIR}/input/corpus/feature/exceptions/TermNotPresentExceptionTest.cpp
+    ${MEWT_TEST_DIR}/input/corpus/feature/FeatureCorpusIOTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/feature/FeatureCorpusTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/feature/FeatureDocumentTest.cpp
+    ${MEWT_TEST_DIR}/input/corpus/feature/FeatureMapIteratorTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/feature/FeatureMapTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/text/TextCorpusTest.cpp
     ${MEWT_TEST_DIR}/input/corpus/text/TextDocumentTest.cpp
+    ${MEWT_TEST_DIR}/input/exceptions/CorpusNotFoundExceptionTest.cpp
     ${MEWT_TEST_DIR}/input/exceptions/IncompatibleCorpusExceptionTest.cpp
+    ${MEWT_TEST_DIR}/input/exceptions/TermNotPresentExceptionTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/bundle/CompleteFilteredBundleTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/bundle/InputOptimiseBundleTest.cpp
     ${MEWT_TEST_DIR}/input/pipe/bundle/ScanInputOptimiseBundleTest.cpp

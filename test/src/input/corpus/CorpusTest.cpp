@@ -16,7 +16,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
-
+ *
  * You should have received a copy of the GNU General Public License
  * along with mewt.  If not, see <http://www.gnu.org/licenses/>.
  * 
@@ -25,6 +25,7 @@
 #include "gtest/gtest.h"
 #include "mewt/input/corpus/Corpus.h"
 #include "mewt/input/corpus/text/TextDocument.h"
+#include "mewt/input/corpus/feature/FeatureDocument.h"
 
 namespace {
 
@@ -46,6 +47,26 @@ namespace {
         Corpus * corpus;
         string location;
     };
+
+    /*
+     * Tests whether the copy constructor works correctly.
+     * 
+     */
+    TEST_F(CorpusTest, CopyConstructorTest) {
+        string testName = "testName";
+        Document * d = new Document(testName);
+        corpus->addDocument(auto_ptr< Document > (new Document(*d)));
+
+        Corpus tmp(*corpus);
+        vector< Document * > const * const documents = tmp.getDocuments();
+        EXPECT_EQ(0, strcmp(location.c_str(), tmp.getLocation().c_str()));
+        EXPECT_EQ(1, tmp.getSize());
+        EXPECT_EQ(0,
+                strcmp(documents->at(0)->getName().c_str(), testName.c_str()));
+        EXPECT_EQ(corpus->getDocumentsType(), tmp.getDocumentsType());
+        EXPECT_TRUE(tmp.contains(d));
+        EXPECT_EQ(tmp, *corpus);
+    }
 
     /*
      * Tests whether the addDocument method works correctly.
@@ -83,13 +104,47 @@ namespace {
      * Tests whether the contains method works correctly.
      * 
      */
-    TEST_F(CorpusTest, ConstainsTest) {
+    TEST_F(CorpusTest, ContainsTest) {
         string testName = "testName";
         Document * d = new Document(testName);
 
         EXPECT_FALSE(corpus->contains(d));
         corpus->addDocument(auto_ptr< Document > (new Document(*d)));
         EXPECT_TRUE(corpus->contains(d));
+    }
+
+    /*
+     * Tests whether the equals methods work correctly.
+     * 
+     */
+    TEST_F(CorpusTest, EqualsTest) {
+        Corpus * other = new Corpus("notlocation", DOCUMENT_TYPE_BASIC);
+        EXPECT_FALSE(corpus->equals(*other));
+        EXPECT_NE(*corpus, *other);
+        EXPECT_TRUE(*corpus != *other);
+        
+        delete other;
+        other = new Corpus(location, DOCUMENT_TYPE_FEATURE);
+        EXPECT_FALSE(corpus->equals(*other));
+        EXPECT_NE(*corpus, *other);
+        EXPECT_TRUE(*corpus != *other);
+        
+        delete other;
+        other = new Corpus(location, DOCUMENT_TYPE_BASIC);
+        EXPECT_TRUE(corpus->equals(*other));
+        EXPECT_EQ(*corpus, *other);
+        EXPECT_FALSE(*corpus != *other);
+        
+        Document * d = new Document("docname");
+        corpus->addDocument(auto_ptr< Document > (d));
+        EXPECT_FALSE(corpus->equals(*other));
+        EXPECT_NE(*corpus, *other);
+        EXPECT_TRUE(*corpus != *other);
+        
+        other->addDocument(auto_ptr< Document > (d));
+        EXPECT_TRUE(corpus->equals(*other));
+        EXPECT_EQ(*corpus, *other);
+        EXPECT_FALSE(*corpus != *other);
     }
 
     /*
@@ -128,25 +183,6 @@ namespace {
         Document * d = new Document(testName);
         corpus->addDocument(auto_ptr< Document > (d));
         EXPECT_EQ(1, corpus->getSize());
-    }
-
-    /*
-     * Tests whether the copy constructor works correctly.
-     * 
-     */
-    TEST_F(CorpusTest, CopyConstructorTest) {
-        string testName = "testName";
-        Document * d = new Document(testName);
-        corpus->addDocument(auto_ptr< Document > (new Document(*d)));
-
-        Corpus tmp(*corpus);
-        vector< Document * > const * const documents = tmp.getDocuments();
-        EXPECT_EQ(0, strcmp(location.c_str(), tmp.getLocation().c_str()));
-        EXPECT_EQ(1, tmp.getSize());
-        EXPECT_EQ(0,
-                strcmp(documents->at(0)->getName().c_str(), testName.c_str()));
-        EXPECT_EQ(corpus->getDocumentsType(), tmp.getDocumentsType());
-        EXPECT_TRUE(tmp.contains(d));
     }
 
     /*

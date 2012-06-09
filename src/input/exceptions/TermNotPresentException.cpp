@@ -1,5 +1,5 @@
 /**
- * @file OutOfBoundsException.cpp
+ * @file TermNotPresentException.cpp
  * @author  William Martin <will.st4@gmail.com>
  * @since 0.2
  *
@@ -22,31 +22,27 @@
  * 
  */
 
-#include "mewt/util/exceptions/OutOfBoundsException.h"
+#include "mewt/input/exceptions/TermNotPresentException.h"
 #include <sstream>
 
 using std::stringstream;
 
-OutOfBoundsException::OutOfBoundsException()
-: Exception(string(OUT_OF_BOUNDS_MESSAGE)) {
+TermNotPresentException::TermNotPresentException()
+: Exception(TERM_NOT_PRESENT_MESSAGE) {
 }
 
-OutOfBoundsException::OutOfBoundsException(
-        int const & index, int const & bounds)
-: Exception(createErrorMessage(index, bounds)) {
+TermNotPresentException::TermNotPresentException(
+        const string term, bool const & isMessage)
+: Exception(isMessage ? term : createErrorMessage(term)) {
 }
 
-OutOfBoundsException::OutOfBoundsException(const string & message)
+TermNotPresentException::TermNotPresentException(const string message)
 : Exception(message) {
 }
 
-OutOfBoundsException::~OutOfBoundsException() throw () {
-}
-
-string const OutOfBoundsException::createErrorMessage(
-        int const & index, int const & bounds) {
+string const TermNotPresentException::createErrorMessage(
+        string const & term) const {
     stringstream stream;
-    stream << OUT_OF_BOUNDS_MESSAGE << " \nIndex: "
-            << index << " Bounds: " << bounds;
+    stream << TERM_NOT_PRESENT_MESSAGE << " \nTerm: " << term;
     return stream.str();
 }

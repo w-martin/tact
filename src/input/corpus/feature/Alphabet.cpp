@@ -25,6 +25,7 @@
 #include "mewt/input/corpus/feature/Alphabet.h"
 #include <sstream>
 
+using std::endl;
 using std::stringstream;
 
 Alphabet::Alphabet() {
@@ -44,11 +45,39 @@ Alphabet::~Alphabet() {
 int const Alphabet::addTerm(string const term) {
     try {
         return getIndex(term);
-    } catch (TermNotPresentException) {
-        int const index = nextIndex++;
+    } catch (TermNotPresentException const &) {
+        int index;
+        while (hasIndex(index = nextIndex++));
+        while (hasIndex(nextIndex)) {
+            nextIndex++;
+        }
         data->insert(bmType::value_type(term, index));
         return index;
     }
+}
+
+int const Alphabet::addTerm(string const term, int const index)
+throw (DuplicateException) {
+    if (hasTerm(term)) {
+        stringstream stream;
+        stream << "Error. Term '" << term
+                << "' already present in this Alphabet." << endl;
+        throw DuplicateException(stream.str());
+    }
+    if (hasIndex(index)) {
+        stringstream stream;
+        stream << "Error. Index '" << index
+                << "' already present in this Alphabet." << endl;
+        throw DuplicateException(stream.str());
+    }
+    if (index == nextIndex) {
+        nextIndex++;
+    }
+    while (hasIndex(nextIndex)) {
+        nextIndex++;
+    }
+    data->insert(bmType::value_type(term, index));
+    return index;
 }
 
 AlphabetIterator const Alphabet::begin() const {
@@ -78,13 +107,20 @@ bool const Alphabet::equals(Alphabet const * const other) const {
     return true;
 }
 
+bool const Alphabet::operator ==(Alphabet const * const other) const {
+    return equals(other);
+}
+
+bool const Alphabet::operator !=(Alphabet const * const other) const {
+    return !equals(other);
+}
+
 int const Alphabet::getIndex(const string & term) const
 throw (TermNotPresentException) {
     bmType::left_const_iterator result = data->left.find(term);
     if (data->left.end() != result) {
         return result->second;
     } else {
-
         throw TermNotPresentException(term, false);
     }
 }
@@ -101,22 +137,27 @@ int const Alphabet::getSize() const {
 
 string const Alphabet::getTerm(const int & index) const
 throw (TermNotPresentException) {
-    if (index < nextIndex) {
-        bmType::right_const_iterator result = data->right.find(index);
-        if (data->right.end() != result) {
-
-            return result->second;
-        }
+    bmType::right_const_iterator result = data->right.find(index);
+    if (data->right.end() != result) {
+        return result->second;
     }
     throw createExceptionWithIndex(index);
+}
+
+bool const Alphabet::hasIndex(int const & id) const {
+    try {
+        getTerm(id);
+        return true;
+    } catch (TermNotPresentException const &) {
+        return false;
+    }
 }
 
 bool const Alphabet::hasTerm(const string & term) const {
     try {
         getIndex(term);
         return true;
-    } catch (TermNotPresentException) {
-
+    } catch (TermNotPresentException const &) {
         return false;
     }
 }
@@ -125,7 +166,6 @@ string const Alphabet::removeTerm(const int & index)
 throw (TermNotPresentException) {
     string const term = getTerm(index);
     data->right.erase(index);
-
     return term;
 }
 

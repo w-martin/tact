@@ -26,14 +26,14 @@
 #define	ALPHABET_H
 
 #include "mewt/input/corpus/feature/AlphabetIterator.h"
-#include "mewt/input/corpus/feature/exceptions/TermNotPresentException.h"
+#include "mewt/input/exceptions/TermNotPresentException.h"
+#include "mewt/util/exceptions/DuplicateException.h"
 #include <string>
 #include <vector>
 #include <boost/bimap.hpp>
 
 using std::auto_ptr;
 using std::string;
-using std::vector;
 using boost::bimaps::bimap;
 
 typedef bimap< string, int > bmType;
@@ -70,6 +70,19 @@ public:
      */
     int const addTerm(string const term);
     /**
+     * Adds the given term to this Alphabet with the given index.
+     * 
+     * @param term the term to add.
+     * @param index the index to assign the term.
+     * @return the index of the added term.
+     * @throw DuplicateException if the term or id was already present in this
+     * Alphabet.
+     * 
+     * 
+     */
+    int const addTerm(string const term, int const index)
+    throw (DuplicateException);
+    /**
      * Gets the AlphabetIterator pointing to the first element.
      * 
      * @return the AlphabetIterator pointing to the first element.
@@ -92,6 +105,24 @@ public:
      * 
      */
     bool const equals(Alphabet const * const other) const;
+    /**
+     * Checks if this Alphabet is equal to the other Alphabet.
+     * 
+     * @param other the Alphabet to check against.
+     * @return true if this Alphabet is equal to the other Alphabet, false
+     * otherwise.
+     * 
+     */
+    bool const operator==(Alphabet const * const other) const;
+    /**
+     * Checks if this Alphabet is not equal to the other Alphabet.
+     * 
+     * @param other the Alphabet to check against.
+     * @return true if this Alphabet is not equal to the other Alphabet, false
+     * otherwise.
+     * 
+     */
+    bool const operator!=(Alphabet const * const other) const;
     /**
      * Gets the index of the given term.
      * 
@@ -126,6 +157,14 @@ public:
      */
     string const getTerm(int const & index) const
     throw (TermNotPresentException);
+    /**
+     * Checks if the given index is present in this Alphabet.
+     * 
+     * @param id the index to check for.
+     * @return true if the index is present, false otherwise.
+     * 
+     */
+    bool const hasIndex(int const & id) const;
     /**
      * Checks if the given term is present in this Alphabet.
      * 

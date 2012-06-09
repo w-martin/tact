@@ -1,5 +1,5 @@
 /**
- * @file TermNotPresentException.cpp
+ * @file DuplicateException.h
  * @author  William Martin <will.st4@gmail.com>
  * @since 0.2
  *
@@ -11,38 +11,43 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
-
+ * 
  * mewt is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
-
+ * 
  * You should have received a copy of the GNU General Public License
  * along with mewt.  If not, see <http://www.gnu.org/licenses/>.
  * 
  */
 
-#include "mewt/input/corpus/feature/exceptions/TermNotPresentException.h"
-#include <sstream>
+#ifndef DUPLICATEEXCEPTION_H
+#define DUPLICATEEXCEPTION_H
 
-using std::stringstream;
+#define DUPLICATE_MESSAGE "Error. Duplicate."
 
-TermNotPresentException::TermNotPresentException()
-: Exception(TERM_NOT_PRESENT_MESSAGE) {
-}
+#include "mewt/util/exceptions/Exception.h"
 
-TermNotPresentException::TermNotPresentException(
-        const string term, bool const & isMessage)
-: Exception(isMessage ? term : createErrorMessage(term)) {
-}
+class DuplicateException : public Exception {
+public:
+    /**
+     * Default constructor. Uses the default error message.
+     * 
+     */
+    DuplicateException();
+    /**
+     * Specific constructor. Uses the given error message.
+     * 
+     * @param message the message to use.
+     * 
+     */
+    DuplicateException(string const & message);
+    /**
+     * Default destructor.
+     * 
+     */
+    virtual ~DuplicateException() throw ();
+};
 
-TermNotPresentException::TermNotPresentException(const string message)
-: Exception(message) {
-}
-
-string const TermNotPresentException::createErrorMessage(
-        string const & term) const {
-    stringstream stream;
-    stream << TERM_NOT_PRESENT_MESSAGE << " \nTerm: " << term << ".";
-    return stream.str();
-}
+#endif /* DUPLICATEEXCEPTION_H */

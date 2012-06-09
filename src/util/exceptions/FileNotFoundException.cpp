@@ -1,5 +1,5 @@
 /**
- * @file OutOfBoundsException.cpp
+ * @file FileNotFoundException.cpp
  * @author  William Martin <will.st4@gmail.com>
  * @since 0.2
  *
@@ -11,42 +11,41 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
-
+ * 
  * mewt is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
-
+ * 
  * You should have received a copy of the GNU General Public License
  * along with mewt.  If not, see <http://www.gnu.org/licenses/>.
  * 
  */
 
-#include "mewt/util/exceptions/OutOfBoundsException.h"
+#include "mewt/util/exceptions/FileNotFoundException.h"
 #include <sstream>
 
 using std::stringstream;
 
-OutOfBoundsException::OutOfBoundsException()
-: Exception(string(OUT_OF_BOUNDS_MESSAGE)) {
+FileNotFoundException::FileNotFoundException()
+: Exception(FILE_NOT_FOUND_MESSAGE) {
 }
 
-OutOfBoundsException::OutOfBoundsException(
-        int const & index, int const & bounds)
-: Exception(createErrorMessage(index, bounds)) {
+FileNotFoundException::FileNotFoundException(string const & fileName,
+        bool const & isMessage)
+: Exception(isMessage ? fileName : createErrorMessage(fileName)) {
 }
 
-OutOfBoundsException::OutOfBoundsException(const string & message)
+FileNotFoundException::FileNotFoundException(string const & message)
 : Exception(message) {
 }
 
-OutOfBoundsException::~OutOfBoundsException() throw () {
+FileNotFoundException::~FileNotFoundException() throw () {
 }
 
-string const OutOfBoundsException::createErrorMessage(
-        int const & index, int const & bounds) {
+string const FileNotFoundException::createErrorMessage(
+        string const & fileName) {
     stringstream stream;
-    stream << OUT_OF_BOUNDS_MESSAGE << " \nIndex: "
-            << index << " Bounds: " << bounds;
+    stream << FILE_NOT_FOUND_MESSAGE << " \nFile name: " << fileName;
     return stream.str();
 }

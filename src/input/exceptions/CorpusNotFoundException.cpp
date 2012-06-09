@@ -1,5 +1,5 @@
 /**
- * @file OutOfBoundsException.cpp
+ * @file CorpusNotFoundException.cpp
  * @author  William Martin <will.st4@gmail.com>
  * @since 0.2
  *
@@ -8,45 +8,41 @@
  * This file is part of mewt.
  * 
  * mewt is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
+ * it under the locations of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
-
+ * 
  * mewt is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
-
+ * 
  * You should have received a copy of the GNU General Public License
  * along with mewt.  If not, see <http://www.gnu.org/licenses/>.
  * 
  */
 
-#include "mewt/util/exceptions/OutOfBoundsException.h"
+#include "mewt/input/exceptions/CorpusNotFoundException.h"
 #include <sstream>
 
 using std::stringstream;
 
-OutOfBoundsException::OutOfBoundsException()
-: Exception(string(OUT_OF_BOUNDS_MESSAGE)) {
+CorpusNotFoundException::CorpusNotFoundException()
+: Exception(CORPUS_NOT_FOUND_MESSAGE) {
 }
 
-OutOfBoundsException::OutOfBoundsException(
-        int const & index, int const & bounds)
-: Exception(createErrorMessage(index, bounds)) {
+CorpusNotFoundException::CorpusNotFoundException(
+        const string location, bool const & isMessage)
+: Exception(isMessage ? location : createErrorMessage(location)) {
 }
 
-OutOfBoundsException::OutOfBoundsException(const string & message)
+CorpusNotFoundException::CorpusNotFoundException(const string message)
 : Exception(message) {
 }
 
-OutOfBoundsException::~OutOfBoundsException() throw () {
-}
-
-string const OutOfBoundsException::createErrorMessage(
-        int const & index, int const & bounds) {
+string const CorpusNotFoundException::createErrorMessage(
+        string const & location) const {
     stringstream stream;
-    stream << OUT_OF_BOUNDS_MESSAGE << " \nIndex: "
-            << index << " Bounds: " << bounds;
+    stream << CORPUS_NOT_FOUND_MESSAGE << " \nLocation: " << location << ".";
     return stream.str();
 }

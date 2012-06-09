@@ -45,6 +45,51 @@ namespace {
     };
 
     /*
+     * Tests whether the copy constructor works correctly.
+     * 
+     */
+    TEST_F(FeatureMapTest, CopyConstructorTest) {
+        FeatureMap tmp(*featureMap);
+        EXPECT_EQ(tmp, *featureMap);
+    }
+
+    /*
+     * Tests whether the equals methods work correctly.
+     * 
+     */
+    TEST_F(FeatureMapTest, EqualsTest) {
+        FeatureMap tmp(*featureMap);
+        EXPECT_TRUE(tmp.equals(*featureMap));
+        EXPECT_EQ(tmp, *featureMap);
+        EXPECT_FALSE(tmp != *featureMap);
+
+        featureMap->setFeature(0, 10);
+        EXPECT_FALSE(tmp.equals(*featureMap));
+        EXPECT_NE(tmp, *featureMap);
+        EXPECT_TRUE(tmp != *featureMap);
+
+        tmp.setFeature(0, 1);
+        EXPECT_FALSE(tmp.equals(*featureMap));
+        EXPECT_NE(tmp, *featureMap);
+        EXPECT_TRUE(tmp != *featureMap);
+
+        tmp.incrementFeature(0, 9);
+        EXPECT_TRUE(tmp.equals(*featureMap));
+        EXPECT_EQ(tmp, *featureMap);
+        EXPECT_FALSE(tmp != *featureMap);
+
+        featureMap->incrementFeature(1, 1);
+        EXPECT_FALSE(tmp.equals(*featureMap));
+        EXPECT_NE(tmp, *featureMap);
+        EXPECT_TRUE(tmp != *featureMap);
+
+        tmp.incrementFeature(1, 1);
+        EXPECT_TRUE(tmp.equals(*featureMap));
+        EXPECT_EQ(tmp, *featureMap);
+        EXPECT_FALSE(tmp != *featureMap);
+    }
+
+    /*
      * Tests whether the getFeature method works correctly.
      * 
      */
@@ -52,6 +97,20 @@ namespace {
         EXPECT_EQ(0, featureMap->getFeature(0));
         featureMap->setFeature(0, 10);
         EXPECT_EQ(10, featureMap->getFeature(0));
+    }
+
+    /*
+     * Tests whether the getSize method works correctly.
+     * 
+     */
+    TEST_F(FeatureMapTest, GetsSizeTest) {
+        EXPECT_EQ(0, featureMap->getSize());
+        featureMap->incrementFeature(0, 1);
+        EXPECT_EQ(1, featureMap->getSize());
+        featureMap->incrementFeature(0, 1);
+        EXPECT_EQ(1, featureMap->getSize());
+        featureMap->incrementFeature(1, 1);
+        EXPECT_EQ(2, featureMap->getSize());
     }
 
     /*
@@ -84,13 +143,5 @@ namespace {
         EXPECT_EQ(0, featureMap->setFeature(0, 10));
         EXPECT_EQ(10, featureMap->setFeature(0, 10));
         EXPECT_EQ(0, featureMap->setFeature(1, 10));
-    }
-
-    /*
-     * Tests whether the copy constructor works correctly.
-     * 
-     */
-    TEST_F(FeatureMapTest, CopyConstructorTest) {
-        FeatureMap tmp(*featureMap);
     }
 }

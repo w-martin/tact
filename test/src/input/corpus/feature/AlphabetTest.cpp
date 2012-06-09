@@ -73,6 +73,16 @@ namespace {
      */
     TEST_F(AlphabetTest, HasTermTest) {
         EXPECT_TRUE(alphabet->hasTerm(testTerm));
+        EXPECT_FALSE(alphabet->hasTerm("hello"));
+    }
+
+    /*
+     * Tests whether the hasIndex method works correctly.
+     * 
+     */
+    TEST_F(AlphabetTest, HasIndexTest) {
+        EXPECT_TRUE(alphabet->hasIndex(0));
+        EXPECT_FALSE(alphabet->hasIndex(1));
     }
 
     /*
@@ -84,6 +94,41 @@ namespace {
         EXPECT_EQ(0, index);
         EXPECT_THROW(alphabet->getIndex("not test term"),
                 TermNotPresentException);
+    }
+
+    /*
+     * Tests whether the add term method works correctly.
+     * 
+     */
+    TEST_F(AlphabetTest, AddTermTest) {
+        string const term1 = "one", term2 = "two";
+        EXPECT_EQ(1, alphabet->getSize());
+        EXPECT_EQ(0, alphabet->getIndex(testTerm));
+        EXPECT_FALSE(alphabet->hasTerm(term1));
+        EXPECT_FALSE(alphabet->hasTerm(term2));
+        EXPECT_TRUE(alphabet->hasIndex(0));
+        EXPECT_FALSE(alphabet->hasIndex(1));
+        EXPECT_FALSE(alphabet->hasIndex(2));
+        EXPECT_FALSE(alphabet->hasIndex(3));
+        
+        EXPECT_THROW(alphabet->addTerm(term1, 0), DuplicateException);
+        EXPECT_EQ(2, alphabet->addTerm(term1, 2));
+        EXPECT_EQ(2, alphabet->getIndex(term1));
+        EXPECT_FALSE(alphabet->hasTerm(term2));
+        EXPECT_TRUE(alphabet->hasIndex(0));
+        EXPECT_FALSE(alphabet->hasIndex(1));
+        EXPECT_TRUE(alphabet->hasIndex(2));
+        EXPECT_FALSE(alphabet->hasIndex(3));
+        
+        EXPECT_THROW(alphabet->addTerm(term1, 1), DuplicateException);
+        EXPECT_EQ(1, alphabet->addTerm(term2));
+        EXPECT_EQ(1, alphabet->getIndex(term2));
+        EXPECT_TRUE(alphabet->hasIndex(0));
+        EXPECT_TRUE(alphabet->hasIndex(1));
+        EXPECT_TRUE(alphabet->hasIndex(2));
+        EXPECT_FALSE(alphabet->hasIndex(3));
+        
+        EXPECT_EQ(3, alphabet->getNextIndex());
     }
 
     /*
@@ -128,13 +173,18 @@ namespace {
     TEST_F(AlphabetTest, EqualsTest) {
         Alphabet * tmp = new Alphabet(*alphabet);
         EXPECT_TRUE(alphabet->equals(tmp));
-        
+        EXPECT_EQ(*alphabet, tmp);
+
         tmp->addTerm("hello");
         EXPECT_FALSE(alphabet->equals(tmp));
-        
+        EXPECT_NE(*alphabet, tmp);
+
         alphabet->addTerm("hello");
         EXPECT_TRUE(alphabet->equals(tmp));
-        
+        EXPECT_EQ(*alphabet, tmp);
+
+        EXPECT_TRUE((*alphabet == tmp) == !(*alphabet != tmp));
+
         delete tmp;
     }
 }

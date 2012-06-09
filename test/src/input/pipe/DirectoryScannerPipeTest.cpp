@@ -58,8 +58,8 @@ namespace {
         string const file1 = ".processTest/file1";
         string const file2 = ".processTest/dir/file2";
         fs::create_directories(".processTest/dir");
-        fs::copy_file("CMakeCache.txt", file1);
-        fs::copy_file("CMakeCache.txt", file2);
+        fs::copy_file("CTestTestfile.cmake", file1);
+        fs::copy_file("CTestTestfile.cmake", file2);
 
         auto_ptr< Corpus > corpus = auto_ptr< Corpus > (
                 new Corpus(".processTest", DOCUMENT_TYPE_BASIC));
