@@ -40,7 +40,12 @@ set(MEWT_INCLUDE_DIR include)
 set(MEWT_TEST_DIR test/src)
 set(MEWT_MOCK_DIR test/mock)
 
-include_directories(${MEWT_INCLUDE_DIR}
+set(Boost_USE_MULTITHREADED ON)
+find_package(Boost COMPONENTS regex filesystem system REQUIRED)
+
+include_directories(
+    ${MEWT_INCLUDE_DIR}
+    ${Boost_INCLUDE_DIRS}
 )
 
 # list all source files here
@@ -77,11 +82,8 @@ add_library (${MEWT_INPUT}
     ${MEWT_SOURCE_DIR}/input/pipe/XmlFilter.cpp
     )
 
-find_package(Boost COMPONENTS regex-mt filesystem-mt system-mt REQUIRED)
 target_link_libraries (${MEWT_INPUT}
-    ${Boost_REGEX-MT_LIBRARY}
-    ${Boost_FILESYSTEM-MT_LIBRARY}
-    ${Boost_SYSTEM-MT_LIBRARY}
+    ${Boost_LIBRARIES}
     )
 
 add_library (${MEWT_OUTPUT}
