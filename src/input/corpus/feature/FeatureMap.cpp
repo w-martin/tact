@@ -24,10 +24,10 @@
 
 #include "mewt/input/corpus/feature/FeatureMap.h"
 
-FeatureMap::FeatureMap() : map() {
+FeatureMap::FeatureMap() : map< int, int >() {
 }
 
-FeatureMap::FeatureMap(const FeatureMap& orig) : map(orig) {
+FeatureMap::FeatureMap(const FeatureMap& orig) : map< int, int >(orig) {
 }
 
 FeatureMap::~FeatureMap() {
