@@ -51,9 +51,14 @@ namespace {
      * 
      */
     TEST_F(DocumentTest, EqualsTest) {
-        EXPECT_TRUE(document->equals(document));
+        EXPECT_TRUE(document->equals(*document));
+        EXPECT_EQ(*document, *document);
+        EXPECT_FALSE(*document != *document);
+
         Document tmp("different name");
-        EXPECT_FALSE(document->equals(&tmp));
+        EXPECT_FALSE(document->equals(tmp));
+        EXPECT_NE(*document, tmp);
+        EXPECT_TRUE(*document != tmp);
     }
 
     /*

@@ -67,6 +67,10 @@ throw (CorpusNotFoundException) {
 }
 
 void FeatureCorpusIO::save(FeatureCorpus const * const corpus) {
+    try {
+        deleteCorpus(corpus->getLocation());
+    } catch (CorpusNotFoundException const &) {
+    }
     string const directory = findNextFreeDirectory();
     fs::create_directories(directory);
     saveInfoFile(directory, corpus);
@@ -77,7 +81,7 @@ void FeatureCorpusIO::save(FeatureCorpus const * const corpus) {
 string const FeatureCorpusIO::util::createDirectory(
         string const & directory, int const & directoryNumber) {
     stringstream dirName;
-    dirName << directory << "/" << (1 < (directoryNumber / 10) ? "0" : "")
+    dirName << directory << "/" << (1 > (directoryNumber / 10) ? "0" : "")
             << directoryNumber << "/";
     fs::create_directories(dirName.str());
     return dirName.str();
@@ -157,7 +161,10 @@ throw (FileNotFoundException, DuplicateException) {
 
 auto_ptr< FeatureDocument > FeatureCorpusIO::util::loadDocument(
         string const & fileName, Alphabet const * const alphabet)
-throw (TermNotPresentException) {
+throw (FileNotFoundException, TermNotPresentException) {
+    if (!fs::is_regular_file(fileName)) {
+        throw (FileNotFoundException(fileName, false));
+    }
     auto_ptr< string > text = InputPipe::readFileIntoString(fileName);
     vector< string > lines, tokens;
     boost::split(lines, (*text.get()), boost::is_any_of("\n"));
@@ -175,6 +182,9 @@ throw (TermNotPresentException) {
 
             try {
                 feature = boost::lexical_cast< int >(tokens[0]);
+                if(!alphabet->hasIndex(feature)){
+                    throw TermNotPresentException();
+                }
                 count = boost::lexical_cast< int >(tokens[1]);
                 featureMap->setFeature(feature, count);
 
@@ -261,7 +271,7 @@ void FeatureCorpusIO::util::saveDocument(
         string const & directory, int const & n,
         FeatureDocument const * const document) {
     stringstream sstream;
-    sstream << directory << "/" << (1 < (n / 10) ? "0" : "") << n;
+    sstream << directory << "/" << (1 > (n / 10) ? "0" : "") << n;
     ofstream file(sstream.str().c_str());
     file << "name=" << document->getName() << endl;
 

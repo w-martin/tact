@@ -54,7 +54,7 @@ public:
      * Default destructor.
      * 
      */
-    virtual ~Document();    
+    virtual ~Document();
     /**
      * Checks if this Document is equal to the other Document.
      * 
@@ -63,7 +63,25 @@ public:
      * false otherwise.
      * 
      */
-    virtual bool const equals(Document const * const other) const;
+    virtual bool const equals(Document const & other) const;
+    /**
+     * Checks if this Document is equal to the other Document.
+     * 
+     * @param other the Document to check against.
+     * @return true if this Document is equal to the other Document,
+     * false otherwise.
+     * 
+     */
+    bool const operator==(Document const & other) const;
+    /**
+     * Checks if this Document is not equal to the other Document.
+     * 
+     * @param other the Document to check against.
+     * @return true if this Document is not equal to the other Document,
+     * false otherwise.
+     * 
+     */
+    bool const operator!=(Document const & other) const;
     /**
      * Gets the name of this Document.
      * 

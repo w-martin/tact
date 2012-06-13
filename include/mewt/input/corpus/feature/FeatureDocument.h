@@ -58,6 +58,15 @@ public:
      */
     virtual ~FeatureDocument();
     /**
+     * Checks if this Document is equal to the other Document.
+     * 
+     * @param other the Document to check against.
+     * @return true if this Document is equal to the other Document,
+     * false otherwise.
+     * 
+     */
+    virtual bool const equals(Document const & other) const;
+    /**
      * Gets the text from this FeatureDocument.
      * 
      * @return the text from this FeatureDocument.

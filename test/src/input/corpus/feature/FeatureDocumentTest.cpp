@@ -51,6 +51,45 @@ namespace {
     };
 
     /*
+     * Tests whether the equals method works correctly.
+     * 
+     */
+    TEST_F(FeatureDocumentTest, EqualsTest) {
+        EXPECT_TRUE(document->equals(*document));
+        EXPECT_EQ(*document, *document);
+        EXPECT_FALSE(*document != *document);
+
+        FeatureDocument * tmp = new FeatureDocument("different name",
+                auto_ptr< FeatureMap > (new FeatureMap(*featureMap)));
+        EXPECT_FALSE(document->equals(*tmp));
+        EXPECT_NE(*document, *tmp);
+        EXPECT_TRUE(*document != *tmp);
+
+        delete tmp;
+        tmp = new FeatureDocument(*document);
+        EXPECT_TRUE(document->equals(*tmp));
+        EXPECT_EQ(*document, *tmp);
+        EXPECT_FALSE(*document != *tmp);
+
+        document->getFeatureMap()->incrementFeature(0, 5);
+        EXPECT_FALSE(document->equals(*tmp));
+        EXPECT_NE(*document, *tmp);
+        EXPECT_TRUE(*document != *tmp);
+
+        tmp->getFeatureMap()->incrementFeature(0, 6);
+        EXPECT_FALSE(document->equals(*tmp));
+        EXPECT_NE(*document, *tmp);
+        EXPECT_TRUE(*document != *tmp);
+
+        document->getFeatureMap()->incrementFeature(0, 1);
+        EXPECT_TRUE(document->equals(*tmp));
+        EXPECT_EQ(*document, *tmp);
+        EXPECT_FALSE(*document != *tmp);
+        
+        delete tmp;
+    }
+
+    /*
      * Tests whether the getName method works correctly.
      * 
      */

@@ -35,9 +35,17 @@ Document::Document(const Document& orig) {
 Document::~Document() {
 }
 
-bool const Document::equals(Document const * const other) const {
-    return (getType() == other->getType()
-            && name == other->getName());
+bool const Document::equals(Document const & other) const {
+    return (getType() == other.getType()
+            && name == other.getName());
+}
+
+bool const Document::operator ==(Document const & other) const {
+    return equals(other);
+}
+
+bool const Document::operator !=(Document const & other) const {
+    return !equals(other);
 }
 
 string const Document::getName() const {

@@ -37,6 +37,13 @@ FeatureDocument::FeatureDocument(const FeatureDocument& orig) : Document(orig) {
 FeatureDocument::~FeatureDocument() {
 }
 
+bool const FeatureDocument::equals(Document const & other) const {
+    return (getType() == other.getType()
+            && getName() == other.getName()
+            && *getFeatureMap()
+            == *((FeatureDocument *) &other)->getFeatureMap());
+}
+
 FeatureMap * const FeatureDocument::getFeatureMap() const {
     return featureMap.get();
 }

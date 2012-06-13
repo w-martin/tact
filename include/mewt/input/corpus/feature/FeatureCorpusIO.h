@@ -124,13 +124,14 @@ namespace FeatureCorpusIO {
          * @param alphabet the Alphabet of the FeatureDocument to load.
          * @return the loaded FeatureDocument from the file with the given 
          * name.
+         * @throw FileNotFoundException if the Document file was not found.
          * @throw TermNotPresentException if a feature was found in the
          * loaded FeatureDocument that is not present in the given Alphabet.
          * 
          */
         auto_ptr< FeatureDocument > loadDocument(string const & fileName,
                 Alphabet const * const alphabet)
-        throw (TermNotPresentException);
+        throw (FileNotFoundException, TermNotPresentException);
         /**
          * Loads the FeatureDocuments from the given directory with the given
          * Alphabet, and adds them to the given FeatureCorpus.
@@ -186,7 +187,7 @@ namespace FeatureCorpusIO {
          * @param document the FeatureDocument to save.
          * 
          */
-        void saveDocument(string const & fileName, int const & n,
+        void saveDocument(string const & directory, int const & n,
                 FeatureDocument const * const document);
         /**
          * Saves the given Documents to the given directory.

@@ -30,7 +30,7 @@
 #include "mewt/util/exceptions/Exception.h"
 
 /**
- * Exception class which indicates that a term was already
+ * Exception class which indicates that a term was not
  * present in an alphabet.
  * 
  */

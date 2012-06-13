@@ -65,7 +65,7 @@ bool const Corpus::contains(Document const * const document) const {
     }
     for (int i = 0; i < getSize(); i++) {
         Document const * const other = documents->at(i);
-        if (document->equals(other)) {
+        if (document->equals(*other)) {
             return true;
         }
     }
@@ -117,7 +117,7 @@ bool const Corpus::removeDocument(Document const * const document) {
     } else {
         for (vector< Document * >::iterator iter = documents->begin();
                 documents->end() != iter; iter++) {
-            if (document->equals(*iter)) {
+            if (document->equals(**iter)) {
                 documents->erase(iter);
                 return true;
             }
