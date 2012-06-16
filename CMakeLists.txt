@@ -29,6 +29,8 @@ cmake_minimum_required (VERSION 2.6.2)
 
 project (mewt)
 
+OPTION(TESTING "Build tests." OFF)
+
 set(MEWT_NAME mewt)
 set(MEWT_UTIL mewt-util)
 set(MEWT_INPUT mewt-input)
@@ -119,90 +121,94 @@ target_link_libraries(${MEWT_NAME}
 ################################################
 # GTest - http://code.google.com/p/googletest/ #
 ################################################
-    
-add_subdirectory(gmock-1.6.0)
-enable_testing(true) 
 
-include_directories(
-    ${gtest_SOURCE_DIR}/include 
-    ${gtest_SOURCE_DIR}
-    ${gmock_SOURCE_DIR}/include 
-    ${gmock_SOURCE_DIR}
-    ${MEWT_MOCK_DIR}
-)
-	
-# list test definitions here
-# TODO: replace this with a macro
+IF(TESTING)
 
-add_executable(UtilTests 
-    ${MEWT_TEST_DIR}/util/exceptions/DuplicateExceptionTest.cpp
-    ${MEWT_TEST_DIR}/util/exceptions/ExceptionTest.cpp
-    ${MEWT_TEST_DIR}/util/exceptions/FileNotFoundExceptionTest.cpp
-    ${MEWT_TEST_DIR}/util/exceptions/OutOfBoundsExceptionTest.cpp
-) 
-target_link_libraries(UtilTests gmock gmock_main
-    ${MEWT_UTIL}) 
-add_test(UtilTests UtilTests)
+    add_subdirectory(gmock-1.6.0)
+    enable_testing(true) 
 
-add_executable(InputTests
-    ${MEWT_TEST_DIR}/input/corpus/CorpusTest.cpp
-    ${MEWT_TEST_DIR}/input/corpus/DocumentTest.cpp
-    ${MEWT_TEST_DIR}/input/corpus/feature/AlphabetTest.cpp
-    ${MEWT_TEST_DIR}/input/corpus/feature/AlphabetIteratorTest.cpp
-    ${MEWT_TEST_DIR}/input/corpus/feature/FeatureCorpusIOTest.cpp
-    ${MEWT_TEST_DIR}/input/corpus/feature/FeatureCorpusTest.cpp
-    ${MEWT_TEST_DIR}/input/corpus/feature/FeatureDocumentTest.cpp
-    ${MEWT_TEST_DIR}/input/corpus/feature/FeatureMapIteratorTest.cpp
-    ${MEWT_TEST_DIR}/input/corpus/feature/FeatureMapTest.cpp
-    ${MEWT_TEST_DIR}/input/corpus/text/TextCorpusTest.cpp
-    ${MEWT_TEST_DIR}/input/corpus/text/TextDocumentTest.cpp
-    ${MEWT_TEST_DIR}/input/exceptions/CorpusNotFoundExceptionTest.cpp
-    ${MEWT_TEST_DIR}/input/exceptions/IncompatibleCorpusExceptionTest.cpp
-    ${MEWT_TEST_DIR}/input/exceptions/TermNotPresentExceptionTest.cpp
-    ${MEWT_TEST_DIR}/input/pipe/bundle/CompleteFilteredBundleTest.cpp
-    ${MEWT_TEST_DIR}/input/pipe/bundle/InputOptimiseBundleTest.cpp
-    ${MEWT_TEST_DIR}/input/pipe/bundle/ScanInputOptimiseBundleTest.cpp
-    ${MEWT_TEST_DIR}/input/pipe/DirectoryScannerPipeTest.cpp
-    ${MEWT_TEST_DIR}/input/pipe/FeatureMapPipeTest.cpp
-    ${MEWT_TEST_DIR}/input/pipe/InputPipeTest.cpp
-    ${MEWT_TEST_DIR}/input/pipe/LengthFilterTest.cpp
-    ${MEWT_TEST_DIR}/input/pipe/LowerCasePipeTest.cpp
-    ${MEWT_TEST_DIR}/input/pipe/PipeTest.cpp
-    ${MEWT_TEST_DIR}/input/pipe/PunctuationFilterTest.cpp
-    ${MEWT_TEST_DIR}/input/pipe/StopwordFilterTest.cpp
-    ${MEWT_TEST_DIR}/input/pipe/XmlFilterTest.cpp
-) 
-target_link_libraries(InputTests gmock gmock_main
-    ${MEWT_UTIL}
-    ${MEWT_INPUT})
-add_test(InputTests InputTests)
+    include_directories(
+        ${gtest_SOURCE_DIR}/include 
+        ${gtest_SOURCE_DIR}
+        ${gmock_SOURCE_DIR}/include 
+        ${gmock_SOURCE_DIR}
+        ${MEWT_MOCK_DIR}
+    )
 
-add_executable(OutputTests
-    ${MEWT_TEST_DIR}/output/IdentifierTest.cpp
-) 
-target_link_libraries(OutputTests gmock gmock_main
-    ${MEWT_UTIL}
-    ${MEWT_INPUT}
-    ${MEWT_OUTPUT})
-add_test(OutputTests OutputTests)
+    # list test definitions here
+    # TODO: replace this with a macro
 
-add_executable(ModelTests
-    ${MEWT_TEST_DIR}/model/ProbabilityMatrixTest.cpp
-    ${MEWT_TEST_DIR}/model/TopicModelTest.cpp
-) 
-target_link_libraries(ModelTests gmock gmock_main
-    ${MEWT_UTIL}
-    ${MEWT_OUTPUT}
-    ${MEWT_MODEL})
-add_test(ModelTests ModelTests)
+    add_executable(UtilTests 
+        ${MEWT_TEST_DIR}/util/exceptions/DuplicateExceptionTest.cpp
+        ${MEWT_TEST_DIR}/util/exceptions/ExceptionTest.cpp
+        ${MEWT_TEST_DIR}/util/exceptions/FileNotFoundExceptionTest.cpp
+        ${MEWT_TEST_DIR}/util/exceptions/OutOfBoundsExceptionTest.cpp
+    ) 
+    target_link_libraries(UtilTests gmock gmock_main
+        ${MEWT_UTIL}) 
+    add_test(UtilTests UtilTests)
 
-add_executable(AlgorithmTests
-    ${MEWT_TEST_DIR}/algorithm/RandomNumberGeneratorTest.cpp
-) 
-target_link_libraries(AlgorithmTests gmock gmock_main
-    ${MEWT_UTIL}
-    ${MEWT_INPUT}
-    ${MEWT_OUTPUT}
-    ${MEWT_MODEL}
-    ${MEWT_ALGORITHM})
-add_test(AlgorithmTests AlgorithmTests)
+    add_executable(InputTests
+        ${MEWT_TEST_DIR}/input/corpus/CorpusTest.cpp
+        ${MEWT_TEST_DIR}/input/corpus/DocumentTest.cpp
+        ${MEWT_TEST_DIR}/input/corpus/feature/AlphabetTest.cpp
+        ${MEWT_TEST_DIR}/input/corpus/feature/AlphabetIteratorTest.cpp
+        ${MEWT_TEST_DIR}/input/corpus/feature/FeatureCorpusIOTest.cpp
+        ${MEWT_TEST_DIR}/input/corpus/feature/FeatureCorpusTest.cpp
+        ${MEWT_TEST_DIR}/input/corpus/feature/FeatureDocumentTest.cpp
+        ${MEWT_TEST_DIR}/input/corpus/feature/FeatureMapIteratorTest.cpp
+        ${MEWT_TEST_DIR}/input/corpus/feature/FeatureMapTest.cpp
+        ${MEWT_TEST_DIR}/input/corpus/text/TextCorpusTest.cpp
+        ${MEWT_TEST_DIR}/input/corpus/text/TextDocumentTest.cpp
+        ${MEWT_TEST_DIR}/input/exceptions/CorpusNotFoundExceptionTest.cpp
+        ${MEWT_TEST_DIR}/input/exceptions/IncompatibleCorpusExceptionTest.cpp
+        ${MEWT_TEST_DIR}/input/exceptions/TermNotPresentExceptionTest.cpp
+        ${MEWT_TEST_DIR}/input/pipe/bundle/CompleteFilteredBundleTest.cpp
+        ${MEWT_TEST_DIR}/input/pipe/bundle/InputOptimiseBundleTest.cpp
+        ${MEWT_TEST_DIR}/input/pipe/bundle/ScanInputOptimiseBundleTest.cpp
+        ${MEWT_TEST_DIR}/input/pipe/DirectoryScannerPipeTest.cpp
+        ${MEWT_TEST_DIR}/input/pipe/FeatureMapPipeTest.cpp
+        ${MEWT_TEST_DIR}/input/pipe/InputPipeTest.cpp
+        ${MEWT_TEST_DIR}/input/pipe/LengthFilterTest.cpp
+        ${MEWT_TEST_DIR}/input/pipe/LowerCasePipeTest.cpp
+        ${MEWT_TEST_DIR}/input/pipe/PipeTest.cpp
+        ${MEWT_TEST_DIR}/input/pipe/PunctuationFilterTest.cpp
+        ${MEWT_TEST_DIR}/input/pipe/StopwordFilterTest.cpp
+        ${MEWT_TEST_DIR}/input/pipe/XmlFilterTest.cpp
+    ) 
+    target_link_libraries(InputTests gmock gmock_main
+        ${MEWT_UTIL}
+        ${MEWT_INPUT})
+    add_test(InputTests InputTests)
+
+    add_executable(OutputTests
+        ${MEWT_TEST_DIR}/output/IdentifierTest.cpp
+    ) 
+    target_link_libraries(OutputTests gmock gmock_main
+        ${MEWT_UTIL}
+        ${MEWT_INPUT}
+        ${MEWT_OUTPUT})
+    add_test(OutputTests OutputTests)
+
+    add_executable(ModelTests
+        ${MEWT_TEST_DIR}/model/ProbabilityMatrixTest.cpp
+        ${MEWT_TEST_DIR}/model/TopicModelTest.cpp
+    ) 
+    target_link_libraries(ModelTests gmock gmock_main
+        ${MEWT_UTIL}
+        ${MEWT_OUTPUT}
+        ${MEWT_MODEL})
+    add_test(ModelTests ModelTests)
+
+    add_executable(AlgorithmTests
+        ${MEWT_TEST_DIR}/algorithm/RandomNumberGeneratorTest.cpp
+    ) 
+    target_link_libraries(AlgorithmTests gmock gmock_main
+        ${MEWT_UTIL}
+        ${MEWT_INPUT}
+        ${MEWT_OUTPUT}
+        ${MEWT_MODEL}
+        ${MEWT_ALGORITHM})
+    add_test(AlgorithmTests AlgorithmTests)
+
+ENDIF(TESTING)

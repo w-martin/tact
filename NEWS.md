@@ -1,6 +1,10 @@
 News
 ====
 
+## v0.3
+
+Made testing optional through a cmake flag: "cmake -D TESTING=ON .."
+
 ## v0.2
 
 Input module completed.   
