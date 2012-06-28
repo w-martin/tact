@@ -24,9 +24,9 @@
 
 #include "mewt/input/corpus/text/TextCorpus.h"
 #include "mewt/input/pipe/XmlFilter.h"
-#include <boost/algorithm/string.hpp>
-#include <boost/algorithm/string_regex.hpp>
-#include <boost/regex.hpp>
+#include "mewt/util/Strings.h"
+
+using mewt::util::strings::replace;
 
 XmlFilter::XmlFilter() : Pipe(DOCUMENT_TYPE_TEXT) {
 }
@@ -40,7 +40,7 @@ auto_ptr< Corpus > XmlFilter::process(auto_ptr<Corpus> corpus) const {
             documents->end() != iter; iter++) {
         TextDocument const * const original = ((TextDocument *) (*iter));
         string const name = original->getName();
-        auto_ptr< string > text = removeXml(original->getText());
+        auto_ptr< string > text = removeXml(*original->getText());
         corpus->removeDocument(original);
         corpus->addDocument(auto_ptr< Document > (
                 new TextDocument(name, text)));
@@ -48,8 +48,6 @@ auto_ptr< Corpus > XmlFilter::process(auto_ptr<Corpus> corpus) const {
     return corpus;
 }
 
-auto_ptr< string > XmlFilter::removeXml(string const * const text) {
-    boost::regex re("<[^>]*>");
-    return auto_ptr< string > (
-            new string(boost::regex_replace(*text, re, " ")));
+auto_ptr< string > XmlFilter::removeXml(string const & text) {
+    return auto_ptr< string > (new string(replace(text, "<[^>]*>", " ")));
 }

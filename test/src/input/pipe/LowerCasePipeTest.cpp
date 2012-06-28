@@ -102,28 +102,6 @@ namespace {
     }
 
     /*
-     * Tests whether the containsUpperCase method works correctly.
-     * 
-     */
-    TEST_F(LowerCasePipeTest, ContainsUpperCaseTest) {
-        string const upper = "has One upper case character";
-        string const lower = "has no upper case characters";
-        EXPECT_TRUE(LowerCasePipe::containsUpperCase(upper));
-        EXPECT_FALSE(LowerCasePipe::containsUpperCase(lower));
-    }
-
-    /*
-     * Tests whether the toLowerCase method works correctly.
-     * 
-     */
-    TEST_F(LowerCasePipeTest, ToLowerCaseTest) {
-        string const upper = "has One upper case character";
-        EXPECT_TRUE(LowerCasePipe::containsUpperCase(upper));
-        string const lower = LowerCasePipe::toLowerCase(upper);
-        EXPECT_FALSE(LowerCasePipe::containsUpperCase(lower));
-    }
-
-    /*
      * Tests whether the getDocumentTypes method works correctly.
      * 
      */

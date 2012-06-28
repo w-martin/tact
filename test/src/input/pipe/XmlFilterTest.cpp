@@ -27,69 +27,66 @@
 #include "mewt/input/corpus/text/TextCorpus.h"
 #include "mewt/input/corpus/feature/FeatureCorpus.h"
 
-namespace {
+/**
+ * Tests XmlFilter.
+ * 
+ */
+class XmlFilterTest : public ::testing::Test {
+protected:
 
-    /**
-     * Tests XmlFilter.
-     * 
-     */
-    class XmlFilterTest : public ::testing::Test {
-    protected:
-
-        XmlFilterTest() {
-            pipe = new XmlFilter();
-        }
-
-        virtual ~XmlFilterTest() {
-            delete pipe;
-        }
-        XmlFilter * pipe;
-    };
-
-    /*
-     * Tests whether the process method works correctly.
-     * 
-     */
-    TEST_F(XmlFilterTest, ProcessExceptionTest) {
-        auto_ptr< Corpus > corpus = auto_ptr< Corpus > (
-                new Corpus(".", DOCUMENT_TYPE_BASIC));
-        EXPECT_THROW(pipe->pipe(corpus), IncompatibleCorpusException);
-
-        corpus = auto_ptr< Corpus > (
-                new Corpus(".", DOCUMENT_TYPE_FEATURE));
-        EXPECT_THROW(pipe->pipe(corpus), IncompatibleCorpusException);
+    XmlFilterTest() {
+        pipe = new XmlFilter();
     }
 
-    /*
-     * Tests whether the process method works correctly.
-     * 
-     */
-    TEST_F(XmlFilterTest, ProcessTest) {
-        auto_ptr< Corpus > corpus =
-                auto_ptr< Corpus > (new TextCorpus("."));
-
-        auto_ptr< string > text = auto_ptr< string > (
-                new string("<tag> some text<tag 2><tag>><tag 3>text"));
-        auto_ptr< Document > document =
-                auto_ptr< Document > (new TextDocument("doc", text));
-        corpus->addDocument(document);
-        EXPECT_EQ(1, corpus->getSize());
-
-        corpus = pipe->pipe(corpus);
-        EXPECT_EQ(1, corpus->getSize());
-        TextDocument const * const processedDocument =
-                ((TextDocument *) corpus->getDocuments()->at(0));
-        EXPECT_STREQ("  some text  > text",
-                processedDocument->getText()->c_str());
+    virtual ~XmlFilterTest() {
+        delete pipe;
     }
+    XmlFilter * pipe;
+};
 
-    /*
-     * Tests whether the removeXml method work correctly.
-     * 
-     */
-    TEST_F(XmlFilterTest, RemoveXmlTest) {
-        string text = "<tag> some text<tag 2><tag>><tag 3>text";
-        auto_ptr< string > processed = XmlFilter::removeXml(&text);
-        EXPECT_STREQ("  some text  > text", processed->c_str());
-    }
+/*
+ * Tests whether the process method works correctly.
+ * 
+ */
+TEST_F(XmlFilterTest, ProcessExceptionTest) {
+    auto_ptr< Corpus > corpus = auto_ptr< Corpus > (
+            new Corpus(".", DOCUMENT_TYPE_BASIC));
+    EXPECT_THROW(pipe->pipe(corpus), IncompatibleCorpusException);
+
+    corpus = auto_ptr< Corpus > (
+            new Corpus(".", DOCUMENT_TYPE_FEATURE));
+    EXPECT_THROW(pipe->pipe(corpus), IncompatibleCorpusException);
+}
+
+/*
+ * Tests whether the process method works correctly.
+ * 
+ */
+TEST_F(XmlFilterTest, ProcessTest) {
+    auto_ptr< Corpus > corpus =
+            auto_ptr< Corpus > (new TextCorpus("."));
+
+    auto_ptr< string > text = auto_ptr< string > (
+            new string("<tag> some text<tag 2><tag>><tag 3>text"));
+    auto_ptr< Document > document =
+            auto_ptr< Document > (new TextDocument("doc", text));
+    corpus->addDocument(document);
+    EXPECT_EQ(1, corpus->getSize());
+
+    corpus = pipe->pipe(corpus);
+    EXPECT_EQ(1, corpus->getSize());
+    TextDocument const * const processedDocument =
+            ((TextDocument *) corpus->getDocuments()->at(0));
+    EXPECT_STREQ("  some text  > text",
+            processedDocument->getText()->c_str());
+}
+
+/*
+ * Tests whether the removeXml method work correctly.
+ * 
+ */
+TEST_F(XmlFilterTest, RemoveXmlTest) {
+    string text = "<tag> some text<tag 2><tag>><tag 3>text";
+    auto_ptr< string > processed = XmlFilter::removeXml(text);
+    EXPECT_STREQ("  some text  > text", processed->c_str());
 }

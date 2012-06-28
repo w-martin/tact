@@ -93,20 +93,6 @@ namespace {
     }
 
     /*
-     * Tests whether the splitString method works correctly.
-     * 
-     */
-    TEST_F(FeatureMapPipeTest, SplitStringTest) {
-        string * text = new string("this is some text");
-        auto_ptr< vector< string > > split = FeatureMapPipe::splitString(text);
-        EXPECT_EQ(4, split->size());
-        EXPECT_STREQ("this", split->at(0).c_str());
-        EXPECT_STREQ("is", split->at(1).c_str());
-        EXPECT_STREQ("some", split->at(2).c_str());
-        EXPECT_STREQ("text", split->at(3).c_str());
-    }
-
-    /*
      * Tests whether the getDocumentTypes method works correctly.
      * 
      */

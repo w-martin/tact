@@ -1,7 +1,7 @@
 /**
- * @file XmlFilter.h
+ * @file FilesTest.cpp
  * @author  William Martin <will.st4@gmail.com>
- * @since 0.2
+ * @since 0.3
  *
  * @section LICENSE
  *
@@ -22,40 +22,34 @@
  * 
  */
 
-#ifndef XMLFILTER_H
-#define XMLFILTER_H
+#include "gtest/gtest.h"
+#include "mewt/util/Files.h"
 
-#include "mewt/input/pipe/Pipe.h"
+using namespace mewt::util::files;
 
-class XmlFilter : public Pipe {
-public:
+namespace {
+
     /**
-     * Default constructor.
+     * Tests Files.
      * 
      */
-    XmlFilter();
-    /**
-     * Default destructor.
-     * 
-     */
-    virtual ~XmlFilter();
-    /**
-     * Removes xml from the given text.
-     * 
-     * @param text the text to remove xml from.
-     * @return the text with xml removed.
-     * 
-     */
-    static auto_ptr< string > removeXml(string const & text);
-private:
-    /**
-     * Process the given corpus.
-     * 
-     * @param corpus the Corpus to process.
-     * @return the processed Corpus.
-     * 
-     */
-    auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+    class FilesTest : public ::testing::Test {
+    protected:
+
+        FilesTest() {
+        }
+
+        virtual ~FilesTest() {
+        }
+    };
+
 };
 
-#endif /* XMLFILTER_H */
+/*
+ * Tests whether the readFile method works correctly.
+ * 
+ */
+TEST_F(FilesTest, ReadFileTest) {
+    auto_ptr< string > text = readFile("CMakeCache.txt");
+    EXPECT_GT(text->size(), 0);
+}

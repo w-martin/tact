@@ -64,16 +64,6 @@ namespace {
     }
 
     /*
-     * Tests whether the readFileIntoString method works correctly.
-     * 
-     */
-    TEST_F(InputPipeTest, ReadFileIntoStringTest) {
-        auto_ptr< string > text =
-                InputPipe::readFileIntoString("CMakeCache.txt");
-        EXPECT_GT(text->size(), 0);
-    }
-
-    /*
      * Tests whether the getDocumentTypes method works correctly.
      * 
      */

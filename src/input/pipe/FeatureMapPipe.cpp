@@ -25,7 +25,9 @@
 #include "mewt/input/pipe/FeatureMapPipe.h"
 #include "mewt/input/corpus/text/TextDocument.h"
 #include "mewt/input/corpus/feature/FeatureCorpus.h"
-#include <boost/algorithm/string.hpp>
+#include "mewt/util/Strings.h"
+
+using mewt::util::strings::split;
 
 FeatureMapPipe::FeatureMapPipe() : Pipe(DOCUMENT_TYPE_TEXT) {
 }
@@ -49,9 +51,9 @@ auto_ptr< Corpus > FeatureMapPipe::process(
         auto_ptr< FeatureMap > featureMap =
                 auto_ptr< FeatureMap > (new FeatureMap());
 
-        auto_ptr< vector< string > > split = splitString(text);
-        for (vector< string >::const_iterator iter2 = split->begin();
-                iter2 != split->end(); iter2++) {
+        auto_ptr< vector< string > > strings = split(*text);
+        for (vector< string >::const_iterator iter2 = strings->begin();
+                iter2 != strings->end(); iter2++) {
             int const index = alphabet->addTerm(*iter2);
             featureMap->incrementFeature(index, 1);
         }
@@ -62,12 +64,4 @@ auto_ptr< Corpus > FeatureMapPipe::process(
     }
 
     return (auto_ptr< Corpus >) featureCorpus;
-}
-
-auto_ptr< vector< string > > FeatureMapPipe::splitString(
-        string const * const text) {
-    auto_ptr< vector< string > > strings =
-            auto_ptr< vector< string > >(new vector< string > ());
-    boost::split(*strings.get(), (*text), boost::is_any_of("\n\t "));
-    return strings;
 }

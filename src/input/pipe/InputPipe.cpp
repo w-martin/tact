@@ -24,14 +24,9 @@
 
 #include "mewt/input/corpus/text/TextCorpus.h"
 #include "mewt/input/pipe/InputPipe.h"
+#include "mewt/util/Files.h"
 
-#include <memory>
-#include <fstream>
-#include <streambuf>
-
-using std::ifstream;
-using std::ios;
-using std::istreambuf_iterator;
+using mewt::util::files::readFile;
 
 InputPipe::InputPipe() {
 }
@@ -52,7 +47,7 @@ auto_ptr< Corpus > InputPipe::process(
             originalDocuments->end() != iter; iter++) {
 
         string const name = (*iter)->getName();
-        auto_ptr< string > text = readFileIntoString(name);
+        auto_ptr< string > text = readFile(name);
 
         auto_ptr< Document > doc = auto_ptr< Document > (
                 new TextDocument(name, text));
@@ -60,19 +55,4 @@ auto_ptr< Corpus > InputPipe::process(
 
     }
     return (auto_ptr< Corpus >) corpus;
-}
-
-auto_ptr< string > InputPipe::readFileIntoString(const string & location) {
-    ifstream t(location.c_str());
-
-    t.seekg(0, ios::end);
-    int const length = t.tellg();
-    t.seekg(0, ios::beg);
-
-    auto_ptr< string > text = auto_ptr< string > (new string());
-    text->reserve(length);
-    text->assign(istreambuf_iterator< char >(t), istreambuf_iterator< char >());
-    t.close();
-
-    return text;
 }

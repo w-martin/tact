@@ -1,7 +1,7 @@
 /**
- * @file PunctuationFilter.h
+ * @file BadCastException.h
  * @author  William Martin <will.st4@gmail.com>
- * @since 0.2
+ * @since 0.3
  *
  * @section LICENSE
  *
@@ -22,40 +22,36 @@
  * 
  */
 
-#ifndef PUNCTUATIONFILTER_H
-#define PUNCTUATIONFILTER_H
+#ifndef BADCASTEXCEPTION_H
+#define BADCASTEXCEPTION_H
 
-#include "mewt/input/pipe/Pipe.h"
+#define BAD_CAST_MESSAGE "Error. Bad cast."
 
-class PunctuationFilter : public Pipe {
+#include "mewt/util/exceptions/Exception.h"
+
+/**
+ * Exception class which indicates that bad cast occurred.
+ * 
+ */
+class BadCastException : public Exception {
 public:
     /**
      * Default constructor.
      * 
      */
-    PunctuationFilter();
+    BadCastException();
+    /**
+     * Specific constructor.
+     * 
+     * @param the message to given this Exception.
+     * 
+     */
+    BadCastException(string const & message);
     /**
      * Default destructor.
      * 
      */
-    virtual ~PunctuationFilter();
-    /**
-     * Removes punctuation form the given term.
-     * 
-     * @param term the term to remove punctuation from.
-     * @return the set of terms that surrounded punctuation in the given
-     * term.
-     */
-    static vector< string > const removePunctuation(string const & term);
-private:
-    /**
-     * Process the given corpus.
-     * 
-     * @param corpus the Corpus to process.
-     * @return the processed Corpus.
-     * 
-     */
-    auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+    virtual ~BadCastException() throw ();
 };
 
-#endif /* PUNCTUATIONFILTER_H */
+#endif /* BADCASTEXCEPTION_H */

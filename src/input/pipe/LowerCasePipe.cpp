@@ -26,10 +26,11 @@
 #include "mewt/input/corpus/feature/Alphabet.h"
 #include "mewt/input/corpus/feature/FeatureCorpus.h"
 #include "mewt/input/corpus/text/TextDocument.h"
+#include "mewt/util/Strings.h"
 #include <map>
-#include <boost/algorithm/string.hpp>
-#include <boost/regex.hpp>
 
+using mewt::util::strings::containsUpper;
+using mewt::util::strings::transformToLower;
 using std::map;
 
 typedef map< string, vector< string > > replacementMapType;
@@ -48,9 +49,9 @@ auto_ptr< Corpus > LowerCasePipe::process(
     for (AlphabetIterator iter = alphabet->begin();
             alphabet->end() != iter; iter++) {
         string const term = iter.getTerm();
-        if (containsUpperCase(term)) {
+        if (containsUpper(term)) {
             vector< string > transformed;
-            transformed.push_back(toLowerCase(term));
+            transformed.push_back(transformToLower(term));
             termsToReplace.insert(std::make_pair(term, transformed));
         }
     }
@@ -60,15 +61,3 @@ auto_ptr< Corpus > LowerCasePipe::process(
     }
     return corpus;
 }
-
-bool const LowerCasePipe::containsUpperCase(string const & term) {
-    boost::regex test(".*[A-Z]+.*", boost::regex::perl);
-    return boost::regex_match(term.begin(), term.end(), test);
-}
-
-string const LowerCasePipe::toLowerCase(string const & originalTerm) {
-    string transformed = originalTerm;
-    boost::algorithm::to_lower(transformed);
-    return transformed;
-}
-

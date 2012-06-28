@@ -23,16 +23,13 @@
  */
 
 #include "mewt/input/corpus/feature/FeatureCorpusIO.h"
-#include "mewt/input/pipe/InputPipe.h"
+#include "mewt/util/Files.h"
+#include "mewt/util/Strings.h"
 #include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <boost/algorithm/string.hpp>
-#include <boost/algorithm/string_regex.hpp>
 #include <boost/filesystem.hpp>
-#include <boost/lexical_cast.hpp>
-#include <boost/regex.hpp>
 
 using std::endl;
 using std::max;
@@ -42,6 +39,8 @@ using namespace FeatureCorpusIO;
 using namespace FeatureCorpusIO::util;
 
 namespace fs = boost::filesystem;
+namespace files = mewt::util::files;
+namespace strings = mewt::util::strings;
 
 void FeatureCorpusIO::clearCache() {
     fs::remove_all(IO_CACHE);
@@ -93,11 +92,11 @@ string const FeatureCorpusIO::util::findNextFreeDirectory() {
         for (fs::directory_iterator end, dir(IO_CACHE);
                 dir != end; ++dir) {
             string location = (* dir).path().generic_string();
-            boost::replace_first(location, IO_CACHE, "");
+            location = strings::replace(location, IO_CACHE, "");
             try {
-                nextDirectory = max(boost::lexical_cast< int >(location) + 1,
+                nextDirectory = max(strings::toInteger(location) + 1,
                         nextDirectory);
-            } catch (boost::bad_lexical_cast const &) {
+            } catch (BadCastException const &) {
             }
         }
         stringstream result;
@@ -135,21 +134,18 @@ throw (FileNotFoundException, DuplicateException) {
     string const alphabetLocation = directory + "/" + IO_CORPUS_ALPHABET;
     if (fs::is_regular_file(alphabetLocation)) {
         auto_ptr< Alphabet > alphabet(new Alphabet());
-        auto_ptr< string > text =
-                InputPipe::readFileIntoString(alphabetLocation);
-        vector< string > lines, tokens;
-        boost::split(lines, (*text.get()), boost::is_any_of("\n"));
+        auto_ptr< string > text = files::readFile(alphabetLocation);
+        auto_ptr< vector< string > > lines, tokens;
+        lines = strings::splitLines(*text.get());
         delete text.release();
-        for (vector< string >::const_iterator iter = lines.begin();
-                lines.end() != iter; iter++) {
-            tokens.clear();
-            boost::split(tokens, *iter, boost::is_any_of("="));
-            if (2 == tokens.size()) {
+        for (vector< string >::const_iterator iter = lines->begin();
+                lines->end() != iter; iter++) {
+            tokens = strings::split(*iter, "=");
+            if (2 == tokens->size()) {
                 try {
                     alphabet->addTerm(
-                            tokens[0],
-                            boost::lexical_cast< int >(tokens[1]));
-                } catch (boost::bad_lexical_cast const &) {
+                            tokens->at(0), strings::toInteger(tokens->at(1)));
+                } catch (BadCastException const &) {
                 }
             }
         }
@@ -165,34 +161,31 @@ throw (FileNotFoundException, TermNotPresentException) {
     if (!fs::is_regular_file(fileName)) {
         throw (FileNotFoundException(fileName, false));
     }
-    auto_ptr< string > text = InputPipe::readFileIntoString(fileName);
-    vector< string > lines, tokens;
-    boost::split(lines, (*text.get()), boost::is_any_of("\n"));
+    auto_ptr< string > text = files::readFile(fileName);
+    auto_ptr< vector< string > > lines, tokens;
+    lines = strings::splitLines(*text.get());
     delete text.release();
     string name;
     auto_ptr< FeatureMap > featureMap =
             auto_ptr< FeatureMap > (new FeatureMap());
     int feature, count;
 
-    for (vector< string >::const_iterator iter = lines.begin();
-            lines.end() != iter; iter++) {
-        tokens.clear();
-        boost::split(tokens, *iter, boost::is_any_of("="));
-        if (2 == tokens.size()) {
+    for (vector< string >::const_iterator iter = lines->begin();
+            lines->end() != iter; iter++) {
+        tokens = strings::split(*iter, "=");
+        if (2 == tokens->size()) {
 
             try {
-                feature = boost::lexical_cast< int >(tokens[0]);
-                if(!alphabet->hasIndex(feature)){
+                feature = strings::toInteger(tokens->at(0));
+                if (!alphabet->hasIndex(feature)) {
                     throw TermNotPresentException();
                 }
-                count = boost::lexical_cast< int >(tokens[1]);
+                count = strings::toInteger(tokens->at(1));
                 featureMap->setFeature(feature, count);
 
-            } catch (boost::bad_lexical_cast const &) {
-                boost::regex test("^name", boost::regex::perl);
-                if (boost::regex_match(
-                        tokens[0].begin(), tokens[0].end(), test)) {
-                    name = tokens[1];
+            } catch (BadCastException const &) {
+                if (strings::matches(tokens->at(0), "^name")) {
+                    name = tokens->at(1);
                 }
             }
         }
@@ -236,18 +229,14 @@ string const FeatureCorpusIO::util::loadName(string const & directory)
 throw (FileNotFoundException) {
     string const infoFileLocation = directory + "/" + IO_CORPUS_INFO;
     if (fs::is_regular_file(infoFileLocation)) {
-        auto_ptr< string > text =
-                InputPipe::readFileIntoString(infoFileLocation);
-        vector< string > lines;
+        auto_ptr< string > text = files::readFile(infoFileLocation);
+        auto_ptr< vector< string > > lines = strings::splitLines(*text);
         string line;
-        boost::split(lines, (*text), boost::is_any_of("\n"));
-        for (vector< string >::const_iterator iter = lines.begin();
-                lines.end() != iter; iter++) {
+        for (vector< string >::const_iterator iter = lines->begin();
+                lines->end() != iter; iter++) {
             line = *iter;
-            boost::regex test("^name=.*", boost::regex::perl);
-            if (boost::regex_match(line.begin(), line.end(), test)) {
-                boost::replace_first(line, "name=", "");
-                return line;
+            if (strings::matches(line, "^name=.*")) {
+                return strings::replace(line, "name=", "");
             }
         }
         return "";

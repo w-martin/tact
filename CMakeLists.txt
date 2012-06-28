@@ -29,7 +29,7 @@ cmake_minimum_required (VERSION 2.6.2)
 
 project (mewt)
 
-OPTION(TESTING "Build tests." OFF)
+OPTION(TESTING "Build tests." ON)
 
 set(MEWT_NAME mewt)
 set(MEWT_UTIL mewt-util)
@@ -54,10 +54,17 @@ include_directories(
 # TODO: replace this with a macro
 
 add_library (${MEWT_UTIL}
+    ${MEWT_SOURCE_DIR}/util/Files.cpp
+    ${MEWT_SOURCE_DIR}/util/Strings.cpp
+    ${MEWT_SOURCE_DIR}/util/exceptions/BadCastException.cpp
     ${MEWT_SOURCE_DIR}/util/exceptions/DuplicateException.cpp
     ${MEWT_SOURCE_DIR}/util/exceptions/Exception.cpp
     ${MEWT_SOURCE_DIR}/util/exceptions/FileNotFoundException.cpp
     ${MEWT_SOURCE_DIR}/util/exceptions/OutOfBoundsException.cpp
+    )
+
+target_link_libraries (${MEWT_UTIL}
+    ${Boost_REGEX_LIBRARY}
     )
 
 add_library (${MEWT_INPUT}
@@ -90,7 +97,8 @@ add_library (${MEWT_INPUT}
     )
 
 target_link_libraries (${MEWT_INPUT}
-    ${Boost_LIBRARIES}
+    ${Boost_FILESYSTEM_LIBRARY}
+    ${Boost_SYSTEM_LIBRARY}
     )
 
 add_library (${MEWT_OUTPUT}
@@ -138,7 +146,10 @@ IF(TESTING)
     # list test definitions here
     # TODO: replace this with a macro
 
-    add_executable(UtilTests 
+    add_executable(UtilTests
+        ${MEWT_TEST_DIR}/util/FilesTest.cpp
+        ${MEWT_TEST_DIR}/util/StringsTest.cpp
+        ${MEWT_TEST_DIR}/util/exceptions/BadCastExceptionTest.cpp
         ${MEWT_TEST_DIR}/util/exceptions/DuplicateExceptionTest.cpp
         ${MEWT_TEST_DIR}/util/exceptions/ExceptionTest.cpp
         ${MEWT_TEST_DIR}/util/exceptions/FileNotFoundExceptionTest.cpp

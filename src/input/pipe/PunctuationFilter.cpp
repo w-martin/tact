@@ -24,11 +24,11 @@
 
 #include "mewt/input/corpus/feature/FeatureCorpus.h"
 #include "mewt/input/pipe/PunctuationFilter.h"
+#include "mewt/util/Strings.h"
 #include <map>
-#include <boost/algorithm/string.hpp>
-#include <boost/algorithm/string_regex.hpp>
-#include <boost/regex.hpp>
 
+using mewt::util::strings::containsPunctuation;
+using mewt::util::strings::split;
 using std::map;
 
 typedef map< string, vector< string > > mapType;
@@ -58,31 +58,14 @@ auto_ptr< Corpus > PunctuationFilter::process(auto_ptr<Corpus> corpus) const {
     return corpus;
 }
 
-bool const PunctuationFilter::containsPunctuation(string const & term) {
-    boost::regex test(".*\\W+.*", boost::regex::perl);
-    return boost::regex_match(term.begin(), term.end(), test);
-}
-
 vector< string > const PunctuationFilter::removePunctuation(
         string const & term) {
-    vector< string > terms;
-    boost::split(terms, term, boost::is_any_of("'"));
+    auto_ptr< vector< string > > terms = split(term, "'");
     string fusedTerm = "";
-    for (vector< string >::const_iterator iter = terms.begin();
-            terms.end() != iter; iter++) {
+    for (vector< string >::const_iterator iter = terms->begin();
+            terms->end() != iter; iter++) {
         fusedTerm.append(*iter);
     }
-    terms.clear();
-    boost::regex re("\\W");
-    boost::algorithm::split_regex(terms, fusedTerm, re);
-
-    vector< string >::iterator iter = terms.begin();
-    while (terms.end() != iter) {
-        if (0 == (*iter).size()) {
-            iter = terms.erase(iter);
-        } else {
-            iter++;
-        }
-    }
-    return terms;
+    terms = split(fusedTerm, "\\W");
+    return *terms.release();
 }

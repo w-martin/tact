@@ -105,24 +105,6 @@ namespace {
     }
 
     /*
-     * Tests whether the constainsPunctuation method work correctly.
-     * 
-     */
-    TEST_F(PunctuationFilterTest, ConstainsPunctuationTest) {
-        EXPECT_TRUE(PunctuationFilter::containsPunctuation("hello,world"));
-        EXPECT_TRUE(PunctuationFilter::containsPunctuation("hellowor!ld"));
-        EXPECT_TRUE(PunctuationFilter::containsPunctuation("he'lloworld"));
-        EXPECT_TRUE(PunctuationFilter::containsPunctuation("hello;worl/\\d"));
-        EXPECT_TRUE(PunctuationFilter::containsPunctuation("hello)world"));
-        EXPECT_TRUE(PunctuationFilter::containsPunctuation("(helloworld"));
-        EXPECT_TRUE(PunctuationFilter::containsPunctuation("hello world"));
-        EXPECT_TRUE(PunctuationFilter::containsPunctuation("({hello&£$%^world\\/()})"));
-        EXPECT_FALSE(PunctuationFilter::containsPunctuation("helloworld"));
-        EXPECT_FALSE(PunctuationFilter::containsPunctuation(""));
-        EXPECT_FALSE(PunctuationFilter::containsPunctuation("9"));
-    }
-
-    /*
      * Tests whether the removePunctuation method work correctly.
      * 
      */

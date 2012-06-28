@@ -45,16 +45,6 @@ public:
      * 
      */
     virtual ~FeatureMapPipe();
-    /**
-     * Splits the given string on whitespace.
-     * 
-     * @param text the string to split.
-     * @return a vector of the subsections of the given string which were
-     * separated by whitespace.
-     * 
-     */
-    static auto_ptr< vector< string > > splitString(
-            string const * const text);
 private:
     /**
      * Process the given corpus.

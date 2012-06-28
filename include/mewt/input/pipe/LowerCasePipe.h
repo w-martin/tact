@@ -43,23 +43,6 @@ public:
      * 
      */
     virtual ~LowerCasePipe();
-    /**
-     * Checks if the given term contains any upper case characters.
-     * 
-     * @param corpus the corpus to check for upper case characters.
-     * @return true if the given term contains any upper case characters,
-     * false otherwise.
-     * 
-     */
-    static bool const containsUpperCase(string const & term);
-    /**
-     * Transforms the given term to lower case.
-     * 
-     * @param originalTerm the original term containing upper case characters.
-     * @return the transformed term.
-     * 
-     */
-    static string const toLowerCase(string const & originalTerm);
 private:
     /**
      * Process the given corpus.
