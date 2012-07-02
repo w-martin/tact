@@ -31,16 +31,16 @@
 #include <sstream>
 #include <boost/filesystem.hpp>
 
+namespace fs = boost::filesystem;
+namespace files = mewt::util::files;
+namespace strings = mewt::util::strings;
+
 using std::endl;
 using std::max;
 using std::ofstream;
 using std::stringstream;
 using namespace FeatureCorpusIO;
 using namespace FeatureCorpusIO::util;
-
-namespace fs = boost::filesystem;
-namespace files = mewt::util::files;
-namespace strings = mewt::util::strings;
 
 void FeatureCorpusIO::clearCache() {
     fs::remove_all(IO_CACHE);
