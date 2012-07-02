@@ -126,7 +126,7 @@ target_link_libraries(${MEWT_NAME}
 
 IF(TESTING)
 
-    add_subdirectory(gmock-1.6.0)
+    add_subdirectory(gmock)
     enable_testing(true) 
 
     include_directories(
@@ -149,9 +149,11 @@ IF(TESTING)
         ${MEWT_TEST_DIR}/util/exceptions/FileNotFoundExceptionTest.cpp
         ${MEWT_TEST_DIR}/util/exceptions/OutOfBoundsExceptionTest.cpp
     ) 
-    target_link_libraries(UtilTests gmock gmock_main
+    target_link_libraries(UtilTests
         ${MEWT_UTIL}
-        ${Boost_REGEX_LIBRARY}) 
+        ${Boost_REGEX_LIBRARY}
+        gmock
+        gmock_main) 
     add_test(UtilTests UtilTests)
 
     add_executable(InputTests
@@ -182,43 +184,49 @@ IF(TESTING)
         ${MEWT_TEST_DIR}/input/pipe/StopwordFilterTest.cpp
         ${MEWT_TEST_DIR}/input/pipe/XmlFilterTest.cpp
     ) 
-    target_link_libraries(InputTests gmock gmock_main
+    target_link_libraries(InputTests
         ${MEWT_INPUT}
         ${MEWT_UTIL}
         ${Boost_REGEX_LIBRARY}
         ${Boost_FILESYSTEM_LIBRARY}
-        ${Boost_SYSTEM_LIBRARY})
+        ${Boost_SYSTEM_LIBRARY}
+        gmock
+        gmock_main)
     add_test(InputTests InputTests)
 
     add_executable(OutputTests
         ${MEWT_TEST_DIR}/output/IdentifierTest.cpp
     ) 
-    target_link_libraries(OutputTests gmock gmock_main
+    target_link_libraries(OutputTests
         ${MEWT_OUTPUT}
         ${MEWT_INPUT}
         ${MEWT_UTIL}
         ${Boost_REGEX_LIBRARY}
         ${Boost_FILESYSTEM_LIBRARY}
-        ${Boost_SYSTEM_LIBRARY})
+        ${Boost_SYSTEM_LIBRARY}
+        gmock
+        gmock_main)
     add_test(OutputTests OutputTests)
 
     add_executable(ModelTests
         ${MEWT_TEST_DIR}/model/ProbabilityMatrixTest.cpp
         ${MEWT_TEST_DIR}/model/TopicModelTest.cpp
     ) 
-    target_link_libraries(ModelTests gmock gmock_main
+    target_link_libraries(ModelTests
         ${MEWT_MODEL}
         ${MEWT_OUTPUT}
         ${MEWT_UTIL}
         ${Boost_REGEX_LIBRARY}
         ${Boost_FILESYSTEM_LIBRARY}
-        ${Boost_SYSTEM_LIBRARY})
+        ${Boost_SYSTEM_LIBRARY}
+        gmock
+        gmock_main)
     add_test(ModelTests ModelTests)
 
     add_executable(AlgorithmTests
         ${MEWT_TEST_DIR}/algorithm/RandomNumberGeneratorTest.cpp
     ) 
-    target_link_libraries(AlgorithmTests gmock gmock_main
+    target_link_libraries(AlgorithmTests
         ${MEWT_ALGORITHM}
         ${MEWT_MODEL}
         ${MEWT_OUTPUT}
@@ -226,7 +234,9 @@ IF(TESTING)
         ${MEWT_UTIL}
         ${Boost_REGEX_LIBRARY}
         ${Boost_FILESYSTEM_LIBRARY}
-        ${Boost_SYSTEM_LIBRARY})
+        ${Boost_SYSTEM_LIBRARY}
+        gmock
+        gmock_main)
     add_test(AlgorithmTests AlgorithmTests)
 
 ENDIF(TESTING)
