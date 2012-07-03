@@ -111,8 +111,8 @@ add_executable (${MEWT_NAME}
     ${MEWT_SOURCE_DIR}/main.cpp)
 target_link_libraries(${MEWT_NAME}
     ${CMAKE_THREAD_LIBS_INIT}
-    ${MEWT_UTIL}
     ${MEWT_INPUT}
+    ${MEWT_UTIL}
     ${MEWT_OUTPUT}
     ${MEWT_MODEL}
     ${MEWT_ALGORITHM}
