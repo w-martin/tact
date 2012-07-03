@@ -24,73 +24,60 @@
 
 #include "mewt/model/TopicModel.h"
 
-TopicModel::TopicModel() {
-}
-
-TopicModel::TopicModel(const TopicModel& orig) {
-    noDocuments = orig.getNoDocuments();
-    noTopics = orig.getNoTopics();
-
-    double const * const tmp = orig.getAlpha();
-    alpha = new double[noTopics];
-    for (int i = 0; i < noTopics; i++) {
-        alpha[i] = tmp[i];
+TopicModel::TopicModel(double const alpha, double const beta,
+        auto_ptr<Corpus> corpus, int const noTopics)
+throw (IncompatibleCorpusException) {
+    if (DOCUMENT_TYPE_FEATURE == corpus->getDocumentsType()) {
+        TopicModel::corpus = (FeatureCorpus *) corpus.release();
+    } else {
+        throw IncompatibleCorpusException(
+                corpus->getDocumentsType(), DOCUMENT_TYPE_FEATURE,
+                "TopicModel::TopicModel");
     }
-
-    alphaSum = orig.getAlphaSum();
-    beta = orig.getBeta();
-    betaSum = orig.getBetaSum();
-    topicDocumentMatrix = new ProbabilityMatrix(*orig.getTopicDocumentMatrix());
-    termTopicMatrix = new ProbabilityMatrix(*orig.getTermTopicMatrix());
+    TopicModel::alpha = alpha;
+    TopicModel::beta = beta;
+    TopicModel::noIterationsCompleted = 0;
+    TopicModel::noTopics = noTopics;
+    TopicModel::termTopicMatrix = new ProbabilityMatrix(TopicModel::noTopics,
+            TopicModel::corpus->getAlphabet()->getSize());
+    TopicModel::topicDocumentMatrix = new ProbabilityMatrix(
+            TopicModel::corpus->getSize(), TopicModel::noTopics);
 }
 
 TopicModel::~TopicModel() {
+    delete corpus;
+    delete termTopicMatrix;
+    delete topicDocumentMatrix;
 }
 
-int const TopicModel::getNoDocuments() const {
-    return noDocuments;
-}
-
-int const TopicModel::getNoTopics() const {
-    return noTopics;
-}
-
-double const * const TopicModel::getAlpha() const {
+double const TopicModel::getAlpha() const {
     return alpha;
-}
-
-void TopicModel::setAlpha(int const & index,
-        const double value)
-throw (OutOfBoundsException) {
-    if (index >= noTopics) {
-        throw OutOfBoundsException(index, noTopics);
-    } else {
-        alphaSum -= alpha[index];
-        alpha[index] = value;
-        alphaSum += value;
-    }
-}
-
-double const TopicModel::getAlphaSum() const {
-    return alphaSum;
 }
 
 double const TopicModel::getBeta() const {
     return beta;
 }
 
-void TopicModel::setBeta(const double beta) {
-    TopicModel::beta = beta;
+FeatureCorpus const * const TopicModel::getCorpus() const {
+    return corpus;
 }
 
-double const TopicModel::getBetaSum() const {
-    return betaSum;
+int const TopicModel::getNoDocuments() const {
+    return corpus->getSize();
 }
 
-ProbabilityMatrix const * const TopicModel::getTopicDocumentMatrix() const {
-    return topicDocumentMatrix;
+int const TopicModel::getNoIterationsCompleted() const {
+    return noIterationsCompleted;
+}
+
+int const TopicModel::getNoTopics() const {
+    return noTopics;
 }
 
 ProbabilityMatrix const * const TopicModel::getTermTopicMatrix() const {
     return termTopicMatrix;
+}
+
+ProbabilityMatrix const * const TopicModel::getTopicDocumentMatrix() const {
+    return topicDocumentMatrix;
 }

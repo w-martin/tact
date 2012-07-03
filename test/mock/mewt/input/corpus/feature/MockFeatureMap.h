@@ -1,7 +1,7 @@
 /**
- * @file MockPipe.h
+ * @file MockFeatureMap.h
  * @author  William Martin <will.st4@gmail.com>
- * @since 0.1
+ * @since 0.4
  *
  * @section LICENSE
  *
@@ -20,34 +20,29 @@
  * You should have received a copy of the GNU General Public License
  * along with mewt.  If not, see <http://www.gnu.org/licenses/>.
  * 
- */
-
-#ifndef PIPE_MOCK_H
-#define PIPE_MOCK_H
-
-#include "gmock/gmock.h"
-#include "mewt/input/pipe/Pipe.h"
-
-/**
- * Mock Pipe class.
+ * @section DESCRIPTION
+ * 
+ * Mock FeatureMap class.
  * 
  */
-class MockPipe : public Pipe {
+
+#ifndef FEATURE_MAP_MOCK_H
+#define FEATURE_MAP_MOCK_H
+
+#include "gmock/gmock.h"
+#include "mewt/input/corpus/feature/FeatureMap.h"
+
+class MockFeatureMap : public FeatureMap {
 public:
 
-    MockPipe() : Pipe() {
+    MockFeatureMap() : FeatureMap() {
     }
 
-    MockPipe(int const & compatibleType) : Pipe(compatibleType) {
+    MockFeatureMap(MockFeatureMap const & orig) : FeatureMap(orig) {
     }
 
-    MockPipe(vector< int > const & compatibleTypes) : Pipe(compatibleTypes) {
-    }
-private:
-
-    virtual auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const {
-        return corpus;
+    virtual ~MockFeatureMap() {
     }
 };
 
-#endif /* PIPE_MOCK_H */
+#endif /* FEATURE_MAP_MOCK_H */

@@ -30,11 +30,6 @@ FeatureCorpus::FeatureCorpus(const string location,
     FeatureCorpus::alphabet = alphabet;
 }
 
-FeatureCorpus::FeatureCorpus(const FeatureCorpus& orig)
-: Corpus(orig) {
-    alphabet = auto_ptr< Alphabet > (new Alphabet(*orig.getAlphabet()));
-}
-
 FeatureCorpus::~FeatureCorpus() {
 }
 

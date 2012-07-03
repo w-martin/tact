@@ -28,9 +28,5 @@ TextCorpus::TextCorpus(const string location)
 : Corpus(location, DOCUMENT_TYPE_TEXT) {
 }
 
-TextCorpus::TextCorpus(const TextCorpus& orig)
-: Corpus(orig) {
-}
-
 TextCorpus::~TextCorpus() {
 }

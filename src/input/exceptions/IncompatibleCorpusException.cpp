@@ -25,6 +25,7 @@
 #include "mewt/input/exceptions/IncompatibleCorpusException.h"
 #include <sstream>
 
+using std::endl;
 using std::stringstream;
 
 IncompatibleCorpusException::IncompatibleCorpusException()
@@ -37,34 +38,42 @@ IncompatibleCorpusException::IncompatibleCorpusException(
 }
 
 IncompatibleCorpusException::IncompatibleCorpusException(
-        int const & corpusType, vector< int > const * const compatibleTypes)
-: Exception(createErrorMessage(corpusType, compatibleTypes)) {
+        int const & corpusType, vector< int > const * const compatibleTypes,
+        string const & source)
+: Exception(createErrorMessage(corpusType, compatibleTypes, source)) {
 }
 
 IncompatibleCorpusException::IncompatibleCorpusException(
-        int const & corpusType, int const & compatibleType)
-: Exception(createErrorMessage(corpusType, compatibleType)) {
+        int const & corpusType, int const & compatibleType,
+        string const & source)
+: Exception(createErrorMessage(corpusType, compatibleType, source)) {
 }
 
 string const IncompatibleCorpusException::createErrorMessage(
         int const & corpusType,
-        vector< int > const * const compatibleTypes) const {
+        vector< int > const * const compatibleTypes,
+        string const & source) const {
     stringstream stream;
-    stream << INCOMPATIBLE_CORPUS_MESSAGE << " \nCorpus type: " << corpusType
-            << " \nCompatible types:";
+    stream << INCOMPATIBLE_CORPUS_MESSAGE << endl;
+    stream << "Thrown from " << source << "." << endl;
+    stream << "Document type: " << corpusType << endl;
+    stream << "Compatible types:";
     for (vector< int >::const_iterator iter = compatibleTypes->begin();
             compatibleTypes->end() != iter; iter++) {
         stream << " " << (*iter);
     }
-    stream << "\n";
+    stream << endl;
     return stream.str();
 }
 
 string const IncompatibleCorpusException::createErrorMessage(
         int const & corpusType,
-        int const & compatibleType) const {
+        int const & compatibleType,
+        string const & source) const {
     stringstream stream;
-    stream << INCOMPATIBLE_CORPUS_MESSAGE << " \nCorpus type: " << corpusType
-            << " \nCompatible type: " << compatibleType << "\n";
+    stream << INCOMPATIBLE_CORPUS_MESSAGE << endl;
+    stream << "Thrown from " << source << "." << endl;
+    stream << "Document type: " << corpusType << endl;
+    stream << "Compatible type: " << compatibleType << endl;
     return stream.str();
 }

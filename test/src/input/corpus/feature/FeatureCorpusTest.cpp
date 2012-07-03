@@ -24,6 +24,7 @@
 
 #include "gtest/gtest.h"
 #include "mewt/input/corpus/feature/FeatureCorpus.h"
+#include "mewt/input/corpus/feature/MockFeatureDocument.h"
 
 namespace {
 
@@ -50,6 +51,29 @@ namespace {
         string location;
         Alphabet * alphabet;
     };
+
+    /*
+     * Tests whether the equals method works correctly.
+     * 
+     */
+    TEST_F(FeatureCorpusTest, EqualsTest) {
+        FeatureCorpus * other = new FeatureCorpus("notLocation",
+                auto_ptr< Alphabet > (new Alphabet(*alphabet)));
+        EXPECT_NE(*other, *corpus);
+
+        delete other;
+        other = new FeatureCorpus(location,
+                auto_ptr< Alphabet > (new Alphabet(*alphabet)));
+        EXPECT_EQ(*other, *corpus);
+
+        other->addDocument(auto_ptr<Document > (new MockFeatureDocument()));
+        EXPECT_NE(*other, *corpus);
+
+        corpus->addDocument(auto_ptr<Document > (new MockFeatureDocument()));
+        EXPECT_EQ(*other, *corpus);
+
+        delete other;
+    }
 
     /*
      * Tests whether the documents type is set correctly.
@@ -115,15 +139,5 @@ namespace {
         EXPECT_EQ(0, featureCorpus->getDocuments()->size());
         EXPECT_EQ(DOCUMENT_TYPE_FEATURE, featureCorpus->getDocumentsType());
         EXPECT_EQ(0, featureCorpus->getSize());
-    }
-
-    /*
-     * Tests whether the copy constructor correctly.
-     * 
-     */
-    TEST_F(FeatureCorpusTest, CopyConstructorTest) {
-        FeatureCorpus tmp(*corpus);
-        EXPECT_EQ(DOCUMENT_TYPE_FEATURE, tmp.getDocumentsType());
-        EXPECT_EQ(1, tmp.getAlphabet()->getSize());
     }
 }

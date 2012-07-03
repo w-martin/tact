@@ -102,6 +102,7 @@ add_library (${MEWT_MODEL}
     )
 
 add_library (${MEWT_ALGORITHM}
+    ${MEWT_SOURCE_DIR}/algorithm/LDA.cpp
     ${MEWT_SOURCE_DIR}/algorithm/RandomNumberGenerator.cpp
     )
 
@@ -215,6 +216,7 @@ IF(TESTING)
     target_link_libraries(ModelTests
         ${MEWT_MODEL}
         ${MEWT_OUTPUT}
+        ${MEWT_INPUT}
         ${MEWT_UTIL}
         ${Boost_REGEX_LIBRARY}
         ${Boost_FILESYSTEM_LIBRARY}
@@ -224,6 +226,7 @@ IF(TESTING)
     add_test(ModelTests ModelTests)
 
     add_executable(AlgorithmTests
+        ${MEWT_TEST_DIR}/algorithm/LDATest.cpp
         ${MEWT_TEST_DIR}/algorithm/RandomNumberGeneratorTest.cpp
     ) 
     target_link_libraries(AlgorithmTests

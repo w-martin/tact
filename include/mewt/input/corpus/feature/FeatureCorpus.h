@@ -44,13 +44,6 @@ public:
      */
     FeatureCorpus(string const location, auto_ptr< Alphabet > alphabet);
     /**
-     * Copy constructor.
-     * 
-     * @param orig the FeatureCorpus to copy.
-     * 
-     */
-    FeatureCorpus(const FeatureCorpus& orig);
-    /**
      * Default destructor.
      * 
      */

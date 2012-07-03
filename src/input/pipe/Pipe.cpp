@@ -61,7 +61,7 @@ auto_ptr< Corpus > Pipe::pipe(auto_ptr<Corpus> corpus) const
 throw (IncompatibleCorpusException) {
     if (!checkCorpusCompatible(corpus.get())) {
         throw IncompatibleCorpusException(
-                corpus->getDocumentsType(), getCompatibleTypes());
+                corpus->getDocumentsType(), getCompatibleTypes(), "Pipe::pipe");
     }
     if (NULL == nextPipe.get()) {
         return process(corpus);

@@ -204,7 +204,7 @@ namespace {
         fs::create_directories(directory);
         FeatureCorpusIO::util::saveAlphabet(directory, corpus->getAlphabet());
         EXPECT_EQ(*corpus->getAlphabet(),
-                FeatureCorpusIO::util::loadAlphabet(directory).get());
+                *FeatureCorpusIO::util::loadAlphabet(directory).get());
     }
 
     /*

@@ -88,12 +88,12 @@ AlphabetIterator const Alphabet::end() const {
     return AlphabetIterator(data->left.end());
 }
 
-bool const Alphabet::equals(Alphabet const * const other) const {
-    if (getSize() == other->getSize()) {
-        AlphabetIterator iter2 = other->begin();
+bool const Alphabet::equals(Alphabet const & other) const {
+    if (getSize() == other.getSize()) {
+        AlphabetIterator iter2 = other.begin();
         AlphabetIterator iter1 = begin();
         while (end() != iter1
-                && other->end() != iter2) {
+                && other.end() != iter2) {
             if (iter1.getIndex() != iter2.getIndex()
                     || iter1.getTerm() != iter2.getTerm()) {
                 return false;
@@ -107,11 +107,11 @@ bool const Alphabet::equals(Alphabet const * const other) const {
     return true;
 }
 
-bool const Alphabet::operator ==(Alphabet const * const other) const {
+bool const Alphabet::operator ==(Alphabet const & other) const {
     return equals(other);
 }
 
-bool const Alphabet::operator !=(Alphabet const * const other) const {
+bool const Alphabet::operator !=(Alphabet const & other) const {
     return !equals(other);
 }
 

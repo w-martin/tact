@@ -47,13 +47,6 @@ public:
      */
     Corpus(string const location, int const documentsType);
     /**
-     * Copy constructor.
-     * 
-     * @param orig the Corpus to copy.
-     * 
-     */
-    Corpus(const Corpus& orig);
-    /**
      * Default destructor.
      * 
      */

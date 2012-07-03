@@ -1,7 +1,7 @@
 /**
- * @file MockPipe.h
+ * @file LDA.cpp
  * @author  William Martin <will.st4@gmail.com>
- * @since 0.1
+ * @since 0.4
  *
  * @section LICENSE
  *
@@ -11,43 +11,29 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
-
+ * 
  * mewt is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
-
+ * 
  * You should have received a copy of the GNU General Public License
  * along with mewt.  If not, see <http://www.gnu.org/licenses/>.
  * 
  */
 
-#ifndef PIPE_MOCK_H
-#define PIPE_MOCK_H
+#include "mewt/algorithm/LDA.h"
 
-#include "gmock/gmock.h"
-#include "mewt/input/pipe/Pipe.h"
+LDA::LDA(double const alpha, double const beta,
+        auto_ptr< Corpus > corpus, int const noTopics)
+throw (IncompatibleCorpusException)
+: TopicModel(alpha, beta, corpus, noTopics) {
+}
 
-/**
- * Mock Pipe class.
- * 
- */
-class MockPipe : public Pipe {
-public:
+LDA::~LDA() {
+}
 
-    MockPipe() : Pipe() {
-    }
+void LDA::estimate(int const & noIterations, string const & outputDirectory,
+        int const & saveInterval) {
 
-    MockPipe(int const & compatibleType) : Pipe(compatibleType) {
-    }
-
-    MockPipe(vector< int > const & compatibleTypes) : Pipe(compatibleTypes) {
-    }
-private:
-
-    virtual auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const {
-        return corpus;
-    }
-};
-
-#endif /* PIPE_MOCK_H */
+}

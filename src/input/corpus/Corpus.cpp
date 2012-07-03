@@ -30,17 +30,6 @@ Corpus::Corpus(const string location, const int documentsType) {
     Corpus::location = location;
 }
 
-Corpus::Corpus(const Corpus& orig) {
-    documents = new vector< Document * > ();
-    vector< Document * > const * const originalDocuments = orig.getDocuments();
-    for (int i = 0; i < orig.getSize(); i++) {
-        documents->push_back(new Document(*originalDocuments->at(i)));
-    }
-
-    documentsType = orig.getDocumentsType();
-    location = orig.getLocation();
-}
-
 Corpus::~Corpus() {
     delete documents;
 }
@@ -49,7 +38,7 @@ bool const Corpus::addDocument(auto_ptr<Document> document)
 throw (IncompatibleCorpusException) {
     if (document->getType() != documentsType) {
         throw IncompatibleCorpusException(
-                getDocumentsType(), document->getType());
+                getDocumentsType(), document->getType(), "Corpus::addDocument");
     }
     if (!contains(document.get())) {
         documents->push_back(document.release());

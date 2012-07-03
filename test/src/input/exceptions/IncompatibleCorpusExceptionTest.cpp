@@ -74,16 +74,18 @@ namespace {
         delete testException;
         vector< int > * types = new vector< int >();
         types->push_back(0);
-        testException = new IncompatibleCorpusException(0, types);
+        testException = new IncompatibleCorpusException(0, types,
+                "IncompatibleCorpusExceptionTest");
 
         char const * whatMessage = testException->what();
         EXPECT_STRNE(NULL, whatMessage);
         EXPECT_STRNE(INCOMPATIBLE_CORPUS_MESSAGE, whatMessage);
         EXPECT_STRNE(message, whatMessage);
         EXPECT_GT(strlen(whatMessage), 0);
-        
+
         delete testException;
-        testException = new IncompatibleCorpusException(0, 0);
+        testException = new IncompatibleCorpusException(0, 0,
+                "IncompatibleCorpusExceptionTest");
 
         whatMessage = testException->what();
         EXPECT_STRNE(NULL, whatMessage);

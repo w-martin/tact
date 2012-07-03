@@ -74,6 +74,8 @@ namespace {
      * 
      */
     TEST_F(StopwordFilterTest, DirectoryConstructorTest) {
+        fs::remove_all(".stopwordFilterTest");
+
         fs::create_directories(".stopwordFilterTest/dir");
         fs::copy_file("CMakeCache.txt", ".stopwordFilterTest/file1");
         fs::copy_file("CTestTestfile.cmake", ".stopwordFilterTest/dir/file2");
@@ -97,7 +99,7 @@ namespace {
      */
     TEST_F(StopwordFilterTest, SpecificConstructorTest) {
         Alphabet const * const copiedAlphabet = pipe->getStopwords();
-        EXPECT_TRUE(alphabet->equals(copiedAlphabet));
+        EXPECT_TRUE(alphabet->equals(*copiedAlphabet));
     }
 
     /*
@@ -107,7 +109,7 @@ namespace {
     TEST_F(StopwordFilterTest, CopyConstructorTest) {
         StopwordFilter tmp(*pipe);
         Alphabet const * const copiedAlphabet = tmp.getStopwords();
-        EXPECT_TRUE(alphabet->equals(copiedAlphabet));
+        EXPECT_TRUE(alphabet->equals(*copiedAlphabet));
     }
 
     /*
@@ -116,7 +118,7 @@ namespace {
      */
     TEST_F(StopwordFilterTest, GetStopwordsTest) {
         Alphabet const * const stopwords = pipe->getStopwords();
-        EXPECT_TRUE(alphabet->equals(stopwords));
+        EXPECT_TRUE(alphabet->equals(*stopwords));
     }
 
     /*

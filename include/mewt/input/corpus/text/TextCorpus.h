@@ -42,13 +42,6 @@ public:
      */
     TextCorpus(string const location);
     /**
-     * Copy constructor.
-     * 
-     * @param orig the TextCorpus to copy.
-     * 
-     */
-    TextCorpus(const TextCorpus& orig);
-    /**
      * Default destructor.
      * 
      */

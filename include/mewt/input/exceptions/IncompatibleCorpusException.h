@@ -25,7 +25,7 @@
 #ifndef INCOMPATIBLECORPUSEXCEPTION_H
 #define	INCOMPATIBLECORPUSEXCEPTION_H
 
-#define INCOMPATIBLE_CORPUS_MESSAGE "Error. Corpus is not compatible with this Pipe."
+#define INCOMPATIBLE_CORPUS_MESSAGE "Error. Incompatible corpus type."
 
 #include "mewt/util/exceptions/Exception.h"
 #include <vector>
@@ -51,20 +51,23 @@ public:
      * 
      * @param corpusType the type of the corpus.
      * @param compatibleTypes the types that are compatible.
+     * @param source the source of this Exception.
      * 
      */
     IncompatibleCorpusException(int const & corpusType,
-            vector< int > const * const compatibleTypes);
+            vector< int > const * const compatibleTypes,
+            string const & source);
     /**
      * Specific constructor. Generated an informative message
      * about the error.
      * 
      * @param corpusType the type of the corpus.
      * @param compatibleType the type that is compatible.
+     * @param source the source of this Exception.
      * 
      */
     IncompatibleCorpusException(int const & corpusType,
-            int const & compatibleType);
+            int const & compatibleType, string const & source);
     /**
      * Uses the given message for this Exception.
      * 
@@ -78,21 +81,24 @@ private:
      * 
      * @param corpusType the type of the corpus.
      * @param compatibleTypes the types that are compatible.
+     * @param source the source of this Exception.
      * @return an error message using the given type identifiers.
      * 
      */
     string const createErrorMessage(int const & corpusType,
-            vector< int > const * const compatibleTypes) const;
+            vector< int > const * const compatibleTypes,
+            string const & source) const;
     /**
      * Creates an error message using the given type identifiers.
      * 
      * @param corpusType the type of the corpus.
      * @param compatibleType the type that is compatible.
+     * @param source the source of this Exception.
      * @return an error message using the given type identifiers.
      * 
      */
     string const createErrorMessage(int const & corpusType,
-            int const & compatibleType) const;
+            int const & compatibleType, string const & source) const;
 };
 
 #endif	/* INCOMPATIBLECORPUSEXCEPTION_H */

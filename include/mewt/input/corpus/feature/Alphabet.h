@@ -104,7 +104,7 @@ public:
      * otherwise.
      * 
      */
-    bool const equals(Alphabet const * const other) const;
+    bool const equals(Alphabet const & other) const;
     /**
      * Checks if this Alphabet is equal to the other Alphabet.
      * 
@@ -113,7 +113,7 @@ public:
      * otherwise.
      * 
      */
-    bool const operator==(Alphabet const * const other) const;
+    bool const operator==(Alphabet const & other) const;
     /**
      * Checks if this Alphabet is not equal to the other Alphabet.
      * 
@@ -122,7 +122,7 @@ public:
      * otherwise.
      * 
      */
-    bool const operator!=(Alphabet const * const other) const;
+    bool const operator!=(Alphabet const & other) const;
     /**
      * Gets the index of the given term.
      * 

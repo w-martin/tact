@@ -171,11 +171,11 @@ namespace {
      * 
      */
     TEST_F(AlphabetTest, EqualsTest) {
-        Alphabet * tmp = new Alphabet(*alphabet);
+        Alphabet tmp(*alphabet);
         EXPECT_TRUE(alphabet->equals(tmp));
         EXPECT_EQ(*alphabet, tmp);
 
-        tmp->addTerm("hello");
+        tmp.addTerm("hello");
         EXPECT_FALSE(alphabet->equals(tmp));
         EXPECT_NE(*alphabet, tmp);
 
@@ -184,7 +184,5 @@ namespace {
         EXPECT_EQ(*alphabet, tmp);
 
         EXPECT_TRUE((*alphabet == tmp) == !(*alphabet != tmp));
-
-        delete tmp;
     }
 }

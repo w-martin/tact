@@ -49,26 +49,6 @@ namespace {
     };
 
     /*
-     * Tests whether the copy constructor works correctly.
-     * 
-     */
-    TEST_F(CorpusTest, CopyConstructorTest) {
-        string testName = "testName";
-        Document * d = new Document(testName);
-        corpus->addDocument(auto_ptr< Document > (new Document(*d)));
-
-        Corpus tmp(*corpus);
-        vector< Document * > const * const documents = tmp.getDocuments();
-        EXPECT_EQ(0, strcmp(location.c_str(), tmp.getLocation().c_str()));
-        EXPECT_EQ(1, tmp.getSize());
-        EXPECT_EQ(0,
-                strcmp(documents->at(0)->getName().c_str(), testName.c_str()));
-        EXPECT_EQ(corpus->getDocumentsType(), tmp.getDocumentsType());
-        EXPECT_TRUE(tmp.contains(d));
-        EXPECT_EQ(tmp, *corpus);
-    }
-
-    /*
      * Tests whether the addDocument method works correctly.
      * 
      */

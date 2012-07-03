@@ -282,7 +282,8 @@ throw (IncompatibleCorpusException) {
             documents->end() != iter; iter++) {
         if (DOCUMENT_TYPE_FEATURE != (*iter)->getType()) {
             throw IncompatibleCorpusException((*iter)->getType(),
-                    DOCUMENT_TYPE_FEATURE);
+                    DOCUMENT_TYPE_FEATURE, 
+                    "FeatureCorpusIO::util::saveDocuments");
         }
         saveDocument(dirName, n, (FeatureDocument *) * iter);
         if (99 == ++n) {
