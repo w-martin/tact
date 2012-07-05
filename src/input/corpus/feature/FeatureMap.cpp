@@ -27,10 +27,12 @@
 
 FeatureMap::FeatureMap() {
     data = new intMapType();
+    size = 0;
 }
 
 FeatureMap::FeatureMap(const FeatureMap& orig) {
     data = new intMapType(*orig.getData());
+    size = orig.getSize();
 }
 
 FeatureMap::~FeatureMap() {
@@ -82,7 +84,7 @@ int const FeatureMap::getFeature(int const & featureID) const {
 }
 
 int const FeatureMap::getSize() const {
-    return data->size();
+    return size;
 }
 
 void FeatureMap::incrementFeature(int const & featureID, int const & amount) {
@@ -102,10 +104,12 @@ int const FeatureMap::setFeature(const int feature, const int count) {
         pair< int, int > p = make_pair(feature, count);
         data->insert(p);
     }
+    size += count - previousCount;
     return previousCount;
 }
 
 void FeatureMap::removeFeature(int const & featureID) {
+    size -= getFeature(featureID);
     data->erase(featureID);
 }
 

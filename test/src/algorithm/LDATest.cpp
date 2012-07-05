@@ -25,6 +25,10 @@
 #include "gtest/gtest.h"
 #include "mewt/algorithm/LDA.h"
 #include "mewt/input/corpus/feature/MockFeatureCorpus.h"
+#include "mewt/input/pipe/bundle/ScanInputOptimiseBundle.h"
+#include <boost/filesystem.hpp>
+
+namespace fs = boost::filesystem;
 
 namespace {
 
@@ -56,6 +60,31 @@ namespace {
      * 
      */
     TEST_F(LDATest, EstimateTest) {
+        int const noIterations = 53;
+        string const outputDirectory = ".EstimateTest";
+        int const saveInterval = 10;
+        lda->estimate(noIterations, outputDirectory, saveInterval);
+        EXPECT_EQ(noIterations, lda->getNoIterationsCompleted());
+        fs::remove_all(outputDirectory);
+    }
+
+    /*
+     * Tests whether the estimate method works correctly.
+     * 
+     */
+    TEST_F(LDATest, NonTrivialTest) {
+        int const noIterations = 53;
+        string const outputDirectory = ".NonTrivialTest";
+        int const saveInterval = 10;
         
+        delete lda;
+        auto_ptr< Corpus > corpus = auto_ptr< Corpus >(
+                new Corpus("../include", DOCUMENT_TYPE_BASIC));
+        corpus = ScanInputOptimiseBundle().pipe(corpus);
+        lda = new LDA(alpha, beta, corpus, noTopics);
+        
+        lda->estimate(noIterations, outputDirectory, saveInterval);
+        EXPECT_EQ(noIterations, lda->getNoIterationsCompleted());
+        fs::remove_all(outputDirectory);
     }
 }

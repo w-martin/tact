@@ -54,11 +54,8 @@ int const RandomNumberGenerator::getSeed() const {
 }
 
 double const RandomNumberGenerator::nextUniform() {
-    srand((unsigned int) time(NULL));
     // ensures consecutive calls generate different numbers
-    for (int i = 0; i < count; i++) {
-        rand();
-    }
+    srand((unsigned int) time(NULL) - count);
     double r = rand() / double(RAND_MAX);
     count++;
     srand(1);

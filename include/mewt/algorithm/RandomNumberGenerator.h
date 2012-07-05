@@ -1,9 +1,9 @@
 /**
  * @file RandomNumberGenerator.h
- * @author  William Martin <will.st4@gmail.com>
+ * @author William Martin <will.st4@gmail.com>
  * @since 0.1
  *
- *  * @section LICENSE
+ * @section LICENSE
  *
  * This file is part of mewt.
  * 
@@ -25,11 +25,36 @@
 #ifndef RANDOMNUMBERGENERATOR_H
 #define	RANDOMNUMBERGENERATOR_H
 
+/**
+ * Generates pseudorandom numbers with a given seed, such that they can be
+ * reconstructed if necessary.
+ * 
+ */
 class RandomNumberGenerator {
 public:
+    /**
+     * Default constructor. Uses the current time as the seed.
+     * 
+     */
     RandomNumberGenerator();
+    /**
+     * Specific constructor.
+     * 
+     * @param seed the seed to use for pseudorandom number generation.
+     * 
+     */
     RandomNumberGenerator(int const seed);
+    /**
+     * Copy constructor.
+     * 
+     * @param orig the original RandomNumberGenerator.
+     * 
+     */
     RandomNumberGenerator(const RandomNumberGenerator& orig);
+    /**
+     * Default destructor.
+     * 
+     */
     virtual ~RandomNumberGenerator();
     /**
      * Gets the count of the number of times rand has been called.
@@ -46,7 +71,7 @@ public:
      */
     int const getSeed() const;
     /**
-     * Returns a random double in the range 0 to 1 sampled uniformly from 
+     * Returns a pseudorandom double in the range 0 to 1 sampled uniformly from 
      * that range. 
      * mean = 0.5
      * variance = 1/12
@@ -56,9 +81,16 @@ public:
      */
     double const nextUniform();
 private:
+    /**
+     * The number of numbers that have been generated.
+     * 
+     */
     int count;
+    /**
+     * The seed that is used for pseudorandom number generation.
+     * 
+     */
     int seed;
 };
 
 #endif	/* RANDOMNUMBERGENERATOR_H */
-

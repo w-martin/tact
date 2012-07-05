@@ -153,6 +153,11 @@ private:
      * 
      */
     intMapType * data;
+    /**
+     * The total number of feature counts in the FeatureMap.
+     * 
+     */
+    int size;
 };
 
 #endif	/* FEATUREMAP_H */

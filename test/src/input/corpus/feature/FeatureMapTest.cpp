@@ -108,9 +108,9 @@ namespace {
         featureMap->incrementFeature(0, 1);
         EXPECT_EQ(1, featureMap->getSize());
         featureMap->incrementFeature(0, 1);
-        EXPECT_EQ(1, featureMap->getSize());
-        featureMap->incrementFeature(1, 1);
         EXPECT_EQ(2, featureMap->getSize());
+        featureMap->incrementFeature(1, 1);
+        EXPECT_EQ(3, featureMap->getSize());
     }
 
     /*
