@@ -118,6 +118,21 @@ protected:
      */
     int * Nwdsums;
     /**
+     * Computes phi, the termTopic probability matrix.
+     * 
+     */
+    void computePhi();
+    /**
+     * Computes theta, the topicDocument probability matrix.
+     * 
+     */
+    void computeTheta();
+    /**
+     * Logs the current state of this TopicModel
+     * 
+     */
+    void log() const;
+    /**
      * Samples the Topics for the Document with the given FeatureMap and
      * document number.
      * 

@@ -108,7 +108,16 @@ void LDA::estimate(int const & noIterations, string const & outputDirectory,
             sampleTopics(featureMap, docNo);
         }
         noIterationsCompleted++;
+
+        if (0.0 == ((double) i / saveInterval)) {
+            computeTheta();
+            computePhi();
+            log();
+        }
     }
+    computeTheta();
+    computePhi();
+    log();
 }
 
 void LDA::sampleTopics(FeatureMap const * const featureMap,
@@ -136,8 +145,11 @@ void LDA::sampleTopics(FeatureMap const * const featureMap,
 
             int k;
             for (k = 0; k < K; k++) {
-                double const lhs = (Nzd[i][k] + alpha);
-                double const rhs = (Nwz[k][term] + beta) / (Nwzsums[k] + K * beta);
+                double const lhs =
+                        (Nzd[i][k] + alpha);
+                double const rhs =
+                        (Nwz[k][term] + beta)
+                        / (Nwzsums[k] + K * beta);
                 p[k] = lhs * rhs;
             }
             // cumulative method
@@ -160,4 +172,30 @@ void LDA::sampleTopics(FeatureMap const * const featureMap,
             Nwzsums[topic] += 1;
         }
     }
+}
+
+void LDA::computePhi() {
+    for (int k = 0; k < K; k++) {
+        for (int w = 0; w < V; w++) {
+            double const result =
+                    (Nwz[k][w] + beta)
+                    / (Nwzsums[k] + V * beta);
+            termTopicMatrix->setElement(k, w, result);
+        }
+    }
+}
+
+void LDA::computeTheta() {
+    for (int m = 0; m < M; m++) {
+        for (int k = 0; k < K; k++) {
+            double const result =
+                    (Nzd[m][k] + alpha)
+                    / (Nwdsums[m] + K * alpha);
+            topicDocumentMatrix->setElement(m, k, result);
+        }
+    }
+}
+
+void LDA::log() const {
+
 }
