@@ -76,7 +76,7 @@ protected:
      * The number of topics. Stored again as K for convenience.
      * 
      */
-    int K;
+    int K, Kalpha;
     /**
      * The number of documents in the training Corpus.
      * 
@@ -86,7 +86,7 @@ protected:
      * The size of the Alphabet.
      * 
      */
-    int V;
+    int V, Vbeta;
     /**
      * Variable for sampling.
      * 

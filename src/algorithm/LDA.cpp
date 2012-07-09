@@ -29,7 +29,9 @@ LDA::LDA(double const alpha, double const beta,
 throw (IncompatibleCorpusException)
 : TopicModel(alpha, beta, corpus, noTopics) {
     K = noTopics;
+    Kalpha = K * alpha;
     V = TopicModel::corpus->getAlphabet()->getSize();
+    Vbeta = V * beta;
     M = TopicModel::corpus->getSize();
 
     random = new RandomNumberGenerator();
@@ -149,13 +151,14 @@ void LDA::sampleTopics(FeatureMap const * const featureMap,
                         (Nzd[i][k] + alpha);
                 double const rhs =
                         (Nwz[k][term] + beta)
-                        / (Nwzsums[k] + K * beta);
+                        / (Nwzsums[k] + Vbeta);
                 p[k] = lhs * rhs;
             }
             // cumulative method
             for (k = 1; k < K; k++) {
                 p[k] += p[k - 1];
             }
+            // sample
             double const u = random->nextUniform() * p[K - 1];
             for (k = 0; k < K; k++) {
                 if (p[k] > u) {
@@ -179,7 +182,7 @@ void LDA::computePhi() {
         for (int w = 0; w < V; w++) {
             double const result =
                     (Nwz[k][w] + beta)
-                    / (Nwzsums[k] + V * beta);
+                    / (Nwzsums[k] + Vbeta);
             termTopicMatrix->setElement(k, w, result);
         }
     }
@@ -190,7 +193,7 @@ void LDA::computeTheta() {
         for (int k = 0; k < K; k++) {
             double const result =
                     (Nzd[m][k] + alpha)
-                    / (Nwdsums[m] + K * alpha);
+                    / (Nwdsums[m] + Kalpha);
             topicDocumentMatrix->setElement(m, k, result);
         }
     }
