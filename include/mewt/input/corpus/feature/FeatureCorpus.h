@@ -65,7 +65,13 @@ public:
      * 
      */
     void replaceTerm(string const & originalTerm,
-            vector< string > const & terms) throw (TermNotPresentException) ;
+            vector< string > const & terms) throw (TermNotPresentException);
+    /**
+     * Squashes the Alphabet and FeatureMaps so that the maximum feature ID
+     * is equal to the number of features - 1.
+     * 
+     */
+    void squash();
     /**
      * Creates an instance of FeatureCorpus with the given location and an
      * empty Alphabet.
@@ -77,7 +83,7 @@ public:
      */
     static auto_ptr< FeatureCorpus > createInstance(string const & location);
 private:
-    auto_ptr< Alphabet > alphabet;
+    Alphabet * alphabet;
 };
 
 #endif	/* FEATURECORPUS_H */

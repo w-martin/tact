@@ -50,50 +50,17 @@ namespace {
     };
 
     /*
-     * Tests whether the getSize method works correctly.
+     * Tests whether the add and remove term methods work correctly.
      * 
      */
-    TEST_F(AlphabetTest, GetSizeTest) {
+    TEST_F(AlphabetTest, AddRemoveTermTest) {
         EXPECT_EQ(1, alphabet->getSize());
-    }
-
-    /*
-     * Tests whether the getTerm method works correctly.
-     * 
-     */
-    TEST_F(AlphabetTest, GetTermTest) {
-        string const term = alphabet->getTerm(0);
-        EXPECT_STREQ(testTerm, term.c_str());
-        EXPECT_THROW(alphabet->getTerm(1), TermNotPresentException);
-    }
-
-    /*
-     * Tests whether the hasTerm method works correctly.
-     * 
-     */
-    TEST_F(AlphabetTest, HasTermTest) {
-        EXPECT_TRUE(alphabet->hasTerm(testTerm));
-        EXPECT_FALSE(alphabet->hasTerm("hello"));
-    }
-
-    /*
-     * Tests whether the hasIndex method works correctly.
-     * 
-     */
-    TEST_F(AlphabetTest, HasIndexTest) {
-        EXPECT_TRUE(alphabet->hasIndex(0));
-        EXPECT_FALSE(alphabet->hasIndex(1));
-    }
-
-    /*
-     * Tests whether the getIndex method works correctly.
-     * 
-     */
-    TEST_F(AlphabetTest, GetIndexTest) {
-        int const index = alphabet->getIndex(testTerm);
-        EXPECT_EQ(0, index);
-        EXPECT_THROW(alphabet->getIndex("not test term"),
-                TermNotPresentException);
+        EXPECT_STREQ(testTerm, alphabet->removeTerm(0).c_str());
+        EXPECT_EQ(0, alphabet->getSize());
+        EXPECT_EQ(1, alphabet->addTerm(testTerm));
+        EXPECT_EQ(1, alphabet->getSize());
+        EXPECT_EQ(1, alphabet->removeTerm(testTerm));
+        EXPECT_EQ(0, alphabet->getSize());
     }
 
     /*
@@ -110,7 +77,7 @@ namespace {
         EXPECT_FALSE(alphabet->hasIndex(1));
         EXPECT_FALSE(alphabet->hasIndex(2));
         EXPECT_FALSE(alphabet->hasIndex(3));
-        
+
         EXPECT_THROW(alphabet->addTerm(term1, 0), DuplicateException);
         EXPECT_EQ(2, alphabet->addTerm(term1, 2));
         EXPECT_EQ(2, alphabet->getIndex(term1));
@@ -119,7 +86,7 @@ namespace {
         EXPECT_FALSE(alphabet->hasIndex(1));
         EXPECT_TRUE(alphabet->hasIndex(2));
         EXPECT_FALSE(alphabet->hasIndex(3));
-        
+
         EXPECT_THROW(alphabet->addTerm(term1, 1), DuplicateException);
         EXPECT_EQ(1, alphabet->addTerm(term2));
         EXPECT_EQ(1, alphabet->getIndex(term2));
@@ -127,32 +94,8 @@ namespace {
         EXPECT_TRUE(alphabet->hasIndex(1));
         EXPECT_TRUE(alphabet->hasIndex(2));
         EXPECT_FALSE(alphabet->hasIndex(3));
-        
+
         EXPECT_EQ(3, alphabet->getNextIndex());
-    }
-
-    /*
-     * Tests whether the add and remove term methods work correctly.
-     * 
-     */
-    TEST_F(AlphabetTest, AddRemoveTermTest) {
-        EXPECT_EQ(1, alphabet->getSize());
-        EXPECT_STREQ(testTerm, alphabet->removeTerm(0).c_str());
-        EXPECT_EQ(0, alphabet->getSize());
-        EXPECT_EQ(1, alphabet->addTerm(testTerm));
-        EXPECT_EQ(1, alphabet->getSize());
-        EXPECT_EQ(1, alphabet->removeTerm(testTerm));
-        EXPECT_EQ(0, alphabet->getSize());
-    }
-
-    /*
-     * Tests whether the getNextIndex method works correctly.
-     * 
-     */
-    TEST_F(AlphabetTest, GetNextIndexTest) {
-        EXPECT_EQ(1, alphabet->getNextIndex());
-        alphabet->addTerm("hello");
-        EXPECT_EQ(2, alphabet->getNextIndex());
     }
 
     /*
@@ -184,5 +127,84 @@ namespace {
         EXPECT_EQ(*alphabet, tmp);
 
         EXPECT_TRUE((*alphabet == tmp) == !(*alphabet != tmp));
+    }
+
+    /*
+     * Tests whether the getIndex method works correctly.
+     * 
+     */
+    TEST_F(AlphabetTest, GetIndexTest) {
+        int const index = alphabet->getIndex(testTerm);
+        EXPECT_EQ(0, index);
+        EXPECT_THROW(alphabet->getIndex("not test term"),
+                TermNotPresentException);
+    }
+
+    /*
+     * Tests whether the getNextIndex method works correctly.
+     * 
+     */
+    TEST_F(AlphabetTest, GetNextIndexTest) {
+        EXPECT_EQ(1, alphabet->getNextIndex());
+        alphabet->addTerm("hello");
+        EXPECT_EQ(2, alphabet->getNextIndex());
+    }
+
+    /*
+     * Tests whether the getSize method works correctly.
+     * 
+     */
+    TEST_F(AlphabetTest, GetSizeTest) {
+        EXPECT_EQ(1, alphabet->getSize());
+    }
+
+    /*
+     * Tests whether the getTerm method works correctly.
+     * 
+     */
+    TEST_F(AlphabetTest, GetTermTest) {
+        string const term = alphabet->getTerm(0);
+        EXPECT_STREQ(testTerm, term.c_str());
+        EXPECT_THROW(alphabet->getTerm(1), TermNotPresentException);
+    }
+
+    /*
+     * Tests whether the hasIndex method works correctly.
+     * 
+     */
+    TEST_F(AlphabetTest, HasIndexTest) {
+        EXPECT_TRUE(alphabet->hasIndex(0));
+        EXPECT_FALSE(alphabet->hasIndex(1));
+    }
+
+    /*
+     * Tests whether the hasTerm method works correctly.
+     * 
+     */
+    TEST_F(AlphabetTest, HasTermTest) {
+        EXPECT_TRUE(alphabet->hasTerm(testTerm));
+        EXPECT_FALSE(alphabet->hasTerm("hello"));
+    }
+
+    /*
+     * Tests whether the squash method works correctly.
+     * 
+     */
+    TEST_F(AlphabetTest, SquashTest) {
+        string const term1 = testTerm, term2 = "two";
+        alphabet->addTerm(term2);
+        alphabet->removeTerm(term1);
+        alphabet->addTerm(term1);
+
+        EXPECT_EQ(3, alphabet->getNextIndex());
+        EXPECT_EQ(2, alphabet->getIndex(term1));
+        EXPECT_EQ(1, alphabet->getIndex(term2));
+        map< int, int > replacements = alphabet->squash();
+        EXPECT_EQ(2, alphabet->getNextIndex());
+        EXPECT_EQ(0, alphabet->getIndex(term1));
+        EXPECT_EQ(1, alphabet->getIndex(term2));
+        EXPECT_EQ(1, replacements.size());
+        EXPECT_EQ(2, replacements.begin()->first);
+        EXPECT_EQ(0, replacements.begin()->second);
     }
 }

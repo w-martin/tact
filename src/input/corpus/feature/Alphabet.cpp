@@ -24,9 +24,12 @@
 
 #include "mewt/input/corpus/feature/Alphabet.h"
 #include <sstream>
+#include <vector>
 
 using std::endl;
 using std::stringstream;
+using std::make_pair;
+using std::vector;
 
 Alphabet::Alphabet() {
     data = new bmType();
@@ -175,6 +178,37 @@ throw (TermNotPresentException) {
     data->left.erase(term);
 
     return index;
+}
+
+map< int, int > Alphabet::squash() {
+    bool indices[getSize()];
+    for (int i = 0; i < getSize(); i++) {
+        indices[i] = false;
+    }
+    vector< int > indicesToReplace;
+    for (AlphabetIterator iter = begin();
+            end() != iter; iter++) {
+        int const index = iter.getIndex();
+        if (getSize() <= index) {
+            indicesToReplace.push_back(index);
+        } else {
+            indices[index] = true;
+        }
+    }
+    vector< int >::const_iterator iter = indicesToReplace.begin();
+    map< int, int > replacements;
+    for (int i = 0; i < getSize(); i++) {
+        if (!indices[i]) {
+            int const original = *iter;
+            string const term = getTerm(original);
+            data->right.erase(original);
+            data->insert(bmType::value_type(term, i));
+            replacements.insert(make_pair(original, i));
+            iter++;
+        }
+    }
+    nextIndex = getSize();
+    return replacements;
 }
 
 bmType const * const Alphabet::getData() const {

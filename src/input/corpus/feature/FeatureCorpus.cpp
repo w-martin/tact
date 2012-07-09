@@ -27,14 +27,15 @@
 FeatureCorpus::FeatureCorpus(const string location,
         auto_ptr<Alphabet> alphabet)
 : Corpus(location, DOCUMENT_TYPE_FEATURE) {
-    FeatureCorpus::alphabet = alphabet;
+    FeatureCorpus::alphabet = alphabet.release();
 }
 
 FeatureCorpus::~FeatureCorpus() {
+    delete alphabet;
 }
 
 Alphabet * const FeatureCorpus::getAlphabet() const {
-    return alphabet.get();
+    return alphabet;
 }
 
 void FeatureCorpus::replaceTerm(string const & originalTerm,
@@ -56,6 +57,26 @@ void FeatureCorpus::replaceTerm(string const & originalTerm,
                     replacementIndices.begin();
                     replacementIndices.end() != indexIter; indexIter++) {
                 featureMap->incrementFeature(*indexIter, count);
+            }
+        }
+    }
+}
+
+void FeatureCorpus::squash() {
+    map< int, int > replacements = alphabet->squash();
+    for (vector< Document * >::const_iterator iter = getDocuments()->begin();
+            getDocuments()->end() != iter; iter++) {
+        FeatureMap * const featureMap =
+                ((FeatureDocument *) (* iter))->getFeatureMap();
+        for (map< int, int >::const_iterator riter = replacements.begin();
+                replacements.end() != riter; riter++) {
+            int const originalIndex = riter->first;
+            int const replacementIndex = riter->second;
+
+            int const count = featureMap->getFeature(originalIndex);
+            if (0 < count) {
+                featureMap->removeFeature(originalIndex);
+                featureMap->setFeature(replacementIndex, count);
             }
         }
     }

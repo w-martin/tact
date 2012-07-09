@@ -28,11 +28,12 @@
 #include "mewt/input/corpus/feature/AlphabetIterator.h"
 #include "mewt/input/exceptions/TermNotPresentException.h"
 #include "mewt/util/exceptions/DuplicateException.h"
+#include <map>
 #include <string>
-#include <vector>
 #include <boost/bimap.hpp>
 
 using std::auto_ptr;
+using std::map;
 using std::string;
 using boost::bimaps::bimap;
 
@@ -195,6 +196,14 @@ public:
      */
     int const removeTerm(string const & term)
     throw (TermNotPresentException);
+    /**
+     * Squashes this Alphabet so that the maximum feature ID
+     * is equal to the number of features - 1.
+     * 
+     * @return a map of <original index, replacement index>.
+     * 
+     */
+    map< int, int > squash();
 protected:
     /**
      * Creates an exception with information about the given index.

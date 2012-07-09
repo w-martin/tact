@@ -128,6 +128,39 @@ namespace {
     }
 
     /*
+     * Tests whether the squash method works correctly.
+     * 
+     */
+    TEST_F(FeatureCorpusTest, SquashTest) {
+        string const original = "hello";
+        Alphabet * const alphabet = corpus->getAlphabet();
+        alphabet->removeTerm(original);
+        
+        int const index = alphabet->addTerm(original);
+        int const count = 33;
+        auto_ptr< FeatureMap > featureMap =
+                auto_ptr< FeatureMap > (new FeatureMap());
+        featureMap->setFeature(index, count);
+        auto_ptr< Document > document = auto_ptr< Document > (
+                new FeatureDocument("testDoc", featureMap));
+        corpus->addDocument(document);
+        
+        FeatureDocument const * const featureDocument =
+                (FeatureDocument *) corpus->getDocuments()->at(0);
+        FeatureMap const * const map = featureDocument->getFeatureMap();
+        EXPECT_EQ(0, map->getFeature(0));
+        EXPECT_EQ(count, map->getFeature(1));
+        EXPECT_EQ(1, alphabet->getSize());
+        EXPECT_EQ(2, alphabet->getNextIndex());
+        
+        corpus->squash();
+        EXPECT_EQ(count, map->getFeature(0));
+        EXPECT_EQ(0, map->getFeature(1));
+        EXPECT_EQ(1, alphabet->getSize());
+        EXPECT_EQ(1, alphabet->getNextIndex());
+    }
+
+    /*
      * Tests whether the createInstance method works correctly.
      * 
      */
