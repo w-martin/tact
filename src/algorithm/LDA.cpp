@@ -23,6 +23,10 @@
  */
 
 #include "mewt/algorithm/LDA.h"
+#include <iostream>
+
+using std::cout;
+using std::endl;
 
 LDA::LDA(double const alpha, double const beta,
         auto_ptr< Corpus > corpus, int const noTopics)
@@ -103,6 +107,12 @@ void LDA::estimate(int const & noIterations, string const & outputDirectory,
     vector< Document * > const * const documents = corpus->getDocuments();
     for (int i = 0; i < noIterations; i++) {
 
+        if (0.0 == (i % saveInterval)) {
+            computeTheta();
+            computePhi();
+            log(noIterations - i);
+        }
+
         // for all $d \in D$ do
         for (int docNo = 0; docNo < M; docNo++) {
             FeatureMap const * const featureMap =
@@ -110,16 +120,10 @@ void LDA::estimate(int const & noIterations, string const & outputDirectory,
             sampleTopics(featureMap, docNo);
         }
         noIterationsCompleted++;
-
-        if (0.0 == ((double) i / saveInterval)) {
-            computeTheta();
-            computePhi();
-            log();
-        }
     }
     computeTheta();
     computePhi();
-    log();
+    log(0);
 }
 
 void LDA::sampleTopics(FeatureMap const * const featureMap,
@@ -199,6 +203,8 @@ void LDA::computeTheta() {
     }
 }
 
-void LDA::log() const {
-
+void LDA::log(int const & noIterationsToGo) const {
+    int const totalIterations = (noIterationsCompleted + noIterationsToGo);
+    cout << "Gibbs sampling: " << noIterationsCompleted << "/"
+            << totalIterations << " iterations completed." << endl;
 }

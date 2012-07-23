@@ -128,10 +128,12 @@ protected:
      */
     void computeTheta();
     /**
-     * Logs the current state of this TopicModel
+     * Logs the current state of this TopicModel.
+     * 
+     * @param noIterationsToGo the number of iterations yet to go.
      * 
      */
-    void log() const;
+    void log(int const & noIterationsToGo) const;
     /**
      * Samples the Topics for the Document with the given FeatureMap and
      * document number.
