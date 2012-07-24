@@ -25,10 +25,20 @@
 #include "mewt/util/Strings.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string_regex.hpp>
+#include <boost/algorithm/string/find.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/regex.hpp>
 
 namespace strings = mewt::util::strings;
+
+bool const strings::contains(string const & first, string const & second,
+        bool const & caseSensitive) {
+    if (caseSensitive) {
+        return boost::algorithm::find_first(first, second);
+    } else {
+        return boost::algorithm::ifind_first(first, second);
+    }
+}
 
 bool const strings::containsPunctuation(string const & term) {
     return matches(term, ".*\\W+.*");

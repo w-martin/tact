@@ -46,7 +46,32 @@ namespace {
 };
 
 /*
- * Tests whether the constainsPunctuation method work correctly.
+ * Tests whether the contains function works correctly.
+ * 
+ */
+TEST_F(StringsTest, ContainsTest) {
+    string const big = "hello WORLD";
+    EXPECT_TRUE(contains(big, "hello", false));
+    EXPECT_TRUE(contains(big, "hello", true));
+    EXPECT_TRUE(contains(big, "hello"));
+    EXPECT_TRUE(contains(big, "HELLO", false));
+    EXPECT_FALSE(contains(big, "HELLO", true));
+    EXPECT_FALSE(contains(big, "HELLO"));
+
+    EXPECT_TRUE(contains(big, "hello WORLD", false));
+    EXPECT_TRUE(contains(big, "hello WORLD", true));
+    EXPECT_TRUE(contains(big, "hello WORLD"));
+    EXPECT_FALSE(contains(big, "HELLO world", true));
+    EXPECT_FALSE(contains(big, "HELLO world"));
+    EXPECT_TRUE(contains(big, "HELLO world", false));
+
+    EXPECT_FALSE(contains(big, "z", true));
+    EXPECT_FALSE(contains(big, "z"));
+    EXPECT_FALSE(contains(big, "z", false));
+}
+
+/*
+ * Tests whether the constainsPunctuation function work correctly.
  * 
  */
 TEST_F(StringsTest, ConstainsPunctuationTest) {
@@ -64,7 +89,7 @@ TEST_F(StringsTest, ConstainsPunctuationTest) {
 }
 
 /*
- * Tests whether the containsUpper method works correctly.
+ * Tests whether the containsUpper function works correctly.
  * 
  */
 TEST_F(StringsTest, ContainsUpperTest) {
@@ -75,7 +100,7 @@ TEST_F(StringsTest, ContainsUpperTest) {
 }
 
 /*
- * Tests whether the matches method works correctly.
+ * Tests whether the matches function works correctly.
  * 
  */
 TEST_F(StringsTest, MatchesTest) {
@@ -90,7 +115,7 @@ TEST_F(StringsTest, MatchesTest) {
 }
 
 /*
- * Tests whether the replace method works correctly.
+ * Tests whether the replace function works correctly.
  * 
  */
 TEST_F(StringsTest, ReplaceTest) {
@@ -102,7 +127,7 @@ TEST_F(StringsTest, ReplaceTest) {
 }
 
 /*
- * Tests whether the split on whitespace method works correctly.
+ * Tests whether the split on whitespace function works correctly.
  * 
  */
 TEST_F(StringsTest, SplitWhitespaceTest) {
@@ -120,7 +145,7 @@ TEST_F(StringsTest, SplitWhitespaceTest) {
 }
 
 /*
- * Tests whether the split on delimiter method works correctly.
+ * Tests whether the split on delimiter function works correctly.
  * 
  */
 TEST_F(StringsTest, SplitTest) {
@@ -130,7 +155,7 @@ TEST_F(StringsTest, SplitTest) {
 }
 
 /*
- * Tests whether the splitLines method works correctly.
+ * Tests whether the splitLines function works correctly.
  * 
  */
 TEST_F(StringsTest, SplitLinesTest) {
@@ -140,7 +165,7 @@ TEST_F(StringsTest, SplitLinesTest) {
 }
 
 /*
- * Tests whether the toInteger method works correctly.
+ * Tests whether the toInteger function works correctly.
  * 
  */
 TEST_F(StringsTest, ToIntegerTest) {
@@ -149,7 +174,7 @@ TEST_F(StringsTest, ToIntegerTest) {
 }
 
 /*
- * Tests whether the toLower method works correctly.
+ * Tests whether the toLower function works correctly.
  * 
  */
 TEST_F(StringsTest, ToLowerTest) {

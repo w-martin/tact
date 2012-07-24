@@ -45,3 +45,11 @@ auto_ptr< string > mewt::util::files::readFile(const string & location) {
 
     return text;
 }
+
+void mewt::util::files::appendFile(string const & text,
+        string const & filename) {
+    std::ofstream outputFileStream;
+    outputFileStream.open(filename.c_str(), std::ios_base::app);
+    outputFileStream << text << std::endl;
+    outputFileStream.close();
+}

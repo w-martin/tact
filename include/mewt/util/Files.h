@@ -48,6 +48,14 @@ namespace mewt {
              * 
              */
             auto_ptr< string > readFile(string const & location);
+            /**
+             * Appends the given text to the file with the given name.
+             * 
+             * @param text the text to append to the file.
+             * @param filename the name of the file to append.
+             * 
+             */
+            void appendFile(string const & text, string const & filename);
         };
 
     };

@@ -33,6 +33,7 @@ OPTION(TESTING "Build tests." ON)
 
 set(MEWT_NAME mewt)
 set(MEWT_UTIL mewt-util)
+set(MEWT_LOGGER mewt-logger)
 set(MEWT_INPUT mewt-input)
 set(MEWT_OUTPUT mewt-output)
 set(MEWT_MODEL mewt-model)
@@ -43,7 +44,13 @@ set(MEWT_TEST_DIR test/src)
 set(MEWT_MOCK_DIR test/mock)
 
 set(Boost_USE_MULTITHREADED ON)
-find_package(Boost COMPONENTS regex filesystem system REQUIRED)
+find_package(Boost COMPONENTS 
+    regex
+    date_time
+    filesystem
+    system
+    thread
+    REQUIRED)
 
 include_directories(
     ${MEWT_INCLUDE_DIR}
@@ -61,6 +68,10 @@ add_library (${MEWT_UTIL}
     ${MEWT_SOURCE_DIR}/util/exceptions/Exception.cpp
     ${MEWT_SOURCE_DIR}/util/exceptions/FileNotFoundException.cpp
     ${MEWT_SOURCE_DIR}/util/exceptions/OutOfBoundsException.cpp
+    )
+
+add_library (${MEWT_LOGGER}
+    ${MEWT_SOURCE_DIR}/logger/Logger.cpp
     )
 
 add_library (${MEWT_INPUT}
@@ -117,9 +128,11 @@ target_link_libraries(${MEWT_NAME}
     ${MEWT_OUTPUT}
     ${MEWT_INPUT}
     ${MEWT_UTIL}
-    ${Boost_REGEX_LIBRARY}
+    ${Boost_DATE_TIME_LIBRARY}
     ${Boost_FILESYSTEM_LIBRARY}
-    ${Boost_SYSTEM_LIBRARY})
+    ${Boost_REGEX_LIBRARY}
+    ${Boost_SYSTEM_LIBRARY}
+    )
 
 ################################################
 # GTest - http://code.google.com/p/googletest/ #
@@ -153,9 +166,26 @@ IF(TESTING)
     target_link_libraries(UtilTests
         ${MEWT_UTIL}
         ${Boost_REGEX_LIBRARY}
+        ${Boost_FILESYSTEM_LIBRARY}
+        ${Boost_SYSTEM_LIBRARY}
         gmock
         gmock_main) 
     add_test(UtilTests UtilTests)
+
+    add_executable(LoggerTests
+        ${MEWT_TEST_DIR}/logger/LoggerTest.cpp
+    ) 
+    target_link_libraries(LoggerTests
+        ${MEWT_LOGGER}
+        ${MEWT_UTIL}
+        ${Boost_REGEX_LIBRARY}
+        ${Boost_DATE_TIME_LIBRARY}
+        ${Boost_FILESYSTEM_LIBRARY}
+        ${Boost_SYSTEM_LIBRARY}
+        ${Boost_THREAD_LIBRARY}
+        gmock
+        gmock_main) 
+    add_test(LoggerTests LoggerTests)
 
     add_executable(InputTests
         ${MEWT_TEST_DIR}/input/corpus/CorpusTest.cpp

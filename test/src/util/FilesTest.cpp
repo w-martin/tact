@@ -22,6 +22,7 @@
  * 
  */
 
+#include <boost/filesystem.hpp>
 #include "gtest/gtest.h"
 #include "mewt/util/Files.h"
 
@@ -52,4 +53,28 @@ namespace {
 TEST_F(FilesTest, ReadFileTest) {
     auto_ptr< string > text = readFile("CMakeCache.txt");
     EXPECT_GT(text->size(), 0);
+}
+
+/*
+ * Tests whether the appendFile method works correctly.
+ * 
+ */
+TEST_F(FilesTest, AppendFileTest) {
+    string testMessage = "test message";
+    std::stringstream stream;
+    stream << testMessage << std::endl;
+    string expectedMessage = stream.str();
+    stream.str(string());
+    
+    string filename = "FilesTest.AppendFileTest";
+    boost::filesystem::remove(filename);
+    
+    appendFile(testMessage, filename);
+    EXPECT_TRUE(boost::filesystem::exists(filename));
+    EXPECT_STREQ(expectedMessage.c_str(), readFile(filename)->c_str());
+    
+    appendFile(testMessage, filename);
+    EXPECT_STREQ(expectedMessage.append(expectedMessage).c_str(), 
+            readFile(filename)->c_str());
+    boost::filesystem::remove(filename);
 }

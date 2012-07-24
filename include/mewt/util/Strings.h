@@ -45,6 +45,19 @@ namespace mewt {
          */
         namespace strings {
             /**
+             * Checks if the first string contains an instance of the second.
+             * 
+             * @param first the string to check.
+             * @param second the string to check for.
+             * @param caseSensitive indicates whether the check should be case
+             * sensitive, defaults to true for speed.
+             * @return true if the first string contains an instance of the 
+             * second, false otherwise.
+             * 
+             */
+            bool const contains(string const & first, string const & second,
+                    bool const & caseSensitive = true);
+            /**
              * Checks if the given term contains punctuation.
              * 
              * @param term the term to check.
