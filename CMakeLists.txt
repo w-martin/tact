@@ -112,11 +112,11 @@ add_executable (${MEWT_NAME}
     ${MEWT_SOURCE_DIR}/main.cpp)
 target_link_libraries(${MEWT_NAME}
     ${CMAKE_THREAD_LIBS_INIT}
+    ${MEWT_ALGORITHM}
+    ${MEWT_MODEL}
+    ${MEWT_OUTPUT}
     ${MEWT_INPUT}
     ${MEWT_UTIL}
-    ${MEWT_OUTPUT}
-    ${MEWT_MODEL}
-    ${MEWT_ALGORITHM}
     ${Boost_REGEX_LIBRARY}
     ${Boost_FILESYSTEM_LIBRARY}
     ${Boost_SYSTEM_LIBRARY})
