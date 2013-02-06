@@ -66,7 +66,7 @@ namespace {
         
         delete lda;
         auto_ptr< Corpus > corpus = auto_ptr< Corpus >(
-                new Corpus("../include", DOCUMENT_TYPE_BASIC));
+                new Corpus("../sample", DOCUMENT_TYPE_BASIC));
         corpus = ScanInputOptimiseBundle().pipe(corpus);
         lda = new LDA(alpha, beta, corpus, noTopics);
         
