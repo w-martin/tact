@@ -272,4 +272,20 @@ IF(TESTING)
         gmock_main)
     add_test(AlgorithmTests AlgorithmTests)
 
+    add_executable(IntegrationTests
+        ${MEWT_TEST_DIR}/integration/IntegrationTests.cpp
+    ) 
+    target_link_libraries(IntegrationTests
+        ${MEWT_ALGORITHM}
+        ${MEWT_MODEL}
+        ${MEWT_OUTPUT}
+        ${MEWT_INPUT}
+        ${MEWT_UTIL}
+        ${Boost_REGEX_LIBRARY}
+        ${Boost_FILESYSTEM_LIBRARY}
+        ${Boost_SYSTEM_LIBRARY}
+        gmock
+        gmock_main)
+    add_test(IntegrationTests IntegrationTests)
+
 ENDIF(TESTING)

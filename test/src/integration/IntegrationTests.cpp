@@ -1,5 +1,5 @@
 /**
- * @file LDATest.cpp
+ * @file IntegrationTest.cpp
  * @author  William Martin <will.st4@gmail.com>
  * @since 0.4
  *
@@ -33,13 +33,13 @@ namespace fs = boost::filesystem;
 namespace {
 
     /**
-     * Tests LDA.
+     * Integration Tests.
      * 
      */
-    class LDATest : public ::testing::Test {
+    class IntegrationTest : public ::testing::Test {
     protected:
 
-        LDATest() {
+        IntegrationTest() {
             alpha = 0.56;
             beta = 0.65;
             noTopics = 23;
@@ -47,7 +47,7 @@ namespace {
                     auto_ptr< Corpus > (new MockFeatureCorpus()), noTopics);
         }
 
-        virtual ~LDATest() {
+        virtual ~IntegrationTest() {
             delete lda;
         }
         LDA * lda;
@@ -59,10 +59,17 @@ namespace {
      * Tests whether the estimate method works correctly.
      * 
      */
-    TEST_F(LDATest, EstimateTest) {
+    TEST_F(IntegrationTest, LDATest) {
         int const noIterations = 53;
-        string const outputDirectory = ".EstimateTest";
+        string const outputDirectory = ".LDATest";
         int const saveInterval = 10;
+        
+        delete lda;
+        auto_ptr< Corpus > corpus = auto_ptr< Corpus >(
+                new Corpus("../include", DOCUMENT_TYPE_BASIC));
+        corpus = ScanInputOptimiseBundle().pipe(corpus);
+        lda = new LDA(alpha, beta, corpus, noTopics);
+        
         lda->estimate(noIterations, outputDirectory, saveInterval);
         EXPECT_EQ(noIterations, lda->getNoIterationsCompleted());
         fs::remove_all(outputDirectory);
