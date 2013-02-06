@@ -26,34 +26,34 @@
 #include <stdlib.h>
 #include <time.h>
 
-RandomNumberGenerator::RandomNumberGenerator() {
+mewt::algorithm::RandomNumberGenerator::RandomNumberGenerator() {
     count = 0;
     seed = time(NULL);
 }
 
-RandomNumberGenerator::RandomNumberGenerator(const int seed) {
+mewt::algorithm::RandomNumberGenerator::RandomNumberGenerator(const int seed) {
     count = 0;
-    RandomNumberGenerator::seed = seed;
+    mewt::algorithm::RandomNumberGenerator::seed = seed;
 }
 
-RandomNumberGenerator::RandomNumberGenerator(
+mewt::algorithm::RandomNumberGenerator::RandomNumberGenerator(
         const RandomNumberGenerator& orig) {
     count = orig.getCount();
     seed = orig.getSeed();
 }
 
-RandomNumberGenerator::~RandomNumberGenerator() {
+mewt::algorithm::RandomNumberGenerator::~RandomNumberGenerator() {
 }
 
-int const RandomNumberGenerator::getCount() const {
+int const mewt::algorithm::RandomNumberGenerator::getCount() const {
     return count;
 }
 
-int const RandomNumberGenerator::getSeed() const {
+int const mewt::algorithm::RandomNumberGenerator::getSeed() const {
     return seed;
 }
 
-double const RandomNumberGenerator::nextUniform() {
+double const mewt::algorithm::RandomNumberGenerator::nextUniform() {
     // ensures consecutive calls generate different numbers
     srand((unsigned int) time(NULL) - count);
     double r = rand() / double(RAND_MAX);

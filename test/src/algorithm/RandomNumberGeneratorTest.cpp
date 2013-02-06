@@ -25,6 +25,8 @@
 #include "gtest/gtest.h"
 #include "mewt/algorithm/RandomNumberGenerator.h"
 
+using mewt::algorithm::RandomNumberGenerator;
+
 namespace {
 
     /**

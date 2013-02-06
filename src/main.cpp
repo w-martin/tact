@@ -35,6 +35,7 @@
 #include <map>
 
 namespace strings = mewt::util::strings;
+using mewt::algorithm::LDA;
 
 using std::cout;
 using std::endl;
@@ -125,7 +126,8 @@ namespace {
          */
         void preprocess(string const & corpusLocation,
                 string const & stopwordsFile) {
-            auto_ptr< Corpus > corpus = Input::process(corpusLocation, stopwordsFile);
+            auto_ptr< Corpus > corpus = Input::process(corpusLocation, 
+                    stopwordsFile);
             FeatureCorpusIO::save((FeatureCorpus *) corpus.get());
         }
 

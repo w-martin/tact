@@ -28,7 +28,7 @@
 using std::cout;
 using std::endl;
 
-LDA::LDA(double const alpha, double const beta,
+mewt::algorithm::LDA::LDA(double const alpha, double const beta,
         auto_ptr< Corpus > corpus, int const noTopics)
 throw (IncompatibleCorpusException)
 : TopicModel(alpha, beta, corpus, noTopics) {
@@ -85,7 +85,7 @@ throw (IncompatibleCorpusException)
     }
 }
 
-LDA::~LDA() {
+mewt::algorithm::LDA::~LDA() {
     delete random;
     delete [] p;
     for (int i = 0; i < K; i++) {
@@ -102,7 +102,7 @@ LDA::~LDA() {
     delete [] Nwdsums;
 }
 
-void LDA::estimate(int const & noIterations, string const & outputDirectory,
+void mewt::algorithm::LDA::estimate(int const & noIterations, string const & outputDirectory,
         int const & saveInterval) {
     vector< Document * > const * const documents = corpus->getDocuments();
     for (int i = 0; i < noIterations; i++) {
@@ -126,7 +126,7 @@ void LDA::estimate(int const & noIterations, string const & outputDirectory,
     log(0);
 }
 
-void LDA::sampleTopics(FeatureMap const * const featureMap,
+void mewt::algorithm::LDA::sampleTopics(FeatureMap const * const featureMap,
         int const & docNo) {
     int const N = featureMap->getSize();
     int const i = docNo;
@@ -181,7 +181,7 @@ void LDA::sampleTopics(FeatureMap const * const featureMap,
     }
 }
 
-void LDA::computePhi() {
+void mewt::algorithm::LDA::computePhi() {
     for (int k = 0; k < K; k++) {
         for (int w = 0; w < V; w++) {
             double const result =
@@ -192,7 +192,7 @@ void LDA::computePhi() {
     }
 }
 
-void LDA::computeTheta() {
+void mewt::algorithm::LDA::computeTheta() {
     for (int m = 0; m < M; m++) {
         for (int k = 0; k < K; k++) {
             double const result =
@@ -203,7 +203,7 @@ void LDA::computeTheta() {
     }
 }
 
-void LDA::log(int const & noIterationsToGo) const {
+void mewt::algorithm::LDA::log(int const & noIterationsToGo) const {
     int const totalIterations = (noIterationsCompleted + noIterationsToGo);
     cout << "Gibbs sampling: " << noIterationsCompleted << "/"
             << totalIterations << " iterations completed." << endl;

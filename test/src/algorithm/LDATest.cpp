@@ -29,6 +29,7 @@
 #include <boost/filesystem.hpp>
 
 namespace fs = boost::filesystem;
+using mewt::algorithm::LDA;
 
 namespace {
 
