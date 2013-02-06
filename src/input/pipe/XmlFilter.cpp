@@ -28,6 +28,8 @@
 
 using mewt::util::strings::replace;
 
+using namespace mewt::input::pipe;
+
 XmlFilter::XmlFilter() : Pipe(DOCUMENT_TYPE_TEXT) {
 }
 

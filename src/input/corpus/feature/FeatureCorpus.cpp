@@ -24,66 +24,68 @@
 
 #include "mewt/input/corpus/feature/FeatureCorpus.h"
 
+using namespace mewt::input::corpus::feature;
+
 FeatureCorpus::FeatureCorpus(const string location,
         auto_ptr<Alphabet> alphabet)
 : Corpus(location, DOCUMENT_TYPE_FEATURE) {
-    FeatureCorpus::alphabet = alphabet.release();
+  FeatureCorpus::alphabet = alphabet.release();
 }
 
 FeatureCorpus::~FeatureCorpus() {
-    delete alphabet;
+  delete alphabet;
 }
 
 Alphabet * const FeatureCorpus::getAlphabet() const {
-    return alphabet;
+  return alphabet;
 }
 
 void FeatureCorpus::replaceTerm(string const & originalTerm,
         vector<string> const & terms) throw (TermNotPresentException) {
-    int const originalIndex = alphabet->removeTerm(originalTerm);
-    vector< int > replacementIndices;
-    for (vector< string >::const_iterator iter = terms.begin();
-            terms.end() != iter; iter++) {
-        replacementIndices.push_back(alphabet->addTerm(*iter));
+  int const originalIndex = alphabet->removeTerm(originalTerm);
+  vector< int > replacementIndices;
+  for (vector< string >::const_iterator iter = terms.begin();
+          terms.end() != iter; iter++) {
+    replacementIndices.push_back(alphabet->addTerm(*iter));
+  }
+  for (vector< Document * >::const_iterator iter = getDocuments()->begin();
+          getDocuments()->end() != iter; iter++) {
+    FeatureMap * const featureMap =
+            ((FeatureDocument *) (* iter))->getFeatureMap();
+    int const count = featureMap->getFeature(originalIndex);
+    if (0 < count) {
+      featureMap->removeFeature(originalIndex);
+      for (vector< int >::const_iterator indexIter =
+              replacementIndices.begin();
+              replacementIndices.end() != indexIter; indexIter++) {
+        featureMap->incrementFeature(*indexIter, count);
+      }
     }
-    for (vector< Document * >::const_iterator iter = getDocuments()->begin();
-            getDocuments()->end() != iter; iter++) {
-        FeatureMap * const featureMap =
-                ((FeatureDocument *) (* iter))->getFeatureMap();
-        int const count = featureMap->getFeature(originalIndex);
-        if (0 < count) {
-            featureMap->removeFeature(originalIndex);
-            for (vector< int >::const_iterator indexIter =
-                    replacementIndices.begin();
-                    replacementIndices.end() != indexIter; indexIter++) {
-                featureMap->incrementFeature(*indexIter, count);
-            }
-        }
-    }
+  }
 }
 
 void FeatureCorpus::squash() {
-    map< int, int > replacements = alphabet->squash();
-    for (vector< Document * >::const_iterator iter = getDocuments()->begin();
-            getDocuments()->end() != iter; iter++) {
-        FeatureMap * const featureMap =
-                ((FeatureDocument *) (* iter))->getFeatureMap();
-        for (map< int, int >::const_iterator riter = replacements.begin();
-                replacements.end() != riter; riter++) {
-            int const originalIndex = riter->first;
-            int const replacementIndex = riter->second;
+  map< int, int > replacements = alphabet->squash();
+  for (vector< Document * >::const_iterator iter = getDocuments()->begin();
+          getDocuments()->end() != iter; iter++) {
+    FeatureMap * const featureMap =
+            ((FeatureDocument *) (* iter))->getFeatureMap();
+    for (map< int, int >::const_iterator riter = replacements.begin();
+            replacements.end() != riter; riter++) {
+      int const originalIndex = riter->first;
+      int const replacementIndex = riter->second;
 
-            int const count = featureMap->getFeature(originalIndex);
-            if (0 < count) {
-                featureMap->removeFeature(originalIndex);
-                featureMap->setFeature(replacementIndex, count);
-            }
-        }
+      int const count = featureMap->getFeature(originalIndex);
+      if (0 < count) {
+        featureMap->removeFeature(originalIndex);
+        featureMap->setFeature(replacementIndex, count);
+      }
     }
+  }
 }
 
 auto_ptr< FeatureCorpus > FeatureCorpus::createInstance(
         const string & location) {
-    return auto_ptr< FeatureCorpus > (new FeatureCorpus(
-            location, auto_ptr< Alphabet > (new Alphabet())));
+  return auto_ptr< FeatureCorpus > (new FeatureCorpus(
+          location, auto_ptr< Alphabet > (new Alphabet())));
 }

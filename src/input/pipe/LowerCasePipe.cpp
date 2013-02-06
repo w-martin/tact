@@ -33,6 +33,8 @@ using mewt::util::strings::containsUpper;
 using mewt::util::strings::transformToLower;
 using std::map;
 
+using namespace mewt::input::pipe;
+
 typedef map< string, vector< string > > replacementMapType;
 
 LowerCasePipe::LowerCasePipe() : Pipe(DOCUMENT_TYPE_FEATURE) {
@@ -43,21 +45,21 @@ LowerCasePipe::~LowerCasePipe() {
 
 auto_ptr< Corpus > LowerCasePipe::process(
         auto_ptr< Corpus > corpus) const {
-    FeatureCorpus * const featureCorpus = (FeatureCorpus*) corpus.get();
-    Alphabet * const alphabet = featureCorpus->getAlphabet();
-    replacementMapType termsToReplace;
-    for (AlphabetIterator iter = alphabet->begin();
-            alphabet->end() != iter; iter++) {
-        string const term = iter.getTerm();
-        if (containsUpper(term)) {
-            vector< string > transformed;
-            transformed.push_back(transformToLower(term));
-            termsToReplace.insert(std::make_pair(term, transformed));
-        }
+  FeatureCorpus * const featureCorpus = (FeatureCorpus*) corpus.get();
+  Alphabet * const alphabet = featureCorpus->getAlphabet();
+  replacementMapType termsToReplace;
+  for (AlphabetIterator iter = alphabet->begin();
+          alphabet->end() != iter; iter++) {
+    string const term = iter.getTerm();
+    if (containsUpper(term)) {
+      vector< string > transformed;
+      transformed.push_back(transformToLower(term));
+      termsToReplace.insert(std::make_pair(term, transformed));
     }
-    for (replacementMapType::const_iterator iter = termsToReplace.begin();
-            termsToReplace.end() != iter; iter++) {
-        featureCorpus->replaceTerm((*iter).first, (*iter).second);
-    }
-    return corpus;
+  }
+  for (replacementMapType::const_iterator iter = termsToReplace.begin();
+          termsToReplace.end() != iter; iter++) {
+    featureCorpus->replaceTerm((*iter).first, (*iter).second);
+  }
+  return corpus;
 }

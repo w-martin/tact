@@ -24,6 +24,8 @@
 
 #include "mewt/input/corpus/text/TextCorpus.h"
 
+using namespace mewt::input::corpus::text;
+
 TextCorpus::TextCorpus(const string location)
 : Corpus(location, DOCUMENT_TYPE_TEXT) {
 }

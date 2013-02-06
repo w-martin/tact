@@ -27,6 +27,8 @@
 #include "mewt/input/pipe/InputPipe.h"
 #include "mewt/input/pipe/bundle/InputOptimiseBundle.h"
 
+using namespace mewt::input::pipe::bundle;
+
 ScanInputOptimiseBundle::ScanInputOptimiseBundle() {
     attachPipe(auto_ptr< Pipe >(new DirectoryScannerPipe(true)));
     attachPipe(auto_ptr< Pipe >(new InputOptimiseBundle()));

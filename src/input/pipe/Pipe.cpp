@@ -24,61 +24,63 @@
 
 #include "mewt/input/pipe/Pipe.h"
 
+using namespace mewt::input::pipe;
+
 Pipe::Pipe() {
-    Pipe::compatibleDocumentTypes = new vector< int >();
+  Pipe::compatibleDocumentTypes = new vector< int >();
 }
 
 Pipe::Pipe(const int compatibleType) {
-    Pipe::compatibleDocumentTypes = new vector< int >();
-    compatibleDocumentTypes->push_back(compatibleType);
+  Pipe::compatibleDocumentTypes = new vector< int >();
+  compatibleDocumentTypes->push_back(compatibleType);
 }
 
 Pipe::Pipe(vector<int> const & compatibleTypes) {
-    Pipe::compatibleDocumentTypes = new vector< int >(compatibleTypes);
+  Pipe::compatibleDocumentTypes = new vector< int >(compatibleTypes);
 }
 
 Pipe::~Pipe() {
-    delete compatibleDocumentTypes;
+  delete compatibleDocumentTypes;
 }
 
 vector< int > const * const Pipe::getCompatibleTypes() const {
-    return compatibleDocumentTypes;
+  return compatibleDocumentTypes;
 }
 
 Pipe const * const Pipe::getNextPipe() const {
-    return nextPipe.get();
+  return nextPipe.get();
 }
 
 void Pipe::attachPipe(auto_ptr<Pipe> nextPipe) {
-    if (NULL == Pipe::nextPipe.get()) {
-        Pipe::nextPipe = nextPipe;
-    } else {
-        Pipe::nextPipe->attachPipe(nextPipe);
-    }
+  if (NULL == Pipe::nextPipe.get()) {
+    Pipe::nextPipe = nextPipe;
+  } else {
+    Pipe::nextPipe->attachPipe(nextPipe);
+  }
 }
 
 auto_ptr< Corpus > Pipe::pipe(auto_ptr<Corpus> corpus) const
 throw (IncompatibleCorpusException) {
-    if (!checkCorpusCompatible(corpus.get())) {
-        throw IncompatibleCorpusException(
-                corpus->getDocumentsType(), getCompatibleTypes(), "Pipe::pipe");
-    }
-    if (NULL == nextPipe.get()) {
-        return process(corpus);
-    } else {
-        return nextPipe->pipe(process(corpus));
-    }
+  if (!checkCorpusCompatible(corpus.get())) {
+    throw IncompatibleCorpusException(
+            corpus->getDocumentsType(), getCompatibleTypes(), "Pipe::pipe");
+  }
+  if (NULL == nextPipe.get()) {
+    return process(corpus);
+  } else {
+    return nextPipe->pipe(process(corpus));
+  }
 }
 
 bool const Pipe::checkCorpusCompatible(Corpus const * const corpus) const {
-    if (0 == getCompatibleTypes()->size()) {
-        return true;
+  if (0 == getCompatibleTypes()->size()) {
+    return true;
+  }
+  for (vector< int >::const_iterator iter = getCompatibleTypes()->begin();
+          getCompatibleTypes()->end() != iter; iter++) {
+    if (corpus->getDocumentsType() == (*iter)) {
+      return true;
     }
-    for (vector< int >::const_iterator iter = getCompatibleTypes()->begin();
-            getCompatibleTypes()->end() != iter; iter++) {
-        if (corpus->getDocumentsType() == (*iter)) {
-            return true;
-        }
-    }
-    return false;
+  }
+  return false;
 }

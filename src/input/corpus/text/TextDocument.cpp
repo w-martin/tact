@@ -24,22 +24,24 @@
 
 #include "mewt/input/corpus/text/TextDocument.h"
 
+using namespace mewt::input::corpus::text;
+
 TextDocument::TextDocument(const string name, auto_ptr< string > text)
 : Document(name) {
-    TextDocument::text = text;
+  TextDocument::text = text;
 }
 
 TextDocument::TextDocument(const TextDocument& orig) : Document(orig) {
-    text = auto_ptr< string > (new string(*orig.getText()));
+  text = auto_ptr< string > (new string(*orig.getText()));
 }
 
 TextDocument::~TextDocument() {
 }
 
 string const * const TextDocument::getText() const {
-    return text.get();
+  return text.get();
 }
 
 int const TextDocument::getType() const {
-    return DOCUMENT_TYPE_TEXT;
+  return DOCUMENT_TYPE_TEXT;
 }

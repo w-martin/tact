@@ -29,13 +29,15 @@
 #include "mewt/input/pipe/FeatureMapPipe.h"
 #include "mewt/input/pipe/LowerCasePipe.h"
 
+using namespace mewt::input::pipe::bundle;
+
 InputOptimiseBundle::InputOptimiseBundle()
 : Pipe(DOCUMENT_TYPE_BASIC) {
-    attachPipe(auto_ptr< Pipe >(new InputPipe()));
-    attachPipe(auto_ptr< Pipe >(new XmlFilter()));
-    attachPipe(auto_ptr< Pipe >(new FeatureMapPipe()));
-    attachPipe(auto_ptr< Pipe >(new LowerCasePipe()));
-    attachPipe(auto_ptr< Pipe >(new PunctuationFilter()));
+  attachPipe(auto_ptr< Pipe > (new InputPipe()));
+  attachPipe(auto_ptr< Pipe > (new XmlFilter()));
+  attachPipe(auto_ptr< Pipe > (new FeatureMapPipe()));
+  attachPipe(auto_ptr< Pipe > (new LowerCasePipe()));
+  attachPipe(auto_ptr< Pipe > (new PunctuationFilter()));
 }
 
 InputOptimiseBundle::~InputOptimiseBundle() {
@@ -43,5 +45,5 @@ InputOptimiseBundle::~InputOptimiseBundle() {
 
 auto_ptr< Corpus > InputOptimiseBundle::process(
         auto_ptr<Corpus> corpus) const {
-    return corpus;
+  return corpus;
 }

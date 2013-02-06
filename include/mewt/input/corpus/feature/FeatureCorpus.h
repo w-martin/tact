@@ -33,64 +33,69 @@ namespace mewt {
 
   namespace input {
 
-    namespace feature {
+    namespace corpus {
 
-      /**
-       * Store of TextDocument objects.
-       * 
-       */
-      class FeatureCorpus : public Corpus {
-      public:
+      namespace feature {
+
         /**
-         * Default constructor.
-         * 
-         * @param location the location of the Corpus on disk.
-         * @param alphabet the Alphabet for this Corpus.
+         * Store of TextDocument objects.
          * 
          */
-        FeatureCorpus(string const location, auto_ptr< Alphabet > alphabet);
-        /**
-         * Default destructor.
-         * 
-         */
-        virtual ~FeatureCorpus();
-        /**
-         * Gets the Alphabet for this Corpus.
-         * 
-         * @return the Alphabet for this Corpus.
-         * 
-         */
-        Alphabet * const getAlphabet() const;
-        /**
-         * Replaces the given term with the set of replacement terms.
-         * 
-         * @param originalTerm the term to replace.
-         * @param terms the terms to replace the given term with.
-         * @throw TermNotPresentException if the originalTerm to replace is not
-         * present in the Alphabet.
-         * 
-         */
-        void replaceTerm(string const & originalTerm,
-                vector< string > const & terms) throw (TermNotPresentException);
-        /**
-         * Squashes the Alphabet and FeatureMaps so that the maximum feature ID
-         * is equal to the number of features - 1.
-         * 
-         */
-        void squash();
-        /**
-         * Creates an instance of FeatureCorpus with the given location and an
-         * empty Alphabet.
-         * 
-         * @param location the location of the created FeatureCorpus.
-         * @return an instance of FeatureCorpus with the given location and an
-         * empty Alphabet.
-         * 
-         */
-        static auto_ptr< FeatureCorpus > createInstance(
-                string const & location);
-      private:
-        Alphabet * alphabet;
+        class FeatureCorpus : public Corpus {
+        public:
+          /**
+           * Default constructor.
+           * 
+           * @param location the location of the Corpus on disk.
+           * @param alphabet the Alphabet for this Corpus.
+           * 
+           */
+          FeatureCorpus(string const location, auto_ptr< Alphabet > alphabet);
+          /**
+           * Default destructor.
+           * 
+           */
+          virtual ~FeatureCorpus();
+          /**
+           * Gets the Alphabet for this Corpus.
+           * 
+           * @return the Alphabet for this Corpus.
+           * 
+           */
+          Alphabet * const getAlphabet() const;
+          /**
+           * Replaces the given term with the set of replacement terms.
+           * 
+           * @param originalTerm the term to replace.
+           * @param terms the terms to replace the given term with.
+           * @throw TermNotPresentException if the originalTerm to replace is 
+           * not present in the Alphabet.
+           * 
+           */
+          void replaceTerm(string const & originalTerm,
+                  vector< string > const & terms)
+          throw (TermNotPresentException);
+          /**
+           * Squashes the Alphabet and FeatureMaps so that the maximum feature 
+           * ID is equal to the number of features - 1.
+           * 
+           */
+          void squash();
+          /**
+           * Creates an instance of FeatureCorpus with the given location and an
+           * empty Alphabet.
+           * 
+           * @param location the location of the created FeatureCorpus.
+           * @return an instance of FeatureCorpus with the given location and an
+           * empty Alphabet.
+           * 
+           */
+          static auto_ptr< FeatureCorpus > createInstance(
+                  string const & location);
+        private:
+          Alphabet * alphabet;
+        };
+
       };
 
     };

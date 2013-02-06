@@ -24,34 +24,36 @@
 
 #include "mewt/input/corpus/Document.h"
 
+using namespace mewt::input::corpus::feature;
+
 Document::Document(const string name) {
-    Document::name = name;
+  Document::name = name;
 }
 
 Document::Document(const Document& orig) {
-    name = orig.getName();
+  name = orig.getName();
 }
 
 Document::~Document() {
 }
 
 bool const Document::equals(Document const & other) const {
-    return (getType() == other.getType()
-            && name == other.getName());
+  return (getType() == other.getType()
+          && name == other.getName());
 }
 
 bool const Document::operator ==(Document const & other) const {
-    return equals(other);
+  return equals(other);
 }
 
 bool const Document::operator !=(Document const & other) const {
-    return !equals(other);
+  return !equals(other);
 }
 
 string const Document::getName() const {
-    return name;
+  return name;
 }
 
 int const Document::getType() const {
-    return DOCUMENT_TYPE_BASIC;
+  return DOCUMENT_TYPE_BASIC;
 }

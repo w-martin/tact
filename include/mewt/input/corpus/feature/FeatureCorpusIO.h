@@ -38,192 +38,199 @@ namespace mewt {
 
   namespace input {
 
-    namespace feature {
+    namespace corpus {
 
-      /**
-       * Name-space for loading and saving a FeatureCorpus.
-       * 
-       */
-      namespace FeatureCorpusIO {
-        /**
-         * Clears all saved corpora.
-         * 
-         */
-        void clearCache();
-        /**
-         * Deletes a saved FeatureCorpus.
-         * 
-         * @param location the original  location of the saved Corpus.
-         * @throw CorpusNotFoundException if the Corpus with the given 
-         * location was not previously saved.
-         * 
-         */
-        void deleteCorpus(string const & location)
-        throw (CorpusNotFoundException);
-        /**
-         * Loads a saved FeatureCorpus.
-         * 
-         * @param location the original  location of the saved Corpus.
-         * @return the loaded Corpus.
-         * @throw CorpusNotFoundException if the Corpus with the given 
-         * location was not previously saved.
-         * 
-         */
-        auto_ptr< FeatureCorpus > load(string const & location)
-        throw (CorpusNotFoundException);
-        /**
-         * Saves a FeatureCorpus.
-         * 
-         * @param Corpus the Corpus to save.
-         * 
-         */
-        void save(FeatureCorpus const * const corpus);
+      namespace feature {
 
         /**
-         * Name-space for utility methods for the FeatureCorpusIO 
-         * name-space.
+         * Name-space for loading and saving a FeatureCorpus.
          * 
          */
-        namespace util {
+        namespace FeatureCorpusIO {
           /**
-           * Creates the directory with the given number in the given 
-           * base directory.
-           * 
-           * @param directory the base directory.
-           * @param directoryNumber the number of the directory.
-           * @return the name of the created directory.
+           * Clears all saved corpora.
            * 
            */
-          string const createDirectory(string const & directory,
-                  int const & directoryNumber);
+          void clearCache();
           /**
-           * Finds the next free directory for saving a Corpus.
+           * Deletes a saved FeatureCorpus.
            * 
-           * @return the next 
-           * free directory for saving a Corpus.
+           * @param location the original  location of the saved Corpus.
+           * @throw CorpusNotFoundException if the Corpus with the given 
+           * location was not previously saved.
            * 
            */
-          string const findNextFreeDirectory();
-          /**
-           * Finds the saved Corpus with the given original location.
-           * 
-           * @param location the original location of the Corpus.
-           * @return the location of the saved Corpus.
-           * @throw CorpusNotFoundException if the Corpus with the 
-           * given location was not previously saved.
-           * 
-           */
-          string const findSavedCorpus(string const & location)
+          void deleteCorpus(string const & location)
           throw (CorpusNotFoundException);
           /**
-           * Loads the Alphabet from the given directory.
+           * Loads a saved FeatureCorpus.
            * 
-           * @param directory the directory to load the Alphabet from.
-           * @return the Alphabet loaded from the given directory.
-           * @throw FileNotFoundException if the Alphabet file was 
-           * not found.
+           * @param location the original  location of the saved Corpus.
+           * @return the loaded Corpus.
+           * @throw CorpusNotFoundException if the Corpus with the given 
+           * location was not previously saved.
            * 
            */
-          auto_ptr< Alphabet > loadAlphabet(string const & directory)
-          throw (FileNotFoundException, DuplicateException);
+          auto_ptr< FeatureCorpus > load(string const & location)
+          throw (CorpusNotFoundException);
           /**
-           * Loads the FeatureDocument from the file with the given 
-           * name.
+           * Saves a FeatureCorpus.
            * 
-           * @param fileName the name of the file to load from.
-           * @param alphabet the Alphabet of the FeatureDocument to 
-           * load.
-           * @return the loaded FeatureDocument from the file with 
-           * the given name.
-           * @throw FileNotFoundException if the Document file was 
-           * not found.
-           * @throw TermNotPresentException if a feature was found 
-           * in the loaded FeatureDocument that is not present in 
-           * the given Alphabet.
+           * @param Corpus the Corpus to save.
            * 
            */
-          auto_ptr< FeatureDocument > loadDocument(string const & fileName,
-                  Alphabet const * const alphabet)
-          throw (FileNotFoundException, TermNotPresentException);
+          void save(FeatureCorpus const * const corpus);
+
           /**
-           * Loads the FeatureDocuments from the given directory with the given
-           * Alphabet, and adds them to the given FeatureCorpus.
-           * 
-           * @param directory the directory to load FeatureDocuments from.
-           * @param alphabet the Alphabet the the FeatureDocuments use.
-           * @param corpus the Corpus to load the FeatureDocuments in to.
-           * @throw TermNotPresentException if a saved FeatureDocument used a 
-           * term that is not present in the given Alphabet.
+           * Name-space for utility methods for the FeatureCorpusIO 
+           * name-space.
            * 
            */
-          void loadDocuments(string const & directory,
-                  Alphabet const * const alphabet, FeatureCorpus * const corpus)
-          throw (TermNotPresentException);
-          /**
-           * Loads the FeatureDocuments from the given directory with the given
-           * Alphabet, and adds them to the given FeatureCorpus.
-           * 
-           * @param directory the directory to load FeatureDocuments from.
-           * @param alphabet the Alphabet the the FeatureDocuments use.
-           * @param corpus the Corpus to load the FeatureDocuments in to.
-           * @throw TermNotPresentException if a saved FeatureDocument used a 
-           * term that is not present in the given Alphabet.
-           * 
-           */
-          void loadDocumentsFromDirectory(string const & directory,
-                  Alphabet const * const alphabet, FeatureCorpus * const corpus)
-          throw (TermNotPresentException);
-          /**
-           * Loads the Corpus name from the given directory.
-           * 
-           * @param directory the directory to load the Corpus name from.
-           * @return the Corpus name loaded from the given directory.
-           * @throw FileNotFoundException if the corpus info file was not found.
-           * 
-           */
-          string const loadName(string const & directory)
-          throw (FileNotFoundException);
-          /**
-           * Saves the given Alphabet in the given directory.
-           * 
-           * @param directory the directory to save the Alphabet in.
-           * @param alphabet the Alphabet to save.
-           * 
-           */
-          void saveAlphabet(string const & directory,
-                  Alphabet const * const alphabet);
-          /**
-           * Saves the given FeatureDocument to the given directory.
-           * 
-           * @param directory the directory to save the FeatureDocument in.
-           * @param n the number of the FeatureDocument to save.
-           * @param document the FeatureDocument to save.
-           * 
-           */
-          void saveDocument(string const & directory, int const & n,
-                  FeatureDocument const * const document);
-          /**
-           * Saves the given Documents to the given directory.
-           * 
-           * @param directory the Directory to save the Documents in.
-           * @param documents the Documents to save.
-           * @throw IncompatibleCorpusException if the Documents were of an
-           * incompatible type.
-           * 
-           */
-          void saveDocuments(string const & directory,
-                  vector< Document * > const * const documents)
-          throw (IncompatibleCorpusException);
-          /**
-           * Saves the info file for the given Corpus in the given directory.
-           * 
-           * @param directory the directory to save the file in.
-           * @param Corpus the Corpus to save an info file for.
-           * 
-           */
-          void saveInfoFile(string const & directory,
-                  FeatureCorpus const * const corpus);
-        }
+          namespace util {
+            /**
+             * Creates the directory with the given number in the given 
+             * base directory.
+             * 
+             * @param directory the base directory.
+             * @param directoryNumber the number of the directory.
+             * @return the name of the created directory.
+             * 
+             */
+            string const createDirectory(string const & directory,
+                    int const & directoryNumber);
+            /**
+             * Finds the next free directory for saving a Corpus.
+             * 
+             * @return the next 
+             * free directory for saving a Corpus.
+             * 
+             */
+            string const findNextFreeDirectory();
+            /**
+             * Finds the saved Corpus with the given original location.
+             * 
+             * @param location the original location of the Corpus.
+             * @return the location of the saved Corpus.
+             * @throw CorpusNotFoundException if the Corpus with the 
+             * given location was not previously saved.
+             * 
+             */
+            string const findSavedCorpus(string const & location)
+            throw (CorpusNotFoundException);
+            /**
+             * Loads the Alphabet from the given directory.
+             * 
+             * @param directory the directory to load the Alphabet from.
+             * @return the Alphabet loaded from the given directory.
+             * @throw FileNotFoundException if the Alphabet file was 
+             * not found.
+             * 
+             */
+            auto_ptr< Alphabet > loadAlphabet(string const & directory)
+            throw (FileNotFoundException, DuplicateException);
+            /**
+             * Loads the FeatureDocument from the file with the given 
+             * name.
+             * 
+             * @param fileName the name of the file to load from.
+             * @param alphabet the Alphabet of the FeatureDocument to 
+             * load.
+             * @return the loaded FeatureDocument from the file with 
+             * the given name.
+             * @throw FileNotFoundException if the Document file was 
+             * not found.
+             * @throw TermNotPresentException if a feature was found 
+             * in the loaded FeatureDocument that is not present in 
+             * the given Alphabet.
+             * 
+             */
+            auto_ptr< FeatureDocument > loadDocument(string const & fileName,
+                    Alphabet const * const alphabet)
+            throw (FileNotFoundException, TermNotPresentException);
+            /**
+             * Loads the FeatureDocuments from the given directory with the 
+             * given Alphabet, and adds them to the given FeatureCorpus.
+             * 
+             * @param directory the directory to load FeatureDocuments from.
+             * @param alphabet the Alphabet the the FeatureDocuments use.
+             * @param corpus the Corpus to load the FeatureDocuments in to.
+             * @throw TermNotPresentException if a saved FeatureDocument used a 
+             * term that is not present in the given Alphabet.
+             * 
+             */
+            void loadDocuments(string const & directory,
+                    Alphabet const * const alphabet,
+                    FeatureCorpus * const corpus)
+            throw (TermNotPresentException);
+            /**
+             * Loads the FeatureDocuments from the given directory with the 
+             * given Alphabet, and adds them to the given FeatureCorpus.
+             * 
+             * @param directory the directory to load FeatureDocuments from.
+             * @param alphabet the Alphabet the the FeatureDocuments use.
+             * @param corpus the Corpus to load the FeatureDocuments in to.
+             * @throw TermNotPresentException if a saved FeatureDocument used a 
+             * term that is not present in the given Alphabet.
+             * 
+             */
+            void loadDocumentsFromDirectory(string const & directory,
+                    Alphabet const * const alphabet,
+                    FeatureCorpus * const corpus)
+            throw (TermNotPresentException);
+            /**
+             * Loads the Corpus name from the given directory.
+             * 
+             * @param directory the directory to load the Corpus name from.
+             * @return the Corpus name loaded from the given directory.
+             * @throw FileNotFoundException if the corpus info file was not 
+             * found.
+             * 
+             */
+            string const loadName(string const & directory)
+            throw (FileNotFoundException);
+            /**
+             * Saves the given Alphabet in the given directory.
+             * 
+             * @param directory the directory to save the Alphabet in.
+             * @param alphabet the Alphabet to save.
+             * 
+             */
+            void saveAlphabet(string const & directory,
+                    Alphabet const * const alphabet);
+            /**
+             * Saves the given FeatureDocument to the given directory.
+             * 
+             * @param directory the directory to save the FeatureDocument in.
+             * @param n the number of the FeatureDocument to save.
+             * @param document the FeatureDocument to save.
+             * 
+             */
+            void saveDocument(string const & directory, int const & n,
+                    FeatureDocument const * const document);
+            /**
+             * Saves the given Documents to the given directory.
+             * 
+             * @param directory the Directory to save the Documents in.
+             * @param documents the Documents to save.
+             * @throw IncompatibleCorpusException if the Documents were of an
+             * incompatible type.
+             * 
+             */
+            void saveDocuments(string const & directory,
+                    vector< Document * > const * const documents)
+            throw (IncompatibleCorpusException);
+            /**
+             * Saves the info file for the given Corpus in the given directory.
+             * 
+             * @param directory the directory to save the file in.
+             * @param Corpus the Corpus to save an info file for.
+             * 
+             */
+            void saveInfoFile(string const & directory,
+                    FeatureCorpus const * const corpus);
+          }
+        };
+
       };
 
     };

@@ -26,9 +26,11 @@
 #include "mewt/input/pipe/bundle/ScanInputOptimiseBundle.h"
 #include "mewt/input/pipe/StopwordFilter.h"
 
+using namespace mewt::input::pipe::bundle;
+
 CompleteFilteredBundle::CompleteFilteredBundle(string const & stopwordsFile) {
-    attachPipe(auto_ptr< Pipe > (new ScanInputOptimiseBundle()));
-    attachPipe(auto_ptr< Pipe > (new StopwordFilter(stopwordsFile)));
+  attachPipe(auto_ptr< Pipe > (new ScanInputOptimiseBundle()));
+  attachPipe(auto_ptr< Pipe > (new StopwordFilter(stopwordsFile)));
 }
 
 CompleteFilteredBundle::~CompleteFilteredBundle() {
@@ -36,5 +38,5 @@ CompleteFilteredBundle::~CompleteFilteredBundle() {
 
 auto_ptr< Corpus > CompleteFilteredBundle::process(
         auto_ptr<Corpus> corpus) const {
-    return corpus;
+  return corpus;
 }

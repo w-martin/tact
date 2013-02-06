@@ -27,6 +27,8 @@
 
 using std::stringstream;
 
+using namespace mewt::input::exceptions;
+
 TermNotPresentException::TermNotPresentException()
 : Exception(TERM_NOT_PRESENT_MESSAGE) {
 }

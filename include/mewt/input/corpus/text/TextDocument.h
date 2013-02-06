@@ -35,49 +35,53 @@ namespace mewt {
 
   namespace input {
 
-    namespace text {
+    namespace corpus {
 
-      /**
-       * TextDocument class for corpus files. Stores the name of the file.
-       * 
-       */
-      class TextDocument : public Document {
-      public:
+      namespace text {
+
         /**
-         * Default constructor.
-         * 
-         * @param name the name of the file.
+         * TextDocument class for corpus files. Stores the name of the file.
          * 
          */
-        TextDocument(string const name, auto_ptr< string > text);
-        /**
-         * Copy constructor.
-         * 
-         * @param orig the TextDocument to copy.
-         * 
-         */
-        TextDocument(const TextDocument& orig);
-        /**
-         * Default destructor.
-         * 
-         */
-        virtual ~TextDocument();
-        /**
-         * Gets the text from this TextDocument.
-         * 
-         * @return the text from this TextDocument.
-         * 
-         */
-        string const * const getText() const;
-        /**
-         * Gets the type of this Document.
-         * 
-         * @return the type of this Document.
-         * 
-         */
-        virtual int const getType() const;
-      private:
-        auto_ptr< string > text;
+        class TextDocument : public Document {
+        public:
+          /**
+           * Default constructor.
+           * 
+           * @param name the name of the file.
+           * 
+           */
+          TextDocument(string const name, auto_ptr< string > text);
+          /**
+           * Copy constructor.
+           * 
+           * @param orig the TextDocument to copy.
+           * 
+           */
+          TextDocument(const TextDocument& orig);
+          /**
+           * Default destructor.
+           * 
+           */
+          virtual ~TextDocument();
+          /**
+           * Gets the text from this TextDocument.
+           * 
+           * @return the text from this TextDocument.
+           * 
+           */
+          string const * const getText() const;
+          /**
+           * Gets the type of this Document.
+           * 
+           * @return the type of this Document.
+           * 
+           */
+          virtual int const getType() const;
+        private:
+          auto_ptr< string > text;
+        };
+
       };
 
     };

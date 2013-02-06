@@ -28,6 +28,8 @@
 
 using mewt::util::files::readFile;
 
+using namespace mewt::input::pipe;
+
 InputPipe::InputPipe() {
 }
 
@@ -37,22 +39,22 @@ InputPipe::~InputPipe() {
 auto_ptr< Corpus > InputPipe::process(
         auto_ptr<Corpus> originalCorpus) const {
 
-    string const location = originalCorpus->getLocation();
-    vector< Document * > const * const originalDocuments =
-            originalCorpus->getDocuments();
-    auto_ptr< TextCorpus > corpus =
-            auto_ptr< TextCorpus > (new TextCorpus(location));
+  string const location = originalCorpus->getLocation();
+  vector< Document * > const * const originalDocuments =
+          originalCorpus->getDocuments();
+  auto_ptr< TextCorpus > corpus =
+          auto_ptr< TextCorpus > (new TextCorpus(location));
 
-    for (vector< Document * >::const_iterator iter = originalDocuments->begin();
-            originalDocuments->end() != iter; iter++) {
+  for (vector< Document * >::const_iterator iter = originalDocuments->begin();
+          originalDocuments->end() != iter; iter++) {
 
-        string const name = (*iter)->getName();
-        auto_ptr< string > text = readFile(name);
+    string const name = (*iter)->getName();
+    auto_ptr< string > text = readFile(name);
 
-        auto_ptr< Document > doc = auto_ptr< Document > (
-                new TextDocument(name, text));
-        corpus->addDocument(doc);
+    auto_ptr< Document > doc = auto_ptr< Document > (
+            new TextDocument(name, text));
+    corpus->addDocument(doc);
 
-    }
-    return (auto_ptr< Corpus >) corpus;
+  }
+  return (auto_ptr< Corpus >) corpus;
 }

@@ -27,44 +27,46 @@
 
 namespace fs = boost::filesystem;
 
+using namespace mewt::input::pipe;
+
 DirectoryScannerPipe::DirectoryScannerPipe(bool const recursive)
 : Pipe() {
-    DirectoryScannerPipe::recursive = recursive;
+  DirectoryScannerPipe::recursive = recursive;
 }
 
 DirectoryScannerPipe::~DirectoryScannerPipe() {
 }
 
 bool const DirectoryScannerPipe::isRecursive() const {
-    return recursive;
+  return recursive;
 }
 
 auto_ptr< Corpus > DirectoryScannerPipe::process(
         auto_ptr<Corpus> corpus) const {
-    if (fs::is_directory(corpus->getLocation())) {
-        addDocumentsInDirectory(corpus->getLocation(), corpus.get());
-    }
-    return corpus;
+  if (fs::is_directory(corpus->getLocation())) {
+    addDocumentsInDirectory(corpus->getLocation(), corpus.get());
+  }
+  return corpus;
 }
 
 void DirectoryScannerPipe::addDocumentsInDirectory(
         string const & directory, Corpus * const corpus) const {
-    for (fs::directory_iterator end, dir(directory);
-            dir != end; ++dir) {
-        string const location = (* dir).path().generic_string();
-        if (fs::is_directory(*dir)) {
-            if (isRecursive()) {
-                addDocumentsInDirectory(location, corpus);
-            }
-        } else {
-            addDocument(location, corpus);
-        }
+  for (fs::directory_iterator end, dir(directory);
+          dir != end; ++dir) {
+    string const location = (* dir).path().generic_string();
+    if (fs::is_directory(*dir)) {
+      if (isRecursive()) {
+        addDocumentsInDirectory(location, corpus);
+      }
+    } else {
+      addDocument(location, corpus);
     }
+  }
 }
 
 void DirectoryScannerPipe::addDocument(
         const string location, Corpus * const corpus) const {
-    auto_ptr< Document > document = auto_ptr< Document > (
-            new Document(location));
-    corpus->addDocument(document);
+  auto_ptr< Document > document = auto_ptr< Document > (
+          new Document(location));
+  corpus->addDocument(document);
 }

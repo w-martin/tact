@@ -28,6 +28,8 @@
 using std::endl;
 using std::stringstream;
 
+using namespace mewt::input::exceptions;
+
 IncompatibleCorpusException::IncompatibleCorpusException()
 : Exception(INCOMPATIBLE_CORPUS_MESSAGE) {
 }
@@ -53,27 +55,27 @@ string const IncompatibleCorpusException::createErrorMessage(
         int const & corpusType,
         vector< int > const * const compatibleTypes,
         string const & source) const {
-    stringstream stream;
-    stream << INCOMPATIBLE_CORPUS_MESSAGE << endl;
-    stream << "Thrown from " << source << "." << endl;
-    stream << "Document type: " << corpusType << endl;
-    stream << "Compatible types:";
-    for (vector< int >::const_iterator iter = compatibleTypes->begin();
-            compatibleTypes->end() != iter; iter++) {
-        stream << " " << (*iter);
-    }
-    stream << endl;
-    return stream.str();
+  stringstream stream;
+  stream << INCOMPATIBLE_CORPUS_MESSAGE << endl;
+  stream << "Thrown from " << source << "." << endl;
+  stream << "Document type: " << corpusType << endl;
+  stream << "Compatible types:";
+  for (vector< int >::const_iterator iter = compatibleTypes->begin();
+          compatibleTypes->end() != iter; iter++) {
+    stream << " " << (*iter);
+  }
+  stream << endl;
+  return stream.str();
 }
 
 string const IncompatibleCorpusException::createErrorMessage(
         int const & corpusType,
         int const & compatibleType,
         string const & source) const {
-    stringstream stream;
-    stream << INCOMPATIBLE_CORPUS_MESSAGE << endl;
-    stream << "Thrown from " << source << "." << endl;
-    stream << "Document type: " << corpusType << endl;
-    stream << "Compatible type: " << compatibleType << endl;
-    return stream.str();
+  stringstream stream;
+  stream << INCOMPATIBLE_CORPUS_MESSAGE << endl;
+  stream << "Thrown from " << source << "." << endl;
+  stream << "Document type: " << corpusType << endl;
+  stream << "Compatible type: " << compatibleType << endl;
+  return stream.str();
 }

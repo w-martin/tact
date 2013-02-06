@@ -24,30 +24,32 @@
 
 #include "mewt/input/corpus/feature/FeatureDocument.h"
 
+using namespace mewt::input::corpus::feature;
+
 FeatureDocument::FeatureDocument(const string name,
         auto_ptr<FeatureMap> featureMap) : Document(name) {
-    FeatureDocument::featureMap = featureMap;
+  FeatureDocument::featureMap = featureMap;
 }
 
 FeatureDocument::FeatureDocument(const FeatureDocument& orig) : Document(orig) {
-    featureMap = auto_ptr< FeatureMap > (
-            new FeatureMap(*orig.getFeatureMap()));
+  featureMap = auto_ptr< FeatureMap > (
+          new FeatureMap(*orig.getFeatureMap()));
 }
 
 FeatureDocument::~FeatureDocument() {
 }
 
 bool const FeatureDocument::equals(Document const & other) const {
-    return (getType() == other.getType()
-            && getName() == other.getName()
-            && *getFeatureMap()
-            == *((FeatureDocument *) &other)->getFeatureMap());
+  return (getType() == other.getType()
+          && getName() == other.getName()
+          && *getFeatureMap()
+          == *((FeatureDocument *) & other)->getFeatureMap());
 }
 
 FeatureMap * const FeatureDocument::getFeatureMap() const {
-    return featureMap.get();
+  return featureMap.get();
 }
 
 int const FeatureDocument::getType() const {
-    return DOCUMENT_TYPE_FEATURE;
+  return DOCUMENT_TYPE_FEATURE;
 }

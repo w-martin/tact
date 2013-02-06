@@ -27,6 +27,8 @@
 
 using std::stringstream;
 
+using namespace mewt::input::exceptions;
+
 CorpusNotFoundException::CorpusNotFoundException()
 : Exception(CORPUS_NOT_FOUND_MESSAGE) {
 }
@@ -42,7 +44,7 @@ CorpusNotFoundException::CorpusNotFoundException(const string message)
 
 string const CorpusNotFoundException::createErrorMessage(
         string const & location) const {
-    stringstream stream;
-    stream << CORPUS_NOT_FOUND_MESSAGE << " \nLocation: " << location << ".";
-    return stream.str();
+  stringstream stream;
+  stream << CORPUS_NOT_FOUND_MESSAGE << " \nLocation: " << location << ".";
+  return stream.str();
 }

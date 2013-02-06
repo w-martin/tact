@@ -31,6 +31,8 @@ using mewt::util::strings::containsPunctuation;
 using mewt::util::strings::split;
 using std::map;
 
+using namespace mewt::input::pipe;
+
 typedef map< string, vector< string > > mapType;
 
 PunctuationFilter::PunctuationFilter() : Pipe(DOCUMENT_TYPE_FEATURE) {
@@ -40,32 +42,32 @@ PunctuationFilter::~PunctuationFilter() {
 }
 
 auto_ptr< Corpus > PunctuationFilter::process(auto_ptr<Corpus> corpus) const {
-    FeatureCorpus * const featureCorpus = (FeatureCorpus*) corpus.get();
-    Alphabet * const alphabet = featureCorpus->getAlphabet();
-    mapType termsToReplace;
-    for (AlphabetIterator iter = alphabet->begin();
-            alphabet->end() != iter; iter++) {
-        string const term = iter.getTerm();
-        if (containsPunctuation(term)) {
-            vector< string > const transformed = removePunctuation(term);
-            termsToReplace.insert(std::make_pair(term, transformed));
-        }
+  FeatureCorpus * const featureCorpus = (FeatureCorpus*) corpus.get();
+  Alphabet * const alphabet = featureCorpus->getAlphabet();
+  mapType termsToReplace;
+  for (AlphabetIterator iter = alphabet->begin();
+          alphabet->end() != iter; iter++) {
+    string const term = iter.getTerm();
+    if (containsPunctuation(term)) {
+      vector< string > const transformed = removePunctuation(term);
+      termsToReplace.insert(std::make_pair(term, transformed));
     }
-    for (mapType::const_iterator iter = termsToReplace.begin();
-            termsToReplace.end() != iter; iter++) {
-        featureCorpus->replaceTerm((*iter).first, (*iter).second);
-    }
-    return corpus;
+  }
+  for (mapType::const_iterator iter = termsToReplace.begin();
+          termsToReplace.end() != iter; iter++) {
+    featureCorpus->replaceTerm((*iter).first, (*iter).second);
+  }
+  return corpus;
 }
 
 vector< string > const PunctuationFilter::removePunctuation(
         string const & term) {
-    auto_ptr< vector< string > > terms = split(term, "'");
-    string fusedTerm = "";
-    for (vector< string >::const_iterator iter = terms->begin();
-            terms->end() != iter; iter++) {
-        fusedTerm.append(*iter);
-    }
-    terms = split(fusedTerm, "\\W");
-    return *terms.release();
+  auto_ptr< vector< string > > terms = split(term, "'");
+  string fusedTerm = "";
+  for (vector< string >::const_iterator iter = terms->begin();
+          terms->end() != iter; iter++) {
+    fusedTerm.append(*iter);
+  }
+  terms = split(fusedTerm, "\\W");
+  return *terms.release();
 }

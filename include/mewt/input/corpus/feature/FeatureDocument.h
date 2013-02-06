@@ -36,60 +36,64 @@ namespace mewt {
 
   namespace input {
 
-    namespace feature {
+    namespace corpus {
 
-      /**
-       * FeatureDocument class for corpus files. Stores the name of the 
-       * file.
-       * 
-       */
-      class FeatureDocument : public Document {
-      public:
+      namespace feature {
+
         /**
-         * Default constructor.
-         * 
-         * @param name the name of the file.
+         * FeatureDocument class for corpus files. Stores the name of the 
+         * file.
          * 
          */
-        FeatureDocument(string const name,
-                auto_ptr< FeatureMap > featureMap);
-        /**
-         * Copy constructor.
-         * 
-         * @param orig the FeatureDocument to copy.
-         * 
-         */
-        FeatureDocument(const FeatureDocument& orig);
-        /**
-         * Default destructor.
-         * 
-         */
-        virtual ~FeatureDocument();
-        /**
-         * Checks if this Document is equal to the other Document.
-         * 
-         * @param other the Document to check against.
-         * @return true if this Document is equal to the other Document,
-         * false otherwise.
-         * 
-         */
-        virtual bool const equals(Document const & other) const;
-        /**
-         * Gets the text from this FeatureDocument.
-         * 
-         * @return the text from this FeatureDocument.
-         * 
-         */
-        FeatureMap * const getFeatureMap() const;
-        /**
-         * Gets the type of this Document.
-         * 
-         * @return the type of this Document.
-         * 
-         */
-        virtual int const getType() const;
-      private:
-        auto_ptr< FeatureMap > featureMap;
+        class FeatureDocument : public Document {
+        public:
+          /**
+           * Default constructor.
+           * 
+           * @param name the name of the file.
+           * 
+           */
+          FeatureDocument(string const name,
+                  auto_ptr< FeatureMap > featureMap);
+          /**
+           * Copy constructor.
+           * 
+           * @param orig the FeatureDocument to copy.
+           * 
+           */
+          FeatureDocument(const FeatureDocument& orig);
+          /**
+           * Default destructor.
+           * 
+           */
+          virtual ~FeatureDocument();
+          /**
+           * Checks if this Document is equal to the other Document.
+           * 
+           * @param other the Document to check against.
+           * @return true if this Document is equal to the other Document,
+           * false otherwise.
+           * 
+           */
+          virtual bool const equals(Document const & other) const;
+          /**
+           * Gets the text from this FeatureDocument.
+           * 
+           * @return the text from this FeatureDocument.
+           * 
+           */
+          FeatureMap * const getFeatureMap() const;
+          /**
+           * Gets the type of this Document.
+           * 
+           * @return the type of this Document.
+           * 
+           */
+          virtual int const getType() const;
+        private:
+          auto_ptr< FeatureMap > featureMap;
+        };
+
       };
 
     };

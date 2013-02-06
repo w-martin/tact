@@ -24,50 +24,52 @@
 
 #include "mewt/input/corpus/feature/FeatureMapIterator.h"
 
+using namespace mewt::input::corpus::feature;
+
 FeatureMapIterator::FeatureMapIterator(const intMapType::const_iterator iter) {
-    FeatureMapIterator::iter = iter;
+  FeatureMapIterator::iter = iter;
 }
 
 FeatureMapIterator::FeatureMapIterator(FeatureMapIterator const & orig) {
-    iter = orig.getIterator();
+  iter = orig.getIterator();
 }
 
 FeatureMapIterator::~FeatureMapIterator() {
 }
 
 FeatureMapIterator FeatureMapIterator::operator ++() {
-    iter++;
-    return *this;
+  iter++;
+  return *this;
 }
 
 FeatureMapIterator FeatureMapIterator::operator ++(int) {
-    FeatureMapIterator dummy(iter);
-    ++(*this);
-    return dummy;
+  FeatureMapIterator dummy(iter);
+  ++(*this);
+  return dummy;
 }
 
 bool const FeatureMapIterator::equals(FeatureMapIterator const & other) const {
-    return iter == other.getIterator();
+  return iter == other.getIterator();
 }
 
 bool const FeatureMapIterator::operator ==(
         FeatureMapIterator const & other) const {
-    return equals(other);
+  return equals(other);
 }
 
 bool const FeatureMapIterator::operator !=(
         FeatureMapIterator const & other) const {
-    return !equals(other);
+  return !equals(other);
 }
 
 int const FeatureMapIterator::getFeature() const {
-    return iter->first;
+  return iter->first;
 }
 
 int const FeatureMapIterator::getCount() const {
-    return iter->second;
+  return iter->second;
 }
 
 intMapType::const_iterator const FeatureMapIterator::getIterator() const {
-    return iter;
+  return iter;
 }

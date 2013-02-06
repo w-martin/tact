@@ -28,54 +28,56 @@
 #include "mewt/input/corpus/feature/FeatureCorpus.h"
 #include "mewt/input/pipe/bundle/InputOptimiseBundle.h"
 
+using namespace mewt::input::pipe;
+
 StopwordFilter::StopwordFilter(string const & stopwordsFile)
 : Pipe(DOCUMENT_TYPE_FEATURE) {
-    auto_ptr< Corpus > corpus = auto_ptr< Corpus > (
-            new Corpus(".", DOCUMENT_TYPE_BASIC));
-    corpus->addDocument(auto_ptr< Document > (new Document(stopwordsFile)));
-    corpus = InputOptimiseBundle().pipe(corpus);
-    stopwords = new Alphabet(*((FeatureCorpus *) corpus.get())->getAlphabet());
+  auto_ptr< Corpus > corpus = auto_ptr< Corpus > (
+          new Corpus(".", DOCUMENT_TYPE_BASIC));
+  corpus->addDocument(auto_ptr< Document > (new Document(stopwordsFile)));
+  corpus = InputOptimiseBundle().pipe(corpus);
+  stopwords = new Alphabet(*((FeatureCorpus *) corpus.get())->getAlphabet());
 }
 
 StopwordFilter::StopwordFilter(string const & stopwordsDirectory,
         bool const & recursive)
 : Pipe(DOCUMENT_TYPE_FEATURE) {
-    auto_ptr< Corpus > corpus = auto_ptr< Corpus > (
-            new Corpus(stopwordsDirectory, DOCUMENT_TYPE_BASIC));
-    DirectoryScannerPipe pipe(recursive);
-    pipe.attachPipe(auto_ptr< Pipe > (new InputOptimiseBundle()));
-    corpus = pipe.pipe(corpus);
-    stopwords = new Alphabet(*((FeatureCorpus *) corpus.get())->getAlphabet());
+  auto_ptr< Corpus > corpus = auto_ptr< Corpus > (
+          new Corpus(stopwordsDirectory, DOCUMENT_TYPE_BASIC));
+  DirectoryScannerPipe pipe(recursive);
+  pipe.attachPipe(auto_ptr< Pipe > (new InputOptimiseBundle()));
+  corpus = pipe.pipe(corpus);
+  stopwords = new Alphabet(*((FeatureCorpus *) corpus.get())->getAlphabet());
 }
 
 StopwordFilter::StopwordFilter(Alphabet const * const stopwords) {
-    StopwordFilter::stopwords = new Alphabet(*stopwords);
+  StopwordFilter::stopwords = new Alphabet(*stopwords);
 }
 
 StopwordFilter::StopwordFilter(StopwordFilter const & orig)
 : Pipe(DOCUMENT_TYPE_FEATURE) {
-    stopwords = new Alphabet(*orig.getStopwords());
+  stopwords = new Alphabet(*orig.getStopwords());
 }
 
 StopwordFilter::~StopwordFilter() {
-    delete stopwords;
+  delete stopwords;
 }
 
 Alphabet const * const StopwordFilter::getStopwords() const {
-    return stopwords;
+  return stopwords;
 }
 
 auto_ptr< Corpus > StopwordFilter::process(auto_ptr<Corpus> corpus) const {
-    vector< string > const empty;
-    vector< string > termsToReplace;
-    for (AlphabetIterator iter = stopwords->begin();
-            stopwords->end() != iter; iter++) {
-        string const term = iter.getTerm();
-        termsToReplace.push_back(term);
-    }
-    for(vector< string >::const_iterator iter = termsToReplace.begin();
-            termsToReplace.end() != iter; iter++){
-        ((FeatureCorpus *) corpus.get())->replaceTerm(*iter, empty);
-    }
-    return corpus;
+  vector< string > const empty;
+  vector< string > termsToReplace;
+  for (AlphabetIterator iter = stopwords->begin();
+          stopwords->end() != iter; iter++) {
+    string const term = iter.getTerm();
+    termsToReplace.push_back(term);
+  }
+  for (vector< string >::const_iterator iter = termsToReplace.begin();
+          termsToReplace.end() != iter; iter++) {
+    ((FeatureCorpus *) corpus.get())->replaceTerm(*iter, empty);
+  }
+  return corpus;
 }

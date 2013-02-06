@@ -32,26 +32,30 @@ namespace mewt {
 
   namespace input {
 
-    namespace text {
+    namespace corpus {
 
-      /**
-       * Store of TextDocument objects.
-       * 
-       */
-      class TextCorpus : public Corpus {
-      public:
+      namespace text {
+
         /**
-         * Default constructor.
-         * 
-         * @param location the location of the corpus on disk.
+         * Store of TextDocument objects.
          * 
          */
-        TextCorpus(string const location);
-        /**
-         * Default destructor.
-         * 
-         */
-        virtual ~TextCorpus();
+        class TextCorpus : public Corpus {
+        public:
+          /**
+           * Default constructor.
+           * 
+           * @param location the location of the corpus on disk.
+           * 
+           */
+          TextCorpus(string const location);
+          /**
+           * Default destructor.
+           * 
+           */
+          virtual ~TextCorpus();
+        };
+
       };
 
     };

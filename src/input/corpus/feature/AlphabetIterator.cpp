@@ -24,50 +24,52 @@
 
 #include "mewt/input/corpus/feature/AlphabetIterator.h"
 
+using namespace mewt::input::corpus::feature;
+
 AlphabetIterator::AlphabetIterator(bmType::left_const_iterator const iter) {
-    AlphabetIterator::iter = iter;
+  AlphabetIterator::iter = iter;
 }
 
 AlphabetIterator::AlphabetIterator(AlphabetIterator const & orig) {
-    iter = orig.getIterator();
+  iter = orig.getIterator();
 }
 
 AlphabetIterator::~AlphabetIterator() {
 }
 
 AlphabetIterator AlphabetIterator::operator ++() {
-    iter++;
-    return *this;
+  iter++;
+  return *this;
 }
 
 AlphabetIterator AlphabetIterator::operator ++(int) {
-    AlphabetIterator dummy(iter);
-    ++(*this);
-    return dummy;
+  AlphabetIterator dummy(iter);
+  ++(*this);
+  return dummy;
 }
 
 bool const AlphabetIterator::operator ==(
         AlphabetIterator const & other) const {
-    return equals(other);
+  return equals(other);
 }
 
 bool const AlphabetIterator::operator !=(
         AlphabetIterator const & other) const {
-    return !equals(other);
+  return !equals(other);
 }
 
 bool const AlphabetIterator::equals(AlphabetIterator const & other) const {
-    return (iter == other.getIterator());
+  return (iter == other.getIterator());
 }
 
 int const AlphabetIterator::getIndex() const {
-    return iter->second;
+  return iter->second;
 }
 
 string const AlphabetIterator::getTerm() const {
-    return iter->first;
+  return iter->first;
 }
 
 bmType::left_const_iterator const AlphabetIterator::getIterator() const {
-    return iter;
+  return iter;
 }
