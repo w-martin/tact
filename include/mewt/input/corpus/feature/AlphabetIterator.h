@@ -31,104 +31,117 @@
 using std::string;
 using boost::bimaps::bimap;
 
-typedef bimap< string, int > bmType;
+namespace mewt {
 
-/**
- * Iterates of Alphabet terms.
- * 
- */
-class AlphabetIterator {
-public:
-    /**
-     * Default constructor.
-     * 
-     * @param iter the internal representation of data.
-     * 
-     */
-    AlphabetIterator(bmType::left_const_iterator const iter);
-    /**
-     * Copy constructor.
-     * 
-     * @param orig the AlphabetIterator to copy from.
-     * 
-     */
-    AlphabetIterator(AlphabetIterator const & orig);
-    /**
-     * Default destructor.
-     * 
-     */
-    virtual ~AlphabetIterator();
-    /**
-     * Iterates to the next term.
-     * 
-     * @return the next term iterator.
-     * 
-     */
-    AlphabetIterator operator++();
-    /**
-     * Iterates to the next term.
-     * 
-     * @return the next term iterator.
-     * 
-     */
-    AlphabetIterator operator++(int);
-    /**
-     * Checks whether this AlphabetIterator is the same as the other
-     * AlphabetIterator.
-     * 
-     * @param other the AlphabetIterator to compare against.
-     * @return true if this AlphabetIterator is the same as the other
-     * AlphabetIterator, false otherwise.
-     * 
-     */
-    bool const operator==(AlphabetIterator const & other) const;
-    /**
-     * Checks whether this AlphabetIterator is the same as the other
-     * AlphabetIterator.
-     * 
-     * @param other the AlphabetIterator to compare against.
-     * @return true if this AlphabetIterator is the same as the other
-     * AlphabetIterator, false otherwise.
-     * 
-     */
-    bool const operator!=(AlphabetIterator const & other) const;
-    /**
-     * Checks if this AlphabetIterator doesn't equal another AlphabetIterator.
-     * 
-     * @param other the other AlphabetIterator.
-     * @return false if this AlphabetIterator is the same as the other
-     * AlphabetIterator, true otherwise.
-     * 
-     */
-    bool const equals(AlphabetIterator const & other) const;
-    /**
-     * Gets the index of the term at this iterator position.
-     * 
-     * @return the index of the term at this iterator position.
-     * 
-     */
-    int const getIndex() const;
-    /**
-     * Gets the term at this iterator position.
-     * 
-     * @return the term at this iterator position.
-     * 
-     */
-    string const getTerm() const;
-protected:
-    /**
-     * Gets the internal representation of data.
-     * 
-     * @return the internal representation of data.
-     * 
-     */
-    bmType::left_const_iterator const getIterator() const;
-private:
-    /**
-     * Internal representation of data.
-     * 
-     */
-    bmType::left_const_iterator iter;
+  namespace input {
+
+    namespace feature {
+
+      typedef bimap< string, int > bmType;
+
+      /**
+       * Iterates of Alphabet terms.
+       * 
+       */
+      class AlphabetIterator {
+      public:
+        /**
+         * Default constructor.
+         * 
+         * @param iter the internal representation of data.
+         * 
+         */
+        AlphabetIterator(bmType::left_const_iterator const iter);
+        /**
+         * Copy constructor.
+         * 
+         * @param orig the AlphabetIterator to copy from.
+         * 
+         */
+        AlphabetIterator(AlphabetIterator const & orig);
+        /**
+         * Default destructor.
+         * 
+         */
+        virtual ~AlphabetIterator();
+        /**
+         * Iterates to the next term.
+         * 
+         * @return the next term iterator.
+         * 
+         */
+        AlphabetIterator operator++();
+        /**
+         * Iterates to the next term.
+         * 
+         * @return the next term iterator.
+         * 
+         */
+        AlphabetIterator operator++(int);
+        /**
+         * Checks whether this AlphabetIterator is the same as the other
+         * AlphabetIterator.
+         * 
+         * @param other the AlphabetIterator to compare against.
+         * @return true if this AlphabetIterator is the same as the other
+         * AlphabetIterator, false otherwise.
+         * 
+         */
+        bool const operator==(AlphabetIterator const & other) const;
+        /**
+         * Checks whether this AlphabetIterator is the same as the other
+         * AlphabetIterator.
+         * 
+         * @param other the AlphabetIterator to compare against.
+         * @return true if this AlphabetIterator is the same as the other
+         * AlphabetIterator, false otherwise.
+         * 
+         */
+        bool const operator!=(AlphabetIterator const & other) const;
+        /**
+         * Checks if this AlphabetIterator doesn't equal another 
+         * AlphabetIterator.
+         * 
+         * @param other the other AlphabetIterator.
+         * @return false if this AlphabetIterator is the same as the other
+         * AlphabetIterator, true otherwise.
+         * 
+         */
+        bool const equals(AlphabetIterator const & other) const;
+        /**
+         * Gets the index of the term at this iterator position.
+         * 
+         * @return the index of the term at this iterator position.
+         * 
+         */
+        int const getIndex() const;
+        /**
+         * Gets the term at this iterator position.
+         * 
+         * @return the term at this iterator position.
+         * 
+         */
+        string const getTerm() const;
+      protected:
+        /**
+         * Gets the internal representation of data.
+         * 
+         * @return the internal representation of data.
+         * 
+         */
+        bmType::left_const_iterator const getIterator() const;
+      private:
+        /**
+         * Internal representation of data.
+         * 
+         */
+        bmType::left_const_iterator iter;
+      };
+
+    };
+
+  };
+
 };
 
 #endif /* ALPHABETITERATOR_H */

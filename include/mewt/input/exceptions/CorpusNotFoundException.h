@@ -29,36 +29,48 @@
 
 #include "mewt/util/exceptions/Exception.h"
 
-class CorpusNotFoundException : public Exception {
-public:
-    /**
-     * Default constructor. Uses the default message for this
-     * Exception.
-     * 
-     */
-    CorpusNotFoundException();
-    /**
-     * Specific constructor. Generated an informative message
-     * about the error.
-     * 
-     */
-    CorpusNotFoundException(string const location, bool const & isMessage);
-    /**
-     * Uses the given message for this Exception.
-     * 
-     * @param message the message to use for this Exception.
-     * 
-     */
-    CorpusNotFoundException(string const message);
-private:
-    /**
-     * Creates an error message using the given location.
-     * 
-     * @param location the location to create an error message with.
-     * @return an error message using the given location.
-     * 
-     */
-    string const createErrorMessage(string const & location) const;
+namespace mewt {
+
+  namespace input {
+
+    namespace exceptions {
+
+      class CorpusNotFoundException : public Exception {
+      public:
+        /**
+         * Default constructor. Uses the default message for this
+         * Exception.
+         * 
+         */
+        CorpusNotFoundException();
+        /**
+         * Specific constructor. Generated an informative message
+         * about the error.
+         * 
+         */
+        CorpusNotFoundException(string const location, bool const & isMessage);
+        /**
+         * Uses the given message for this Exception.
+         * 
+         * @param message the message to use for this Exception.
+         * 
+         */
+        CorpusNotFoundException(string const message);
+      private:
+        /**
+         * Creates an error message using the given location.
+         * 
+         * @param location the location to create an error message with.
+         * @return an error message using the given location.
+         * 
+         */
+        string const createErrorMessage(string const & location) const;
+      };
+
+    };
+
+  };
+
 };
 
 #endif /* CORPUSNOTFOUNDEXCEPTION_H */

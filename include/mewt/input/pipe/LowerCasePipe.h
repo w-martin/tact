@@ -27,31 +27,43 @@
 
 #include "mewt/input/pipe/Pipe.h"
 
-/**
- * LowerCasePipe class for transforming Corpus objects.
- * 
- */
-class LowerCasePipe : public Pipe {
-public:
-    /**
-     * Default constructor.
-     * 
-     */
-    LowerCasePipe();
-    /**
-     * Default destructor.
-     * 
-     */
-    virtual ~LowerCasePipe();
-private:
-    /**
-     * Process the given corpus.
-     * 
-     * @param corpus the Corpus to process.
-     * @return the processed Corpus.
-     * 
-     */
-    auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+namespace mewt {
+
+  namespace input {
+
+    namespace pipe {
+
+      /**
+       * LowerCasePipe class for transforming Corpus objects.
+       * 
+       */
+      class LowerCasePipe : public Pipe {
+      public:
+        /**
+         * Default constructor.
+         * 
+         */
+        LowerCasePipe();
+        /**
+         * Default destructor.
+         * 
+         */
+        virtual ~LowerCasePipe();
+      private:
+        /**
+         * Process the given corpus.
+         * 
+         * @param corpus the Corpus to process.
+         * @return the processed Corpus.
+         * 
+         */
+        auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+      };
+
+    };
+
+  };
+
 };
 
 #endif	/* LOWERCASEPIPE_H */

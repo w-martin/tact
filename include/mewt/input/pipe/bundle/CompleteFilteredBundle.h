@@ -27,29 +27,46 @@
 
 #include "mewt/input/pipe/Pipe.h"
 
-class CompleteFilteredBundle : public Pipe {
-public:
-    /**
-     * Default constructor.
-     * 
-     * @param stopwordsFile the location of the stop-words file.
-     * 
-     */
-    CompleteFilteredBundle(string const & stopwordsFile);
-    /**
-     * Default destructor.
-     * 
-     */
-    virtual ~CompleteFilteredBundle();
-private:
-    /**
-     * Process the given corpus.
-     * 
-     * @param corpus the Corpus to process.
-     * @return the processed Corpus.
-     * 
-     */
-    auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+namespace mewt {
+
+  namespace input {
+
+    namespace pipe {
+
+      namespace bundle {
+
+        class CompleteFilteredBundle : public Pipe {
+        public:
+          /**
+           * Default constructor.
+           * 
+           * @param stopwordsFile the location of the stop-words file.
+           * 
+           */
+          CompleteFilteredBundle(string const & stopwordsFile);
+          /**
+           * Default destructor.
+           * 
+           */
+          virtual ~CompleteFilteredBundle();
+        private:
+          /**
+           * Process the given corpus.
+           * 
+           * @param corpus the Corpus to process.
+           * @return the processed Corpus.
+           * 
+           */
+          auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+        };
+
+      };
+
+    };
+
+  };
+
 };
+
 
 #endif /* COMPLETEFILTEREDBUNDLE_H */

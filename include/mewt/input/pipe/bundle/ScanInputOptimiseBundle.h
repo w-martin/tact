@@ -27,27 +27,43 @@
 
 #include "mewt/input/pipe/Pipe.h"
 
-class ScanInputOptimiseBundle : public Pipe {
-public:
-    /**
-     * Default constructor.
-     * 
-     */
-    ScanInputOptimiseBundle();
-    /**
-     * Default destructor.
-     * 
-     */
-    virtual ~ScanInputOptimiseBundle();
-private:
-    /**
-     * Process the given corpus.
-     * 
-     * @param corpus the Corpus to process.
-     * @return the processed Corpus.
-     * 
-     */
-    auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+namespace mewt {
+
+  namespace input {
+
+    namespace pipe {
+
+      namespace bundle {
+
+        class ScanInputOptimiseBundle : public Pipe {
+        public:
+          /**
+           * Default constructor.
+           * 
+           */
+          ScanInputOptimiseBundle();
+          /**
+           * Default destructor.
+           * 
+           */
+          virtual ~ScanInputOptimiseBundle();
+        private:
+          /**
+           * Process the given corpus.
+           * 
+           * @param corpus the Corpus to process.
+           * @return the processed Corpus.
+           * 
+           */
+          auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+        };
+
+      };
+
+    };
+
+  };
+
 };
 
 #endif /* SCANINPUTOPTIMISEBUNDLE_H */

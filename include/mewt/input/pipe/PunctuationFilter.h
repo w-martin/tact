@@ -27,35 +27,47 @@
 
 #include "mewt/input/pipe/Pipe.h"
 
-class PunctuationFilter : public Pipe {
-public:
-    /**
-     * Default constructor.
-     * 
-     */
-    PunctuationFilter();
-    /**
-     * Default destructor.
-     * 
-     */
-    virtual ~PunctuationFilter();
-    /**
-     * Removes punctuation form the given term.
-     * 
-     * @param term the term to remove punctuation from.
-     * @return the set of terms that surrounded punctuation in the given
-     * term.
-     */
-    static vector< string > const removePunctuation(string const & term);
-private:
-    /**
-     * Process the given corpus.
-     * 
-     * @param corpus the Corpus to process.
-     * @return the processed Corpus.
-     * 
-     */
-    auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+namespace mewt {
+
+  namespace input {
+
+    namespace pipe {
+
+      class PunctuationFilter : public Pipe {
+      public:
+        /**
+         * Default constructor.
+         * 
+         */
+        PunctuationFilter();
+        /**
+         * Default destructor.
+         * 
+         */
+        virtual ~PunctuationFilter();
+        /**
+         * Removes punctuation form the given term.
+         * 
+         * @param term the term to remove punctuation from.
+         * @return the set of terms that surrounded punctuation in the given
+         * term.
+         */
+        static vector< string > const removePunctuation(string const & term);
+      private:
+        /**
+         * Process the given corpus.
+         * 
+         * @param corpus the Corpus to process.
+         * @return the processed Corpus.
+         * 
+         */
+        auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+      };
+
+    };
+
+  };
+
 };
 
 #endif /* PUNCTUATIONFILTER_H */

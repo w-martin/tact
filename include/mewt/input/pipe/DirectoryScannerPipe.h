@@ -27,59 +27,71 @@
 
 #include "mewt/input/pipe/Pipe.h"
 
-class DirectoryScannerPipe : public Pipe {
-public:
-    /**
-     * Default constructor.
-     * 
-     * @param recursive indicates whether this scanner is recursive or not.
-     * 
-     */
-    DirectoryScannerPipe(bool const recursive);
-    /**
-     * Default destructor.
-     * 
-     */
-    virtual ~DirectoryScannerPipe();
-    /**
-     * Checks whether this scanner is recursive or not.
-     * 
-     * @return true if this scanner is recursive, false otherwise.
-     * 
-     */
-    bool const isRecursive() const;
-private:
-    /**
-     * Indicates whether this scanner is recursive or not.
-     * 
-     */
-    bool recursive;
-    /**
-     * Adds the documents in the given directory to the given corpus.
-     * 
-     * @param corpus the corpus to add documents to.
-     * @param directory the directory to add documents from.
-     * 
-     */
-    void addDocumentsInDirectory(
-            string const & directory, Corpus * const corpus) const;
-    /**
-     * Adds the given document to the given corpus.
-     * 
-     * @param location the location of the document relative to the corpus
-     * directory.
-     * @param corpus the corpus to add the document to.
-     * 
-     */
-    void addDocument(string const location, Corpus * const corpus) const;
-    /**
-     * Process the given corpus.
-     * 
-     * @param corpus the Corpus to process.
-     * @return the processed Corpus.
-     * 
-     */
-    auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+namespace mewt {
+
+  namespace input {
+
+    namespace pipe {
+
+      class DirectoryScannerPipe : public Pipe {
+      public:
+        /**
+         * Default constructor.
+         * 
+         * @param recursive indicates whether this scanner is recursive or not.
+         * 
+         */
+        DirectoryScannerPipe(bool const recursive);
+        /**
+         * Default destructor.
+         * 
+         */
+        virtual ~DirectoryScannerPipe();
+        /**
+         * Checks whether this scanner is recursive or not.
+         * 
+         * @return true if this scanner is recursive, false otherwise.
+         * 
+         */
+        bool const isRecursive() const;
+      private:
+        /**
+         * Indicates whether this scanner is recursive or not.
+         * 
+         */
+        bool recursive;
+        /**
+         * Adds the documents in the given directory to the given corpus.
+         * 
+         * @param corpus the corpus to add documents to.
+         * @param directory the directory to add documents from.
+         * 
+         */
+        void addDocumentsInDirectory(
+                string const & directory, Corpus * const corpus) const;
+        /**
+         * Adds the given document to the given corpus.
+         * 
+         * @param location the location of the document relative to the corpus
+         * directory.
+         * @param corpus the corpus to add the document to.
+         * 
+         */
+        void addDocument(string const location, Corpus * const corpus) const;
+        /**
+         * Process the given corpus.
+         * 
+         * @param corpus the Corpus to process.
+         * @return the processed Corpus.
+         * 
+         */
+        auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+      };
+
+    };
+
+  };
+
 };
 
 #endif /* DIRECTORYSCANNERPIPE_H */

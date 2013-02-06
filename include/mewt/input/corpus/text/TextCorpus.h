@@ -28,24 +28,36 @@
 #include "mewt/input/corpus/Corpus.h"
 #include "mewt/input/corpus/text/TextDocument.h"
 
-/**
- * Store of TextDocument objects.
- * 
- */
-class TextCorpus : public Corpus {
-public:
-    /**
-     * Default constructor.
-     * 
-     * @param location the location of the corpus on disk.
-     * 
-     */
-    TextCorpus(string const location);
-    /**
-     * Default destructor.
-     * 
-     */
-    virtual ~TextCorpus();
+namespace mewt {
+
+  namespace input {
+
+    namespace text {
+
+      /**
+       * Store of TextDocument objects.
+       * 
+       */
+      class TextCorpus : public Corpus {
+      public:
+        /**
+         * Default constructor.
+         * 
+         * @param location the location of the corpus on disk.
+         * 
+         */
+        TextCorpus(string const location);
+        /**
+         * Default destructor.
+         * 
+         */
+        virtual ~TextCorpus();
+      };
+
+    };
+
+  };
+
 };
 
 #endif	/* TEXTCORPUS_H */

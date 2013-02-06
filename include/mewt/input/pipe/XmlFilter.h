@@ -27,35 +27,47 @@
 
 #include "mewt/input/pipe/Pipe.h"
 
-class XmlFilter : public Pipe {
-public:
-    /**
-     * Default constructor.
-     * 
-     */
-    XmlFilter();
-    /**
-     * Default destructor.
-     * 
-     */
-    virtual ~XmlFilter();
-    /**
-     * Removes xml from the given text.
-     * 
-     * @param text the text to remove xml from.
-     * @return the text with xml removed.
-     * 
-     */
-    static auto_ptr< string > removeXml(string const & text);
-private:
-    /**
-     * Process the given corpus.
-     * 
-     * @param corpus the Corpus to process.
-     * @return the processed Corpus.
-     * 
-     */
-    auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+namespace mewt {
+
+  namespace input {
+
+    namespace pipe {
+
+      class XmlFilter : public Pipe {
+      public:
+        /**
+         * Default constructor.
+         * 
+         */
+        XmlFilter();
+        /**
+         * Default destructor.
+         * 
+         */
+        virtual ~XmlFilter();
+        /**
+         * Removes xml from the given text.
+         * 
+         * @param text the text to remove xml from.
+         * @return the text with xml removed.
+         * 
+         */
+        static auto_ptr< string > removeXml(string const & text);
+      private:
+        /**
+         * Process the given corpus.
+         * 
+         * @param corpus the Corpus to process.
+         * @return the processed Corpus.
+         * 
+         */
+        auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+      };
+
+    };
+
+  };
+
 };
 
 #endif /* XMLFILTER_H */

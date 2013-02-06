@@ -29,41 +29,53 @@
 
 #include "mewt/util/exceptions/Exception.h"
 
-/**
- * Exception class which indicates that a term was not
- * present in an alphabet.
- * 
- */
-class TermNotPresentException : public Exception {
-public:
-    /**
-     * Default constructor. Uses the default message for this
-     * Exception.
-     * 
-     */
-    TermNotPresentException();
-    /**
-     * Specific constructor. Generated an informative message
-     * about the error.
-     * 
-     */
-    TermNotPresentException(string const term, bool const & isMessage);
-    /**
-     * Uses the given message for this Exception.
-     * 
-     * @param message the message to use for this Exception.
-     * 
-     */
-    TermNotPresentException(string const message);
-private:
-    /**
-     * Creates an error message using the given term.
-     * 
-     * @param term the term to create an error message with.
-     * @return an error message using the given term.
-     * 
-     */
-    string const createErrorMessage(string const & term) const;
+namespace mewt {
+
+  namespace input {
+
+    namespace exceptions {
+
+      /**
+       * Exception class which indicates that a term was not
+       * present in an alphabet.
+       * 
+       */
+      class TermNotPresentException : public Exception {
+      public:
+        /**
+         * Default constructor. Uses the default message for this
+         * Exception.
+         * 
+         */
+        TermNotPresentException();
+        /**
+         * Specific constructor. Generated an informative message
+         * about the error.
+         * 
+         */
+        TermNotPresentException(string const term, bool const & isMessage);
+        /**
+         * Uses the given message for this Exception.
+         * 
+         * @param message the message to use for this Exception.
+         * 
+         */
+        TermNotPresentException(string const message);
+      private:
+        /**
+         * Creates an error message using the given term.
+         * 
+         * @param term the term to create an error message with.
+         * @return an error message using the given term.
+         * 
+         */
+        string const createErrorMessage(string const & term) const;
+      };
+
+    };
+
+  };
+
 };
 
 #endif	/* TERMNOTPRESENTEXCEPTION_H */

@@ -27,43 +27,56 @@
 
 #include "mewt/input/pipe/Pipe.h"
 
-class LengthFilter : public Pipe {
-public:
-    /**
-     * Default constructor.
-     * 
-     * @param minimumLength the minimumLength that terms must have to pass 
-     * this length filter.
-     * 
-     */
-    LengthFilter(int const minimumLength);
-    /**
-     * Default destructor.
-     * 
-     */
-    virtual ~LengthFilter();
-    /**
-     * Gets the minimumLength that terms must have to pass this length filter.
-     * 
-     * @return the minimumLength that terms must have to pass this length 
-     * filter.
-     * 
-     */
-    int const getMinimumLength() const;
-private:
-    /**
-     * The minimumLength that terms must have to pass this length filter.
-     * 
-     */
-    int minimumLength;
-    /**
-     * Process the given corpus.
-     * 
-     * @param corpus the Corpus to process.
-     * @return the processed Corpus.
-     * 
-     */
-    auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+namespace mewt {
+
+  namespace input {
+
+    namespace pipe {
+
+      class LengthFilter : public Pipe {
+      public:
+        /**
+         * Default constructor.
+         * 
+         * @param minimumLength the minimumLength that terms must have to pass 
+         * this length filter.
+         * 
+         */
+        LengthFilter(int const minimumLength);
+        /**
+         * Default destructor.
+         * 
+         */
+        virtual ~LengthFilter();
+        /**
+         * Gets the minimumLength that terms must have to pass this length 
+         * filter.
+         * 
+         * @return the minimumLength that terms must have to pass this length 
+         * filter.
+         * 
+         */
+        int const getMinimumLength() const;
+      private:
+        /**
+         * The minimumLength that terms must have to pass this length filter.
+         * 
+         */
+        int minimumLength;
+        /**
+         * Process the given corpus.
+         * 
+         * @param corpus the Corpus to process.
+         * @return the processed Corpus.
+         * 
+         */
+        auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+      };
+
+    };
+
+  };
+
 };
 
 #endif /* LENGTHFILTER_H */

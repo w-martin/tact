@@ -27,33 +27,45 @@
 
 #include "mewt/input/pipe/Pipe.h"
 
-/**
- * FeatureMapPipe class for transforming TextCorpus objects into 
- * FeatureMapCorpus objects.  A static assert is used to check that the
- * correct corpus types are used as input.
- * 
- */
-class FeatureMapPipe : public Pipe {
-public:
-    /**
-     * Default constructor.
-     * 
-     */
-    FeatureMapPipe();
-    /**
-     * Default destructor.
-     * 
-     */
-    virtual ~FeatureMapPipe();
-private:
-    /**
-     * Process the given corpus.
-     * 
-     * @param corpus the Corpus to process.
-     * @return the processed Corpus.
-     * 
-     */
-    auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+namespace mewt {
+
+  namespace input {
+
+    namespace pipe {
+
+      /**
+       * FeatureMapPipe class for transforming TextCorpus objects into 
+       * FeatureMapCorpus objects.  A static assert is used to check that the
+       * correct corpus types are used as input.
+       * 
+       */
+      class FeatureMapPipe : public Pipe {
+      public:
+        /**
+         * Default constructor.
+         * 
+         */
+        FeatureMapPipe();
+        /**
+         * Default destructor.
+         * 
+         */
+        virtual ~FeatureMapPipe();
+      private:
+        /**
+         * Process the given corpus.
+         * 
+         * @param corpus the Corpus to process.
+         * @return the processed Corpus.
+         * 
+         */
+        auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+      };
+
+    };
+
+  };
+
 };
 
 #endif	/* FEATUREMAPPIPE_H */

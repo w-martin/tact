@@ -28,64 +28,75 @@
 #include "mewt/input/corpus/feature/Alphabet.h"
 #include "mewt/input/pipe/Pipe.h"
 
-class StopwordFilter : public Pipe {
-public:
-    /**
-     * File constructor.
-     * 
-     * @param stopwordsFile the location of the file containing stop-words.
-     * 
-     */
-    StopwordFilter(string const & stopwordsFile);
-    /**
-     * Directory constructor.
-     * 
-     * @param stopwordsDirectory the directory containing stop-word files.
-     * @param recursive whether the directory should be scanned recursively.
-     * 
-     */
-    StopwordFilter(string const & stopwordsDirectory, bool const & recursive);
-    /**
-     * Specific constructor.
-     * 
-     * @param stopwords a list of stop-words.
-     * 
-     */
-    StopwordFilter(Alphabet const * const stopwords);
-    /**
-     * Copy constructor.
-     * 
-     * @param orig the StopwordFilter to copy.
-     * 
-     */
-    StopwordFilter(StopwordFilter const & orig);
-    /**
-     * Default destructor.
-     * 
-     */
-    virtual ~StopwordFilter();
-    /**
-     * Gets the Alphabet of stop-words.
-     * 
-     * @return the Alphabet of stop-words.
-     * 
-     */
-    Alphabet const * const getStopwords() const;
-protected:
-    /**
-     * Alphabet of stop-words.
-     * 
-     */
-    Alphabet const * stopwords;
-private:
-    /**
-     * Process the given corpus.
-     * 
-     * @param corpus the Corpus to process.
-     * @return the processed Corpus.
-     * 
-     */
-    auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+namespace mewt {
+
+  namespace input {
+
+    namespace pipe {
+
+      class StopwordFilter : public Pipe {
+      public:
+        /**
+         * File constructor.
+         * 
+         * @param stopwordsFile the location of the file containing stop-words.
+         * 
+         */
+        StopwordFilter(string const & stopwordsFile);
+        /**
+         * Directory constructor.
+         * 
+         * @param stopwordsDirectory the directory containing stop-word files.
+         * @param recursive whether the directory should be scanned recursively.
+         * 
+         */
+        StopwordFilter(string const & stopwordsDirectory, bool const & recursive);
+        /**
+         * Specific constructor.
+         * 
+         * @param stopwords a list of stop-words.
+         * 
+         */
+        StopwordFilter(Alphabet const * const stopwords);
+        /**
+         * Copy constructor.
+         * 
+         * @param orig the StopwordFilter to copy.
+         * 
+         */
+        StopwordFilter(StopwordFilter const & orig);
+        /**
+         * Default destructor.
+         * 
+         */
+        virtual ~StopwordFilter();
+        /**
+         * Gets the Alphabet of stop-words.
+         * 
+         * @return the Alphabet of stop-words.
+         * 
+         */
+        Alphabet const * const getStopwords() const;
+      protected:
+        /**
+         * Alphabet of stop-words.
+         * 
+         */
+        Alphabet const * stopwords;
+      private:
+        /**
+         * Process the given corpus.
+         * 
+         * @param corpus the Corpus to process.
+         * @return the processed Corpus.
+         * 
+         */
+        auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+      };
+
+    };
+
+  };
 
 };
 

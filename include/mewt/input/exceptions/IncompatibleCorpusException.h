@@ -32,73 +32,85 @@
 
 using std::vector;
 
-/**
- * Exception class which indicates that a corpus was incompatible with a
- * Document or Pipe due to its type constraints.
- * 
- */
-class IncompatibleCorpusException : public Exception {
-public:
-    /**
-     * Default constructor. Uses the default message for this
-     * Exception.
-     * 
-     */
-    IncompatibleCorpusException();
-    /**
-     * Specific constructor. Generated an informative message
-     * about the error.
-     * 
-     * @param corpusType the type of the corpus.
-     * @param compatibleTypes the types that are compatible.
-     * @param source the source of this Exception.
-     * 
-     */
-    IncompatibleCorpusException(int const & corpusType,
-            vector< int > const * const compatibleTypes,
-            string const & source);
-    /**
-     * Specific constructor. Generated an informative message
-     * about the error.
-     * 
-     * @param corpusType the type of the corpus.
-     * @param compatibleType the type that is compatible.
-     * @param source the source of this Exception.
-     * 
-     */
-    IncompatibleCorpusException(int const & corpusType,
-            int const & compatibleType, string const & source);
-    /**
-     * Uses the given message for this Exception.
-     * 
-     * @param message the message to use for this Exception.
-     * 
-     */
-    IncompatibleCorpusException(string const & message);
-private:
-    /**
-     * Creates an error message using the given type identifiers.
-     * 
-     * @param corpusType the type of the corpus.
-     * @param compatibleTypes the types that are compatible.
-     * @param source the source of this Exception.
-     * @return an error message using the given type identifiers.
-     * 
-     */
-    string const createErrorMessage(int const & corpusType,
-            vector< int > const * const compatibleTypes,
-            string const & source) const;
-    /**
-     * Creates an error message using the given type identifiers.
-     * 
-     * @param corpusType the type of the corpus.
-     * @param compatibleType the type that is compatible.
-     * @param source the source of this Exception.
-     * @return an error message using the given type identifiers.
-     * 
-     */
-    string const createErrorMessage(int const & corpusType,
-            int const & compatibleType, string const & source) const;
+namespace mewt {
+
+  namespace input {
+
+    namespace exceptions {
+
+      /**
+       * Exception class which indicates that a corpus was incompatible with a
+       * Document or Pipe due to its type constraints.
+       * 
+       */
+      class IncompatibleCorpusException : public Exception {
+      public:
+        /**
+         * Default constructor. Uses the default message for this
+         * Exception.
+         * 
+         */
+        IncompatibleCorpusException();
+        /**
+         * Specific constructor. Generated an informative message
+         * about the error.
+         * 
+         * @param corpusType the type of the corpus.
+         * @param compatibleTypes the types that are compatible.
+         * @param source the source of this Exception.
+         * 
+         */
+        IncompatibleCorpusException(int const & corpusType,
+                vector< int > const * const compatibleTypes,
+                string const & source);
+        /**
+         * Specific constructor. Generated an informative message
+         * about the error.
+         * 
+         * @param corpusType the type of the corpus.
+         * @param compatibleType the type that is compatible.
+         * @param source the source of this Exception.
+         * 
+         */
+        IncompatibleCorpusException(int const & corpusType,
+                int const & compatibleType, string const & source);
+        /**
+         * Uses the given message for this Exception.
+         * 
+         * @param message the message to use for this Exception.
+         * 
+         */
+        IncompatibleCorpusException(string const & message);
+      private:
+        /**
+         * Creates an error message using the given type identifiers.
+         * 
+         * @param corpusType the type of the corpus.
+         * @param compatibleTypes the types that are compatible.
+         * @param source the source of this Exception.
+         * @return an error message using the given type identifiers.
+         * 
+         */
+        string const createErrorMessage(int const & corpusType,
+                vector< int > const * const compatibleTypes,
+                string const & source) const;
+        /**
+         * Creates an error message using the given type identifiers.
+         * 
+         * @param corpusType the type of the corpus.
+         * @param compatibleType the type that is compatible.
+         * @param source the source of this Exception.
+         * @return an error message using the given type identifiers.
+         * 
+         */
+        string const createErrorMessage(int const & corpusType,
+                int const & compatibleType, string const & source) const;
+      };
+
+    };
+
+  };
+
 };
 
 #endif	/* INCOMPATIBLECORPUSEXCEPTION_H */

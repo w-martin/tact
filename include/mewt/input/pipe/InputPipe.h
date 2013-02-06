@@ -27,31 +27,43 @@
 
 #include "mewt/input/pipe/Pipe.h"
 
-/**
- * InputPipe class for transforming Corpus objects.
- * 
- */
-class InputPipe : public Pipe {
-public:
-    /**
-     * Default constructor.
-     * 
-     */
-    InputPipe();
-    /**
-     * Default destructor.
-     * 
-     */
-    virtual ~InputPipe();
-private:
-    /**
-     * Process the given corpus.
-     * 
-     * @param corpus the Corpus to process.
-     * @return the processed Corpus.
-     * 
-     */
-    auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+namespace mewt {
+
+  namespace input {
+
+    namespace pipe {
+
+      /**
+       * InputPipe class for transforming Corpus objects.
+       * 
+       */
+      class InputPipe : public Pipe {
+      public:
+        /**
+         * Default constructor.
+         * 
+         */
+        InputPipe();
+        /**
+         * Default destructor.
+         * 
+         */
+        virtual ~InputPipe();
+      private:
+        /**
+         * Process the given corpus.
+         * 
+         * @param corpus the Corpus to process.
+         * @return the processed Corpus.
+         * 
+         */
+        auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const;
+      };
+
+    };
+
+  };
+
 };
 
 #endif	/* INPUTPIPE_H */
