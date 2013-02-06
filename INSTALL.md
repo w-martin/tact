@@ -30,7 +30,7 @@ Once built:
 
 1. Run "mkdir build"
 2. Run "cd build"
-3. Run "cmake -D TESTING=ON .." to create the Makefile.
+3. Run "cmake -D TESTING=FAST .." to create the Makefile with most tests enabled, or run "cmake -D TESTING=ALL .." to enable integration tests as well.
 4. Run "make" to build.
 5. Run "make test" to run tests.
 

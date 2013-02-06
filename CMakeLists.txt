@@ -29,7 +29,7 @@ cmake_minimum_required (VERSION 2.6.2)
 
 project (mewt)
 
-OPTION(TESTING "Build tests." ON)
+SET(TESTING "NONE" CACHE STRING "NONE")
 
 set(MEWT_NAME mewt)
 set(MEWT_UTIL mewt-util)
@@ -138,7 +138,11 @@ target_link_libraries(${MEWT_NAME}
 # GTest - http://code.google.com/p/googletest/ #
 ################################################
 
-IF(TESTING)
+message("-- Testing mode: ${TESTING}")
+
+IF(NOT ("NONE" STREQUAL TESTING))
+
+    message("-- Testing is enabled.")
 
     add_subdirectory(gmock)
     enable_testing(true) 
@@ -272,6 +276,12 @@ IF(TESTING)
         gmock_main)
     add_test(AlgorithmTests AlgorithmTests)
 
+ENDIF()
+
+IF("ALL" STREQUAL TESTING)
+
+    message("-- Integration testing is enabled.")
+
     add_executable(IntegrationTests
         ${MEWT_TEST_DIR}/integration/IntegrationTests.cpp
     ) 
@@ -288,4 +298,4 @@ IF(TESTING)
         gmock_main)
     add_test(IntegrationTests IntegrationTests)
 
-ENDIF(TESTING)
+ENDIF()
