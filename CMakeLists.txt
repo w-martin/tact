@@ -29,7 +29,8 @@ cmake_minimum_required (VERSION 2.6.2)
 
 project (mewt)
 
-SET(TESTING "NONE" CACHE STRING "NONE")
+set(TESTING "NONE" CACHE STRING "NONE")
+option(COVERAGE "Generate code coverage reports." OFF)
 
 set(MEWT_NAME mewt)
 set(MEWT_UTIL mewt-util)
@@ -42,6 +43,7 @@ set(MEWT_SOURCE_DIR src)
 set(MEWT_INCLUDE_DIR include)
 set(MEWT_TEST_DIR test/src)
 set(MEWT_MOCK_DIR test/mock)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 
 set(Boost_USE_MULTITHREADED ON)
 find_package(Boost COMPONENTS 
@@ -119,21 +121,6 @@ add_library (${MEWT_ALGORITHM}
 
 #find_package(Threads REQUIRED)
 
-add_executable (${MEWT_NAME}
-    ${MEWT_SOURCE_DIR}/main.cpp)
-target_link_libraries(${MEWT_NAME}
-    ${CMAKE_THREAD_LIBS_INIT}
-    ${MEWT_ALGORITHM}
-    ${MEWT_MODEL}
-    ${MEWT_OUTPUT}
-    ${MEWT_INPUT}
-    ${MEWT_UTIL}
-    ${Boost_DATE_TIME_LIBRARY}
-    ${Boost_FILESYSTEM_LIBRARY}
-    ${Boost_REGEX_LIBRARY}
-    ${Boost_SYSTEM_LIBRARY}
-    )
-
 ################################################
 # GTest - http://code.google.com/p/googletest/ #
 ################################################
@@ -154,6 +141,25 @@ IF(NOT ("NONE" STREQUAL TESTING))
         ${gmock_SOURCE_DIR}
         ${MEWT_MOCK_DIR}
     )
+
+    ################################################
+    # Code coverage ################################
+    ################################################
+
+    message("-- Coverage mode: ${COVERAGE}")
+    if(COVERAGE)
+
+      set(CMAKE_BUILD_TYPE "Debug")
+
+      if(NOT CMAKE_COMPILER_IS_GNUCXX)
+        message("-- Compiler not GNU, cannot create coverage report.")
+      else()
+        include(CodeCoverage)
+        message("-- Code coverage is enabled.")
+        SETUP_TARGET_FOR_COVERAGE_COBERTURA(coverage ctest coverage)
+      endif()
+
+    endif(COVERAGE)
 
     # list test definitions here
     # TODO: replace this with a macro
@@ -299,3 +305,18 @@ IF("ALL" STREQUAL TESTING)
     add_test(IntegrationTests IntegrationTests)
 
 ENDIF()
+
+add_executable (${MEWT_NAME}
+    ${MEWT_SOURCE_DIR}/main.cpp)
+target_link_libraries(${MEWT_NAME}
+    ${CMAKE_THREAD_LIBS_INIT}
+    ${MEWT_ALGORITHM}
+    ${MEWT_MODEL}
+    ${MEWT_OUTPUT}
+    ${MEWT_INPUT}
+    ${MEWT_UTIL}
+    ${Boost_DATE_TIME_LIBRARY}
+    ${Boost_FILESYSTEM_LIBRARY}
+    ${Boost_REGEX_LIBRARY}
+    ${Boost_SYSTEM_LIBRARY}
+    )

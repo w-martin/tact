@@ -34,6 +34,14 @@ Once built:
 4. Run "make" to build.
 5. Run "make test" to run tests.
 
+## Coverage reports
+
+1. Run "mkdir build"
+2. Run "cd build"
+3. Run "cmake .. -DCOVERAGE=ON -DTESTING=ALL" to create the Makefile.
+4. Run "make" to build.
+5. Run "make coverage" to run tests and generate a cobertura coverage report.
+
 ## Running
 
 Run "./mewt" to run the program from within the build directory, 
