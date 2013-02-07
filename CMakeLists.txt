@@ -30,7 +30,7 @@ cmake_minimum_required (VERSION 2.6.2)
 project (mewt)
 
 set(TESTING "NONE" CACHE STRING "NONE")
-option(COVERAGE "Generate code coverage reports." OFF)
+set(COVERAGE "NONE" CACHE STRING "NONE")
 
 set(MEWT_NAME mewt)
 set(MEWT_UTIL mewt-util)
@@ -127,7 +127,7 @@ add_library (${MEWT_ALGORITHM}
 
 message("-- Testing mode: ${TESTING}")
 
-IF(NOT ("NONE" STREQUAL TESTING))
+IF(("FAST" STREQUAL TESTING) OR ("ALL" STREQUAL TESTING))
 
     message("-- Testing is enabled.")
 
@@ -147,7 +147,7 @@ IF(NOT ("NONE" STREQUAL TESTING))
     ################################################
 
     message("-- Coverage mode: ${COVERAGE}")
-    if(COVERAGE)
+    if(("LCOV" STREQUAL COVERAGE) OR ("COBERTURA" STREQUAL COVERAGE))
 
       set(CMAKE_BUILD_TYPE "Debug")
 
@@ -156,10 +156,16 @@ IF(NOT ("NONE" STREQUAL TESTING))
       else()
         include(CodeCoverage)
         message("-- Code coverage is enabled.")
-        SETUP_TARGET_FOR_COVERAGE_COBERTURA(coverage ctest coverage)
+
+        if("LCOV" STREQUAL COVERAGE)
+          SETUP_TARGET_FOR_COVERAGE(coverage ctest coverage)
+        else()
+          SETUP_TARGET_FOR_COVERAGE_COBERTURA(coverage ctest coverage)
+        endif()
+
       endif()
 
-    endif(COVERAGE)
+    endif()
 
     # list test definitions here
     # TODO: replace this with a macro

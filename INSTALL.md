@@ -38,9 +38,9 @@ Once built:
 
 1. Run "mkdir build"
 2. Run "cd build"
-3. Run "cmake .. -DCOVERAGE=ON -DTESTING=ALL" to create the Makefile.
+3. Run "cmake .. -DCOVERAGE=LCOV -DTESTING=ALL" to create the Makefile and output using lcov, or "cmake .. -DCOVERAGE=COBERTURA -DTESTING=ALL" to use cobertura instead.
 4. Run "make" to build.
-5. Run "make coverage" to run tests and generate a cobertura coverage report.
+5. Run "make coverage" to run tests and generate a coverage report.
 
 ## Running
 

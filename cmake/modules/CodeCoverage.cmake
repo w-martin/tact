@@ -1,6 +1,7 @@
 # - Enable Code Coverage
 #
 # 2012-01-31, Lars Bilke
+# Modified by William Martin for project specific configuration.
 #
 # USAGE:
 # 1. Copy this file into your cmake modules path
@@ -62,7 +63,7 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE _targetname _testrunner _outputname)
 		
 		# Capturing lcov counters and generating report
 		COMMAND ${LCOV_PATH} --directory . --capture --output-file ${_outputname}.info
-		COMMAND ${LCOV_PATH} --remove ${_outputname}.info 'tests/*' '/usr/*' --output-file ${_outputname}.info.cleaned
+		COMMAND ${LCOV_PATH} --remove ${_outputname}.info 'tests/*' 'test/*' 'gmock/*' '/usr/*' --output-file ${_outputname}.info.cleaned
 		COMMAND ${GENHTML_PATH} -o ${_outputname} ${_outputname}.info.cleaned
 		COMMAND ${CMAKE_COMMAND} -E remove ${_outputname}.info ${_outputname}.info.cleaned
 		
@@ -99,7 +100,7 @@ FUNCTION(SETUP_TARGET_FOR_COVERAGE_COBERTURA _targetname _testrunner _outputname
 		${_testrunner} ${ARGV3}
 
 		# Running gcovr
-		COMMAND ${GCOVR_PATH} -x -r ${CMAKE_SOURCE_DIR} -e '${CMAKE_SOURCE_DIR}/tests/'  -o ${_outputname}.xml
+		COMMAND ${GCOVR_PATH} -x -r ${CMAKE_SOURCE_DIR} -e '${CMAKE_SOURCE_DIR}/[gt].*/'  -o ${_outputname}.xml
 		WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 		COMMENT "Running gcovr to produce Cobertura code coverage report."
 	)
