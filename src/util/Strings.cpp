@@ -5,31 +5,31 @@
  *
  * @section LICENSE
  *
- * This file is part of mewt.
+ * This file is part of teflon.
  * 
- * mewt is free software: you can redistribute it and/or modify
+ * teflon is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
- * mewt is distributed in the hope that it will be useful,
+ * teflon is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  * 
  * You should have received a copy of the GNU General Public License
- * along with mewt.  If not, see <http://www.gnu.org/licenses/>.
+ * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
  * 
  */
 
-#include "mewt/util/Strings.h"
+#include "teflon/util/Strings.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string_regex.hpp>
 #include <boost/algorithm/string/find.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/regex.hpp>
 
-namespace strings = mewt::util::strings;
+namespace strings = teflon::util::strings;
 
 bool const strings::contains(string const & first, string const & second,
         bool const & caseSensitive) {

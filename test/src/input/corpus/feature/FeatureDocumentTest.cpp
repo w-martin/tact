@@ -5,26 +5,26 @@
  *
  * @section LICENSE
  *
- * This file is part of mewt.
+ * This file is part of teflon.
  * 
- * mewt is free software: you can redistribute it and/or modify
+ * teflon is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
 
- * mewt is distributed in the hope that it will be useful,
+ * teflon is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
 
  * You should have received a copy of the GNU General Public License
- * along with mewt.  If not, see <http://www.gnu.org/licenses/>.
+ * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
  * 
  */
 
 #include "gtest/gtest.h"
-#include "mewt/input/corpus/feature/FeatureDocument.h"
-#include "mewt/input/corpus/feature/MockFeatureDocument.h"
+#include "teflon/input/corpus/feature/FeatureDocument.h"
+#include "teflon/input/corpus/feature/MockFeatureDocument.h"
 
 namespace {
 

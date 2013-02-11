@@ -4,18 +4,15 @@ Installation instructions for mewt
 ## Disclaimer
 This program is written in C++, and built using CMake.  
 To build, you will need to have the following utilities and libraries 
-installed: 
+installed:
 * A C compiler such as gcc or clang.
 * A C++ compiler such a g++ or clang.
 * Boost libraries (http://www.boost.org/) version 1.49.0 or higher.
 * CMake (http://www.cmake.org/cmake/resources/software.html) build utility.
 * A Python interpreter (http://www.python.org/) version 2.7.0 or higher.
 Optionally install:
-# lcov if you wish to generate lcov coverage reports.
-# cobertura,python,gcovr if you wish to generate cobertura coverage reports (for jenkins). 
-
-Please note that utilities and libraries with lower version numbers may work, 
-but we cannot guarantee their compatibility.
+* lcov if you wish to generate lcov coverage reports.
+* cobertura,python,gcovr if you wish to generate cobertura coverage reports (for jenkins).
 
 ## Building
 

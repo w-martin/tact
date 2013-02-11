@@ -5,20 +5,20 @@
  *
  * @section LICENSE
  *
- * This file is part of mewt.
+ * This file is part of teflon.
  * 
- * mewt is free software: you can redistribute it and/or modify
+ * teflon is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * mewt is distributed in the hope that it will be useful,
+ * teflon is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with mewt.  If not, see <http://www.gnu.org/licenses/>.
+ * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @section DESCRIPTION
  *
@@ -26,15 +26,15 @@
  * 
  */
 
-#include "mewt/input/pipe/bundle/CompleteFilteredBundle.h"
-#include "mewt/input/corpus/feature/FeatureCorpusIO.h"
-#include "mewt/util/Strings.h"
-#include "mewt/input/pipe/bundle/ScanInputOptimiseBundle.h"
-#include "mewt/algorithm/LDA.h"
+#include "teflon/input/pipe/bundle/CompleteFilteredBundle.h"
+#include "teflon/input/corpus/feature/FeatureCorpusIO.h"
+#include "teflon/util/Strings.h"
+#include "teflon/input/pipe/bundle/ScanInputOptimiseBundle.h"
+#include "teflon/algorithm/LDA.h"
 #include <iostream>
 #include <map>
 
-namespace strings = mewt::util::strings;
+namespace strings = teflon::util::strings;
 
 using std::cout;
 using std::endl;
@@ -209,7 +209,7 @@ namespace {
      * 
      */
     void printUsage() {
-        cout << "Usage: mewt <mode> <arguments>"
+        cout << "Usage: teflon <mode> <arguments>"
                 << endl;
         cout << "  Modes:" << endl;
         cout << "    -c" << endl;
@@ -228,9 +228,9 @@ namespace {
         cout << "        Processes the given corpus and uses it as input."
                 << endl;
         cout << "Examples:" << endl;
-        cout << "  mewt -p myCorpus/" << "; mewt -m output/ -l myCorpus/"
+        cout << "  teflon -p myCorpus/" << "; teflon -m output/ -l myCorpus/"
                 << endl;
-        cout << "  mewt -m output -i myCorpus" << endl;
+        cout << "  teflon -m output -i myCorpus" << endl;
     }
 }
 
