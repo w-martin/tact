@@ -6,7 +6,7 @@
  * @section LICENSE
  *
  * This file is part of teflon.
- * 
+ *
  * teflon is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -19,7 +19,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 #include "teflon/input/pipe/LowerCasePipe.h"
@@ -42,22 +42,22 @@ LowerCasePipe::~LowerCasePipe() {
 }
 
 auto_ptr< Corpus > LowerCasePipe::process(
-        auto_ptr< Corpus > corpus) const {
-    FeatureCorpus * const featureCorpus = (FeatureCorpus*) corpus.get();
-    Alphabet * const alphabet = featureCorpus->getAlphabet();
-    replacementMapType termsToReplace;
-    for (AlphabetIterator iter = alphabet->begin();
-            alphabet->end() != iter; iter++) {
-        string const term = iter.getTerm();
-        if (containsUpper(term)) {
-            vector< string > transformed;
-            transformed.push_back(transformToLower(term));
-            termsToReplace.insert(std::make_pair(term, transformed));
-        }
+  auto_ptr< Corpus > corpus) const {
+  FeatureCorpus * const featureCorpus = (FeatureCorpus*) corpus.get();
+  Alphabet * const alphabet = featureCorpus->getAlphabet();
+  replacementMapType termsToReplace;
+  for (AlphabetIterator iter = alphabet->begin();
+       alphabet->end() != iter; iter++) {
+    string const term = iter.getTerm();
+    if (containsUpper(term)) {
+      vector< string > transformed;
+      transformed.push_back(transformToLower(term));
+      termsToReplace.insert(std::make_pair(term, transformed));
     }
-    for (replacementMapType::const_iterator iter = termsToReplace.begin();
-            termsToReplace.end() != iter; iter++) {
-        featureCorpus->replaceTerm((*iter).first, (*iter).second);
-    }
-    return corpus;
+  }
+  for (replacementMapType::const_iterator iter = termsToReplace.begin();
+       termsToReplace.end() != iter; iter++) {
+    featureCorpus->replaceTerm((*iter).first, (*iter).second);
+  }
+  return corpus;
 }

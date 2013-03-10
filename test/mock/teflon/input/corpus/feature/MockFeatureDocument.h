@@ -6,7 +6,7 @@
  * @section LICENSE
  *
  * This file is part of teflon.
- * 
+ *
  * teflon is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -19,11 +19,11 @@
 
  * You should have received a copy of the GNU General Public License
  * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * @section DESCRIPTION
- * 
+ *
  * Mock FeatureDocument class.
- * 
+ *
  */
 
 #ifndef FEATURE_DOCUMENT_MOCK_H
@@ -36,16 +36,16 @@
 class MockFeatureDocument : public FeatureDocument {
 public:
 
-    MockFeatureDocument() : FeatureDocument("MockFeatureDocument",
-    auto_ptr< FeatureMap >(new MockFeatureMap())) {
-    }
+  MockFeatureDocument() : FeatureDocument("MockFeatureDocument",
+                                            auto_ptr< FeatureMap >(new MockFeatureMap())) {
+  }
 
-    MockFeatureDocument(MockFeatureDocument const & orig)
+  MockFeatureDocument(MockFeatureDocument const & orig)
     : FeatureDocument(orig) {
-    }
+  }
 
-    virtual ~MockFeatureDocument() {
-    }
+  virtual ~MockFeatureDocument() {
+  }
 };
 
 #endif /* FEATURE_DOCUMENT_MOCK_H */

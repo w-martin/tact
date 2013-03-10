@@ -6,7 +6,7 @@
  * @section LICENSE
  *
  * This file is part of teflon.
- * 
+ *
  * teflon is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -19,7 +19,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 #include "teflon/algorithm/RandomNumberGenerator.h"
@@ -27,37 +27,37 @@
 #include <time.h>
 
 RandomNumberGenerator::RandomNumberGenerator() {
-    count = 0;
-    seed = time(NULL);
+  count = 0;
+  seed = time(NULL);
 }
 
 RandomNumberGenerator::RandomNumberGenerator(const int seed) {
-    count = 0;
-    RandomNumberGenerator::seed = seed;
+  count = 0;
+  RandomNumberGenerator::seed = seed;
 }
 
 RandomNumberGenerator::RandomNumberGenerator(
-        const RandomNumberGenerator& orig) {
-    count = orig.getCount();
-    seed = orig.getSeed();
+  const RandomNumberGenerator& orig) {
+  count = orig.getCount();
+  seed = orig.getSeed();
 }
 
 RandomNumberGenerator::~RandomNumberGenerator() {
 }
 
 int const RandomNumberGenerator::getCount() const {
-    return count;
+  return count;
 }
 
 int const RandomNumberGenerator::getSeed() const {
-    return seed;
+  return seed;
 }
 
 double const RandomNumberGenerator::nextUniform() {
-    // ensures consecutive calls generate different numbers
-    srand((unsigned int) time(NULL) - count);
-    double r = rand() / double(RAND_MAX);
-    count++;
-    srand(1);
-    return r;
+  // ensures consecutive calls generate different numbers
+  srand((unsigned int) time(NULL) - count);
+  double r = rand() / double(RAND_MAX);
+  count++;
+  srand(1);
+  return r;
 }

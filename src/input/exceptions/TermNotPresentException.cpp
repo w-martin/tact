@@ -6,7 +6,7 @@
  * @section LICENSE
  *
  * This file is part of teflon.
- * 
+ *
  * teflon is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -19,7 +19,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 #include "teflon/input/exceptions/TermNotPresentException.h"
@@ -28,21 +28,21 @@
 using std::stringstream;
 
 TermNotPresentException::TermNotPresentException()
-: Exception(TERM_NOT_PRESENT_MESSAGE) {
+  : Exception(TERM_NOT_PRESENT_MESSAGE) {
 }
 
 TermNotPresentException::TermNotPresentException(
-        const string term, bool const & isMessage)
-: Exception(isMessage ? term : createErrorMessage(term)) {
+  const string term, bool const & isMessage)
+  : Exception(isMessage ? term : createErrorMessage(term)) {
 }
 
 TermNotPresentException::TermNotPresentException(const string message)
-: Exception(message) {
+  : Exception(message) {
 }
 
 string const TermNotPresentException::createErrorMessage(
-        string const & term) const {
-    stringstream stream;
-    stream << TERM_NOT_PRESENT_MESSAGE << " \nTerm: " << term;
-    return stream.str();
+  string const & term) const {
+  stringstream stream;
+  stream << TERM_NOT_PRESENT_MESSAGE << " \nTerm: " << term;
+  return stream.str();
 }

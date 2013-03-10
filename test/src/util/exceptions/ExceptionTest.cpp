@@ -6,7 +6,7 @@
  * @section LICENSE
  *
  * This file is part of teflon.
- * 
+ *
  * teflon is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -19,7 +19,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 #include "gtest/gtest.h"
@@ -29,28 +29,28 @@
 
 namespace {
 
-    /**
-     * Tests Exception.
-     * 
-     */
-    class ExceptionTest : public ::testing::Test {
-    protected:
+/**
+ * Tests Exception.
+ *
+ */
+class ExceptionTest : public ::testing::Test {
+protected:
 
-        ExceptionTest() {
-            testException = new Exception(message);
-        }
+  ExceptionTest() {
+    testException = new Exception(message);
+  }
 
-        virtual ~ExceptionTest() {
-            delete testException;
-        }
-        Exception *testException;
-    };
+  virtual ~ExceptionTest() {
+    delete testException;
+  }
+  Exception *testException;
+};
 
-    /*
-     * Tests whether the <code>Exception</code>'s message was set correctly.
-     * 
-     */
-    TEST_F(ExceptionTest, MessageTest) {
-        EXPECT_STREQ(message, testException->what());
-    }
+/*
+ * Tests whether the <code>Exception</code>'s message was set correctly.
+ *
+ */
+TEST_F(ExceptionTest, MessageTest) {
+  EXPECT_STREQ(message, testException->what());
+}
 }

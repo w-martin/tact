@@ -6,7 +6,7 @@
  * @section LICENSE
  *
  * This file is part of teflon.
- * 
+ *
  * teflon is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -19,7 +19,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 #define testWord "testWord"
@@ -30,45 +30,45 @@
 
 namespace {
 
-    /**
-     * Tests InputPipe.
-     * 
-     */
-    class InputPipeTest : public ::testing::Test {
-    protected:
+/**
+ * Tests InputPipe.
+ *
+ */
+class InputPipeTest : public ::testing::Test {
+protected:
 
-        InputPipeTest() {
-            pipe = new InputPipe();
-        }
+  InputPipeTest() {
+    pipe = new InputPipe();
+  }
 
-        virtual ~InputPipeTest() {
-            delete pipe;
-        }
-        InputPipe * pipe;
-    };
+  virtual ~InputPipeTest() {
+    delete pipe;
+  }
+  InputPipe * pipe;
+};
 
-    /*
-     * Tests whether the process method works correctly.
-     * 
-     */
-    TEST_F(InputPipeTest, ProcessTest) {
-        auto_ptr< Corpus > corpus = auto_ptr< Corpus > (
-                new Corpus(".", DOCUMENT_TYPE_BASIC));
-        corpus->addDocument(
-                auto_ptr< Document > (new Document("CMakeCache.txt")));
-        auto_ptr< Corpus > textCorpus = pipe->pipe(corpus);
+/*
+ * Tests whether the process method works correctly.
+ *
+ */
+TEST_F(InputPipeTest, ProcessTest) {
+  auto_ptr< Corpus > corpus = auto_ptr< Corpus > (
+                                new Corpus(".", DOCUMENT_TYPE_BASIC));
+  corpus->addDocument(
+    auto_ptr< Document > (new Document("CMakeCache.txt")));
+  auto_ptr< Corpus > textCorpus = pipe->pipe(corpus);
 
-        TextDocument const * const onlyDocument =
-                (TextDocument const * const) textCorpus->getDocuments()->at(0);
-        EXPECT_GT(onlyDocument->getText()->size(), 0);
-    }
+  TextDocument const * const onlyDocument =
+    (TextDocument const * const) textCorpus->getDocuments()->at(0);
+  EXPECT_GT(onlyDocument->getText()->size(), 0);
+}
 
-    /*
-     * Tests whether the getDocumentTypes method works correctly.
-     * 
-     */
-    TEST_F(InputPipeTest, GetDocumentTypesTest) {
-        vector< int > const * compatibleTypes = pipe->getCompatibleTypes();
-        EXPECT_EQ(0, compatibleTypes->size());
-    }
+/*
+ * Tests whether the getDocumentTypes method works correctly.
+ *
+ */
+TEST_F(InputPipeTest, GetDocumentTypesTest) {
+  vector< int > const * compatibleTypes = pipe->getCompatibleTypes();
+  EXPECT_EQ(0, compatibleTypes->size());
+}
 }

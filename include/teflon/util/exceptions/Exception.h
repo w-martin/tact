@@ -6,7 +6,7 @@
  * @section LICENSE
  *
  * This file is part of teflon.
- * 
+ *
  * teflon is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -19,7 +19,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 #ifndef EXCEPTION_H
@@ -33,37 +33,37 @@ using std::string;
 
 /**
  * Custom <code>Exception</code> class.
- * 
+ *
  * @param message the message that will be printed as the cause for this
  * <code>Exception</code>.
- * 
+ *
  */
 class Exception : public exception {
 public:
-    /**
-     * Default constructor.
-     * 
-     * @param message the message that will be printed as the cause for this
-     * <code>Exception</code>.
-     * 
-     */
-    Exception(string const message);
-    /**
-     * Default destructor.
-     * 
-     */
-    virtual ~Exception() throw ();
-    /**
-     * Returns a C-style character string describing the general cause of 
-     * the current error.
-     * 
-     * @return a C-style character string describing the general cause of 
-     * the current error.
-     * 
-     */
-    virtual char const * what() const throw ();
+  /**
+   * Default constructor.
+   *
+   * @param message the message that will be printed as the cause for this
+   * <code>Exception</code>.
+   *
+   */
+  Exception(string const message);
+  /**
+   * Default destructor.
+   *
+   */
+  virtual ~Exception() throw ();
+  /**
+   * Returns a C-style character string describing the general cause of
+   * the current error.
+   *
+   * @return a C-style character string describing the general cause of
+   * the current error.
+   *
+   */
+  virtual char const * what() const throw ();
 private:
-    string message;
+  string message;
 };
 
 #endif	/* EXCEPTION_H */

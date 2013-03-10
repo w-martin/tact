@@ -6,7 +6,7 @@
  * @section LICENSE
  *
  * This file is part of teflon.
- * 
+ *
  * teflon is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -19,7 +19,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 #include "teflon/input/exceptions/IncompatibleCorpusException.h"
@@ -29,51 +29,51 @@ using std::endl;
 using std::stringstream;
 
 IncompatibleCorpusException::IncompatibleCorpusException()
-: Exception(INCOMPATIBLE_CORPUS_MESSAGE) {
+  : Exception(INCOMPATIBLE_CORPUS_MESSAGE) {
 }
 
 IncompatibleCorpusException::IncompatibleCorpusException(
-        const string & message)
-: Exception(message) {
+  const string & message)
+  : Exception(message) {
 }
 
 IncompatibleCorpusException::IncompatibleCorpusException(
-        int const & corpusType, vector< int > const * const compatibleTypes,
-        string const & source)
-: Exception(createErrorMessage(corpusType, compatibleTypes, source)) {
+  int const & corpusType, vector< int > const * const compatibleTypes,
+  string const & source)
+  : Exception(createErrorMessage(corpusType, compatibleTypes, source)) {
 }
 
 IncompatibleCorpusException::IncompatibleCorpusException(
-        int const & corpusType, int const & compatibleType,
-        string const & source)
-: Exception(createErrorMessage(corpusType, compatibleType, source)) {
+  int const & corpusType, int const & compatibleType,
+  string const & source)
+  : Exception(createErrorMessage(corpusType, compatibleType, source)) {
 }
 
 string const IncompatibleCorpusException::createErrorMessage(
-        int const & corpusType,
-        vector< int > const * const compatibleTypes,
-        string const & source) const {
-    stringstream stream;
-    stream << INCOMPATIBLE_CORPUS_MESSAGE << endl;
-    stream << "Thrown from " << source << "." << endl;
-    stream << "Document type: " << corpusType << endl;
-    stream << "Compatible types:";
-    for (vector< int >::const_iterator iter = compatibleTypes->begin();
-            compatibleTypes->end() != iter; iter++) {
-        stream << " " << (*iter);
-    }
-    stream << endl;
-    return stream.str();
+  int const & corpusType,
+  vector< int > const * const compatibleTypes,
+  string const & source) const {
+  stringstream stream;
+  stream << INCOMPATIBLE_CORPUS_MESSAGE << endl;
+  stream << "Thrown from " << source << "." << endl;
+  stream << "Document type: " << corpusType << endl;
+  stream << "Compatible types:";
+  for (vector< int >::const_iterator iter = compatibleTypes->begin();
+       compatibleTypes->end() != iter; iter++) {
+    stream << " " << (*iter);
+  }
+  stream << endl;
+  return stream.str();
 }
 
 string const IncompatibleCorpusException::createErrorMessage(
-        int const & corpusType,
-        int const & compatibleType,
-        string const & source) const {
-    stringstream stream;
-    stream << INCOMPATIBLE_CORPUS_MESSAGE << endl;
-    stream << "Thrown from " << source << "." << endl;
-    stream << "Document type: " << corpusType << endl;
-    stream << "Compatible type: " << compatibleType << endl;
-    return stream.str();
+  int const & corpusType,
+  int const & compatibleType,
+  string const & source) const {
+  stringstream stream;
+  stream << INCOMPATIBLE_CORPUS_MESSAGE << endl;
+  stream << "Thrown from " << source << "." << endl;
+  stream << "Document type: " << corpusType << endl;
+  stream << "Compatible type: " << compatibleType << endl;
+  return stream.str();
 }

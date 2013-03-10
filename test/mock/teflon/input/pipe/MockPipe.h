@@ -6,7 +6,7 @@
  * @section LICENSE
  *
  * This file is part of teflon.
- * 
+ *
  * teflon is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -19,7 +19,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 #ifndef PIPE_MOCK_H
@@ -30,24 +30,24 @@
 
 /**
  * Mock Pipe class.
- * 
+ *
  */
 class MockPipe : public Pipe {
 public:
 
-    MockPipe() : Pipe() {
-    }
+  MockPipe() : Pipe() {
+  }
 
-    MockPipe(int const & compatibleType) : Pipe(compatibleType) {
-    }
+  MockPipe(int const & compatibleType) : Pipe(compatibleType) {
+  }
 
-    MockPipe(vector< int > const & compatibleTypes) : Pipe(compatibleTypes) {
-    }
+  MockPipe(vector< int > const & compatibleTypes) : Pipe(compatibleTypes) {
+  }
 private:
 
-    virtual auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const {
-        return corpus;
-    }
+  virtual auto_ptr< Corpus > process(auto_ptr< Corpus > corpus) const {
+    return corpus;
+  }
 };
 
 #endif /* PIPE_MOCK_H */

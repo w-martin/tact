@@ -6,20 +6,20 @@
  * @section LICENSE
  *
  * This file is part of teflon.
- * 
+ *
  * teflon is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * teflon is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 #include "teflon/util/Files.h"
@@ -32,24 +32,24 @@ using std::ios;
 using std::istreambuf_iterator;
 
 auto_ptr< string > teflon::util::files::readFile(const string & location) {
-    ifstream t(location.c_str());
+  ifstream t(location.c_str());
 
-    t.seekg(0, ios::end);
-    int const length = t.tellg();
-    t.seekg(0, ios::beg);
+  t.seekg(0, ios::end);
+  int const length = t.tellg();
+  t.seekg(0, ios::beg);
 
-    auto_ptr< string > text = auto_ptr< string > (new string());
-    text->reserve(length);
-    text->assign(istreambuf_iterator< char >(t), istreambuf_iterator< char >());
-    t.close();
+  auto_ptr< string > text = auto_ptr< string > (new string());
+  text->reserve(length);
+  text->assign(istreambuf_iterator< char >(t), istreambuf_iterator< char >());
+  t.close();
 
-    return text;
+  return text;
 }
 
 void teflon::util::files::appendFile(string const & text,
-        string const & filename) {
-    std::ofstream outputFileStream;
-    outputFileStream.open(filename.c_str(), std::ios_base::app);
-    outputFileStream << text << std::endl;
-    outputFileStream.close();
+                                     string const & filename) {
+  std::ofstream outputFileStream;
+  outputFileStream.open(filename.c_str(), std::ios_base::app);
+  outputFileStream << text << std::endl;
+  outputFileStream.close();
 }

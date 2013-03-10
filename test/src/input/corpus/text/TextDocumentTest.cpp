@@ -6,7 +6,7 @@
  * @section LICENSE
  *
  * This file is part of teflon.
- * 
+ *
  * teflon is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -19,7 +19,7 @@
 
  * You should have received a copy of the GNU General Public License
  * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 #include "gtest/gtest.h"
@@ -27,59 +27,59 @@
 
 namespace {
 
-    /**
-     * Tests TextDocument.
-     * 
-     */
-    class TextDocumentTest : public ::testing::Test {
-    protected:
+/**
+ * Tests TextDocument.
+ *
+ */
+class TextDocumentTest : public ::testing::Test {
+protected:
 
-        TextDocumentTest() {
-            name = "test name";
-            text = "this is\nsome text!\t\n\t";
-            document = new TextDocument(
-                    name, auto_ptr< string > (new string(text)));
-        }
+  TextDocumentTest() {
+    name = "test name";
+    text = "this is\nsome text!\t\n\t";
+    document = new TextDocument(
+      name, auto_ptr< string > (new string(text)));
+  }
 
-        virtual ~TextDocumentTest() {
-            delete document;
-        }
-        TextDocument * document;
-        string name;
-        string text;
-    };
+  virtual ~TextDocumentTest() {
+    delete document;
+  }
+  TextDocument * document;
+  string name;
+  string text;
+};
 
-    /*
-     * Tests whether the getName method works correctly.
-     * 
-     */
-    TEST_F(TextDocumentTest, GetNameTest) {
-        EXPECT_EQ(0, strcmp(name.c_str(), document->getName().c_str()));
-    }
+/*
+ * Tests whether the getName method works correctly.
+ *
+ */
+TEST_F(TextDocumentTest, GetNameTest) {
+  EXPECT_EQ(0, strcmp(name.c_str(), document->getName().c_str()));
+}
 
-    /*
-     * Tests whether the getText method works correctly.
-     * 
-     */
-    TEST_F(TextDocumentTest, GetTextTest) {
-        EXPECT_EQ(0, strcmp(text.c_str(), document->getText()->c_str()));
-    }
+/*
+ * Tests whether the getText method works correctly.
+ *
+ */
+TEST_F(TextDocumentTest, GetTextTest) {
+  EXPECT_EQ(0, strcmp(text.c_str(), document->getText()->c_str()));
+}
 
-    /*
-     * Tests whether the getName method works correctly.
-     * 
-     */
-    TEST_F(TextDocumentTest, GetTypeTest) {
-        EXPECT_EQ(DOCUMENT_TYPE_TEXT, document->getType());
-    }
+/*
+ * Tests whether the getName method works correctly.
+ *
+ */
+TEST_F(TextDocumentTest, GetTypeTest) {
+  EXPECT_EQ(DOCUMENT_TYPE_TEXT, document->getType());
+}
 
-    /*
-     * Tests whether the copy constructor works correctly.
-     * 
-     */
-    TEST_F(TextDocumentTest, CopyConstructorTest) {
-        TextDocument tmp(*document);
-        EXPECT_EQ(0, strcmp(name.c_str(), tmp.getName().c_str()));
-        EXPECT_EQ(0, strcmp(text.c_str(), tmp.getText()->c_str()));
-    }
+/*
+ * Tests whether the copy constructor works correctly.
+ *
+ */
+TEST_F(TextDocumentTest, CopyConstructorTest) {
+  TextDocument tmp(*document);
+  EXPECT_EQ(0, strcmp(name.c_str(), tmp.getName().c_str()));
+  EXPECT_EQ(0, strcmp(text.c_str(), tmp.getText()->c_str()));
+}
 }

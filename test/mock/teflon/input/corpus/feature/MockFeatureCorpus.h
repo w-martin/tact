@@ -6,7 +6,7 @@
  * @section LICENSE
  *
  * This file is part of teflon.
- * 
+ *
  * teflon is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -19,11 +19,11 @@
 
  * You should have received a copy of the GNU General Public License
  * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  * @section DESCRIPTION
- * 
+ *
  * Mock FeatureCorpus class.
- * 
+ *
  */
 
 #ifndef FEATURE_CORPUS_MOCK_H
@@ -36,12 +36,12 @@
 class MockFeatureCorpus : public FeatureCorpus {
 public:
 
-    MockFeatureCorpus() : FeatureCorpus("myLocation",
-    auto_ptr< Alphabet >(new Alphabet())) {
-    }
+  MockFeatureCorpus() : FeatureCorpus("myLocation",
+                                        auto_ptr< Alphabet >(new Alphabet())) {
+  }
 
-    virtual ~MockFeatureCorpus() {
-    }
+  virtual ~MockFeatureCorpus() {
+  }
 };
 
 #endif /* FEATURE_CORPUS_MOCK_H */

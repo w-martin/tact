@@ -6,20 +6,20 @@
  * @section LICENSE
  *
  * This file is part of teflon.
- * 
+ *
  * teflon is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * teflon is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  */
 
 #ifndef FILES_H
@@ -33,32 +33,32 @@ using std::string;
 
 namespace teflon {
 
-    namespace util {
+namespace util {
 
-        /**
-         * Namespace containing methods for manipulating files.
-         * 
-         */
-        namespace files {
-            /**
-             * Reads the given file directly into a string.
-             * 
-             * @param location the location of the file on disk.
-             * @return the string which was read.
-             * 
-             */
-            auto_ptr< string > readFile(string const & location);
-            /**
-             * Appends the given text to the file with the given name.
-             * 
-             * @param text the text to append to the file.
-             * @param filename the name of the file to append.
-             * 
-             */
-            void appendFile(string const & text, string const & filename);
-        };
+/**
+ * Namespace containing methods for manipulating files.
+ *
+ */
+namespace files {
+/**
+ * Reads the given file directly into a string.
+ *
+ * @param location the location of the file on disk.
+ * @return the string which was read.
+ *
+ */
+auto_ptr< string > readFile(string const & location);
+/**
+ * Appends the given text to the file with the given name.
+ *
+ * @param text the text to append to the file.
+ * @param filename the name of the file to append.
+ *
+ */
+void appendFile(string const & text, string const & filename);
+};
 
-    };
+};
 
 };
 
