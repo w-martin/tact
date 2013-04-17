@@ -30,6 +30,7 @@
 #define TOPIC_MODEL_MOCK_H
 
 #include "gmock/gmock.h"
+#include "teflon/input/corpus/feature/MockFeatureCorpus.h"
 #include "teflon/model/TopicModel.h"
 
 class MockTopicModel : public TopicModel {

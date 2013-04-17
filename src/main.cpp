@@ -199,7 +199,7 @@ auto_ptr< Corpus > process(string const & corpusLocation,
                            string const & stopwordsFile) {
   auto_ptr< Corpus > corpus = auto_ptr< Corpus > (
                                 new Corpus(corpusLocation, DOCUMENT_TYPE_BASIC));
-  corpus = CompleteFilteredBundle(stopwordsFile). pipe(corpus);
+  corpus = CompleteFilteredBundle(stopwordsFile).pipe(corpus);
   return corpus;
 }
 }

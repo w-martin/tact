@@ -81,3 +81,5 @@ ProbabilityMatrix const * const TopicModel::getTermTopicMatrix() const {
 ProbabilityMatrix const * const TopicModel::getTopicDocumentMatrix() const {
   return topicDocumentMatrix;
 }
+
+
