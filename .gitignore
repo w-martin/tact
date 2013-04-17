@@ -13,3 +13,4 @@ build/
 
 *.orig
 *.kdev4
+.cproject
