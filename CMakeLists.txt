@@ -250,6 +250,20 @@ IF(("FAST" STREQUAL TESTING) OR ("ALL" STREQUAL TESTING))
         ${TEFLON_TEST_DIR}/output/IdentifierTest.cpp
         ${TEFLON_TEST_DIR}/output/TopicModelPrinterTest.cpp
     ) 
+    target_link_libraries(OutputTests
+        ${TEFLON_OUTPUT}
+        ${TEFLON_MODEL}
+        ${TEFLON_INPUT}
+        ${TEFLON_UTIL}
+        ${TEFLON_LOGGER}
+        ${Boost_REGEX_LIBRARY}
+        ${Boost_DATE_TIME_LIBRARY}
+        ${Boost_FILESYSTEM_LIBRARY}
+        ${Boost_SYSTEM_LIBRARY}
+        ${Boost_THREAD_LIBRARY}
+        gmock
+        gmock_main)
+    add_test(OutputTests OutputTests)
 
     add_executable(ModelTests
         ${TEFLON_TEST_DIR}/model/ProbabilityMatrixTest.cpp
@@ -265,21 +279,6 @@ IF(("FAST" STREQUAL TESTING) OR ("ALL" STREQUAL TESTING))
         gmock
         gmock_main)
     add_test(ModelTests ModelTests)
-
-    target_link_libraries(OutputTests
-        ${TEFLON_OUTPUT}
-        ${TEFLON_MODEL}
-        ${TEFLON_INPUT}
-        ${TEFLON_UTIL}
-        ${TEFLON_LOGGER}
-        ${Boost_REGEX_LIBRARY}
-        ${Boost_DATE_TIME_LIBRARY}
-        ${Boost_FILESYSTEM_LIBRARY}
-        ${Boost_SYSTEM_LIBRARY}
-        ${Boost_THREAD_LIBRARY}
-        gmock
-        gmock_main)
-    add_test(OutputTests OutputTests)
 
     add_executable(AlgorithmTests
         ${TEFLON_TEST_DIR}/algorithm/LDATest.cpp

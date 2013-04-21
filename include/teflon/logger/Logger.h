@@ -112,7 +112,7 @@ public:
    * @return the logged message.
    *
    */
-  string const log(Level const & level, string const & message) const;
+  virtual string const log(Level const & level, string const & message) const;
 private:
   /**
    * Whether this Logger should log to console or not.

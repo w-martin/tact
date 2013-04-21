@@ -14,6 +14,7 @@
  */
 
 #include "gtest/gtest.h"
+#include "teflon/logger/MockLogger.h"
 #include "teflon/model/MockTopicModel.h"
 #include "teflon/output/TopicModelPrinter.h"
 
@@ -30,8 +31,7 @@ namespace {
 
         TopicModelPrinterTest() {
             topicModel = new MockTopicModel();
-            // use mock here
-            logger = new Logger("test logger", false, false);
+            logger = new MockLogger();
             topicmodelprinter = new TopicModelPrinter(topicModel, logger);
         }
 
