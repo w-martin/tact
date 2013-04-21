@@ -19,6 +19,8 @@
 #include "teflon/output/TopicModelPrinter.h"
 
 using teflon::output::TopicModelPrinter;
+using ::testing::_;
+using namespace teflon::logger;
 
 namespace {
 
@@ -31,16 +33,16 @@ namespace {
 
         TopicModelPrinterTest() {
             topicModel = new MockTopicModel();
-            logger = new MockLogger();
-            topicmodelprinter = new TopicModelPrinter(topicModel, logger);
+            printer = new TopicModelPrinter(topicModel, &logger);
         }
 
         virtual ~TopicModelPrinterTest() {
-            delete topicmodelprinter;
+            delete printer;
+            delete topicModel;
         }
-        TopicModelPrinter * topicmodelprinter;
+        TopicModelPrinter * printer;
         TopicModel * topicModel;
-        Logger * logger;
+        MockLogger logger;
     };
 
     /*
@@ -48,8 +50,76 @@ namespace {
      * 
      */
     TEST_F(TopicModelPrinterTest, CopyConstructorTest) {
-        TopicModelPrinter tmp(*topicmodelprinter);
+        TopicModelPrinter tmp(*printer);
         EXPECT_EQ(topicModel, tmp.getTopicModel());
-        EXPECT_EQ(logger, tmp.getLogger());
+        EXPECT_EQ(&logger, tmp.getLogger());
+    }
+
+    /*
+     * Tests whether the logger getter works correctly.
+     * 
+     */
+    TEST_F(TopicModelPrinterTest, GetLoggerTest) {
+        EXPECT_EQ(&logger, printer->getLogger());
+    }
+
+    /*
+     * Tests whether the topic model getter works correctly.
+     * 
+     */
+    TEST_F(TopicModelPrinterTest, GetTopicModelTest) {
+        EXPECT_EQ(topicModel, printer->getTopicModel());
+    }
+
+    /*
+     * Tests whether the printDocumentTopTopics method works correctly.
+     * 
+     */
+    TEST_F(TopicModelPrinterTest, PrintDocumentTopTopicsTest) {
+      int n = 2;
+      EXPECT_CALL(logger, log(INFO, _)).Times(
+              topicModel->getNoDocuments());
+      printer->printDocumentTopTopics(n);
+      
+      n = 4;
+      EXPECT_CALL(logger, log(INFO, _)).Times(
+              topicModel->getNoDocuments());
+      printer->printDocumentTopTopics(n);
+    }
+
+    /*
+     * Tests whether the printDocumentTop5 method works correctly.
+     * 
+     */
+    TEST_F(TopicModelPrinterTest, PrintDocumentTop5Test) {
+      EXPECT_CALL(logger, log(INFO, _)).Times(
+              topicModel->getNoDocuments());
+      printer->printDocumentTop5();
+    }
+
+    /*
+     * Tests whether the printTopicTopWords method works correctly.
+     * 
+     */
+    TEST_F(TopicModelPrinterTest, PrintTopicTopWordsTest) {
+      int n = 2;
+      EXPECT_CALL(logger, log(INFO, _)).Times(
+              topicModel->getNoTopics());
+      printer->printTopicTopWords(n);
+      
+      n = 4;
+      EXPECT_CALL(logger, log(INFO, _)).Times(
+              topicModel->getNoTopics());
+      printer->printTopicTopWords(n);
+    }
+
+    /*
+     * Tests whether the printTopicTop10 method works correctly.
+     * 
+     */
+    TEST_F(TopicModelPrinterTest, PrintTopicTop10Test) {
+      EXPECT_CALL(logger, log(INFO, _)).Times(
+              topicModel->getNoTopics());
+      printer->printTopicTop10();
     }
 }

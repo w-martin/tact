@@ -15,52 +15,57 @@
 
 #include "teflon/output/TopicModelPrinter.h"
 
+using namespace teflon::logger;
 using teflon::output::TopicModelPrinter;
 
-TopicModelPrinter::TopicModelPrinter(TopicModel const * const topicModel, 
+TopicModelPrinter::TopicModelPrinter(TopicModel const * const topicModel,
         Logger const * const logger) {
-    TopicModelPrinter::topicModel = topicModel;
-    TopicModelPrinter::logger = logger;
+  TopicModelPrinter::topicModel = topicModel;
+  TopicModelPrinter::logger = logger;
 }
 
 TopicModelPrinter::TopicModelPrinter(TopicModelPrinter const & orig) {
-    topicModel = orig.getTopicModel();
-    logger = orig.getLogger();
+  topicModel = orig.getTopicModel();
+  logger = orig.getLogger();
 }
 
 TopicModelPrinter::~TopicModelPrinter() {
 }
 
 Logger const * const TopicModelPrinter::getLogger() const {
-    return logger;
+  return logger;
 }
 
 TopicModel const * const TopicModelPrinter::getTopicModel() const {
-    return topicModel;
+  return topicModel;
 }
 
 void TopicModelPrinter::printDocumentTopTopics(int const & n) const {
-    
+  for (int m = 0; m < topicModel->getNoDocuments(); m++) {
+    printSingleDocumentTopics(n, m);
+  }
 }
 
 void TopicModelPrinter::printDocumentTop5() const {
-    
+  printDocumentTopTopics(5);
 }
 
 void TopicModelPrinter::printTopicTopWords(int const & n) const {
-    
+  for (int k = 0; k < topicModel->getNoTopics(); k++) {
+    printSingleTopicWords(n, k);
+  }
 }
 
 void TopicModelPrinter::printTopicTop10() const {
-    
+  printTopicTopWords(10);
 }
 
-void TopicModelPrinter::printSingleDocumentTopics(int const & n, 
+void TopicModelPrinter::printSingleDocumentTopics(int const & n,
         int const & m) const {
-    
+  logger->log(INFO, "printout");
 }
 
-void TopicModelPrinter::printSingleTopicWords(int const & n, 
+void TopicModelPrinter::printSingleTopicWords(int const & n,
         int const & k) const {
-    
+  logger->log(INFO, "printout");
 }
