@@ -5,30 +5,30 @@
  *
  * @section LICENSE
  *
- * This file is part of teflon.
+ * This file is part of tact.
  *
- * teflon is free software: you can redistribute it and/or modify
+ * tact is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * teflon is distributed in the hope that it will be useful,
+ * tact is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
+ * along with tact.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
-#include "teflon/input/corpus/feature/FeatureCorpus.h"
-#include "teflon/input/pipe/PunctuationFilter.h"
-#include "teflon/util/Strings.h"
+#include "tact/input/corpus/feature/FeatureCorpus.h"
+#include "tact/input/pipe/PunctuationFilter.h"
+#include "tact/util/Strings.h"
 #include <map>
 
-using teflon::util::strings::containsPunctuation;
-using teflon::util::strings::split;
+using tact::util::strings::containsPunctuation;
+using tact::util::strings::split;
 using std::map;
 
 typedef map< string, vector< string > > mapType;

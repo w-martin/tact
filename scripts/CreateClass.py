@@ -6,20 +6,20 @@
 # 
 # @section LICENSE
 # 
-# This file is part of mewt.
+# This file is part of tact.
 # 
-# mewt is free software: you can redistribute it and/or modify
+# tact is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 # 
-# mewt is distributed in the hope that it will be useful,
+# tact is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 # 
 # You should have received a copy of the GNU General Public License
-# along with mewt.  If not, see <http://www.gnu.org/licenses/>.
+# along with tact.  If not, see <http://www.gnu.org/licenses/>.
 # 
 # @section DESCRIPTION
 # 
@@ -47,7 +47,7 @@ def usage():
     reference: The source file to use as a reference for \
 documentation, such as the license i.e. src/MyClass.cpp \n\
     include/project: The include directory, with any project name \
-in use i.e. include/mewt src test \n\
+in use i.e. include/tact src test \n\
     source: The source directory i.e. src \n\
     test: The test directory i.e. test or test/src")
 

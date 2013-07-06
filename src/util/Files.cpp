@@ -5,24 +5,24 @@
  *
  * @section LICENSE
  *
- * This file is part of teflon.
+ * This file is part of tact.
  *
- * teflon is free software: you can redistribute it and/or modify
+ * tact is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * teflon is distributed in the hope that it will be useful,
+ * tact is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
+ * along with tact.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
-#include "teflon/util/Files.h"
+#include "tact/util/Files.h"
 
 #include <fstream>
 #include <streambuf>
@@ -31,7 +31,7 @@ using std::ifstream;
 using std::ios;
 using std::istreambuf_iterator;
 
-auto_ptr< string > teflon::util::files::readFile(const string & location) {
+auto_ptr< string > tact::util::files::readFile(const string & location) {
   ifstream t(location.c_str());
 
   t.seekg(0, ios::end);
@@ -46,7 +46,7 @@ auto_ptr< string > teflon::util::files::readFile(const string & location) {
   return text;
 }
 
-void teflon::util::files::appendFile(string const & text,
+void tact::util::files::appendFile(string const & text,
                                      string const & filename) {
   std::ofstream outputFileStream;
   outputFileStream.open(filename.c_str(), std::ios_base::app);

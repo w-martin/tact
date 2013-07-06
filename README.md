@@ -1,8 +1,8 @@
-mewt
+tact
 ====
 
-Extensible Topic Modelling Framework in C++.  
-MEWT is an anagram of EWTM (Externally Weighted Topic Model), the model this framework was created to facilitate.  
+Topic ArchiteCT in C++.  
+Extensible topic modelling framework that allows you to not only train topic models, but design and shape them as you require.  
 
 See AUTHORS for list of authors.  
 See ChangeLog for list of version changes.  

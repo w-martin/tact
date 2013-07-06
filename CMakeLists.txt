@@ -1,22 +1,22 @@
 #
-# CMake build script for teflon.
+# CMake build script for tact.
 #
 ########################################################################
 #                                                                      #
-# This file is part of teflon.                                           #
+# This file is part of tact.                                           #
 #                                                                      #
-# teflon is free software: you can redistribute it and/or modify         #
+# tact is free software: you can redistribute it and/or modify         #
 # it under the terms of the GNU General Public License as published by #
 # the Free Software Foundation, either version 3 of the License, or    #
 # (at your option) any later version.                                  #
 #                                                                      #
-# teflon is distributed in the hope that it will be useful,              #
+# tact is distributed in the hope that it will be useful,              #
 # but WITHOUT ANY WARRANTY; without even the implied warranty of       #
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the        #
 # GNU General Public License for more details.                         #
 #                                                                      #
 # You should have received a copy of the GNU General Public License    #
-# along with teflon.  If not, see <http://www.gnu.org/licenses/>.        #
+# along with tact.  If not, see <http://www.gnu.org/licenses/>.        #
 #                                                                      #
 ########################################################################
 #
@@ -27,18 +27,18 @@ cmake_minimum_required (VERSION 2.6.2)
 # Main #
 ########
 
-project (teflon)
+project (tact)
 
 set(TESTING "NONE" CACHE STRING "NONE")
 set(COVERAGE "NONE" CACHE STRING "NONE")
 
-set(TEFLON_NAME teflon)
-set(TEFLON_UTIL teflon-util)
-set(TEFLON_LOGGER teflon-logger)
-set(TEFLON_INPUT teflon-input)
-set(TEFLON_OUTPUT teflon-output)
-set(TEFLON_MODEL teflon-model)
-set(TEFLON_ALGORITHM teflon-algorithm)
+set(TEFLON_NAME tact)
+set(TEFLON_UTIL tact-util)
+set(TEFLON_LOGGER tact-logger)
+set(TEFLON_INPUT tact-input)
+set(TEFLON_OUTPUT tact-output)
+set(TEFLON_MODEL tact-model)
+set(TEFLON_ALGORITHM tact-algorithm)
 set(TEFLON_SOURCE_DIR src)
 set(TEFLON_INCLUDE_DIR include)
 set(TEFLON_TEST_DIR test/src)

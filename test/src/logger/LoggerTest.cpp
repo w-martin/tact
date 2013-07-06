@@ -5,20 +5,20 @@
  *
  * @section LICENSE
  *
- * This file is part of teflon.
+ * This file is part of tact.
  *
- * teflon is free software: you can redistribute it and/or modify
+ * tact is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * teflon is distributed in the hope that it will be useful,
+ * tact is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
+ * along with tact.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
@@ -26,11 +26,11 @@
 #include <boost/thread/thread.hpp>
 #include <boost/filesystem.hpp>
 #include "gtest/gtest.h"
-#include "teflon/logger/Logger.h"
-#include "teflon/util/Files.h"
-#include "teflon/util/Strings.h"
+#include "tact/logger/Logger.h"
+#include "tact/util/Files.h"
+#include "tact/util/Strings.h"
 
-using namespace teflon::logger;
+using namespace tact::logger;
 
 namespace {
 
@@ -120,31 +120,31 @@ TEST_F(LoggerTest, LogTest) {
 
   string message = logger->log(ERROR, "first message");
   EXPECT_LT(0, message.size());
-  EXPECT_TRUE(teflon::util::strings::contains(message, "ERROR"));
-  EXPECT_FALSE(teflon::util::strings::contains(message, "INFO"));
-  EXPECT_FALSE(teflon::util::strings::contains(message, "SEVERE"));
+  EXPECT_TRUE(tact::util::strings::contains(message, "ERROR"));
+  EXPECT_FALSE(tact::util::strings::contains(message, "INFO"));
+  EXPECT_FALSE(tact::util::strings::contains(message, "SEVERE"));
 
   message = logger->log(INFO, "second message");
   EXPECT_LT(0, message.size());
-  EXPECT_FALSE(teflon::util::strings::contains(message, "ERROR"));
-  EXPECT_TRUE(teflon::util::strings::contains(message, "INFO"));
-  EXPECT_FALSE(teflon::util::strings::contains(message, "SEVERE"));
+  EXPECT_FALSE(tact::util::strings::contains(message, "ERROR"));
+  EXPECT_TRUE(tact::util::strings::contains(message, "INFO"));
+  EXPECT_FALSE(tact::util::strings::contains(message, "SEVERE"));
 
   message = logger->log(SEVERE, "third message");
   EXPECT_LT(0, message.size());
-  EXPECT_FALSE(teflon::util::strings::contains(message, "ERROR"));
-  EXPECT_FALSE(teflon::util::strings::contains(message, "INFO"));
-  EXPECT_TRUE(teflon::util::strings::contains(message, "SEVERE"));
+  EXPECT_FALSE(tact::util::strings::contains(message, "ERROR"));
+  EXPECT_FALSE(tact::util::strings::contains(message, "INFO"));
+  EXPECT_TRUE(tact::util::strings::contains(message, "SEVERE"));
 
-  auto_ptr< string > file = teflon::util::files::readFile(LOG_FILE_NAME);
+  auto_ptr< string > file = tact::util::files::readFile(LOG_FILE_NAME);
   EXPECT_LT(0, file->size());
-  EXPECT_TRUE(teflon::util::strings::contains(*file.get(), "ERROR"));
-  EXPECT_TRUE(teflon::util::strings::contains(*file.get(), "INFO"));
-  EXPECT_TRUE(teflon::util::strings::contains(*file.get(), "SEVERE"));
-  EXPECT_TRUE(teflon::util::strings::contains(*file.get(), "first"));
-  EXPECT_TRUE(teflon::util::strings::contains(*file.get(), "second"));
-  EXPECT_TRUE(teflon::util::strings::contains(*file.get(), "third"));
-  EXPECT_TRUE(teflon::util::strings::contains(*file.get(), "message"));
-  EXPECT_FALSE(teflon::util::strings::contains(*file.get(), "fourth"));
+  EXPECT_TRUE(tact::util::strings::contains(*file.get(), "ERROR"));
+  EXPECT_TRUE(tact::util::strings::contains(*file.get(), "INFO"));
+  EXPECT_TRUE(tact::util::strings::contains(*file.get(), "SEVERE"));
+  EXPECT_TRUE(tact::util::strings::contains(*file.get(), "first"));
+  EXPECT_TRUE(tact::util::strings::contains(*file.get(), "second"));
+  EXPECT_TRUE(tact::util::strings::contains(*file.get(), "third"));
+  EXPECT_TRUE(tact::util::strings::contains(*file.get(), "message"));
+  EXPECT_FALSE(tact::util::strings::contains(*file.get(), "fourth"));
 }
 }

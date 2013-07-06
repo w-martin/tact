@@ -18,7 +18,7 @@ FeatureCorpusIO::save((FeatureCorpus *) corpus.get());
 
 ## v0.1.2
 
-Changed project name to mewt.  
+Changed project name to tact.  
 
 ## v0.1.1
 

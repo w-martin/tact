@@ -5,20 +5,20 @@
  *
  * @section LICENSE
  *
- * This file is part of teflon.
+ * This file is part of tact.
  *
- * teflon is free software: you can redistribute it and/or modify
+ * tact is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * teflon is distributed in the hope that it will be useful,
+ * tact is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with teflon.  If not, see <http://www.gnu.org/licenses/>.
+ * along with tact.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @section DESCRIPTION
  *
@@ -26,15 +26,15 @@
  *
  */
 
-#include "teflon/input/pipe/bundle/CompleteFilteredBundle.h"
-#include "teflon/input/corpus/feature/FeatureCorpusIO.h"
-#include "teflon/util/Strings.h"
-#include "teflon/input/pipe/bundle/ScanInputOptimiseBundle.h"
-#include "teflon/algorithm/LDA.h"
+#include "tact/input/pipe/bundle/CompleteFilteredBundle.h"
+#include "tact/input/corpus/feature/FeatureCorpusIO.h"
+#include "tact/util/Strings.h"
+#include "tact/input/pipe/bundle/ScanInputOptimiseBundle.h"
+#include "tact/algorithm/LDA.h"
 #include <iostream>
 #include <map>
 
-namespace strings = teflon::util::strings;
+namespace strings = tact::util::strings;
 
 using std::cout;
 using std::endl;
@@ -209,7 +209,7 @@ auto_ptr< Corpus > process(string const & corpusLocation,
  *
  */
 void printUsage() {
-  cout << "Usage: teflon <mode> <arguments>"
+  cout << "Usage: tact <mode> <arguments>"
        << endl;
   cout << "  Modes:" << endl;
   cout << "    -c" << endl;
@@ -228,9 +228,9 @@ void printUsage() {
   cout << "        Processes the given corpus and uses it as input."
        << endl;
   cout << "Examples:" << endl;
-  cout << "  teflon -p myCorpus/" << "; teflon -m output/ -l myCorpus/"
+  cout << "  tact -p myCorpus/" << "; tact -m output/ -l myCorpus/"
        << endl;
-  cout << "  teflon -m output -i myCorpus" << endl;
+  cout << "  tact -m output -i myCorpus" << endl;
 }
 }
 

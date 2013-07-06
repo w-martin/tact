@@ -9,7 +9,7 @@ ChangeLog
 
 ## 0.1.2
 
-[UPGRADE] Changed project name to `mewt`.  
+[UPGRADE] Changed project name to `tact`.  
 
 ## 0.1.1
 

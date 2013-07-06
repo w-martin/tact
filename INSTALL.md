@@ -1,4 +1,4 @@
-Installation instructions for mewt
+Installation instructions for tact
 ==================================
 
 ## Disclaimer
@@ -44,5 +44,5 @@ Once built:
 
 ## Running
 
-Run "./mewt" to run the program from within the build directory, 
-or if installed, just run "mewt".
+Run "./tact" to run the program from within the build directory, 
+or if installed, just run "tact".

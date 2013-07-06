@@ -15,7 +15,7 @@
 #---------------------------------------------------------------------------
 
 DOXYFILE_ENCODING      = UTF-8
-PROJECT_NAME           = mewt
+PROJECT_NAME           = tact
 PROJECT_NUMBER         = 0.2
 PROJECT_BRIEF          = 
 
